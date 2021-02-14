@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="winkhouse" uid="winkhouse-gestionale" id="winkhouse.product" application="winkhouse.application" version="1.9.0" useFeatures="false" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="product_lg.gif"/>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="icons/icowin/home16.png" i32="icons/icowin/home32.png" i48="icons/icowin/home48.png" i64="icons/icowin/home64.png" i128="icons/icowin/home128.png"/>
+
+   <splash
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
+      startupForegroundColor="000000" />
+   <launcher name="winkhouse">
+      <solaris/>
+      <win useIco="false">
+         <bmp
+            winSmallHigh="icons/home16.bmp"
+            winMediumHigh="icons/home32.bmp"
+            winLargeHigh="icons/home48.bmp"/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <license>
+        <text>
+   licenza d’uso del software winkhouse.
+
+L’utente è tenuto a leggere con attenzione il presente contratto di licenza. 
+Qualora si intenda aderire alle “condizioni generali”, cliccare su “accetto”. 
+L’utilizzo di winkhouse comporta in ogni caso l’accettazione dei termini 
+e delle condizioni del “contratto di licenza”. 
+Qualora l’utente non desideri più essere vincolato ai termini del “contratto di licenza”, 
+sarà tenuto ad interrompere l’utilizzo di winkhouse e a disinstallarlo dal proprio elaboratore. 
+Se l’utente non intenda accettare le presenti “condizioni generali”, non dovrà installare, 
+né utilizzare winkhouse e dovrà cliccare su &quot;Annulla&quot;.
+
+1. generale
+Licenza a titolo gratuito per l’utilizzo di winkhouse e della documentazione riguardante 
+l’impiego dello stesso e la documentazione messa a disposizione sul sito web www.winkhouse.org.
+Tutto quanto non espressamente incluso nel “contratto di licenza” deve considerarsi escluso ed i 
+relativi diritti rimarranno di proprietà di Lavoratornovo Michele.
+winkhouse è di proprietà di Lavoratornovo Michele ed ogni e qualsivoglia diritto di proprietà 
+intellettuale relativo allo stesso ed alla documentazione resta in capo a Lavoratornovo Michele,  
+mentre esulano dall’oggetto del “contratto di licenza” tutti i diritti di proprietà intellettuale di 
+terzi. 
+La licenza concessa da Lavoratornovo Michele in forza delle presenti “condizioni generali” comprende altresì 
+il diritto dell’utente di scaricare, installare e utilizzare eventuali aggiornamenti di winkhouse
+disponibili su www.winkhouse.org.
+
+2. utilizzi permessi e restrizioni di winkhouse
+All’utente è concesso il diritto di scaricare, installare e utilizzare il winkhouse sul proprio computer. 
+winkhouse potrà essere installato su una rete che ne consenta l’utilizzo da più elaboratori contemporaneamente.
+E&apos; fatto divieto di decompilare, estrarre il codice sorgente o disassemblare il winkhouse o creare, dallo 
+stesso o sulla base di alcuni suoi componenti, prodotti derivati salvo espressa autorizzazione concessa da
+Lavoratornovo Michele. 
+Non è consentito utilizzare il winkhouse per fini illeciti o in contrasto con la presente licenza. 
+
+3. diritti d’autore
+l’utente si impegna a tutelare i diritti di Lavoratornovo Michele relativamente a winkhouse e ad adempiere a tutte le 
+richieste scritte formulate dalla stessa, nonché ad informare Lavoratornovo Michele, per iscritto, nel caso in cui venga a 
+conoscenza di un utilizzo non consentito di winkhouse o di violazioni dei diritti di proprietà intellettuale 
+da parte di terzi.
+
+4. trasmissione
+non è consentito concedere in sub-licenza, cedere o in qualsiasi altro modo trasferire il winkhouse, se non previa 
+autorizzazione scritta di Lavoratornovo Michele.
+
+
+5. esclusione di garanzie
+Viene espressamente esclusa qualsiasi tipo di garanzia su questo prodotto. 
+Il software e tutto il materiale allegato è rilasciato così com&apos;é, senza garanzie di alcun tipo, esplicite o implicite. 
+Tutti i rischi derivanti dal funzionamento, o dal mancato funzionamento del software sono a carico dell&apos;Utente.
+
+6. limitazione di responsabilità
+In nessun caso l&apos;autore di questo software potrà essere considerato responsabile per qualsiasi danno diretto od indiretto 
+di qualsiasi tipo (inclusi, senza limitazioni, danni per perdita di profitti, di interruzione di servizi o di perdite di dati) 
+derivanti dall&apos;utilizzo o dall&apos;impossibilità di utilizzo del prodotto.
+         </text>
+   </license>
+
+   <plugins>
+      <plugin id="com.ibm.icu"/>
+      <plugin id="javax.annotation"/>
+      <plugin id="javax.inject"/>
+      <plugin id="javax.xml"/>
+      <plugin id="org.apache.batik.css"/>
+      <plugin id="org.apache.batik.util"/>
+      <plugin id="org.apache.batik.util.gui"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.beans"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.filesystem"/>
+      <plugin id="org.eclipse.core.filesystem.java7" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.win32.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+      <plugin id="org.eclipse.draw2d"/>
+      <plugin id="org.eclipse.e4.core.commands"/>
+      <plugin id="org.eclipse.e4.core.contexts"/>
+      <plugin id="org.eclipse.e4.core.di"/>
+      <plugin id="org.eclipse.e4.core.di.extensions"/>
+      <plugin id="org.eclipse.e4.core.services"/>
+      <plugin id="org.eclipse.e4.ui.bindings"/>
+      <plugin id="org.eclipse.e4.ui.css.core"/>
+      <plugin id="org.eclipse.e4.ui.css.swt"/>
+      <plugin id="org.eclipse.e4.ui.css.swt.theme"/>
+      <plugin id="org.eclipse.e4.ui.di"/>
+      <plugin id="org.eclipse.e4.ui.model.workbench"/>
+      <plugin id="org.eclipse.e4.ui.services"/>
+      <plugin id="org.eclipse.e4.ui.widgets"/>
+      <plugin id="org.eclipse.e4.ui.workbench"/>
+      <plugin id="org.eclipse.e4.ui.workbench.addons.swt"/>
+      <plugin id="org.eclipse.e4.ui.workbench.renderers.swt"/>
+      <plugin id="org.eclipse.e4.ui.workbench.swt"/>
+      <plugin id="org.eclipse.e4.ui.workbench3"/>
+      <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.ecore"/>
+      <plugin id="org.eclipse.emf.ecore.change"/>
+      <plugin id="org.eclipse.emf.ecore.xmi"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.ds"/>
+      <plugin id="org.eclipse.equinox.event"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.equinox.util"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>
+      <plugin id="org.eclipse.osgi.services"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.forms"/>
+      <plugin id="org.eclipse.ui.views"/>
+      <plugin id="org.eclipse.ui.views.properties.tabbed"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.eclipse.zest.core"/>
+      <plugin id="org.eclipse.zest.layouts"/>
+      <plugin id="org.w3c.css.sac"/>
+      <plugin id="org.w3c.dom.events"/>
+      <plugin id="org.w3c.dom.smil"/>
+      <plugin id="org.w3c.dom.svg"/>
+      <plugin id="winkhouse"/>
+   </plugins>
+
+
+</product>
