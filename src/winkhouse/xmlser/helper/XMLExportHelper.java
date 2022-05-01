@@ -21,7 +21,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 
 import winkhouse.export.helpers.SystemPreferenceHelper;
 import winkhouse.export.helpers.UtilsHelper;
-import winkhouse.model.winkcloud.MonitorFTPModel;
+
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AgentiVO;
@@ -502,8 +502,7 @@ public class XMLExportHelper {
 		winkhouseBinding.setAlias(EntityXMLModel.class, "entita");
 		winkhouseBinding.setAlias(AttributeXMLModel.class, "attributo");
 		winkhouseBinding.setAlias(AttributeValueXMLModel.class, "valoreattributo");
-		winkhouseBinding.setAlias(ImmobiliPropietariXMLModel.class, "immobilipropietari");
-		winkhouseBinding.setAlias(MonitorFTPModel.class, "monitorftp");
+		winkhouseBinding.setAlias(ImmobiliPropietariXMLModel.class, "immobilipropietari");		
 				
 		return winkhouseBinding;
 		

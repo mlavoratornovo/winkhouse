@@ -32,6 +32,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import winkhouse.model.winkcloud.HTTPConnector;
+import winkhouse.model.winkcloud.HttpServerConnector;
 import winkhouse.model.winkcloud.restmsgs.MessageCode;
 import winkhouse.model.winkcloud.restmsgs.MessageStatusCheck;
 import winkhouse.model.winkcloud.restmsgs.QueryByCode;
@@ -62,40 +63,40 @@ public class HTTPHelper {
 		
 	}
 	
-	public boolean checkStatus(HTTPConnector connector){
+	public boolean checkStatus(HttpServerConnector connector){
 		
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet((connector.getUrl().endsWith("/"))
-                					? connector.getUrl() + CHKSTATUS_CODICE_ACTION 
-                					: connector.getUrl() + "/" + CHKSTATUS_CODICE_ACTION);				
-		try {
-			HttpResponse response = client.execute(request);
-			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-			StringBuffer result = new StringBuffer();
-			String line = "";
-			while ((line = rd.readLine()) != null) {
-				result.append(line);
-			}
-			
-			GsonBuilder builder = new GsonBuilder();
-	        Gson gson = builder.create();
-	        
-	        MessageStatusCheck rcm = gson.fromJson(result.toString(), MessageStatusCheck.class);
-	        if (rcm.message.startsWith("WinkCloudQuerySystem_v_1")){
-	        	return true;
-	        }else{
-	        	return false;
-	        }
-		} catch (ClientProtocolException e) {
-			return false;
-		} catch (IOException e) {
-			return false;
-		}
-
+//		HttpClient client = HttpClientBuilder.create().build();
+//		HttpGet request = new HttpGet((connector.getUrl().endsWith("/"))
+//                					? connector.getUrl() + CHKSTATUS_CODICE_ACTION 
+//                					: connector.getUrl() + "/" + CHKSTATUS_CODICE_ACTION);				
+//		try {
+//			HttpResponse response = client.execute(request);
+//			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+//
+//			StringBuffer result = new StringBuffer();
+//			String line = "";
+//			while ((line = rd.readLine()) != null) {
+//				result.append(line);
+//			}
+//			
+//			GsonBuilder builder = new GsonBuilder();
+//	        Gson gson = builder.create();
+//	        
+//	        MessageStatusCheck rcm = gson.fromJson(result.toString(), MessageStatusCheck.class);
+//	        if (rcm.message.startsWith("WinkCloudQuerySystem_v_1")){
+//	        	return true;
+//	        }else{
+//	        	return false;
+//	        }
+//		} catch (ClientProtocolException e) {
+//			return false;
+//		} catch (IOException e) {
+//			return false;
+//		}
+		return true;
 	}
 	
-	public String getCode(HTTPConnector connector){
+	public String getCode(HttpServerConnector connector){
 		
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet((connector.getUrl().endsWith("/"))

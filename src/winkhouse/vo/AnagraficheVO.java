@@ -3,7 +3,14 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Anagrafiche;
 
 public class AnagraficheVO implements Serializable{
 
@@ -78,6 +85,37 @@ public class AnagraficheVO implements Serializable{
 		}
 		
 		dateUpdate = rs.getTimestamp("DATEUPDATE");		
+		
+	}	
+
+	public AnagraficheVO(Anagrafiche rs){
+		super();
+		LocalDateTime now = LocalDateTime.now();
+		ZoneId zone = ZoneId.of("Europe/Berlin");
+		ZoneOffset zoneOffSet = zone.getRules().getOffset(now);
+		
+		codAnagrafica = Cayenne.intPKForObject(rs);
+		nome = rs.getNome();
+		cognome = rs.getCognome();
+		ragioneSociale = rs.getRagsoc();
+		indirizzo = rs.getIndirizzo();
+		ncivico = rs.getNcivico();
+		provincia = rs.getProvincia();
+		cap = rs.getCap();
+		citta = rs.getCitta();
+		dataInserimento = (rs.getDatainserimento() != null)?java.util.Date.from(rs.getDatainserimento().atStartOfDay().toInstant(zoneOffSet)):null;
+		commento = rs.getCommento();
+		storico = rs.isStorico();
+		
+		codClasseCliente = (rs.getClassicliente() != null)?Cayenne.intPKForObject (rs.getClassicliente()):null;
+		
+		codAgenteInseritore = (rs.getAgenti() != null)?Cayenne.intPKForObject (rs.getAgenti()):null;
+		
+		codiceFiscale = rs.getCodicefiscale();
+		partitaIva = rs.getPiva();			
+		codUserUpdate = (rs.getAgenti() != null)?(int) Cayenne.longPKForObject (rs.getAgenti()):null;
+		dateUpdate = (rs.getDateupdate() != null)?java.util.Date.from(rs.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;
 		
 	}	
 	

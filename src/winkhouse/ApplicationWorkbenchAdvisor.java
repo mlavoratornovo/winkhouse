@@ -14,7 +14,6 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 import winkhouse.dao.AgentiDAO;
 import winkhouse.db.ConnectionManager;
-import winkhouse.model.winkcloud.jobs.FTPJob;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AgentiVO;
@@ -39,19 +38,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		super.postStartup();
 		
 			
-	}
-
-	@Override
-	public boolean preShutdown() {
-		IJobManager jobMan = Job.getJobManager();
-		Job[] jobs = jobMan.find(null);
-		for (Job job : jobs) {
-			if (job instanceof FTPJob){
-				((FTPJob)job).setChkvar(false);
-				job.cancel();
-			}
-		}
-		return super.preShutdown();
 	}
 
 	public String getInitialWindowPerspectiveId() {

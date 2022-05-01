@@ -724,6 +724,7 @@ public class WinkhouseUtils {
 			immobileSearchGetters.add(new ObjectSearchGetters(18,")",")","",""));
 			immobileSearchGetters.add(new ObjectSearchGetters(19,"getCodClasseEnergetica","classe energetica","CODCLASSEENERGETICA",""));
 			immobileSearchGetters.add(new ObjectSearchGetters(20,"getIndirizzo","indirizzo","INDIRIZZO",""));
+			immobileSearchGetters.add(new ObjectSearchGetters(21,"getCodImmobile","Codice immobile","CODIMMOBILE",""));
 			addCampiPersonalizzatiOSG(immobileSearchGetters, ImmobiliVO.class.getName(), 21);
 		}
 		return immobileSearchGetters;
@@ -765,15 +766,15 @@ public class WinkhouseUtils {
 			immobileReportSearchGetters.add(new ObjectSearchGetters(31,"getAllegati","Lista allegati","",WinkhouseUtils.ALLEGATIIMMOBILE));
 			immobileReportSearchGetters.add(new ObjectSearchGetters(32,"getColloquiVisiteReport","Lista colloqui","",WinkhouseUtils.COLLOQUI));
 			immobileReportSearchGetters.add(new ObjectSearchGetters(33,"getAnagraficheAbbinate","Lista anagrafiche abbinate","",WinkhouseUtils.ABBINAMENTI));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(34,"getNomeCognomeAnagrafica","nome cognome anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(35,"getCittaAnagrafica","citta anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(36,"getIndirizzoAnagrafica","indirizzo anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(37,"getPrimoRecapitoAnagrafica","primo recapito anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(38,"getSecondoRecapitoAnagrafica","secondo recapito anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(39,"getCodiceFiscaleAnagrafica","codice fiscale anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(40,"getPartitaIvaAnagrafica","partita iva anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(41,"getCapAnagrafica","cap anagrafica propietario","",""));
-			immobileReportSearchGetters.add(new ObjectSearchGetters(42,"getProvinciaAnagrafica","provincia anagrafica propietario","",""));			
+			immobileReportSearchGetters.add(new ObjectSearchGetters(34,"getNomeCognomeAnagrafica","nome cognome anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(35,"getCittaAnagrafica","citta anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(36,"getIndirizzoAnagrafica","indirizzo anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(37,"getPrimoRecapitoAnagrafica","primo recapito anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(38,"getSecondoRecapitoAnagrafica","secondo recapito anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(39,"getCodiceFiscaleAnagrafica","codice fiscale anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(40,"getPartitaIvaAnagrafica","partita iva anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(41,"getCapAnagrafica","cap anagrafica proprietario","",""));
+			immobileReportSearchGetters.add(new ObjectSearchGetters(42,"getProvinciaAnagrafica","provincia anagrafica proprietario","",""));			
 			immobileReportSearchGetters.add(new ObjectSearchGetters(43,"getDatiCatastali","dati catastali","",WinkhouseUtils.DATICATASTALI));
 			immobileReportSearchGetters.add(new ObjectSearchGetters(44,"getCodClasseEnergetica","codice classe energetica","CODCLASSEENERGETICA",""));
 			immobileReportSearchGetters.add(new ObjectSearchGetters(45,"getClasseEnergetica","classe energetica","",WinkhouseUtils.CLASSIENERGETICHE));
@@ -1006,8 +1007,9 @@ public class WinkhouseUtils {
 			anagraficheReportSearchGetters.add(new ObjectSearchGetters(14,"getContatti","Lista contatti","",WinkhouseUtils.CONTATTI));
 			anagraficheReportSearchGetters.add(new ObjectSearchGetters(15,"getRagioneSociale","ragione sociale","RAGSOC",""));
 			anagraficheReportSearchGetters.add(new ObjectSearchGetters(16,"getColloquiReport","Lista colloqui","",WinkhouseUtils.COLLOQUI));
-			anagraficheReportSearchGetters.add(new ObjectSearchGetters(17,"getImmobili","Lista immobili propieta","",WinkhouseUtils.IMMOBILI));
+			anagraficheReportSearchGetters.add(new ObjectSearchGetters(17,"getImmobili","Lista immobili proprieta","",WinkhouseUtils.IMMOBILI));
 			anagraficheReportSearchGetters.add(new ObjectSearchGetters(18,"getAbbinamenti","Lista immobili abbinati","",WinkhouseUtils.ABBINAMENTI));
+			
 			addCampiPersonalizzatiOSG(anagraficheReportSearchGetters, AnagraficheVO.class.getName(), 19);
 		}
 		return anagraficheReportSearchGetters;
@@ -1035,6 +1037,7 @@ public class WinkhouseUtils {
 			anagraficheSearchGetters.add(new ObjectSearchGetters(17,")",")","",""));
 			anagraficheSearchGetters.add(new ObjectSearchGetters(18,"getCodiceFiscale","Codice fiscale","CODICEFISCALE",""));
 			anagraficheSearchGetters.add(new ObjectSearchGetters(19,"getPartitaIva","Partita iva","PIVA",""));
+			anagraficheSearchGetters.add(new ObjectSearchGetters(21,"getCodAnagrafica","Codice anagrafica","CODANAGRAFICA",""));
 			addCampiPersonalizzatiOSG(anagraficheSearchGetters, AnagraficheVO.class.getName(), 20);
 		}
 		return anagraficheSearchGetters;
@@ -1110,7 +1113,7 @@ public class WinkhouseUtils {
 			contattiSearchGetters = new ArrayList<ObjectSearchGetters>();
 			contattiSearchGetters.add(new ObjectSearchGetters(1,"getContatto","Contatto","",""));
 			contattiSearchGetters.add(new ObjectSearchGetters(2,"getDesTipologiaContatto","Tipologia contatto","",""));
-			contattiSearchGetters.add(new ObjectSearchGetters(3,"getDescrizionePropietario","Propietario contatto","",""));
+			contattiSearchGetters.add(new ObjectSearchGetters(3,"getDescrizioneproprietario","Proprietario contatto","",""));
 			contattiSearchGetters.add(new ObjectSearchGetters(4,"(","(","",""));
 			contattiSearchGetters.add(new ObjectSearchGetters(5,")",")","",""));
 		}
@@ -1906,7 +1909,7 @@ public class WinkhouseUtils {
 			immagineSearchGetters = new ArrayList<ObjectSearchGetters>();
 			immagineSearchGetters.add(new ObjectSearchGetters(1,"getCodImmagine","Codice immagine","",""));
 			immagineSearchGetters.add(new ObjectSearchGetters(2,"getCodImmobile","Codice immobile","",""));
-			immagineSearchGetters.add(new ObjectSearchGetters(3,"getImgPropsStr","Propieta immagine","",""));
+			immagineSearchGetters.add(new ObjectSearchGetters(3,"getImgPropsStr","Proprieta immagine","",""));
 			immagineSearchGetters.add(new ObjectSearchGetters(4,"getOrdine","ordine","",""));
 			immagineSearchGetters.add(new ObjectSearchGetters(5,"getPathImmagine","Nome immagine","",""));
 		}
@@ -1918,7 +1921,7 @@ public class WinkhouseUtils {
 			immagineReportSearchGetters = new ArrayList<ObjectSearchGetters>();
 			immagineReportSearchGetters.add(new ObjectSearchGetters(1,"getCodImmagine","Codice immagine","",""));
 			immagineReportSearchGetters.add(new ObjectSearchGetters(2,"getCodImmobile","Codice immobile","",""));
-			immagineReportSearchGetters.add(new ObjectSearchGetters(3,"getImgPropsStr","Propieta immagine","",""));
+			immagineReportSearchGetters.add(new ObjectSearchGetters(3,"getImgPropsStr","Proprieta immagine","",""));
 			immagineReportSearchGetters.add(new ObjectSearchGetters(4,"getOrdine","ordine","",""));
 			immagineReportSearchGetters.add(new ObjectSearchGetters(5,"getPathImmagine","Nome immagine","",""));
 		}		
@@ -2003,7 +2006,7 @@ public class WinkhouseUtils {
 			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(6,"getRifImmobile","riferimento immobile","",""));
 			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(7,"getCittaImmobile","citta immobile","",""));
 			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(8,"getIndirizzoImmobile","indirizzo immobile","",""));
-			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(9,"getNomeCognomePropietarioImmobile","nome e cognome propietario immobile","",""));
+			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(9,"getNomeCognomeproprietarioImmobile","nome e cognome proprietario immobile","",""));
 			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(10,"getNomeCognomeAnagrafica","nome e cognome anagrafica","",""));
 			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(11,"getRagioneSocialeAnagrafica","ragione sociale anagrafica","",""));
 			abbinamentiReportSearchGetters.add(new ObjectSearchGetters(12,"getIndirizzoAnagrafica","indirizzo anagrafica","",""));
@@ -2815,9 +2818,9 @@ public class WinkhouseUtils {
     		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/calendario.png").createImage(), "Calendario appuntamenti", CalendarioView.ID));
     		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/korgac.png").createImage(), "Dettaglio appuntamento", DettaglioAppuntamentoView.ID));
     		
-    		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/anagrafica.png").createImage(), "Anagrafiche propietarie", AnagrafichePropietarieView.ID));
+    		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/anagrafica.png").createImage(), "Anagrafiche proprietarie", AnagrafichePropietarieView.ID));
     		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/anagraficheabbinate.png").createImage(), "Abbinamenti", AbbinamentiView.ID));    		
-    		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/immobile.png").createImage(), "Immobili propieta", ImmobiliPropietaView.ID));
+    		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/immobile.png").createImage(), "Immobili proprieta", ImmobiliPropietaView.ID));
     		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/affitti.png").createImage(), "Lista affitti", ListaAffittiView.ID));
     		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/affitti20.png").createImage(), "Dettaglio affitto", DettaglioAffittiView.ID));
     		viewInfo.add(new ViewInfo(Activator.getImageDescriptor("icons/campi_personali20.png").createImage(), "Campi personali", EAVView.ID));

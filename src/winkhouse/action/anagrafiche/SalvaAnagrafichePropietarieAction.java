@@ -50,7 +50,7 @@ public class SalvaAnagrafichePropietarieAction extends Action {
 			
 		}else{
 			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-									  "Salvataggio anagrafiche propietarie",
+									  "Salvataggio anagrafiche proprietarie",
 									  "Eseguire il salvataggio dell'immobile");
 		}
 		

@@ -1,5 +1,6 @@
 package winkhouse.xmldeser.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -579,5 +580,39 @@ public class ElementFileLoader implements IRunnableWithProgress {
 		return returnValue;
 		
 	}
+	
+	private ArrayList loadFromString(String importString,String xmlTag,Class classToDeserialize){
+		
+		ArrayList returnValue = null;
+		XMLObjectReader xmlor = null;
+		try {
+			xmlor = XMLObjectReader.newInstance(new ByteArrayInputStream(importString.getBytes()));
+			returnValue = new ArrayList();
+			while (xmlor.hasNext()){
+				
+				Object o = xmlor.read(xmlTag, classToDeserialize);
+				returnValue.add(o);
+				
+			}
+			
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (xmlor != null){
+				try {
+					xmlor.close();
+				} catch (XMLStreamException e) {
+					e.printStackTrace();
+				}	
+			}
+		}
+
+		
+		return returnValue;
+		
+	}
+	
 
 }

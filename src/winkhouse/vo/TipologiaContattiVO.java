@@ -3,7 +3,12 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Tipologiecontatti;
 
 public class TipologiaContattiVO implements Serializable{
 
@@ -25,6 +30,16 @@ public class TipologiaContattiVO implements Serializable{
 		}
 		
 		dateUpdate = rs.getTimestamp("DATEUPDATE");		
+
+	}
+
+	public TipologiaContattiVO(Tipologiecontatti rs){
+		codTipologiaContatto = (int) Cayenne.longPKForObject(rs);
+		descrizione = rs.getDescrizione();	
+		codUserUpdate = (rs.getAgenti() != null)?(int) Cayenne.longPKForObject(rs):null;
+		
+		dateUpdate = (rs.getDateupdate() != null)?java.util.Date.from(rs.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;
 
 	}
 	

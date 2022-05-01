@@ -161,12 +161,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 		gdExpH2.verticalAlignment = SWT.FILL;
 		gdExpH2.minimumHeight = 15;
 		gdExpH2.horizontalSpan = 2;
-		/*
-		section.setLayout(new GridLayout());
-		section.setLayoutData(gdExpVH);
-		section.setText("Anagrafica");
-		section.setDescription("anagrafica propietario immobile");
-		 */
+
 		Composite canagraficaimmobile = ft.createComposite(f.getBody());
 		canagraficaimmobile.setLayoutData(gdExpVH);
 		GridLayout gl = new GridLayout();

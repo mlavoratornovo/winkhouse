@@ -3,7 +3,12 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Statoconservativo;
 
 public class StatoConservativoVO implements Serializable{
 
@@ -28,6 +33,15 @@ public class StatoConservativoVO implements Serializable{
 		
 	}
 
+	public StatoConservativoVO(Statoconservativo rs){
+		codStatoConservativo = (int) Cayenne.longPKForObject(rs);
+		descrizione = rs.getDescrizione();	
+		codUserUpdate = (rs.getAgenti() != null)?(int) Cayenne.longPKForObject(rs):null;
+		
+		dateUpdate = (rs.getDateupdate() != null)?java.util.Date.from(rs.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;		
+	}
+	
 	public Integer getCodStatoConservativo() {
 		return codStatoConservativo;
 	}

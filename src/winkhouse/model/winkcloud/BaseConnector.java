@@ -2,6 +2,8 @@ package winkhouse.model.winkcloud;
 
 public class BaseConnector {
 	
+	public BaseConnector(){}
+	
 	public String getUrl() {
 		return url;
 	}

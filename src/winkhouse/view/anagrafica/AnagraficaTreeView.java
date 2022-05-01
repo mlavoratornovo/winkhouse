@@ -65,7 +65,7 @@ public class AnagraficaTreeView extends ViewPart
 		
 		mgr.add(new OrdinaAnagraficheAction("Ordina anagrafiche", Action.AS_CHECK_BOX));
 		mgr.add(new FiltraAnagraficheAction("Attiva filtro anagrafiche", Action.AS_CHECK_BOX));
-		mgr.add(new ChangeAnagraficheFilterAction("Visualizza solo i propietari", Action.AS_CHECK_BOX));
+		mgr.add(new ChangeAnagraficheFilterAction("Visualizza solo i proprietari", Action.AS_CHECK_BOX));
 		mgr.add(new RefreshAnagraficheAction("Ricarica anagrafiche", 
 				  Activator.getImageDescriptor("/icons/adept_reinstall.png")));
 

@@ -4,7 +4,6 @@ import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 
-import winkhouse.view.winkcloud.MonitorsTreeView;
 import winkhouse.view.winkcloud.QueryFilesView;
 import winkhouse.view.winkcloud.ResultsView;
 
@@ -16,12 +15,12 @@ public class CloudPerspective implements IPerspectiveFactory {
 	public void createInitialLayout(IPageLayout layout) {
 		String editorArea = layout.getEditorArea();
 		layout.setEditorAreaVisible(false);		
-		IFolderLayout flmonitorcartelle = layout.createFolder("monitorcartelle", IPageLayout.LEFT, 0.20f, editorArea);
-		flmonitorcartelle.addView(MonitorsTreeView.ID);
-		layout.getViewLayout(MonitorsTreeView.ID).setCloseable(false);
-		layout.getViewLayout(MonitorsTreeView.ID).setMoveable(false);
+//		IFolderLayout flmonitorcartelle = layout.createFolder("monitorcartelle", IPageLayout.LEFT, 0.20f, editorArea);
+//		flmonitorcartelle.addView(MonitorsTreeView.ID);
+//		layout.getViewLayout(MonitorsTreeView.ID).setCloseable(false);
+//		layout.getViewLayout(MonitorsTreeView.ID).setMoveable(false);
 		
-		IFolderLayout fldettagliomonitor = layout.createFolder("dettagliomonitor", IPageLayout.RIGHT, 0.25f, MonitorsTreeView.ID);
+		IFolderLayout fldettagliomonitor = layout.createFolder("dettagliomonitor", IPageLayout.TOP, 0.25f, editorArea);
 		fldettagliomonitor.addView(QueryFilesView.ID);
 		layout.getViewLayout(QueryFilesView.ID).setCloseable(false);
 		layout.getViewLayout(QueryFilesView.ID).setMoveable(false);

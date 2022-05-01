@@ -46,14 +46,8 @@ public class CloudQueryModel {
 		this.type = type;
 	}
 	
-	public String getTypeDescription(){
-		if (this.type == CloudQueryOrigin.MOBILE){
-			return "winkhouse android";
-		}
-		if (this.type == CloudQueryOrigin.DESKTOP){
-			return "winkhouse";
-		}
-		return null;
+	public String getTypeDescription(){		
+		return this.type.toString();
 	}
 	
 	public ArrayList getResults() {
@@ -87,7 +81,7 @@ public class CloudQueryModel {
 	
 	public String getDescrizioneQuery() {
 		if (descrizioneQuery == null){
-			if (getCriteri() != null & getCriteri().size() > 0){
+			if (getCriteri() != null && getCriteri().size() > 0){
 				descrizioneQuery = "";
 				for (CriteriRicercaModel crm : getCriteri()) {
 					descrizioneQuery += crm.toString() + " ";

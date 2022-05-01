@@ -3,6 +3,7 @@ package winkhouse;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.apache.cayenne.ObjectContext;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.action.ICoolBarManager;
@@ -16,6 +17,7 @@ import org.eclipse.ui.internal.WorkbenchWindow;
 
 import winkhouse.dao.AgentiDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.dialogs.custom.LoggedUser;
 import winkhouse.dialogs.custom.LoginDialog;
 import winkhouse.util.IWinkSysProperties;
@@ -36,6 +38,8 @@ public class Application implements IApplication {
 		
 		Locale.setDefault(Locale.ITALIAN);
 		Display display = PlatformUI.createDisplay();
+		
+		ObjectContext c = CayenneContextManager.getInstance().getContext();
 		
 		if (ConnectionManager.getInstance().getConnectionSelectConnection() != null){
 			

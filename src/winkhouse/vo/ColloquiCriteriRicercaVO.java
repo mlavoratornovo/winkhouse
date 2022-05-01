@@ -12,7 +12,7 @@ import winkhouse.util.WinkhouseUtils.ObjectSearchGetters;
 public class ColloquiCriteriRicercaVO implements Serializable{
 	
 	/**
-	 * La classe rappresenta una condizione di ricerca da passare alle funzioni di ricerca per propietà
+	 * La classe rappresenta una condizione di ricerca da passare alle funzioni di ricerca per proprietà
 	 * La classe può essere serializzata nella tabella COLLOQUICRITERIRICERCA
 	 */
 	
@@ -151,14 +151,22 @@ public class ColloquiCriteriRicercaVO implements Serializable{
 	public String toString() {
 		String returnValue = "";
 		ObjectSearchGetters osg = WinkhouseUtils.getInstance()
-												  .findObjectSearchGettersByMethodName(this.getterMethodName, 
-														  							   WinkhouseUtils.IMMOBILI, WinkhouseUtils.FUNCTION_SEARCH);
+												.findObjectSearchGettersByMethodName(this.getterMethodName, 
+														  							 WinkhouseUtils.IMMOBILI,
+														  							 WinkhouseUtils.FUNCTION_SEARCH);
+		if (osg == null){
+			osg = WinkhouseUtils.getInstance()
+					  			.findObjectSearchGettersByMethodName(this.getterMethodName, 
+							  							   			 WinkhouseUtils.ANAGRAFICHE, 
+							  							   			 WinkhouseUtils.FUNCTION_SEARCH);
+
+		}
 		if (osg != null){
 			returnValue += osg.getDescrizione() + " da : " + 
 						   this.getFromValue() + " a : " + 
 						   this.getToValue(); 
 		}else{
-			returnValue += " da : " + this.getFromValue() + " a : " + 
+			returnValue += this.getterMethodName + " da : " + this.getFromValue() + " a : " + 
 						   this.getToValue(); 
 		}
 		

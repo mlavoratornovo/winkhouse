@@ -3,7 +3,14 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Immobili;
 
 /**
  * Classe VO che rappresenta una riga della tabella IMMOBILI
@@ -134,6 +141,44 @@ public class ImmobiliVO implements Serializable{
 		dateUpdate = rs.getTimestamp("DATEUPDATE");		
 
 	}	
+	
+	public ImmobiliVO(Immobili rs) {
+		LocalDateTime now = LocalDateTime.now();
+		ZoneId zone = ZoneId.of("Europe/Berlin");
+		ZoneOffset zoneOffSet = zone.getRules().getOffset(now);
+		
+		codImmobile = Cayenne.intPKForObject(rs);
+		rif = rs.getRif();
+		indirizzo = rs.getIndirizzo();
+		ncivico = rs.getNcivico();
+		provincia = rs.getProvincia();
+		cap = rs.getCap();
+		citta = rs.getCitta();
+		zona = rs.getZona();	
+		dataInserimento = (rs.getDatainserimento() != null)?java.util.Date.from(rs.getDatainserimento().atStartOfDay().toInstant(zoneOffSet)):null;
+		dataLibero = (rs.getDatalibero() != null)?java.util.Date.from(rs.getDatalibero().atStartOfDay().toInstant(zoneOffSet)):null;
+		descrizione = rs.getDescrizione();
+		mutuoDescrizione = rs.getMutuodescrizione();
+		prezzo = rs.getPrezzo();
+		mutuo = rs.getMutuo();
+		spese = rs.getSpese();
+		varie = rs.getVarie();
+		visione = rs.isVisione();
+		storico = rs.isStorico();
+		affittabile = rs.isAffitto();
+		mq = rs.getMq();
+		annoCostruzione = rs.getAnnocostruzione();
+		codAgenteInseritore = (rs.getAgenti() != null)?Cayenne.intPKForObject (rs.getAgenti()):null;	
+		codAnagrafica = (rs.getAnagrafiche() != null)?Cayenne.intPKForObject (rs.getAnagrafiche()):null;		
+		codRiscaldamento = (rs.getRiscaldamenti() != null)?Cayenne.intPKForObject (rs.getRiscaldamenti()):null;		
+		codStato = (rs.getStatoconservativo() != null)?Cayenne.intPKForObject (rs.getStatoconservativo()):null;	
+		codTipologia = (rs.getTipologieimmobili() != null)?Cayenne.intPKForObject (rs.getTipologieimmobili()):null;
+		codClasseEnergetica = (rs.getClassienergetiche() != null)?Cayenne.intPKForObject (rs.getClassienergetiche()):null;
+		codUserUpdate = (rs.getAgenti() != null)?(int) Cayenne.longPKForObject (rs.getAgenti()):null;
+		dateUpdate = (rs.getDateupdate() != null)?java.util.Date.from(rs.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;
+
+	}
 	
 	public Integer getCodImmobile() {
 		return codImmobile;

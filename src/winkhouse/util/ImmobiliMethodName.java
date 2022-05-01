@@ -3,6 +3,7 @@ package winkhouse.util;
 
 public interface ImmobiliMethodName {
 	
+	public String GET_CODIMMOBILE = "getCodImmobile";
 	public String GET_MQ = "getMq";
 	public String GET_NUMEROSTANZE = "getNumeroStanze";
 	public String GET_PREZZO = "getPrezzo";

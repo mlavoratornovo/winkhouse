@@ -126,7 +126,7 @@ public class ImmobiliHelper {
 	}
 	
 	/**
-	 * Ritorna la lista degli immobili di propieta dell'anagrafica passata in input tramite il codice.
+	 * Ritorna la lista degli immobili di proprieta dell'anagrafica passata in input tramite il codice.
 	 * @param codAnagrafica
 	 * @return ArrayList<ImmobiliModel>
 	 */
@@ -190,7 +190,7 @@ public class ImmobiliHelper {
 	}
 	
 	/**
-	 * Ritorna la lista degli immobili che hanno come tipologia (appartamento,villa,ecc...) quella passata in input tramite il codice e che hanno la propietà
+	 * Ritorna la lista degli immobili che hanno come tipologia (appartamento,villa,ecc...) quella passata in input tramite il codice e che hanno la proprietà
 	 * affittabile == True.
 	 * @param codStatoConservativo
 	 * @return ArrayList<ImmobiliModel>

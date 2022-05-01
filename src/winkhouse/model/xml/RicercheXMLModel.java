@@ -50,7 +50,7 @@ public class RicercheXMLModel extends RicercheModel {
 	public void start(){
 		
 		if (this.ricercaJob == null){
-			this.ricercaJob = new HTTPRicercaJob(monitor.getConnector().getCode() + "_" + this.toString(), 
+			this.ricercaJob = new HTTPRicercaJob(monitor.getConnector().getPort().toString() + "_" + this.toString(), 
 												 monitor.getPollingIntervall(), 
 												 this);
 			this.ricercaJob.schedule();

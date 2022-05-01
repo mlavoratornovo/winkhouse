@@ -139,7 +139,8 @@ public class QueryBuilder {
 			    		}else{
 			    			if (
 			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODAGENTEINSERITORE)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODCLASSECLIENTE))
+			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODCLASSECLIENTE)) ||
+			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODANAGRAFICA))
 			    				){
 			    				
 		    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromValue(); 
@@ -490,7 +491,7 @@ public class QueryBuilder {
 			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_PROVINCIA)) ||
 			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAP)) || 
 			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RIF)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_INDIRIZZO)) 
+			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_INDIRIZZO))			    				
 			    			){
 			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromValue().replace("'", "''").toLowerCase() + "%'" ;
 			    		}else{
@@ -500,7 +501,8 @@ public class QueryBuilder {
 			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODSTATO)) ||
 			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODTIPOLOGIA)) ||
 			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODCLASSEENERGETICA)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.MTIPOLOGIASTANZA))
+			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.MTIPOLOGIASTANZA)) ||
+			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.GET_CODIMMOBILE))
 			    				){
 			    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromValue();
 			    				

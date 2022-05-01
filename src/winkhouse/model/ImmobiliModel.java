@@ -22,6 +22,7 @@ import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.engine.search.AnagraficheSearchEngine;
 import winkhouse.engine.search.ImmobiliSearchEngine;
 import winkhouse.helper.ProfilerHelper;
+import winkhouse.orm.Immobili;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.AllegatiImmobiliVO;
@@ -100,11 +101,16 @@ public class ImmobiliModel extends ImmobiliVO implements IEntityAttribute{
 		setVisione(iVO.getVisione());
 		setZona(iVO.getZona());
 		setRif(iVO.getRif());
-		setCodClasseEnergetica(iVO.getCodClasseEnergetica());
+		setCodClasseEnergetica(iVO.getCodClasseEnergetica());		
 	}	
 
 	public ImmobiliModel(ResultSet rs) throws SQLException {
+		super(rs);		
+	}
+	
+	public ImmobiliModel(Immobili rs){
 		super(rs);
+		this.getStanze();
 	}
 
 	public AgentiVO getAgenteInseritore() {
@@ -552,5 +558,19 @@ public class ImmobiliModel extends ImmobiliVO implements IEntityAttribute{
 		
 		return returnValue;
 		
+	}
+	
+	public void resolveDepedencies(){
+		getAgenteInseritore();
+//		getAnagrafica();
+		getAnagrafichePropietarie();
+//		getAttributes();
+		getClasseEnergetica();
+//		getColloqui();
+		getDatiCatastali();
+		getImmagini();
+		getRiscaldamento();
+		getStanze();
+		getStatoConservativo();
 	}
 }

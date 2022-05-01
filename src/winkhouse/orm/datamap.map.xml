@@ -1,0 +1,1620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/10/modelMap"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://cayenne.apache.org/schema/10/modelMap https://cayenne.apache.org/schema/10/modelMap.xsd"
+	 project-version="10">	
+	<db-entity name="ABBINAMENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODABBINAMENTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+	</db-entity>
+	<db-entity name="AFFITTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CAUZIONE" type="DOUBLE" length="64"/>
+		<db-attribute name="CODAFFITTI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAGENTEINS" type="INTEGER" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATAFINE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATAINIZIO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="RATA" type="DOUBLE" length="64"/>
+	</db-entity>
+	<db-entity name="AFFITTIALLEGATI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAFFITTIALLEGATI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAFFITTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="AFFITTIANAGRAFICHE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAFFITTIANAGRAFICHE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAFFITTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="NOTA" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="AFFITTIRATE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAFFITTIRATE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAFFITTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODPARENT" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATAPAGATO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="IMPORTO" type="DOUBLE" length="64"/>
+		<db-attribute name="MESE" type="INTEGER" length="32"/>
+		<db-attribute name="NOTA" type="VARCHAR" length="1048576"/>
+		<db-attribute name="SCADENZA" type="TIMESTAMP" length="26"/>
+	</db-entity>
+	<db-entity name="AFFITTISPESE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAFFITTISPESE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAFFITTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODPARENT" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATAFINE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATAINIZIO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATAPAGATO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="IMPORTO" type="DOUBLE" length="64"/>
+		<db-attribute name="SCADENZA" type="TIMESTAMP" length="26"/>
+		<db-attribute name="VERSATO" type="DOUBLE" length="64"/>
+	</db-entity>
+	<db-entity name="AGENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CAP" type="VARCHAR" length="255"/>
+		<db-attribute name="CITTA" type="VARCHAR" length="255"/>
+		<db-attribute name="CODAGENTE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="COGNOME" type="VARCHAR" length="255"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="INDIRIZZO" type="VARCHAR" length="255"/>
+		<db-attribute name="ISADMIN" type="BOOLEAN"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+		<db-attribute name="PASSWORD" type="VARCHAR" length="255"/>
+		<db-attribute name="PROVINCIA" type="VARCHAR" length="255"/>
+		<db-attribute name="USERNAME" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="AGENTIAPPUNTAMENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODAGENTIAPPUNTAMENTI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAPPUNTAMENTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="NOTE" type="VARCHAR" length="1048576"/>
+	</db-entity>
+	<db-entity name="ALLEGATICOLLOQUIO" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODALLEGATICOLLOQUIO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODCOLLOQUIO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="COMMENTO" type="VARCHAR" length="1048576"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="ALLEGATIIMMOBILI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODALLEGATIIMMOBILI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="COMMENTO" type="VARCHAR" length="1048576"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="ANAGRAFICHE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CAP" type="VARCHAR" length="255"/>
+		<db-attribute name="CITTA" type="VARCHAR" length="255"/>
+		<db-attribute name="CODAGENTEINSERITORE" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODCLASSECLIENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODICEFISCALE" type="VARCHAR" length="255"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="COGNOME" type="VARCHAR" length="255"/>
+		<db-attribute name="COMMENTO" type="VARCHAR" length="1048576"/>
+		<db-attribute name="DATAINSERIMENTO" type="DATE" length="10"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="INDIRIZZO" type="VARCHAR" length="255"/>
+		<db-attribute name="NCIVICO" type="VARCHAR" length="100"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+		<db-attribute name="PIVA" type="VARCHAR" length="255"/>
+		<db-attribute name="PROVINCIA" type="VARCHAR" length="255"/>
+		<db-attribute name="RAGSOC" type="VARCHAR" length="255"/>
+		<db-attribute name="STORICO" type="BOOLEAN"/>
+	</db-entity>
+	<db-entity name="ANAGRAFICHEAPPUNTAMENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICHEAPPUNTAMENTI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODAPPUNTAMENTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="NOTE" type="VARCHAR" length="1048576"/>
+	</db-entity>
+	<db-entity name="APPUNTAMENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAPPUNTAMENTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODPADRE" type="INTEGER" length="32"/>
+		<db-attribute name="CODTIPOAPPUNTAMENTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATAAPPUNTAMENTO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATAFINEAPPUNTAMENTO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATAINSERIMENTO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="ICALUID" type="VARCHAR" length="255"/>
+		<db-attribute name="LUOGO" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="ATTRIBUTE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="ATTRIBUTENAME" type="VARCHAR" length="255"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="ENUMFIELDVALUES" type="VARCHAR" length="16777216"/>
+		<db-attribute name="FIELDTYPE" type="VARCHAR" length="255"/>
+		<db-attribute name="IDATTRIBUTE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="IDCLASSENTITY" type="INTEGER" length="32"/>
+		<db-attribute name="LINKEDIDENTITY" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="ATTRIBUTEVALUE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="FIELDVALUE" type="VARCHAR" length="255"/>
+		<db-attribute name="IDFIELD" type="INTEGER" length="32"/>
+		<db-attribute name="IDOBJECT" type="INTEGER" length="32"/>
+		<db-attribute name="IDVALUE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+	</db-entity>
+	<db-entity name="CLASSICLIENTE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODCLASSECLIENTE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="ORDINE" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="CLASSIENERGETICHE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODCLASSEENERGETICA" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+		<db-attribute name="ORDINE" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="COLLOQUI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAGENTEINSERITORE" type="INTEGER" length="32"/>
+		<db-attribute name="CODCOLLOQUIO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODIMMOBILEABBINATO" type="INTEGER" length="32"/>
+		<db-attribute name="CODPARENT" type="INTEGER" length="32"/>
+		<db-attribute name="CODTIPOLOGIACOLLOQUIO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="COMMENTOAGENZIA" type="VARCHAR" length="1048576"/>
+		<db-attribute name="COMMENTOCLIENTE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="DATACOLLOQUIO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATAINSERIMENTO" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="ICALUID" type="VARCHAR" length="255"/>
+		<db-attribute name="LUOGO" type="VARCHAR" length="255"/>
+		<db-attribute name="SCADENZIERE" type="BOOLEAN"/>
+	</db-entity>
+	<db-entity name="COLLOQUIAGENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODCOLLOQUIO" type="INTEGER" length="32"/>
+		<db-attribute name="CODCOLLOQUIOAGENTE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="COMMENTO" type="VARCHAR" length="1048576"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+	</db-entity>
+	<db-entity name="COLLOQUIANAGRAFICHE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODCOLLOQUIANAGRAFICHE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODCOLLOQUIO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="COLLOQUICRITERIRICERCA" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODCOLLOQUIO" type="INTEGER" length="32"/>
+		<db-attribute name="CODCRITERIORICERCA" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODRICERCA" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="FROMVALUE" type="VARCHAR" length="255"/>
+		<db-attribute name="GETTERMETHODNAME" type="VARCHAR" length="255"/>
+		<db-attribute name="ISPERSONAL" type="BOOLEAN"/>
+		<db-attribute name="LOGICALOPERATOR" type="VARCHAR" length="255"/>
+		<db-attribute name="TOVALUE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="COMUNI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="ABITANTI" type="INTEGER" length="32"/>
+		<db-attribute name="CAP" type="VARCHAR" length="255"/>
+		<db-attribute name="CODCOMUNE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODFISCO" type="VARCHAR" length="255"/>
+		<db-attribute name="CODISTAT" type="VARCHAR" length="255"/>
+		<db-attribute name="COMUNE" type="VARCHAR" length="255"/>
+		<db-attribute name="LINK" type="VARCHAR" length="255"/>
+		<db-attribute name="PREFISSO" type="VARCHAR" length="255"/>
+		<db-attribute name="PROVINCIA" type="VARCHAR" length="255"/>
+		<db-attribute name="REGIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="CONTATTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODCONTATTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODTIPOLOGIACONTATTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="CONTATTO" type="VARCHAR" length="255"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="DATICATASTALI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CATEGORIA" type="VARCHAR" length="255"/>
+		<db-attribute name="CODDATICATASTALI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DIMENSIONE" type="DOUBLE" length="64"/>
+		<db-attribute name="FOGLIO" type="VARCHAR" length="255"/>
+		<db-attribute name="PARTICELLA" type="VARCHAR" length="255"/>
+		<db-attribute name="REDDITOAGRARIO" type="DOUBLE" length="64"/>
+		<db-attribute name="REDDITODOMENICALE" type="DOUBLE" length="64"/>
+		<db-attribute name="RENDITA" type="DOUBLE" length="64"/>
+		<db-attribute name="SUBALTERNO" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="ENTITY" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CLASSNAME" type="VARCHAR" length="255"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIPTION" type="VARCHAR" length="255"/>
+		<db-attribute name="IDCLASSENTITY" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="32"/>
+	</db-entity>
+	<db-entity name="GCALENDAR" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="ALLURL" type="VARCHAR" length="255"/>
+		<db-attribute name="CODGCALENDAR" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODGDATA" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="PRIVATEURL" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="GDATA" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODCONTATTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODGDATA" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="PWSKEY" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="IMMAGINI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODIMMAGINE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="IMGPROPS" type="VARCHAR" length="255"/>
+		<db-attribute name="ORDINE" type="INTEGER" length="32"/>
+		<db-attribute name="PATHIMMAGINE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="IMMOBILI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="AFFITTO" type="BOOLEAN"/>
+		<db-attribute name="ANNOCOSTRUZIONE" type="INTEGER" length="32"/>
+		<db-attribute name="CAP" type="VARCHAR" length="255"/>
+		<db-attribute name="CITTA" type="VARCHAR" length="255"/>
+		<db-attribute name="CODAGENTEINSERITORE" type="INTEGER" length="32"/>
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODCLASSEENERGETICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODRISCALDAMENTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODSTATO" type="INTEGER" length="32"/>
+		<db-attribute name="CODTIPOLOGIA" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATAINSERIMENTO" type="DATE" length="10"/>
+		<db-attribute name="DATALIBERO" type="DATE" length="10"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="INDIRIZZO" type="VARCHAR" length="255"/>
+		<db-attribute name="MQ" type="INTEGER" length="32"/>
+		<db-attribute name="MUTUO" type="DOUBLE" length="64"/>
+		<db-attribute name="MUTUODESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="NCIVICO" type="VARCHAR" length="100"/>
+		<db-attribute name="PREZZO" type="DOUBLE" length="64"/>
+		<db-attribute name="PROVINCIA" type="VARCHAR" length="255"/>
+		<db-attribute name="RIF" type="VARCHAR" length="255"/>
+		<db-attribute name="SPESE" type="DOUBLE" length="64"/>
+		<db-attribute name="STORICO" type="BOOLEAN"/>
+		<db-attribute name="VARIE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="VISIONE" type="BOOLEAN"/>
+		<db-attribute name="ZONA" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="IMMOBILIPROPIETARI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="PERMESSI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CANREAD" type="BOOLEAN"/>
+		<db-attribute name="CANWRITE" type="BOOLEAN"/>
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODPERMESSO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODRICERCA" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="ISNOT" type="BOOLEAN"/>
+	</db-entity>
+	<db-entity name="PERMESSIUI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODPERMESSOUI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DIALOGID" type="VARCHAR" length="255"/>
+		<db-attribute name="ISNOT" type="BOOLEAN"/>
+		<db-attribute name="PERSPECTIVEID" type="VARCHAR" length="255"/>
+		<db-attribute name="VIEWID" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="PROMEMORIA" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODPROMEMORIA" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+	</db-entity>
+	<db-entity name="PROMEMORIALINKS" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODPROMEMORIA" type="INTEGER" length="32"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="ISFILE" type="BOOLEAN"/>
+		<db-attribute name="URILINK" type="VARCHAR" length="1048576"/>
+	</db-entity>
+	<db-entity name="PROMEMORIAOGGETTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODOGGETTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODPROMEMORIA" type="INTEGER" length="32"/>
+		<db-attribute name="TIPO" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="REPORT" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODREPORT" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="ISLIST" type="BOOLEAN"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+		<db-attribute name="TEMPLATE" type="VARCHAR" length="255"/>
+		<db-attribute name="TIPO" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="REPORTMARKERS" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODMARKER" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODREPORT" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="GETMETHODNAME" type="VARCHAR" length="255"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+		<db-attribute name="PARAMS" type="VARCHAR" length="255"/>
+		<db-attribute name="PARAMSDESC" type="VARCHAR" length="255"/>
+		<db-attribute name="TIPO" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="RICERCHE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODRICERCA" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
+		<db-attribute name="NOME" type="VARCHAR" length="255"/>
+		<db-attribute name="TIPO" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="RISCALDAMENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODICEFISCALE" type="VARCHAR" length="255"/>
+		<db-attribute name="CODRISCALDAMENTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="PIVA" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="STANZEIMMOBILI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="CODSTANZEIMMOBILI" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODTIPOLOGIASTANZA" type="INTEGER" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="MQ" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="STATOCONSERVATIVO" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODSTATOCONSERVATIVO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="TIPIAPPUNTAMENTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODTIPOAPPUNTAMENTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+		<db-attribute name="GCALCOLOR" type="VARCHAR" length="20"/>
+		<db-attribute name="ORDINE" type="INTEGER" length="32"/>
+	</db-entity>
+	<db-entity name="TIPOLOGIASTANZE" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODTIPOLOGIASTANZE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="TIPOLOGIECOLLOQUI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODTIPOLOGIACOLLOQUIO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="TIPOLOGIECONTATTI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODTIPOLOGIACONTATTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="TIPOLOGIEIMMOBILI" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CODTIPOLOGIAIMMOBILE" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="CODUSERUPDATE" type="INTEGER" length="32"/>
+		<db-attribute name="DATEUPDATE" type="TIMESTAMP" length="26"/>
+		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="WINKGCALENDAR" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="CALENDARID" type="VARCHAR" length="255"/>
+		<db-attribute name="CODAGENTE" type="INTEGER" length="32"/>
+		<db-attribute name="CODAPPUNTAMENTO" type="INTEGER" length="32"/>
+		<db-attribute name="CODCOLLOQUIO" type="INTEGER" length="32"/>
+		<db-attribute name="CODWINKGCALENDAR" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
+		<db-attribute name="EVENTID" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="WINKSYS" schema="PUBLIC" catalog="PUBLIC">
+		<db-attribute name="PROPERTYNAME" type="VARCHAR" isPrimaryKey="true" isMandatory="true" length="255"/>
+		<db-attribute name="PROPERTYVALUE" type="VARCHAR" length="255"/>
+	</db-entity>
+	<obj-entity name="Abbinamenti" className="winkhouse.orm.Abbinamenti" dbEntityName="ABBINAMENTI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+	</obj-entity>
+	<obj-entity name="Affitti" className="winkhouse.orm.Affitti" dbEntityName="AFFITTI">
+		<obj-attribute name="cauzione" type="double" db-attribute-path="CAUZIONE"/>
+		<obj-attribute name="datafine" type="java.time.LocalDateTime" db-attribute-path="DATAFINE"/>
+		<obj-attribute name="datainizio" type="java.time.LocalDateTime" db-attribute-path="DATAINIZIO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="rata" type="double" db-attribute-path="RATA"/>
+	</obj-entity>
+	<obj-entity name="Affittiallegati" className="winkhouse.orm.Affittiallegati" dbEntityName="AFFITTIALLEGATI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+	</obj-entity>
+	<obj-entity name="Affittianagrafiche" className="winkhouse.orm.Affittianagrafiche" dbEntityName="AFFITTIANAGRAFICHE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="nota" type="java.lang.String" db-attribute-path="NOTA"/>
+	</obj-entity>
+	<obj-entity name="Affittirate" className="winkhouse.orm.Affittirate" dbEntityName="AFFITTIRATE">
+		<obj-attribute name="datapagato" type="java.time.LocalDateTime" db-attribute-path="DATAPAGATO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="importo" type="double" db-attribute-path="IMPORTO"/>
+		<obj-attribute name="mese" type="int" db-attribute-path="MESE"/>
+		<obj-attribute name="nota" type="java.lang.String" db-attribute-path="NOTA"/>
+		<obj-attribute name="scadenza" type="java.time.LocalDateTime" db-attribute-path="SCADENZA"/>
+	</obj-entity>
+	<obj-entity name="Affittispese" className="winkhouse.orm.Affittispese" dbEntityName="AFFITTISPESE">
+		<obj-attribute name="datafine" type="java.time.LocalDateTime" db-attribute-path="DATAFINE"/>
+		<obj-attribute name="datainizio" type="java.time.LocalDateTime" db-attribute-path="DATAINIZIO"/>
+		<obj-attribute name="datapagato" type="java.time.LocalDateTime" db-attribute-path="DATAPAGATO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="importo" type="double" db-attribute-path="IMPORTO"/>
+		<obj-attribute name="scadenza" type="java.time.LocalDateTime" db-attribute-path="SCADENZA"/>
+		<obj-attribute name="versato" type="double" db-attribute-path="VERSATO"/>
+	</obj-entity>
+	<obj-entity name="Agenti" className="winkhouse.orm.Agenti" dbEntityName="AGENTI">
+		<obj-attribute name="cap" type="java.lang.String" db-attribute-path="CAP"/>
+		<obj-attribute name="citta" type="java.lang.String" db-attribute-path="CITTA"/>
+		<obj-attribute name="cognome" type="java.lang.String" db-attribute-path="COGNOME"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="indirizzo" type="java.lang.String" db-attribute-path="INDIRIZZO"/>
+		<obj-attribute name="isadmin" type="boolean" db-attribute-path="ISADMIN"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+		<obj-attribute name="password" type="java.lang.String" db-attribute-path="PASSWORD"/>
+		<obj-attribute name="provincia" type="java.lang.String" db-attribute-path="PROVINCIA"/>
+		<obj-attribute name="username" type="java.lang.String" db-attribute-path="USERNAME"/>
+	</obj-entity>
+	<obj-entity name="Agentiappuntamenti" className="winkhouse.orm.Agentiappuntamenti" dbEntityName="AGENTIAPPUNTAMENTI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="note" type="java.lang.String" db-attribute-path="NOTE"/>
+	</obj-entity>
+	<obj-entity name="Allegaticolloquio" className="winkhouse.orm.Allegaticolloquio" dbEntityName="ALLEGATICOLLOQUIO">
+		<obj-attribute name="commento" type="java.lang.String" db-attribute-path="COMMENTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+	</obj-entity>
+	<obj-entity name="Allegatiimmobili" className="winkhouse.orm.Allegatiimmobili" dbEntityName="ALLEGATIIMMOBILI">
+		<obj-attribute name="commento" type="java.lang.String" db-attribute-path="COMMENTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+	</obj-entity>
+	<obj-entity name="Anagrafiche" className="winkhouse.orm.Anagrafiche" dbEntityName="ANAGRAFICHE">
+		<obj-attribute name="cap" type="java.lang.String" db-attribute-path="CAP"/>
+		<obj-attribute name="citta" type="java.lang.String" db-attribute-path="CITTA"/>
+		<obj-attribute name="codicefiscale" type="java.lang.String" db-attribute-path="CODICEFISCALE"/>
+		<obj-attribute name="cognome" type="java.lang.String" db-attribute-path="COGNOME"/>
+		<obj-attribute name="commento" type="java.lang.String" db-attribute-path="COMMENTO"/>
+		<obj-attribute name="datainserimento" type="java.time.LocalDate" db-attribute-path="DATAINSERIMENTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="indirizzo" type="java.lang.String" db-attribute-path="INDIRIZZO"/>
+		<obj-attribute name="ncivico" type="java.lang.String" db-attribute-path="NCIVICO"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+		<obj-attribute name="piva" type="java.lang.String" db-attribute-path="PIVA"/>
+		<obj-attribute name="provincia" type="java.lang.String" db-attribute-path="PROVINCIA"/>
+		<obj-attribute name="ragsoc" type="java.lang.String" db-attribute-path="RAGSOC"/>
+		<obj-attribute name="storico" type="boolean" db-attribute-path="STORICO"/>
+	</obj-entity>
+	<obj-entity name="Anagraficheappuntamenti" className="winkhouse.orm.Anagraficheappuntamenti" dbEntityName="ANAGRAFICHEAPPUNTAMENTI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="note" type="java.lang.String" db-attribute-path="NOTE"/>
+	</obj-entity>
+	<obj-entity name="Appuntamenti" className="winkhouse.orm.Appuntamenti" dbEntityName="APPUNTAMENTI">
+		<obj-attribute name="dataappuntamento" type="java.time.LocalDateTime" db-attribute-path="DATAAPPUNTAMENTO"/>
+		<obj-attribute name="datafineappuntamento" type="java.time.LocalDateTime" db-attribute-path="DATAFINEAPPUNTAMENTO"/>
+		<obj-attribute name="datainserimento" type="java.time.LocalDateTime" db-attribute-path="DATAINSERIMENTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="icaluid" type="java.lang.String" db-attribute-path="ICALUID"/>
+		<obj-attribute name="luogo" type="java.lang.String" db-attribute-path="LUOGO"/>
+	</obj-entity>
+	<obj-entity name="Attribute" className="winkhouse.orm.Attribute" dbEntityName="ATTRIBUTE">
+		<obj-attribute name="attributename" type="java.lang.String" db-attribute-path="ATTRIBUTENAME"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="enumfieldvalues" type="java.lang.String" db-attribute-path="ENUMFIELDVALUES"/>
+		<obj-attribute name="fieldtype" type="java.lang.String" db-attribute-path="FIELDTYPE"/>
+	</obj-entity>
+	<obj-entity name="Attributevalue" className="winkhouse.orm.Attributevalue" dbEntityName="ATTRIBUTEVALUE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="fieldvalue" type="java.lang.String" db-attribute-path="FIELDVALUE"/>
+		<obj-attribute name="idobject" type="int" db-attribute-path="IDOBJECT"/>
+	</obj-entity>
+	<obj-entity name="Classicliente" className="winkhouse.orm.Classicliente" dbEntityName="CLASSICLIENTE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="ordine" type="int" db-attribute-path="ORDINE"/>
+	</obj-entity>
+	<obj-entity name="Classienergetiche" className="winkhouse.orm.Classienergetiche" dbEntityName="CLASSIENERGETICHE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+		<obj-attribute name="ordine" type="int" db-attribute-path="ORDINE"/>
+	</obj-entity>
+	<obj-entity name="Colloqui" className="winkhouse.orm.Colloqui" dbEntityName="COLLOQUI">
+		<obj-attribute name="codtipologiacolloquio" type="int" db-attribute-path="CODTIPOLOGIACOLLOQUIO"/>
+		<obj-attribute name="commentoagenzia" type="java.lang.String" db-attribute-path="COMMENTOAGENZIA"/>
+		<obj-attribute name="commentocliente" type="java.lang.String" db-attribute-path="COMMENTOCLIENTE"/>
+		<obj-attribute name="datacolloquio" type="java.time.LocalDateTime" db-attribute-path="DATACOLLOQUIO"/>
+		<obj-attribute name="datainserimento" type="java.time.LocalDateTime" db-attribute-path="DATAINSERIMENTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="icaluid" type="java.lang.String" db-attribute-path="ICALUID"/>
+		<obj-attribute name="luogo" type="java.lang.String" db-attribute-path="LUOGO"/>
+		<obj-attribute name="scadenziere" type="boolean" db-attribute-path="SCADENZIERE"/>
+	</obj-entity>
+	<obj-entity name="Colloquiagenti" className="winkhouse.orm.Colloquiagenti" dbEntityName="COLLOQUIAGENTI">
+		<obj-attribute name="codcolloquio" type="int" db-attribute-path="CODCOLLOQUIO"/>
+		<obj-attribute name="commento" type="java.lang.String" db-attribute-path="COMMENTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+	</obj-entity>
+	<obj-entity name="Colloquianagrafiche" className="winkhouse.orm.Colloquianagrafiche" dbEntityName="COLLOQUIANAGRAFICHE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Colloquicriteriricerca" className="winkhouse.orm.Colloquicriteriricerca" dbEntityName="COLLOQUICRITERIRICERCA">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="fromvalue" type="java.lang.String" db-attribute-path="FROMVALUE"/>
+		<obj-attribute name="gettermethodname" type="java.lang.String" db-attribute-path="GETTERMETHODNAME"/>
+		<obj-attribute name="ispersonal" type="boolean" db-attribute-path="ISPERSONAL"/>
+		<obj-attribute name="logicaloperator" type="java.lang.String" db-attribute-path="LOGICALOPERATOR"/>
+		<obj-attribute name="tovalue" type="java.lang.String" db-attribute-path="TOVALUE"/>
+	</obj-entity>
+	<obj-entity name="Comuni" className="winkhouse.orm.Comuni" dbEntityName="COMUNI">
+		<obj-attribute name="abitanti" type="int" db-attribute-path="ABITANTI"/>
+		<obj-attribute name="cap" type="java.lang.String" db-attribute-path="CAP"/>
+		<obj-attribute name="codfisco" type="java.lang.String" db-attribute-path="CODFISCO"/>
+		<obj-attribute name="codistat" type="java.lang.String" db-attribute-path="CODISTAT"/>
+		<obj-attribute name="comune" type="java.lang.String" db-attribute-path="COMUNE"/>
+		<obj-attribute name="link" type="java.lang.String" db-attribute-path="LINK"/>
+		<obj-attribute name="prefisso" type="java.lang.String" db-attribute-path="PREFISSO"/>
+		<obj-attribute name="provincia" type="java.lang.String" db-attribute-path="PROVINCIA"/>
+		<obj-attribute name="regione" type="java.lang.String" db-attribute-path="REGIONE"/>
+	</obj-entity>
+	<obj-entity name="Contatti" className="winkhouse.orm.Contatti" dbEntityName="CONTATTI">
+		<obj-attribute name="contatto" type="java.lang.String" db-attribute-path="CONTATTO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Daticatastali" className="winkhouse.orm.Daticatastali" dbEntityName="DATICATASTALI">
+		<obj-attribute name="categoria" type="java.lang.String" db-attribute-path="CATEGORIA"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="dimensione" type="double" db-attribute-path="DIMENSIONE"/>
+		<obj-attribute name="foglio" type="java.lang.String" db-attribute-path="FOGLIO"/>
+		<obj-attribute name="particella" type="java.lang.String" db-attribute-path="PARTICELLA"/>
+		<obj-attribute name="redditoagrario" type="double" db-attribute-path="REDDITOAGRARIO"/>
+		<obj-attribute name="redditodomenicale" type="double" db-attribute-path="REDDITODOMENICALE"/>
+		<obj-attribute name="rendita" type="double" db-attribute-path="RENDITA"/>
+		<obj-attribute name="subalterno" type="java.lang.String" db-attribute-path="SUBALTERNO"/>
+	</obj-entity>
+	<obj-entity name="Entity" className="winkhouse.orm.Entity" dbEntityName="ENTITY">
+		<obj-attribute name="classname" type="java.lang.String" db-attribute-path="CLASSNAME"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="description" type="java.lang.String" db-attribute-path="DESCRIPTION"/>
+	</obj-entity>
+	<obj-entity name="Gcalendar" className="winkhouse.orm.Gcalendar" dbEntityName="GCALENDAR">
+		<obj-attribute name="allurl" type="java.lang.String" db-attribute-path="ALLURL"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="privateurl" type="java.lang.String" db-attribute-path="PRIVATEURL"/>
+	</obj-entity>
+	<obj-entity name="Gdata" className="winkhouse.orm.Gdata" dbEntityName="GDATA">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="pwskey" type="java.lang.String" db-attribute-path="PWSKEY"/>
+	</obj-entity>
+	<obj-entity name="Immagini" className="winkhouse.orm.Immagini" dbEntityName="IMMAGINI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="imgprops" type="java.lang.String" db-attribute-path="IMGPROPS"/>
+		<obj-attribute name="ordine" type="int" db-attribute-path="ORDINE"/>
+		<obj-attribute name="pathimmagine" type="java.lang.String" db-attribute-path="PATHIMMAGINE"/>
+	</obj-entity>
+	<obj-entity name="Immobili" className="winkhouse.orm.Immobili" dbEntityName="IMMOBILI">
+		<obj-attribute name="affitto" type="boolean" db-attribute-path="AFFITTO"/>
+		<obj-attribute name="annocostruzione" type="int" db-attribute-path="ANNOCOSTRUZIONE"/>
+		<obj-attribute name="cap" type="java.lang.String" db-attribute-path="CAP"/>
+		<obj-attribute name="citta" type="java.lang.String" db-attribute-path="CITTA"/>
+		<obj-attribute name="datainserimento" type="java.time.LocalDate" db-attribute-path="DATAINSERIMENTO"/>
+		<obj-attribute name="datalibero" type="java.time.LocalDate" db-attribute-path="DATALIBERO"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="indirizzo" type="java.lang.String" db-attribute-path="INDIRIZZO"/>
+		<obj-attribute name="mq" type="int" db-attribute-path="MQ"/>
+		<obj-attribute name="mutuo" type="double" db-attribute-path="MUTUO"/>
+		<obj-attribute name="mutuodescrizione" type="java.lang.String" db-attribute-path="MUTUODESCRIZIONE"/>
+		<obj-attribute name="ncivico" type="java.lang.String" db-attribute-path="NCIVICO"/>
+		<obj-attribute name="prezzo" type="double" db-attribute-path="PREZZO"/>
+		<obj-attribute name="provincia" type="java.lang.String" db-attribute-path="PROVINCIA"/>
+		<obj-attribute name="rif" type="java.lang.String" db-attribute-path="RIF"/>
+		<obj-attribute name="spese" type="double" db-attribute-path="SPESE"/>
+		<obj-attribute name="storico" type="boolean" db-attribute-path="STORICO"/>
+		<obj-attribute name="varie" type="java.lang.String" db-attribute-path="VARIE"/>
+		<obj-attribute name="visione" type="boolean" db-attribute-path="VISIONE"/>
+		<obj-attribute name="zona" type="java.lang.String" db-attribute-path="ZONA"/>
+	</obj-entity>
+	<obj-entity name="Immobilipropietari" className="winkhouse.orm.Immobilipropietari" dbEntityName="IMMOBILIPROPIETARI"/>
+	<obj-entity name="Permessi" className="winkhouse.orm.Permessi" dbEntityName="PERMESSI">
+		<obj-attribute name="canread" type="boolean" db-attribute-path="CANREAD"/>
+		<obj-attribute name="canwrite" type="boolean" db-attribute-path="CANWRITE"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="isnot" type="boolean" db-attribute-path="ISNOT"/>
+	</obj-entity>
+	<obj-entity name="Permessiui" className="winkhouse.orm.Permessiui" dbEntityName="PERMESSIUI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="dialogid" type="java.lang.String" db-attribute-path="DIALOGID"/>
+		<obj-attribute name="isnot" type="boolean" db-attribute-path="ISNOT"/>
+		<obj-attribute name="perspectiveid" type="java.lang.String" db-attribute-path="PERSPECTIVEID"/>
+		<obj-attribute name="viewid" type="java.lang.String" db-attribute-path="VIEWID"/>
+	</obj-entity>
+	<obj-entity name="Promemoria" className="winkhouse.orm.Promemoria" dbEntityName="PROMEMORIA">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Promemorialinks" className="winkhouse.orm.Promemorialinks" dbEntityName="PROMEMORIALINKS">
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="isfile" type="boolean" db-attribute-path="ISFILE"/>
+		<obj-attribute name="urilink" type="java.lang.String" db-attribute-path="URILINK"/>
+	</obj-entity>
+	<obj-entity name="Promemoriaoggetti" className="winkhouse.orm.Promemoriaoggetti" dbEntityName="PROMEMORIAOGGETTI">
+		<obj-attribute name="codoggetto" type="int" db-attribute-path="CODOGGETTO"/>
+		<obj-attribute name="codpromemoria" type="int" db-attribute-path="CODPROMEMORIA"/>
+		<obj-attribute name="tipo" type="int" db-attribute-path="TIPO"/>
+	</obj-entity>
+	<obj-entity name="Report" className="winkhouse.orm.Report" dbEntityName="REPORT">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="islist" type="boolean" db-attribute-path="ISLIST"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+		<obj-attribute name="template" type="java.lang.String" db-attribute-path="TEMPLATE"/>
+		<obj-attribute name="tipo" type="java.lang.String" db-attribute-path="TIPO"/>
+	</obj-entity>
+	<obj-entity name="Reportmarkers" className="winkhouse.orm.Reportmarkers" dbEntityName="REPORTMARKERS">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="getmethodname" type="java.lang.String" db-attribute-path="GETMETHODNAME"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+		<obj-attribute name="params" type="java.lang.String" db-attribute-path="PARAMS"/>
+		<obj-attribute name="paramsdesc" type="java.lang.String" db-attribute-path="PARAMSDESC"/>
+		<obj-attribute name="tipo" type="java.lang.String" db-attribute-path="TIPO"/>
+	</obj-entity>
+	<obj-entity name="Ricerche" className="winkhouse.orm.Ricerche" dbEntityName="RICERCHE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="nome" type="java.lang.String" db-attribute-path="NOME"/>
+		<obj-attribute name="tipo" type="int" db-attribute-path="TIPO"/>
+	</obj-entity>
+	<obj-entity name="Riscaldamenti" className="winkhouse.orm.Riscaldamenti" dbEntityName="RISCALDAMENTI">
+		<obj-attribute name="codicefiscale" type="java.lang.String" db-attribute-path="CODICEFISCALE"/>
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="piva" type="java.lang.String" db-attribute-path="PIVA"/>
+	</obj-entity>
+	<obj-entity name="Stanzeimmobili" className="winkhouse.orm.Stanzeimmobili" dbEntityName="STANZEIMMOBILI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="mq" type="int" db-attribute-path="MQ"/>
+	</obj-entity>
+	<obj-entity name="Statoconservativo" className="winkhouse.orm.Statoconservativo" dbEntityName="STATOCONSERVATIVO">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Tipiappuntamenti" className="winkhouse.orm.Tipiappuntamenti" dbEntityName="TIPIAPPUNTAMENTI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+		<obj-attribute name="gcalcolor" type="java.lang.String" db-attribute-path="GCALCOLOR"/>
+		<obj-attribute name="ordine" type="int" db-attribute-path="ORDINE"/>
+	</obj-entity>
+	<obj-entity name="Tipologiastanze" className="winkhouse.orm.Tipologiastanze" dbEntityName="TIPOLOGIASTANZE">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Tipologiecolloqui" className="winkhouse.orm.Tipologiecolloqui" dbEntityName="TIPOLOGIECOLLOQUI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Tipologiecontatti" className="winkhouse.orm.Tipologiecontatti" dbEntityName="TIPOLOGIECONTATTI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Tipologieimmobili" className="winkhouse.orm.Tipologieimmobili" dbEntityName="TIPOLOGIEIMMOBILI">
+		<obj-attribute name="dateupdate" type="java.time.LocalDateTime" db-attribute-path="DATEUPDATE"/>
+		<obj-attribute name="descrizione" type="java.lang.String" db-attribute-path="DESCRIZIONE"/>
+	</obj-entity>
+	<obj-entity name="Winkgcalendar" className="winkhouse.orm.Winkgcalendar" dbEntityName="WINKGCALENDAR">
+		<obj-attribute name="calendarid" type="java.lang.String" db-attribute-path="CALENDARID"/>
+		<obj-attribute name="eventid" type="java.lang.String" db-attribute-path="EVENTID"/>
+	</obj-entity>
+	<obj-entity name="Winksys" className="winkhouse.orm.Winksys" dbEntityName="WINKSYS">
+		<obj-attribute name="propertyvalue" type="java.lang.String" db-attribute-path="PROPERTYVALUE"/>
+	</obj-entity>
+	<db-relationship name="agenti" source="ABBINAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="ABBINAMENTI" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="ABBINAMENTI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="affittiallegatis" source="AFFITTI" target="AFFITTIALLEGATI" toMany="true">
+		<db-attribute-pair source="CODAFFITTI" target="CODAFFITTO"/>
+	</db-relationship>
+	<db-relationship name="affittianagrafiches" source="AFFITTI" target="AFFITTIANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODAFFITTI" target="CODAFFITTO"/>
+	</db-relationship>
+	<db-relationship name="affittirates" source="AFFITTI" target="AFFITTIRATE" toMany="true">
+		<db-attribute-pair source="CODAFFITTI" target="CODAFFITTO"/>
+	</db-relationship>
+	<db-relationship name="affittispeses" source="AFFITTI" target="AFFITTISPESE" toMany="true">
+		<db-attribute-pair source="CODAFFITTI" target="CODAFFITTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AFFITTI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTEINS" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="AFFITTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="AFFITTI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="affitti" source="AFFITTIALLEGATI" target="AFFITTI">
+		<db-attribute-pair source="CODAFFITTO" target="CODAFFITTI"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AFFITTIALLEGATI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="affitti" source="AFFITTIANAGRAFICHE" target="AFFITTI">
+		<db-attribute-pair source="CODAFFITTO" target="CODAFFITTI"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AFFITTIANAGRAFICHE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="AFFITTIANAGRAFICHE" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="affitti" source="AFFITTIRATE" target="AFFITTI">
+		<db-attribute-pair source="CODAFFITTO" target="CODAFFITTI"/>
+	</db-relationship>
+	<db-relationship name="affittirate" source="AFFITTIRATE" target="AFFITTIRATE">
+		<db-attribute-pair source="CODPARENT" target="CODAFFITTIRATE"/>
+	</db-relationship>
+	<db-relationship name="affittirates" source="AFFITTIRATE" target="AFFITTIRATE" toMany="true">
+		<db-attribute-pair source="CODAFFITTIRATE" target="CODPARENT"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AFFITTIRATE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="AFFITTIRATE" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="affitti" source="AFFITTISPESE" target="AFFITTI">
+		<db-attribute-pair source="CODAFFITTO" target="CODAFFITTI"/>
+	</db-relationship>
+	<db-relationship name="affittispese" source="AFFITTISPESE" target="AFFITTISPESE">
+		<db-attribute-pair source="CODPARENT" target="CODAFFITTISPESE"/>
+	</db-relationship>
+	<db-relationship name="affittispeses" source="AFFITTISPESE" target="AFFITTISPESE" toMany="true">
+		<db-attribute-pair source="CODAFFITTISPESE" target="CODPARENT"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AFFITTISPESE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="AFFITTISPESE" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="abbinamentis" source="AGENTI" target="ABBINAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="affittiallegatis" source="AGENTI" target="AFFITTIALLEGATI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="affittianagrafiches" source="AGENTI" target="AFFITTIANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="affittirates" source="AGENTI" target="AFFITTIRATE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="affittis" source="AGENTI" target="AFFITTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTEINS"/>
+	</db-relationship>
+	<db-relationship name="affittis1" source="AGENTI" target="AFFITTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="affittispeses" source="AGENTI" target="AFFITTISPESE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AGENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agentiappuntamentis" source="AGENTI" target="AGENTIAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="agentiappuntamentis1" source="AGENTI" target="AGENTIAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agentis" source="AGENTI" target="AGENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="allegaticolloquios" source="AGENTI" target="ALLEGATICOLLOQUIO" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="allegatiimmobilis" source="AGENTI" target="ALLEGATIIMMOBILI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="anagraficheappuntamentis" source="AGENTI" target="ANAGRAFICHEAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiches" source="AGENTI" target="ANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTEINSERITORE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiches1" source="AGENTI" target="ANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="appuntamentis" source="AGENTI" target="APPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="attributes" source="AGENTI" target="ATTRIBUTE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="attributevalues" source="AGENTI" target="ATTRIBUTEVALUE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="classiclientes" source="AGENTI" target="CLASSICLIENTE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="classienergetiches" source="AGENTI" target="CLASSIENERGETICHE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="colloquiagentis" source="AGENTI" target="COLLOQUIAGENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="colloquiagentis1" source="AGENTI" target="COLLOQUIAGENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="colloquianagrafiches" source="AGENTI" target="COLLOQUIANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="colloquicriteriricercas" source="AGENTI" target="COLLOQUICRITERIRICERCA" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="colloquis" source="AGENTI" target="COLLOQUI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTEINSERITORE"/>
+	</db-relationship>
+	<db-relationship name="colloquis1" source="AGENTI" target="COLLOQUI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="contattis" source="AGENTI" target="CONTATTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="contattis1" source="AGENTI" target="CONTATTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="daticatastalis" source="AGENTI" target="DATICATASTALI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="entities" source="AGENTI" target="ENTITY" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="gcalendars" source="AGENTI" target="GCALENDAR" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="gdatas" source="AGENTI" target="GDATA" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="immaginis" source="AGENTI" target="IMMAGINI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="immobilis" source="AGENTI" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTEINSERITORE"/>
+	</db-relationship>
+	<db-relationship name="immobilis1" source="AGENTI" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="permessis" source="AGENTI" target="PERMESSI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="permessis1" source="AGENTI" target="PERMESSI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="permessiuis" source="AGENTI" target="PERMESSIUI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="permessiuis1" source="AGENTI" target="PERMESSIUI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="promemorias" source="AGENTI" target="PROMEMORIA" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="promemorias1" source="AGENTI" target="PROMEMORIA" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="reportmarkerss" source="AGENTI" target="REPORTMARKERS" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="reports" source="AGENTI" target="REPORT" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="ricerches" source="AGENTI" target="RICERCHE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="riscaldamentis" source="AGENTI" target="RISCALDAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="stanzeimmobilis" source="AGENTI" target="STANZEIMMOBILI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="statoconservativoes" source="AGENTI" target="STATOCONSERVATIVO" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="tipiappuntamentis" source="AGENTI" target="TIPIAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="tipologiastanzes" source="AGENTI" target="TIPOLOGIASTANZE" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="tipologiecolloquis" source="AGENTI" target="TIPOLOGIECOLLOQUI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="tipologiecontattis" source="AGENTI" target="TIPOLOGIECONTATTI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="tipologieimmobilis" source="AGENTI" target="TIPOLOGIEIMMOBILI" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODUSERUPDATE"/>
+	</db-relationship>
+	<db-relationship name="winkgcalendars" source="AGENTI" target="WINKGCALENDAR" toMany="true">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="AGENTIAPPUNTAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="AGENTIAPPUNTAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="appuntamenti" source="AGENTIAPPUNTAMENTI" target="APPUNTAMENTI">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ALLEGATICOLLOQUIO" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="colloqui" source="ALLEGATICOLLOQUIO" target="COLLOQUI">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ALLEGATIIMMOBILI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="ALLEGATIIMMOBILI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="abbinamentis" source="ANAGRAFICHE" target="ABBINAMENTI" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="affittianagrafiches" source="ANAGRAFICHE" target="AFFITTIANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="affittirates" source="ANAGRAFICHE" target="AFFITTIRATE" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="affittispeses" source="ANAGRAFICHE" target="AFFITTISPESE" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ANAGRAFICHE" target="AGENTI">
+		<db-attribute-pair source="CODAGENTEINSERITORE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="ANAGRAFICHE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagraficheappuntamentis" source="ANAGRAFICHE" target="ANAGRAFICHEAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="classicliente" source="ANAGRAFICHE" target="CLASSICLIENTE">
+		<db-attribute-pair source="CODCLASSECLIENTE" target="CODCLASSECLIENTE"/>
+	</db-relationship>
+	<db-relationship name="colloquianagrafiches" source="ANAGRAFICHE" target="COLLOQUIANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="contattis" source="ANAGRAFICHE" target="CONTATTI" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="immobilipropietaris" source="ANAGRAFICHE" target="IMMOBILIPROPIETARI" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="immobilis" source="ANAGRAFICHE" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ANAGRAFICHEAPPUNTAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="ANAGRAFICHEAPPUNTAMENTI" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="appuntamenti" source="ANAGRAFICHEAPPUNTAMENTI" target="APPUNTAMENTI">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="APPUNTAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agentiappuntamentis" source="APPUNTAMENTI" target="AGENTIAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="anagraficheappuntamentis" source="APPUNTAMENTI" target="ANAGRAFICHEAPPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="appuntamenti" source="APPUNTAMENTI" target="APPUNTAMENTI">
+		<db-attribute-pair source="CODPADRE" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="appuntamentis" source="APPUNTAMENTI" target="APPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODPADRE"/>
+	</db-relationship>
+	<db-relationship name="tipiappuntamenti" source="APPUNTAMENTI" target="TIPIAPPUNTAMENTI">
+		<db-attribute-pair source="CODTIPOAPPUNTAMENTO" target="CODTIPOAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="winkgcalendars" source="APPUNTAMENTI" target="WINKGCALENDAR" toMany="true">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ATTRIBUTE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="attributevalues" source="ATTRIBUTE" target="ATTRIBUTEVALUE" toMany="true">
+		<db-attribute-pair source="IDATTRIBUTE" target="IDFIELD"/>
+	</db-relationship>
+	<db-relationship name="entity" source="ATTRIBUTE" target="ENTITY">
+		<db-attribute-pair source="LINKEDIDENTITY" target="IDCLASSENTITY"/>
+	</db-relationship>
+	<db-relationship name="entity1" source="ATTRIBUTE" target="ENTITY">
+		<db-attribute-pair source="IDCLASSENTITY" target="IDCLASSENTITY"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ATTRIBUTEVALUE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="attribute" source="ATTRIBUTEVALUE" target="ATTRIBUTE">
+		<db-attribute-pair source="IDFIELD" target="IDATTRIBUTE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="CLASSICLIENTE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiches" source="CLASSICLIENTE" target="ANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODCLASSECLIENTE" target="CODCLASSECLIENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="CLASSIENERGETICHE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobilis" source="CLASSIENERGETICHE" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODCLASSEENERGETICA" target="CODCLASSEENERGETICA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="COLLOQUI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTEINSERITORE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="COLLOQUI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="allegaticolloquios" source="COLLOQUI" target="ALLEGATICOLLOQUIO" toMany="true">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="colloqui" source="COLLOQUI" target="COLLOQUI">
+		<db-attribute-pair source="CODPARENT" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="colloquianagrafiches" source="COLLOQUI" target="COLLOQUIANAGRAFICHE" toMany="true">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="colloquicriteriricercas" source="COLLOQUI" target="COLLOQUICRITERIRICERCA" toMany="true">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="colloquis" source="COLLOQUI" target="COLLOQUI" toMany="true">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODPARENT"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="COLLOQUI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILEABBINATO" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="winkgcalendars" source="COLLOQUI" target="WINKGCALENDAR" toMany="true">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="COLLOQUIAGENTI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="COLLOQUIAGENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="COLLOQUIANAGRAFICHE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="COLLOQUIANAGRAFICHE" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="colloqui" source="COLLOQUIANAGRAFICHE" target="COLLOQUI">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="COLLOQUICRITERIRICERCA" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="colloqui" source="COLLOQUICRITERIRICERCA" target="COLLOQUI">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<db-relationship name="ricerche" source="COLLOQUICRITERIRICERCA" target="RICERCHE">
+		<db-attribute-pair source="CODRICERCA" target="CODRICERCA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="CONTATTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="CONTATTI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="CONTATTI" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="gdatas" source="CONTATTI" target="GDATA" toMany="true">
+		<db-attribute-pair source="CODCONTATTO" target="CODCONTATTO"/>
+	</db-relationship>
+	<db-relationship name="tipologiecontatti" source="CONTATTI" target="TIPOLOGIECONTATTI">
+		<db-attribute-pair source="CODTIPOLOGIACONTATTO" target="CODTIPOLOGIACONTATTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="DATICATASTALI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="DATICATASTALI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="ENTITY" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="attributes" source="ENTITY" target="ATTRIBUTE" toMany="true">
+		<db-attribute-pair source="IDCLASSENTITY" target="LINKEDIDENTITY"/>
+	</db-relationship>
+	<db-relationship name="attributes1" source="ENTITY" target="ATTRIBUTE" toMany="true">
+		<db-attribute-pair source="IDCLASSENTITY" target="IDCLASSENTITY"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="GCALENDAR" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="gdata" source="GCALENDAR" target="GDATA">
+		<db-attribute-pair source="CODGDATA" target="CODGDATA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="GDATA" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="contatti" source="GDATA" target="CONTATTI">
+		<db-attribute-pair source="CODCONTATTO" target="CODCONTATTO"/>
+	</db-relationship>
+	<db-relationship name="gcalendars" source="GDATA" target="GCALENDAR" toMany="true">
+		<db-attribute-pair source="CODGDATA" target="CODGDATA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="IMMAGINI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="IMMAGINI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="abbinamentis" source="IMMOBILI" target="ABBINAMENTI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="affittis" source="IMMOBILI" target="AFFITTI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="IMMOBILI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTEINSERITORE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="IMMOBILI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="allegatiimmobilis" source="IMMOBILI" target="ALLEGATIIMMOBILI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="IMMOBILI" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="classienergetiche" source="IMMOBILI" target="CLASSIENERGETICHE">
+		<db-attribute-pair source="CODCLASSEENERGETICA" target="CODCLASSEENERGETICA"/>
+	</db-relationship>
+	<db-relationship name="colloquis" source="IMMOBILI" target="COLLOQUI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILEABBINATO"/>
+	</db-relationship>
+	<db-relationship name="daticatastalis" source="IMMOBILI" target="DATICATASTALI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="immaginis" source="IMMOBILI" target="IMMAGINI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="immobilipropietaris" source="IMMOBILI" target="IMMOBILIPROPIETARI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="riscaldamenti" source="IMMOBILI" target="RISCALDAMENTI">
+		<db-attribute-pair source="CODRISCALDAMENTO" target="CODRISCALDAMENTO"/>
+	</db-relationship>
+	<db-relationship name="stanzeimmobilis" source="IMMOBILI" target="STANZEIMMOBILI" toMany="true">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="statoconservativo" source="IMMOBILI" target="STATOCONSERVATIVO">
+		<db-attribute-pair source="CODSTATO" target="CODSTATOCONSERVATIVO"/>
+	</db-relationship>
+	<db-relationship name="tipologieimmobili" source="IMMOBILI" target="TIPOLOGIEIMMOBILI">
+		<db-attribute-pair source="CODTIPOLOGIA" target="CODTIPOLOGIAIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="anagrafiche" source="IMMOBILIPROPIETARI" target="ANAGRAFICHE">
+		<db-attribute-pair source="CODANAGRAFICA" target="CODANAGRAFICA"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="IMMOBILIPROPIETARI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="PERMESSI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="PERMESSI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="ricerche" source="PERMESSI" target="RICERCHE">
+		<db-attribute-pair source="CODRICERCA" target="CODRICERCA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="PERMESSIUI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="PERMESSIUI" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="PROMEMORIA" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti1" source="PROMEMORIA" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="promemorialinkss" source="PROMEMORIA" target="PROMEMORIALINKS" toMany="true">
+		<db-attribute-pair source="CODPROMEMORIA" target="CODPROMEMORIA"/>
+	</db-relationship>
+	<db-relationship name="promemoria" source="PROMEMORIALINKS" target="PROMEMORIA">
+		<db-attribute-pair source="CODPROMEMORIA" target="CODPROMEMORIA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="REPORT" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="reportmarkerss" source="REPORT" target="REPORTMARKERS" toMany="true">
+		<db-attribute-pair source="CODREPORT" target="CODREPORT"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="REPORTMARKERS" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="report" source="REPORTMARKERS" target="REPORT">
+		<db-attribute-pair source="CODREPORT" target="CODREPORT"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="RICERCHE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="colloquicriteriricercas" source="RICERCHE" target="COLLOQUICRITERIRICERCA" toMany="true">
+		<db-attribute-pair source="CODRICERCA" target="CODRICERCA"/>
+	</db-relationship>
+	<db-relationship name="permessis" source="RICERCHE" target="PERMESSI" toMany="true">
+		<db-attribute-pair source="CODRICERCA" target="CODRICERCA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="RISCALDAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobilis" source="RISCALDAMENTI" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODRISCALDAMENTO" target="CODRISCALDAMENTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="STANZEIMMOBILI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobili" source="STANZEIMMOBILI" target="IMMOBILI">
+		<db-attribute-pair source="CODIMMOBILE" target="CODIMMOBILE"/>
+	</db-relationship>
+	<db-relationship name="tipologiastanze" source="STANZEIMMOBILI" target="TIPOLOGIASTANZE">
+		<db-attribute-pair source="CODTIPOLOGIASTANZA" target="CODTIPOLOGIASTANZE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="STATOCONSERVATIVO" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobilis" source="STATOCONSERVATIVO" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODSTATOCONSERVATIVO" target="CODSTATO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="TIPIAPPUNTAMENTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="appuntamentis" source="TIPIAPPUNTAMENTI" target="APPUNTAMENTI" toMany="true">
+		<db-attribute-pair source="CODTIPOAPPUNTAMENTO" target="CODTIPOAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="TIPOLOGIASTANZE" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="stanzeimmobilis" source="TIPOLOGIASTANZE" target="STANZEIMMOBILI" toMany="true">
+		<db-attribute-pair source="CODTIPOLOGIASTANZE" target="CODTIPOLOGIASTANZA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="TIPOLOGIECOLLOQUI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="TIPOLOGIECONTATTI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="contattis" source="TIPOLOGIECONTATTI" target="CONTATTI" toMany="true">
+		<db-attribute-pair source="CODTIPOLOGIACONTATTO" target="CODTIPOLOGIACONTATTO"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="TIPOLOGIEIMMOBILI" target="AGENTI">
+		<db-attribute-pair source="CODUSERUPDATE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="immobilis" source="TIPOLOGIEIMMOBILI" target="IMMOBILI" toMany="true">
+		<db-attribute-pair source="CODTIPOLOGIAIMMOBILE" target="CODTIPOLOGIA"/>
+	</db-relationship>
+	<db-relationship name="agenti" source="WINKGCALENDAR" target="AGENTI">
+		<db-attribute-pair source="CODAGENTE" target="CODAGENTE"/>
+	</db-relationship>
+	<db-relationship name="appuntamenti" source="WINKGCALENDAR" target="APPUNTAMENTI">
+		<db-attribute-pair source="CODAPPUNTAMENTO" target="CODAPPUNTAMENTO"/>
+	</db-relationship>
+	<db-relationship name="colloqui" source="WINKGCALENDAR" target="COLLOQUI">
+		<db-attribute-pair source="CODCOLLOQUIO" target="CODCOLLOQUIO"/>
+	</db-relationship>
+	<obj-relationship name="agenti" source="Abbinamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiche" source="Abbinamenti" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="immobili" source="Abbinamenti" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="affittiallegatis" source="Affitti" target="Affittiallegati" deleteRule="Deny" db-relationship-path="affittiallegatis"/>
+	<obj-relationship name="affittianagrafiches" source="Affitti" target="Affittianagrafiche" deleteRule="Deny" db-relationship-path="affittianagrafiches"/>
+	<obj-relationship name="affittirates" source="Affitti" target="Affittirate" deleteRule="Deny" db-relationship-path="affittirates"/>
+	<obj-relationship name="affittispeses" source="Affitti" target="Affittispese" deleteRule="Deny" db-relationship-path="affittispeses"/>
+	<obj-relationship name="agenti" source="Affitti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Affitti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="immobili" source="Affitti" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="affitti" source="Affittiallegati" target="Affitti" deleteRule="Nullify" db-relationship-path="affitti"/>
+	<obj-relationship name="agenti" source="Affittiallegati" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="affitti" source="Affittianagrafiche" target="Affitti" deleteRule="Nullify" db-relationship-path="affitti"/>
+	<obj-relationship name="agenti" source="Affittianagrafiche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiche" source="Affittianagrafiche" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="affitti" source="Affittirate" target="Affitti" deleteRule="Nullify" db-relationship-path="affitti"/>
+	<obj-relationship name="affittirate" source="Affittirate" target="Affittirate" deleteRule="Nullify" db-relationship-path="affittirate"/>
+	<obj-relationship name="affittirates" source="Affittirate" target="Affittirate" deleteRule="Deny" db-relationship-path="affittirates"/>
+	<obj-relationship name="agenti" source="Affittirate" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiche" source="Affittirate" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="affitti" source="Affittispese" target="Affitti" deleteRule="Nullify" db-relationship-path="affitti"/>
+	<obj-relationship name="affittispese" source="Affittispese" target="Affittispese" deleteRule="Nullify" db-relationship-path="affittispese"/>
+	<obj-relationship name="affittispeses" source="Affittispese" target="Affittispese" deleteRule="Deny" db-relationship-path="affittispeses"/>
+	<obj-relationship name="agenti" source="Affittispese" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiche" source="Affittispese" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="abbinamentis" source="Agenti" target="Abbinamenti" deleteRule="Deny" db-relationship-path="abbinamentis"/>
+	<obj-relationship name="affittiallegatis" source="Agenti" target="Affittiallegati" deleteRule="Deny" db-relationship-path="affittiallegatis"/>
+	<obj-relationship name="affittianagrafiches" source="Agenti" target="Affittianagrafiche" deleteRule="Deny" db-relationship-path="affittianagrafiches"/>
+	<obj-relationship name="affittirates" source="Agenti" target="Affittirate" deleteRule="Deny" db-relationship-path="affittirates"/>
+	<obj-relationship name="affittis" source="Agenti" target="Affitti" deleteRule="Deny" db-relationship-path="affittis"/>
+	<obj-relationship name="affittis1" source="Agenti" target="Affitti" deleteRule="Deny" db-relationship-path="affittis1"/>
+	<obj-relationship name="affittispeses" source="Agenti" target="Affittispese" deleteRule="Deny" db-relationship-path="affittispeses"/>
+	<obj-relationship name="agenti" source="Agenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agentiappuntamentis" source="Agenti" target="Agentiappuntamenti" deleteRule="Deny" db-relationship-path="agentiappuntamentis"/>
+	<obj-relationship name="agentiappuntamentis1" source="Agenti" target="Agentiappuntamenti" deleteRule="Deny" db-relationship-path="agentiappuntamentis1"/>
+	<obj-relationship name="agentis" source="Agenti" target="Agenti" deleteRule="Deny" db-relationship-path="agentis"/>
+	<obj-relationship name="allegaticolloquios" source="Agenti" target="Allegaticolloquio" deleteRule="Deny" db-relationship-path="allegaticolloquios"/>
+	<obj-relationship name="allegatiimmobilis" source="Agenti" target="Allegatiimmobili" deleteRule="Deny" db-relationship-path="allegatiimmobilis"/>
+	<obj-relationship name="anagraficheappuntamentis" source="Agenti" target="Anagraficheappuntamenti" deleteRule="Deny" db-relationship-path="anagraficheappuntamentis"/>
+	<obj-relationship name="anagrafiches" source="Agenti" target="Anagrafiche" deleteRule="Deny" db-relationship-path="anagrafiches"/>
+	<obj-relationship name="anagrafiches1" source="Agenti" target="Anagrafiche" deleteRule="Deny" db-relationship-path="anagrafiches1"/>
+	<obj-relationship name="appuntamentis" source="Agenti" target="Appuntamenti" deleteRule="Deny" db-relationship-path="appuntamentis"/>
+	<obj-relationship name="attributes" source="Agenti" target="Attribute" deleteRule="Deny" db-relationship-path="attributes"/>
+	<obj-relationship name="attributevalues" source="Agenti" target="Attributevalue" deleteRule="Deny" db-relationship-path="attributevalues"/>
+	<obj-relationship name="classiclientes" source="Agenti" target="Classicliente" deleteRule="Deny" db-relationship-path="classiclientes"/>
+	<obj-relationship name="classienergetiches" source="Agenti" target="Classienergetiche" deleteRule="Deny" db-relationship-path="classienergetiches"/>
+	<obj-relationship name="colloquiagentis" source="Agenti" target="Colloquiagenti" deleteRule="Deny" db-relationship-path="colloquiagentis"/>
+	<obj-relationship name="colloquiagentis1" source="Agenti" target="Colloquiagenti" deleteRule="Deny" db-relationship-path="colloquiagentis1"/>
+	<obj-relationship name="colloquianagrafiches" source="Agenti" target="Colloquianagrafiche" deleteRule="Deny" db-relationship-path="colloquianagrafiches"/>
+	<obj-relationship name="colloquicriteriricercas" source="Agenti" target="Colloquicriteriricerca" deleteRule="Deny" db-relationship-path="colloquicriteriricercas"/>
+	<obj-relationship name="colloquis" source="Agenti" target="Colloqui" deleteRule="Deny" db-relationship-path="colloquis"/>
+	<obj-relationship name="colloquis1" source="Agenti" target="Colloqui" deleteRule="Deny" db-relationship-path="colloquis1"/>
+	<obj-relationship name="contattis" source="Agenti" target="Contatti" deleteRule="Deny" db-relationship-path="contattis"/>
+	<obj-relationship name="contattis1" source="Agenti" target="Contatti" deleteRule="Deny" db-relationship-path="contattis1"/>
+	<obj-relationship name="daticatastalis" source="Agenti" target="Daticatastali" deleteRule="Deny" db-relationship-path="daticatastalis"/>
+	<obj-relationship name="entities" source="Agenti" target="Entity" deleteRule="Deny" db-relationship-path="entities"/>
+	<obj-relationship name="gcalendars" source="Agenti" target="Gcalendar" deleteRule="Deny" db-relationship-path="gcalendars"/>
+	<obj-relationship name="gdatas" source="Agenti" target="Gdata" deleteRule="Deny" db-relationship-path="gdatas"/>
+	<obj-relationship name="immaginis" source="Agenti" target="Immagini" deleteRule="Deny" db-relationship-path="immaginis"/>
+	<obj-relationship name="immobilis" source="Agenti" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="immobilis1" source="Agenti" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis1"/>
+	<obj-relationship name="permessis" source="Agenti" target="Permessi" deleteRule="Deny" db-relationship-path="permessis"/>
+	<obj-relationship name="permessis1" source="Agenti" target="Permessi" deleteRule="Deny" db-relationship-path="permessis1"/>
+	<obj-relationship name="permessiuis" source="Agenti" target="Permessiui" deleteRule="Deny" db-relationship-path="permessiuis"/>
+	<obj-relationship name="permessiuis1" source="Agenti" target="Permessiui" deleteRule="Deny" db-relationship-path="permessiuis1"/>
+	<obj-relationship name="promemorias" source="Agenti" target="Promemoria" deleteRule="Deny" db-relationship-path="promemorias"/>
+	<obj-relationship name="promemorias1" source="Agenti" target="Promemoria" deleteRule="Deny" db-relationship-path="promemorias1"/>
+	<obj-relationship name="reportmarkerss" source="Agenti" target="Reportmarkers" deleteRule="Deny" db-relationship-path="reportmarkerss"/>
+	<obj-relationship name="reports" source="Agenti" target="Report" deleteRule="Deny" db-relationship-path="reports"/>
+	<obj-relationship name="ricerches" source="Agenti" target="Ricerche" deleteRule="Deny" db-relationship-path="ricerches"/>
+	<obj-relationship name="riscaldamentis" source="Agenti" target="Riscaldamenti" deleteRule="Deny" db-relationship-path="riscaldamentis"/>
+	<obj-relationship name="stanzeimmobilis" source="Agenti" target="Stanzeimmobili" deleteRule="Deny" db-relationship-path="stanzeimmobilis"/>
+	<obj-relationship name="statoconservativoes" source="Agenti" target="Statoconservativo" deleteRule="Deny" db-relationship-path="statoconservativoes"/>
+	<obj-relationship name="tipiappuntamentis" source="Agenti" target="Tipiappuntamenti" deleteRule="Deny" db-relationship-path="tipiappuntamentis"/>
+	<obj-relationship name="tipologiastanzes" source="Agenti" target="Tipologiastanze" deleteRule="Deny" db-relationship-path="tipologiastanzes"/>
+	<obj-relationship name="tipologiecolloquis" source="Agenti" target="Tipologiecolloqui" deleteRule="Deny" db-relationship-path="tipologiecolloquis"/>
+	<obj-relationship name="tipologiecontattis" source="Agenti" target="Tipologiecontatti" deleteRule="Deny" db-relationship-path="tipologiecontattis"/>
+	<obj-relationship name="tipologieimmobilis" source="Agenti" target="Tipologieimmobili" deleteRule="Deny" db-relationship-path="tipologieimmobilis"/>
+	<obj-relationship name="winkgcalendars" source="Agenti" target="Winkgcalendar" deleteRule="Deny" db-relationship-path="winkgcalendars"/>
+	<obj-relationship name="agenti" source="Agentiappuntamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Agentiappuntamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="appuntamenti" source="Agentiappuntamenti" target="Appuntamenti" deleteRule="Nullify" db-relationship-path="appuntamenti"/>
+	<obj-relationship name="agenti" source="Allegaticolloquio" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="colloqui" source="Allegaticolloquio" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloqui"/>
+	<obj-relationship name="agenti" source="Allegatiimmobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobili" source="Allegatiimmobili" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="abbinamentis" source="Anagrafiche" target="Abbinamenti" deleteRule="Deny" db-relationship-path="abbinamentis"/>
+	<obj-relationship name="affittianagrafiches" source="Anagrafiche" target="Affittianagrafiche" deleteRule="Deny" db-relationship-path="affittianagrafiches"/>
+	<obj-relationship name="affittirates" source="Anagrafiche" target="Affittirate" deleteRule="Deny" db-relationship-path="affittirates"/>
+	<obj-relationship name="affittispeses" source="Anagrafiche" target="Affittispese" deleteRule="Deny" db-relationship-path="affittispeses"/>
+	<obj-relationship name="agenti" source="Anagrafiche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Anagrafiche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="anagraficheappuntamentis" source="Anagrafiche" target="Anagraficheappuntamenti" deleteRule="Deny" db-relationship-path="anagraficheappuntamentis"/>
+	<obj-relationship name="classicliente" source="Anagrafiche" target="Classicliente" deleteRule="Nullify" db-relationship-path="classicliente"/>
+	<obj-relationship name="colloquianagrafiches" source="Anagrafiche" target="Colloquianagrafiche" deleteRule="Deny" db-relationship-path="colloquianagrafiches"/>
+	<obj-relationship name="contattis" source="Anagrafiche" target="Contatti" deleteRule="Deny" db-relationship-path="contattis"/>
+	<obj-relationship name="immobilipropietaris" source="Anagrafiche" target="Immobilipropietari" deleteRule="Deny" db-relationship-path="immobilipropietaris"/>
+	<obj-relationship name="immobilis" source="Anagrafiche" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="agenti" source="Anagraficheappuntamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiche" source="Anagraficheappuntamenti" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="appuntamenti" source="Anagraficheappuntamenti" target="Appuntamenti" deleteRule="Nullify" db-relationship-path="appuntamenti"/>
+	<obj-relationship name="agenti" source="Appuntamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agentiappuntamentis" source="Appuntamenti" target="Agentiappuntamenti" deleteRule="Deny" db-relationship-path="agentiappuntamentis"/>
+	<obj-relationship name="anagraficheappuntamentis" source="Appuntamenti" target="Anagraficheappuntamenti" deleteRule="Deny" db-relationship-path="anagraficheappuntamentis"/>
+	<obj-relationship name="appuntamenti" source="Appuntamenti" target="Appuntamenti" deleteRule="Nullify" db-relationship-path="appuntamenti"/>
+	<obj-relationship name="appuntamentis" source="Appuntamenti" target="Appuntamenti" deleteRule="Deny" db-relationship-path="appuntamentis"/>
+	<obj-relationship name="tipiappuntamenti" source="Appuntamenti" target="Tipiappuntamenti" deleteRule="Nullify" db-relationship-path="tipiappuntamenti"/>
+	<obj-relationship name="winkgcalendars" source="Appuntamenti" target="Winkgcalendar" deleteRule="Deny" db-relationship-path="winkgcalendars"/>
+	<obj-relationship name="agenti" source="Attribute" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="attributevalues" source="Attribute" target="Attributevalue" deleteRule="Deny" db-relationship-path="attributevalues"/>
+	<obj-relationship name="entity" source="Attribute" target="Entity" deleteRule="Nullify" db-relationship-path="entity"/>
+	<obj-relationship name="entity1" source="Attribute" target="Entity" deleteRule="Nullify" db-relationship-path="entity1"/>
+	<obj-relationship name="agenti" source="Attributevalue" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="attribute" source="Attributevalue" target="Attribute" deleteRule="Nullify" db-relationship-path="attribute"/>
+	<obj-relationship name="agenti" source="Classicliente" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiches" source="Classicliente" target="Anagrafiche" deleteRule="Deny" db-relationship-path="anagrafiches"/>
+	<obj-relationship name="agenti" source="Classienergetiche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobilis" source="Classienergetiche" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="agenti" source="Colloqui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Colloqui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="allegaticolloquios" source="Colloqui" target="Allegaticolloquio" deleteRule="Deny" db-relationship-path="allegaticolloquios"/>
+	<obj-relationship name="colloqui" source="Colloqui" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloqui"/>
+	<obj-relationship name="colloquianagrafiches" source="Colloqui" target="Colloquianagrafiche" deleteRule="Deny" db-relationship-path="colloquianagrafiches"/>
+	<obj-relationship name="colloquicriteriricercas" source="Colloqui" target="Colloquicriteriricerca" deleteRule="Deny" db-relationship-path="colloquicriteriricercas"/>
+	<obj-relationship name="colloquis" source="Colloqui" target="Colloqui" deleteRule="Deny" db-relationship-path="colloquis"/>
+	<obj-relationship name="immobili" source="Colloqui" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="winkgcalendars" source="Colloqui" target="Winkgcalendar" deleteRule="Deny" db-relationship-path="winkgcalendars"/>
+	<obj-relationship name="agenti" source="Colloquiagenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Colloquiagenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="agenti" source="Colloquianagrafiche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="anagrafiche" source="Colloquianagrafiche" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="colloqui" source="Colloquianagrafiche" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloqui"/>
+	<obj-relationship name="agenti" source="Colloquicriteriricerca" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="colloqui" source="Colloquicriteriricerca" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloqui"/>
+	<obj-relationship name="ricerche" source="Colloquicriteriricerca" target="Ricerche" deleteRule="Nullify" db-relationship-path="ricerche"/>
+	<obj-relationship name="agenti" source="Contatti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Contatti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="anagrafiche" source="Contatti" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="gdatas" source="Contatti" target="Gdata" deleteRule="Deny" db-relationship-path="gdatas"/>
+	<obj-relationship name="tipologiecontatti" source="Contatti" target="Tipologiecontatti" deleteRule="Nullify" db-relationship-path="tipologiecontatti"/>
+	<obj-relationship name="agenti" source="Daticatastali" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobili" source="Daticatastali" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="agenti" source="Entity" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="attributes" source="Entity" target="Attribute" deleteRule="Deny" db-relationship-path="attributes"/>
+	<obj-relationship name="attributes1" source="Entity" target="Attribute" deleteRule="Deny" db-relationship-path="attributes1"/>
+	<obj-relationship name="agenti" source="Gcalendar" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="gdata" source="Gcalendar" target="Gdata" deleteRule="Nullify" db-relationship-path="gdata"/>
+	<obj-relationship name="agenti" source="Gdata" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="contatti" source="Gdata" target="Contatti" deleteRule="Nullify" db-relationship-path="contatti"/>
+	<obj-relationship name="gcalendars" source="Gdata" target="Gcalendar" deleteRule="Deny" db-relationship-path="gcalendars"/>
+	<obj-relationship name="agenti" source="Immagini" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobili" source="Immagini" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="abbinamentis" source="Immobili" target="Abbinamenti" deleteRule="Deny" db-relationship-path="abbinamentis"/>
+	<obj-relationship name="affittis" source="Immobili" target="Affitti" deleteRule="Deny" db-relationship-path="affittis"/>
+	<obj-relationship name="agenti" source="Immobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Immobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="allegatiimmobilis" source="Immobili" target="Allegatiimmobili" deleteRule="Deny" db-relationship-path="allegatiimmobilis"/>
+	<obj-relationship name="anagrafiche" source="Immobili" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="classienergetiche" source="Immobili" target="Classienergetiche" deleteRule="Nullify" db-relationship-path="classienergetiche"/>
+	<obj-relationship name="colloquis" source="Immobili" target="Colloqui" deleteRule="Deny" db-relationship-path="colloquis"/>
+	<obj-relationship name="daticatastalis" source="Immobili" target="Daticatastali" deleteRule="Deny" db-relationship-path="daticatastalis"/>
+	<obj-relationship name="immaginis" source="Immobili" target="Immagini" deleteRule="Deny" db-relationship-path="immaginis"/>
+	<obj-relationship name="immobilipropietaris" source="Immobili" target="Immobilipropietari" deleteRule="Deny" db-relationship-path="immobilipropietaris"/>
+	<obj-relationship name="riscaldamenti" source="Immobili" target="Riscaldamenti" deleteRule="Nullify" db-relationship-path="riscaldamenti"/>
+	<obj-relationship name="stanzeimmobilis" source="Immobili" target="Stanzeimmobili" deleteRule="Deny" db-relationship-path="stanzeimmobilis"/>
+	<obj-relationship name="statoconservativo" source="Immobili" target="Statoconservativo" deleteRule="Nullify" db-relationship-path="statoconservativo"/>
+	<obj-relationship name="tipologieimmobili" source="Immobili" target="Tipologieimmobili" deleteRule="Nullify" db-relationship-path="tipologieimmobili"/>
+	<obj-relationship name="anagrafiche" source="Immobilipropietari" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiche"/>
+	<obj-relationship name="immobili" source="Immobilipropietari" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="agenti" source="Permessi" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Permessi" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="ricerche" source="Permessi" target="Ricerche" deleteRule="Nullify" db-relationship-path="ricerche"/>
+	<obj-relationship name="agenti" source="Permessiui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Permessiui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="agenti" source="Promemoria" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti1" source="Promemoria" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
+	<obj-relationship name="promemorialinkss" source="Promemoria" target="Promemorialinks" deleteRule="Deny" db-relationship-path="promemorialinkss"/>
+	<obj-relationship name="promemoria" source="Promemorialinks" target="Promemoria" deleteRule="Nullify" db-relationship-path="promemoria"/>
+	<obj-relationship name="agenti" source="Report" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="reportmarkerss" source="Report" target="Reportmarkers" deleteRule="Deny" db-relationship-path="reportmarkerss"/>
+	<obj-relationship name="agenti" source="Reportmarkers" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="report" source="Reportmarkers" target="Report" deleteRule="Nullify" db-relationship-path="report"/>
+	<obj-relationship name="agenti" source="Ricerche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="colloquicriteriricercas" source="Ricerche" target="Colloquicriteriricerca" deleteRule="Deny" db-relationship-path="colloquicriteriricercas"/>
+	<obj-relationship name="permessis" source="Ricerche" target="Permessi" deleteRule="Deny" db-relationship-path="permessis"/>
+	<obj-relationship name="agenti" source="Riscaldamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobilis" source="Riscaldamenti" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="agenti" source="Stanzeimmobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobili" source="Stanzeimmobili" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
+	<obj-relationship name="tipologiastanze" source="Stanzeimmobili" target="Tipologiastanze" deleteRule="Nullify" db-relationship-path="tipologiastanze"/>
+	<obj-relationship name="agenti" source="Statoconservativo" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobilis" source="Statoconservativo" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="agenti" source="Tipiappuntamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="appuntamentis" source="Tipiappuntamenti" target="Appuntamenti" deleteRule="Deny" db-relationship-path="appuntamentis"/>
+	<obj-relationship name="agenti" source="Tipologiastanze" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="stanzeimmobilis" source="Tipologiastanze" target="Stanzeimmobili" deleteRule="Deny" db-relationship-path="stanzeimmobilis"/>
+	<obj-relationship name="agenti" source="Tipologiecolloqui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="agenti" source="Tipologiecontatti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="contattis" source="Tipologiecontatti" target="Contatti" deleteRule="Deny" db-relationship-path="contattis"/>
+	<obj-relationship name="agenti" source="Tipologieimmobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="immobilis" source="Tipologieimmobili" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="agenti" source="Winkgcalendar" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
+	<obj-relationship name="appuntamenti" source="Winkgcalendar" target="Appuntamenti" deleteRule="Nullify" db-relationship-path="appuntamenti"/>
+	<obj-relationship name="colloqui" source="Winkgcalendar" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloqui"/>
+	<dbImport xmlns="http://cayenne.apache.org/schema/10/dbimport">
+		<tableTypes>
+			<tableType>TABLE</tableType>
+			<tableType>VIEW</tableType>
+		</tableTypes>
+		<forceDataMapCatalog>false</forceDataMapCatalog>
+		<forceDataMapSchema>false</forceDataMapSchema>
+		<namingStrategy>org.apache.cayenne.dbsync.naming.DefaultObjectNameGenerator</namingStrategy>
+		<skipPrimaryKeyLoading>false</skipPrimaryKeyLoading>
+		<skipRelationshipsLoading>false</skipRelationshipsLoading>
+		<useJava7Types>false</useJava7Types>
+		<usePrimitives>true</usePrimitives>
+	</dbImport>
+	<cgen xmlns="http://cayenne.apache.org/schema/10/cgen">
+		<destDir>.</destDir>
+		<mode>all</mode>
+		<template>templates/v4_1/subclass.vm</template>
+		<superTemplate>templates/v4_1/superclass.vm</superTemplate>
+		<template>templates/v4_1/subclass.vm</template>
+		<superTemplate>templates/v4_1/superclass.vm</superTemplate>
+		<embeddableTemplate>templates/v4_1/embeddable-subclass.vm</embeddableTemplate>
+		<embeddableSuperTemplate>templates/v4_1/embeddable-superclass.vm</embeddableSuperTemplate>
+		<queryTemplate>templates/v4_1/datamap-subclass.vm</queryTemplate>
+		<querySuperTemplate>templates/v4_1/datamap-superclass.vm</querySuperTemplate>
+		<outputPattern>*.java</outputPattern>
+		<makePairs>true</makePairs>
+		<usePkgPath>true</usePkgPath>
+		<overwrite>false</overwrite>
+		<createPropertyNames>false</createPropertyNames>
+		<createPKProperties>false</createPKProperties>
+		<client>false</client>
+	</cgen>
+</data-map>

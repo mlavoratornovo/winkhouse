@@ -8,229 +8,198 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+
+
+
+
+
+import org.apache.cayenne.query.QueryCacheStrategy;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
+
+
+
+
+
 import winkhouse.Activator;
 import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.helper.WinkCloudHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
+import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.winkcloud.CloudQueryModel;
+import winkhouse.model.winkcloud.CloudQueryOrigin;
 import winkhouse.model.winkcloud.MonitorHTTPModel;
 import winkhouse.model.winkcloud.RicercaModel;
 import winkhouse.model.winkcloud.helpers.HTTPHelper;
+import winkhouse.model.winkcloud.helpers.RESTAPIHelper;
+import winkhouse.model.winkcloud.mobilecolumns.ImmobiliColumnNames;
 import winkhouse.model.winkcloud.restmsgs.QueryByCode;
 import winkhouse.model.xml.RicercheXMLModel;
+import winkhouse.util.AnagraficheMethodName;
+import winkhouse.util.ColloquiMethodName;
+import winkhouse.util.ImmobiliMethodName;
 import winkhouse.util.WinkCloudDeviceType;
 import winkhouse.util.WinkhouseUtils;
-
+import winkhouse.view.winkcloud.QueryFilesView;
+import static spark.Spark.*;
 
 public class HTTPJob extends Job {
 
 	boolean chkvar = true;	
 	private ArrayList<CloudQueryModel> cloudQueries = null;
 	private HTTPHelper httpHelper = null;
+	private RESTAPIHelper restAPIHelper = null;
 	private MonitorHTTPModel monitorHTTP = null; 
+	private QueryFilesView qfv = null;
 	
-	public HTTPJob(String name, MonitorHTTPModel monitorHTTP) {
+	public HTTPJob(String name, MonitorHTTPModel monitorHTTP, QueryFilesView qfv) {
 		super(name);
 		httpHelper = new HTTPHelper();
+		restAPIHelper = new RESTAPIHelper();
 		this.monitorHTTP = monitorHTTP;
+		this.qfv = qfv;
 	}
 	
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
-		
-		while (this.isChkvar()){
-					
-			QueryByCode[] queryFiles = httpHelper.getQueriesByCode(this.monitorHTTP.getConnector(), this.monitorHTTP.getConnector().getCode());
-			if (queryFiles != null){
-				winkhouse.util.ZipUtils zu_unzip = new winkhouse.util.ZipUtils();		
-				for (int i = 0; i < queryFiles.length; i++) {
-					
-					QueryByCode queryFileName = queryFiles[i];
-					
-					if (monitorHTTP.getRicercheServite().get(queryFileName.filename) == null){
-									
-						String pathdownload = Activator.getDefault().getStateLocation().toFile().toString() + 
-											  File.separator + "cloudsearch" + File.separator + this.monitorHTTP.getConnector().getCode();
-						
-						File fpathdownload = new File(pathdownload);
-						fpathdownload.mkdirs();
-						
-						File requestFile = new File(pathdownload + File.separator + queryFileName.filename);
-						
-						if (httpHelper.downloadQueryRequest(this.monitorHTTP.getConnector(), queryFileName.filename, this.monitorHTTP.getConnector().getCode(), requestFile)){
-							try {
-								
-								String unzipFolder = String.valueOf(new Date().getTime());
-								File funzipFolder = new File(pathdownload + File.separator + unzipFolder);
-								funzipFolder.mkdirs();
-								
-								if (zu_unzip.unZip4jArchivio(pathdownload + File.separator + queryFileName.filename, 
-														     pathdownload + File.separator + unzipFolder)){
-									
-									String[] files = funzipFolder.list();
-									
-									for (int x = 0; x < files.length; x++) {
-										
-										if (files[x].endsWith(".xml")){
-											
-											WinkCloudDeviceType tipoFile = null;
-											tipoFile = this.getQueryFromType(new File(pathdownload + File.separator + 
-					 					   											  unzipFolder + File.separator + 
-					 					   											  files[x]));
-											
-											if (tipoFile != null){
-												
-												ArrayList al_ricerche = new ArrayList();
-												WinkCloudHelper wch = new WinkCloudHelper();
-												
-												if (tipoFile == WinkCloudDeviceType.DEVICE_MOBILE){
-													al_ricerche = wch.loadFromFile(new File(pathdownload + File.separator + 
-															 					   			unzipFolder + File.separator + 
-															 								files[x]), 
-															 					   wch.XML_TAG_MOBILE, 
-															 					   RicercaModel.class);
-												}
-												if (tipoFile == WinkCloudDeviceType.DEVICE_PC){
-													al_ricerche = wch.loadFromFile(new File(pathdownload + File.separator + 
-												 	  						                unzipFolder + File.separator + 
-													 							            files[x]), 
-													 							   RicercheXMLModel.class.getName(), 
-													 							   RicercheXMLModel.class);
-													
-												}
-												if (al_ricerche.size() > 0){
-													
-													ArrayList immobili = new ArrayList();
-													ArrayList alCriteria = new ArrayList();
-													
-													for (Object criterio : al_ricerche) {
-
-														if ((criterio instanceof RicercaModel) && ((RicercaModel)criterio).getSearchType().equalsIgnoreCase("immobili")){
-															alCriteria.add(((RicercaModel)criterio).toCriteriRicercaModel());
-														}
-														
-														if ((criterio instanceof RicercheXMLModel) && ((RicercheXMLModel)criterio).getTipo() == RicercheXMLModel.RICERCHE_IMMOBILI){
-															RicercheXMLModel rxml = (RicercheXMLModel)criterio;
-															alCriteria.add(rxml);
-														}
-
-													}
-													
-													SearchEngineImmobili sei = new SearchEngineImmobili(alCriteria);
-													immobili = sei.find();													
-													
-													int maxcloud = Integer.valueOf((WinkhouseUtils.getInstance().getPreferenceStore().getString(WinkhouseUtils.MAXCLOUDRESULT).equalsIgnoreCase(""))
-				            														? WinkhouseUtils.getInstance().getPreferenceStore().getDefaultString(WinkhouseUtils.MAXCLOUDRESULT)
-				            														: WinkhouseUtils.getInstance().getPreferenceStore().getString(WinkhouseUtils.MAXCLOUDRESULT));
-				            
-									            	try {
-									            		immobili = new ArrayList(immobili.subList(0, maxcloud));																								
-													} catch (Exception e1) {}
-									            	
-													String exportPath = pathdownload + File.separator + String.valueOf(new Date().getTime());
-													File fexportPath = new File(exportPath);
-													fexportPath.mkdirs();
-													
-													if (wch.exportImmobili(immobili, exportPath)){
-														
-														String fzip = pathdownload + File.separator + String.valueOf(new Date().getTime()) + ".zip";
-														
-														winkhouse.util.ZipUtils zu_zip = new winkhouse.util.ZipUtils();
-														
-														zu_zip.zip4jArchivio(exportPath, fzip);
-														if (httpHelper.uploadResponse2QueryRequest(this.monitorHTTP.getConnector(), 
-																								   new File(fzip), 
-																								   this.monitorHTTP.getConnector().getCode(), 
-																								   queryFileName.filename)){
-															
-															if (tipoFile == WinkCloudDeviceType.DEVICE_MOBILE){
-																
-																RicercheXMLModel r = null;
-																for (Object criterio : al_ricerche) {
-																	
-																	if (r == null){
-																		r = new RicercheXMLModel((RicercaModel)criterio);
-																	}else{
-																		r.getCriteri().add((new ColloquiCriteriRicercaModel(((RicercaModel)criterio).toCriteriRicercaModel())));
-																	}
-																
-																}
-																monitorHTTP.getRicercheServite().put(queryFileName.filename, r);
-
-																
-															}
-															
-															if (tipoFile == WinkCloudDeviceType.DEVICE_PC){
-																RicercheXMLModel r = null;
-																for (Object criterio : al_ricerche) {
-																	
-																	if (r == null){
-																		r = new RicercheXMLModel();
-																	}
-																	r.getCriteri().addAll(((RicercheXMLModel)criterio).getCriteri());
-																}
-
-																int count = 0;
-																for (Object criterio : al_ricerche) {
-																	monitorHTTP.getRicercheServite().put(queryFileName.filename+String.valueOf(count), (RicercheXMLModel)criterio);
-																	count ++;
-																}
-															}
-															
-															if (monitorHTTP.getPathloadingFile() != null){
-																monitorHTTP.save(monitorHTTP.getPathloadingFile());
-															}
-															monitorHTTP.getTvMonitors().getControl().getDisplay().asyncExec(new Runnable() {
-																
-																@Override
-																public void run() {
-																	monitorHTTP.getTvMonitors().refresh();
-																	
-																}
-															});
-														}else{
-															System.out.println("upload respose None");
-														}
-														
-													}
-																						
-												}
-											}									
-										}
-										
-									}
-									
-								}
-								
-							}catch(Exception e){
-								e.printStackTrace();
-							}
-						}else{
-							// TODO scrivere nel log
-						}
-						
-					}
-					
-				}
-			}
-			try {
-				TimeUnit.SECONDS.sleep(this.monitorHTTP.getPollingInterval());
-			} catch (InterruptedException e) {
-				chkvar = false;
-				e.printStackTrace();
-			}
+		port(this.monitorHTTP.getConnector().getPort());
+		//
+		post("/search", (req, res) -> {
+			ArrayList searchResult = restAPIHelper.searchItems(req);
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
+			CloudQueryOrigin type = (CloudQueryOrigin)searchResult.get(2);
+			CloudQueryModel cqm = new CloudQueryModel(type, "", new Date());
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			for (RicercaModel ricerca : (ArrayList<RicercaModel>)searchResult.get(0)) {
+				al.add(ricerca.toCriteriRicercaModel());
+			} 
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return searchResult.get(1);
+		});
+		get("/core/search", (req, res) -> {
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 			
-		}
+			String tipo = req.queryParams("tipo");
+			CloudQueryOrigin type = null;
+			switch (tipo) {
+			case "ce": 
+				type = CloudQueryOrigin.CORE_CLASSIENERGETICHE;
+				break;
+			case "ti":
+				type = CloudQueryOrigin.CORE_TIPIIMMOBILI;
+				break;
+			case "cc":
+				type = CloudQueryOrigin.CORE_CLASSICLIENTI;
+				break;
+			case "tc":			
+				type = CloudQueryOrigin.CORE_TIPICOLLOQUI;
+				break;
+			case "ts":
+				type = CloudQueryOrigin.CORE_TIPISTANZE;
+				break;
+			case "tcon":
+				type = CloudQueryOrigin.CORE_TIPICONTATTI;
+				break;
+			case "ri":
+				type = CloudQueryOrigin.CORE_RISCALDAMENTI;
+				break;
+			case "sc":
+				type = CloudQueryOrigin.CORE_STATOCONSERVATIVO;
+				break;
+
+			default:
+				break;
+			}
+			CloudQueryModel cqm = new CloudQueryModel(type, "", new Date());
+			
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			al.add(restAPIHelper.serchCoreCriteria(req));
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return restAPIHelper.searchCore(req);
+		});
+		get("/colloqui/immobile/:idimmobile", (req, res) -> {
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
+			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_COLLOQUI_IMMOBILE, "", new Date());
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			CriteriRicercaModel c = new CriteriRicercaModel();
+			c.setGetterMethodName(ImmobiliMethodName.GET_CODIMMOBILE);
+			c.setFromValue(req.params(":idimmobile"));
+			al.add(c);			
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return restAPIHelper.getColloquiByImmobile(Integer.parseInt(req.params(":idimmobile")));
+		});
+		get("/colloqui/anagrafica/:idanagrafica", (req, res) -> {
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
+			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_COLLOQUI_ANAGRAFICA, "", new Date());
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			CriteriRicercaModel c = new CriteriRicercaModel();
+			c.setGetterMethodName(AnagraficheMethodName.GET_CODANAGRAFICA);
+			c.setFromValue(req.params(":idanagrafica"));
+			al.add(c);			
+			cqm.setCriteri(al);			
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return restAPIHelper.getColloquiByAnagrafica(Integer.parseInt(req.params(":idanagrafica")));
+		});
+		get("/anagrafica/:idanagrafica/abbinati", (req, res) -> {
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
+			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_ABBINAMENTI_IMMOBILI_ANAGRAFICA, "", new Date());
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			CriteriRicercaModel c = new CriteriRicercaModel();
+			c.setGetterMethodName(AnagraficheMethodName.GET_CODANAGRAFICA);
+			c.setFromValue(req.params(":idanagrafica"));
+			al.add(c);			
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return restAPIHelper.getImmobiliAbbinatiByAnagrafica(Integer.parseInt(req.params(":idanagrafica")));
+		});
+		get("/immobile/:idimmobile/abbinati", (req, res) -> {
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
+			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_ABBINAMENTI_ANAGRAFICHE_IMMOBILE, "", new Date());			
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			CriteriRicercaModel c = new CriteriRicercaModel();
+			c.setGetterMethodName(ImmobiliMethodName.GET_CODIMMOBILE);
+			c.setFromValue(req.params(":idimmobile"));
+			al.add(c);
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return restAPIHelper.getAnagraficheAbbinateByImmobile(Integer.parseInt(req.params(":idimmobile")));
+		});
+		post("/immobile", (req, res) -> {
+			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
+			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.POST_PUT_IMMOBILE, "", new Date());
+			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			CriteriRicercaModel c = new CriteriRicercaModel();
+			c.setGetterMethodName("invio immobili");			
+			al.add(c);
+			cqm.setCriteri(al);
+			alq.add(cqm);
+			qfv.setQueries(alq);
+			return restAPIHelper.postImmobile(req, cqm);
+//			qfv.setQueries(alq);
+		});
+
+		
 		return Status.OK_STATUS;
-	    
+	}
+	
+	public void stop(){
+		spark.Spark.stop();
 	}
 
-	public boolean isChkvar() {
+	public boolean isChkvar() {		
 		return chkvar;
 	}
 

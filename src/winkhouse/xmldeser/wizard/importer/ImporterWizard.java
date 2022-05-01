@@ -40,12 +40,12 @@ public class ImporterWizard extends Wizard {
 												   Activator.getImageDescriptor("icons/wizardimport/folder64.png"));
 			soi.setDescription("Seleziona la cartella di origine da cui imporate i dati");
 			addPage(soi);
-		}
-		ipp = new ImportPreviewPage("ImporterPreviewPage",
-									"Lista degli oggetti che saranno importati", 
-									Activator.getImageDescriptor("icons/wizardimport/folder64.png"));
-		addPage(ipp);
 		
+			ipp = new ImportPreviewPage("ImporterPreviewPage",
+										"Lista degli oggetti che saranno importati", 
+										Activator.getImageDescriptor("icons/wizardimport/folder64.png"));
+			addPage(ipp);
+		}
 		mcp = new MergeConflictPage("MergerConflictPage", 
 									"Oggetti presenti nella base dati",
 									Activator.getImageDescriptor("icons/wizardimport/folder64.png"));

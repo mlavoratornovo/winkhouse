@@ -3,8 +3,12 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
 
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Tipologiecolloqui;
 import javolution.xml.XMLFormat;
 import javolution.xml.XMLSerializable;
 import javolution.xml.stream.XMLStreamException;
@@ -29,6 +33,16 @@ public class TipologieColloquiVO implements XMLSerializable,Serializable{
 		}
 		
 		dateUpdate = rs.getTimestamp("DATEUPDATE");		
+		
+	}
+	
+	public TipologieColloquiVO(Tipologiecolloqui rs){
+		codTipologiaColloquio = (int) Cayenne.longPKForObject(rs);
+		descrizione = rs.getDescrizione();		
+		codUserUpdate = (rs.getAgenti() != null)?(int) Cayenne.longPKForObject(rs):null;
+		
+		dateUpdate = (rs.getDateupdate() != null)?java.util.Date.from(rs.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;
 		
 	}
 

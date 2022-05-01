@@ -3,7 +3,12 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Classienergetiche;
 
 public class ClasseEnergeticaVO implements Serializable{
 
@@ -18,6 +23,16 @@ public class ClasseEnergeticaVO implements Serializable{
 		nome = "";
 		descrizione = "";
 		ordine = 0;
+	}
+	
+	public ClasseEnergeticaVO(Classienergetiche ce){
+		codClasseEnergetica = (int) Cayenne.longPKForObject(ce);
+		nome = ce.getNome();
+		descrizione = ce.getDescrizione();
+		ordine = ce.getOrdine();
+		codUserUpdate = (ce.getAgenti() != null)?(int) Cayenne.longPKForObject (ce.getAgenti()):null;
+		dateUpdate = (ce.getDateupdate() != null)?java.util.Date.from(ce.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;
 	}
 
 	public ClasseEnergeticaVO(ResultSet rs) throws SQLException {

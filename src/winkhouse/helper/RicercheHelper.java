@@ -133,6 +133,9 @@ public class RicercheHelper {
 						colloquiCriteriRicerca.remove(index);
 						Collections.sort(colloquiCriteriRicerca,comparerColloquiCriteriRicerca);
 					}
+					if (colloquioCriteriRicerca.getCodColloquio() == 0){
+						colloquioCriteriRicerca.setCodColloquio(null);
+					}
 					colloquioCriteriRicerca.setCodRicerca(ricerche.getCodRicerca());
 					if (!ccrDAO.saveUpdate(colloquioCriteriRicerca, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),

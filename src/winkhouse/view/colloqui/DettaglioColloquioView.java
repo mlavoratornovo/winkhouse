@@ -1203,7 +1203,7 @@ public class DettaglioColloquioView extends ViewPart {
 		
 		sectionCriteri.setLayout(new GridLayout());
 		sectionCriteri.setLayoutData(gdExpVH);
-		sectionCriteri.setText("Criteri ricerca");						
+		sectionCriteri.setText("Criteri ricerca");
 		
 		GridData gdVH = new GridData();
 		gdVH.grabExcessHorizontalSpace = true;
@@ -1404,7 +1404,7 @@ public class DettaglioColloquioView extends ViewPart {
 				if ((colloquio.getCriteriRicerca() != null) &&
 					(colloquio.getCriteriRicerca().size() != 0)){
 					
-					PopUpEditRicerca puER = new PopUpEditRicerca();
+					PopUpEditRicerca puER = new PopUpEditRicerca((DettaglioColloquioView)getViewSite().getPart(),"setCriteriColloquio");
 					getRicerca().setTipo(RicercheVO.RICERCHE_IMMOBILI);
 					puER.setRicerca(getRicerca());										
 				}else{

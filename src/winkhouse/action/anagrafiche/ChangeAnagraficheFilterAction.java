@@ -36,7 +36,7 @@ public class ChangeAnagraficheFilterAction extends Action {
 		}else{
 			WinkhouseUtils.getInstance()
 						  .setAngraficheFilterType(WinkhouseUtils.RICHIEDENTI);
-			setToolTipText("Visualizza solo i propietari");
+			setToolTipText("Visualizza solo i proprietari");
 			setImageDescriptor(Activator.getImageDescriptor("icons/anagrafica16.png"));
 		}
 		if (WinkhouseUtils.getInstance().isAnagraficheFiltered()){

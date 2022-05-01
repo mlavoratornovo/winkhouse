@@ -2,17 +2,28 @@ package winkhouse.view.winkcloud;
 
 import java.util.ArrayList;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
@@ -20,6 +31,11 @@ import org.eclipse.ui.part.ViewPart;
 import winkhouse.Activator;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.model.winkcloud.CloudQueryOrigin;
+import winkhouse.perspective.ImmobiliPerspective;
+import winkhouse.view.immobili.DettaglioImmobileView;
+import winkhouse.view.immobili.handler.DettaglioImmobiliHandler;
+import winkhouse.vo.ImmobiliVO;
 
 public class ResultsView extends ViewPart {
 
@@ -33,6 +49,8 @@ public class ResultsView extends ViewPart {
 	private Image anagrafica = Activator.getImageDescriptor("icons/anagrafica_16.png").createImage();
 	private Image viewicon = Activator.getImageDescriptor("icons/view_text.png").createImage();
 	
+	private CloudQueryOrigin cqo = null;
+	
 	public ResultsView() {
 		// TODO Auto-generated constructor stub
 	}
@@ -43,7 +61,7 @@ public class ResultsView extends ViewPart {
 		ft = new FormToolkit(getViewSite().getShell().getDisplay());
 		f = ft.createForm(parent);
 		f.setImage(viewicon);
-		f.setText("Richieste ricevute");
+		f.setText("Dati ricevuti o inviati");
 		f.getBody().setLayout(new GridLayout());
 
 		GridData gdExpVH = new GridData();
@@ -52,10 +70,12 @@ public class ResultsView extends ViewPart {
 		gdExpVH.horizontalAlignment = SWT.FILL;
 		gdExpVH.verticalAlignment = SWT.FILL;	
 
-		tvResults = new TableViewer(f.getBody(),SWT.HORIZONTAL|SWT.VERTICAL|SWT.FULL_SELECTION);
+		
+		tvResults = new TableViewer(f.getBody(),SWT.HORIZONTAL|SWT.VERTICAL|SWT.FULL_SELECTION|SWT.H_SCROLL | SWT.V_SCROLL);
 		tvResults.getTable().setLayoutData(gdExpVH);
 		tvResults.getTable().setHeaderVisible(true);
 		tvResults.getTable().setLinesVisible(true);
+		
 		tvResults.setContentProvider(new IStructuredContentProvider(){
 
 			@Override
@@ -134,7 +154,42 @@ public class ResultsView extends ViewPart {
 
 		TableColumn tcPropietario = new TableColumn(tvResults.getTable(),SWT.CENTER,2);
 		tcPropietario.setWidth(400);
-		tcPropietario.setText("Propietrio");
+		tcPropietario.setText("Proprietrio");				
+		
+		Menu menuTable = new Menu(tvResults.getTable());
+		tvResults.getTable().setMenu(menuTable);
+		MenuItem mVisualizza = new MenuItem(menuTable, SWT.NONE);
+		mVisualizza.setText("Visualizza");
+		mVisualizza.addSelectionListener(new SelectionListener() {
+						
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IPerspectiveDescriptor ipd = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(ImmobiliPerspective.ID);
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(ipd);
+				DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance()
+						.getDettaglioImmobile((ImmobiliVO)((StructuredSelection)tvResults.getSelection()).getFirstElement());
+				
+				//tvResults.getSelection().toString(); 
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		MenuItem mImporta = new MenuItem(menuTable, SWT.NONE);
+		mImporta.setText("Importa");
+
+		tvResults.getTable().addListener(SWT.MenuDetect, new Listener() {
+			  @Override
+			  public void handleEvent(Event event) {
+			    if (tvResults.getTable().getSelectionCount() <= 0) {
+			      event.doit = false;
+			    }
+			  }
+			});
 
 	}
 
@@ -144,7 +199,7 @@ public class ResultsView extends ViewPart {
 
 	}
 
-	public void setResults(ArrayList results){
+	public void setResults(ArrayList results, CloudQueryOrigin cqo){
 		tvResults.setInput(results);
 	}
 }

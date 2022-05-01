@@ -73,7 +73,7 @@ public class NuovoRecapitoAction extends Action {
 		}else{
 			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 									  "Nuovo recapito",
-									  "Nessuna anagrafica presente, \n selezionare un dettaglio anagrafica o aggiungere delle anagrafiche propietarie all'immobile");
+									  "Nessuna anagrafica presente, \n selezionare un dettaglio anagrafica o aggiungere delle anagrafiche proprietarie all'immobile");
 		}
 		
 //		ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(rv.getAnagrafiche(),true);

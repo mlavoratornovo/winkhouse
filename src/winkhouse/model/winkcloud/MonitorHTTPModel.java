@@ -23,7 +23,7 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 	public final static long serialVersionUID = 1000001;
 	public final static String XMLTAG = "monitorhttp"; 
 	private CloudMonitorState stato = CloudMonitorState.PAUSA;
-	private HTTPConnector connector = null;
+	private HttpServerConnector connector = null;
 	private ArrayList<CloudQueryModel> cloudQueries = null;
 	private long pollingInterval = 5;	
 	private QueryFilesView qfv = null;
@@ -33,19 +33,22 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 	private String pathloadingFile = null;
 	private HashMap<String, RicercheXMLModel> ricercheServite = new HashMap<String, RicercheXMLModel>(); 
 	private TreeViewer tvMonitors = null;
+	private Integer port = null;
+	private Boolean login = null;
 	
 	public MonitorHTTPModel() {		
 	}
 
-	public MonitorHTTPModel(HTTPConnector connector) {
+	public MonitorHTTPModel(HttpServerConnector connector) {
 		this.connector = connector;
 		httpHelper = new HTTPHelper();
 	}
 	
 	
+	
 	@Override
 	public void start() {
-		job = new HTTPJob("Monitor Ascolto HTTP", this);
+		job = new HTTPJob("Monitor Ascolto HTTP", this, qfv);
 		job.schedule();
 	}
 
@@ -62,6 +65,7 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 		}
 		return cloudQueries;
 	}
+	
 
 	@Override
 	public CloudMonitorState getStato() {
@@ -103,7 +107,7 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 			XMLExportHelper xmleh = new XMLExportHelper();
 			HashMap item = new HashMap();
 			
-			item.put(((HTTPConnector)getConnector()).getUrl(), this);		
+			item.put(((HttpServerConnector)getConnector()).getPort(), this);
 			xmleh.exportSelection(item, pathFileName);
 			
 		}catch(Exception e){
@@ -118,11 +122,11 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 		this.qfv = qfv;
 	}
 
-	public HTTPConnector getConnector() {
+	public HttpServerConnector getConnector() {
 		return connector;
 	}
 
-	public void setConnector(HTTPConnector connector) {
+	public void setConnector(HttpServerConnector connector) {
 		this.connector = connector;
 	}
 	
@@ -138,7 +142,7 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 		
 		if (getConnector() != null){
 		
-			return ((HTTPConnector)getConnector()).getCode()+"@"+((HTTPConnector)getConnector()).getUrl();
+			return ((HttpServerConnector)getConnector()).getPort().toString()+"@"+String.valueOf(((HttpServerConnector)getConnector()).isLogin());
 			
 		}
 		return super.toString();
@@ -193,7 +197,7 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 			
 			arg1.setPollingIntervall(arg0.getAttribute("pollingIntervall", 5));	
 			arg1.setPathloadingFile(arg0.getAttribute("pathloadingFile", null));
-			arg1.setConnector((HTTPConnector)arg0.getNext());			
+			arg1.setConnector((HttpServerConnector)arg0.getNext());			
 			try{
 				arg1.setRicerche(new ArrayList((FastList)arg0.getNext()));
 			}catch(Exception e){
@@ -252,11 +256,11 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 	}
 
 	public boolean checkStatus(){
-		return httpHelper.checkStatus((HTTPConnector)getConnector());
+		return httpHelper.checkStatus((HttpServerConnector)getConnector());
 	}
 	
 	public String getCode(){
-		return httpHelper.getCode((HTTPConnector)getConnector());
+		return httpHelper.getCode((HttpServerConnector)getConnector());
 	}
 
 	public String getPathloadingFile() {

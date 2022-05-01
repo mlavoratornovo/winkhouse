@@ -50,6 +50,7 @@ public class WinkCloudPage extends PreferencePage {
 	private Image delbutton = Activator.getImageDescriptor("icons/edittrash.png").createImage();
 	private Image winkcloudbutton = Activator.getImageDescriptor("icons/winkclouid.png").createImage();
 	private Text winkID = null;
+	private Button add = null; 
 	
 	public WinkCloudPage() {
 	}
@@ -80,220 +81,46 @@ public class WinkCloudPage extends PreferencePage {
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		gridData.minimumHeight = 25;
 		GridData gridDataHV = new GridData(SWT.FILL, SWT.FILL, true, true);
-
 		
 		toolkit.paintBordersFor(form.getBody());
 		
-		Label l_uuid = toolkit.createLabel(form.getBody(), "ID WinkCloud");
+		Label l_uuid = toolkit.createLabel(form.getBody(), "Porta di ascolto");
 		l_uuid.setBackground(l_uuid.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-
-		Composite cid = toolkit.createComposite(form.getBody());
-		cid.setLayout(new GridLayout(2,false));
-		cid.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
-		cid.setBackground(cid.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		
-		winkID = toolkit.createText(cid, WinkhouseUtils.getInstance().getPreferenceStore().getString("winkcloudid"), SWT.FLAT);
+		winkID = toolkit.createText(form.getBody(), WinkhouseUtils.getInstance().getPreferenceStore().getString("winkcloudid"), SWT.FLAT);
 		winkID.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
-		
-		Button getid = toolkit.createButton(cid, null, SWT.FLAT);
-		getid.setImage(winkcloudbutton);
-		getid.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseUp(MouseEvent e) {
-				winkID.setText(UUID.randomUUID().toString().replace("-", ""));
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-		});
-		
-		Label l_login = toolkit.createLabel(form.getBody(), "Url servizio winkcloud");
+		winkID.setText((WinkhouseUtils.getInstance().getPreferenceStore().getString("winkcloudport")!="" && WinkhouseUtils.getInstance().getPreferenceStore().getString("winkcloudport")!=null)
+						? WinkhouseUtils.getInstance().getPreferenceStore().getString("winkcloudport")
+						: "80");
+		Label l_login = toolkit.createLabel(form.getBody(), "Consenti solo utenti registrati");
 		l_login.setBackground(l_login.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		
-		Composite cbuttons = toolkit.createComposite(form.getBody());
-		cbuttons.setLayout(new RowLayout());
-		cbuttons.setBackground(cbuttons.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		add = toolkit.createButton(form.getBody(), null, SWT.CHECK);
+		add.setSelection(WinkhouseUtils.getInstance().getPreferenceStore().getBoolean("onlyregisteredusers"));
 		
-		Button add = toolkit.createButton(cbuttons, null, SWT.FLAT);
-		add.setImage(addbutton);
-		add.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseUp(MouseEvent e) {
-				
-				urlsvalue = (urlsvalue == null)? new ArrayList<String>():urlsvalue;
-				urlsvalue.add("nuovo url");
-				turls.setInput(urlsvalue);
-				
-				TableItem ti = turls.getTable().getItem(turls.getTable().getItemCount()-1);
-				Object[] sel = new Object[1];
-				sel[0] = ti.getData();
-		
-				StructuredSelection ss = new StructuredSelection(sel);
-				
-				turls.setSelection(ss, true);
-
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-		});
-		
-		Button del = toolkit.createButton(cbuttons, null, SWT.FLAT);
-		del.setImage(delbutton);
-		del.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseUp(MouseEvent e) {
-				
-				if (turls.getSelection() != null && ((StructuredSelection)turls.getSelection()).getFirstElement() != null){
-					
-					for (Iterator iterator = urlsvalue.iterator(); iterator.hasNext();) {
-						String string = (String) iterator.next();
-						if (string.equalsIgnoreCase((String)((StructuredSelection)turls.getSelection()).getFirstElement())){
-							urlsvalue.remove(string);
-							break;
-						}						
-					}
-					
-					turls.setInput(urlsvalue);
-					
-				}else{
-					MessageDialog.openWarning(turls.getTable().getShell(), "Eliminazione url", "Selezionare un url da eliminare");
-				}	
-				
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-		});
-		
-		turls = new TableViewer(form.getBody());
-		turls.setContentProvider(new IStructuredContentProvider() {
-			
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			}
-			
-			@Override
-			public void dispose() {
-			}
-			
-			@Override
-			public Object[] getElements(Object inputElement) {	
-				return (inputElement instanceof ArrayList)?(((ArrayList<String>)inputElement).toArray()):null;
-			}
-		});		
-		
-		turls.getTable().setLayoutData(gridDataHV);
-		turls.getTable().setLinesVisible(true);		
-		turls.getTable().setHeaderVisible(true);
-		
-	    TableColumn column = new TableColumn(turls.getTable(),SWT.CENTER,0);
-	    column.setText("Url");
-	    column.setWidth(300);
-	    
-	    tceurl = new TextCellEditor(turls.getTable());
-	    
-	    TableViewerColumn tvc = new TableViewerColumn(turls, column);
-	    tvc.setLabelProvider(new CellLabelProvider() {
-			
-			@Override
-			public void update(ViewerCell cell) {
-				String url = ((String)cell.getElement());
-				cell.setText(url);				
-			}
-		});
-	    
-	    tvc.setEditingSupport(new EditingSupport(turls) {
-			
-			@Override
-			protected void setValue(Object element, Object value) {
-				
-				for (int i = 0; i < urlsvalue.size(); i++) {
-					if (urlsvalue.get(i).equalsIgnoreCase((String)element)){
-						urlsvalue.set(i, (String)value);
-						break;
-					}
-				}
-				turls.refresh();
-						
-			}
-			
-			@Override
-			protected Object getValue(Object element) {				
-				return element;
-			}
-			
-			@Override
-			protected CellEditor getCellEditor(Object element) {
-				return tceurl;
-			}
-			
-			@Override
-			protected boolean canEdit(Object element) {
-				return true;
-			}
-		});
-	    
-	    String urls = WinkhouseUtils.getInstance().getPreferenceStore().getString("winkcloudurls");
-	    if ((urls != null) && (urls.trim().equalsIgnoreCase(""))){
-	    	urls = WinkhouseUtils.getInstance().getPreferenceStore().getDefaultString("winkcloudurls");
-	    }
-	    String[] values = urls.split(";");
-	    if (values.length == 1 && values[0].equalsIgnoreCase("")){
-	    	urlsvalue = null;	
-	    }else{
-	    	urlsvalue = new ArrayList<String>(Arrays.asList(values));
-	    }
-	    
-	    
-	    turls.setInput(urlsvalue);
-
 		return form;
 	}
 
 	@Override
 	protected void performApply() {
-		
-		StringBuffer stringvalue = new StringBuffer();
-		
-		for (Iterator iterator = urlsvalue.iterator(); iterator.hasNext();) {
-			String string = (String) iterator.next();
-			stringvalue.append(string);
-			stringvalue.append(";");			
+		try {
+			Integer linsteningPort = Integer.valueOf(winkID.getText());
+			if (linsteningPort > 0 && linsteningPort < 65535){
+				WinkhouseUtils.getInstance().getPreferenceStore().setValue("winkcloudport", linsteningPort);
+			}else{
+				MessageDialog.openError(this.getShell(), "Errore valore porta ascolto", "Il valore assegnato alla porta di ascolto deve essere un numero compreso tra 0 e 65535");
+			}
+			WinkhouseUtils.getInstance().getPreferenceStore().setValue("onlyregisteredusers", add.getSelection());
+		} catch (Exception e) {
+			MessageDialog.openError(this.getShell(), "Errore valore porta ascolto", "Il valore assegnato alla porta di ascolto deve essere un numero compreso tra 0 e 65535");
 		}
-		
-		if (stringvalue.length()>0){
-			stringvalue = stringvalue.deleteCharAt(stringvalue.length()-1);	
-		}
-				
-		WinkhouseUtils.getInstance().getPreferenceStore().setValue("winkcloudurls", stringvalue.toString());
-		WinkhouseUtils.getInstance().getPreferenceStore().setValue("winkcloudid", winkID.getText().trim());
-		
+			
 		try {
 			WinkhouseUtils.getInstance().getPreferenceStore().save();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {			
+			MessageDialog.openError(this.getShell(), "Errore nel salvataggio delle preferenze", e.getMessage());
 		}
-		
+			
 	}
 
 }

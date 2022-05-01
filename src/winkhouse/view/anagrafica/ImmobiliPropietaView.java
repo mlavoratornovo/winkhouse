@@ -44,7 +44,7 @@ public class ImmobiliPropietaView extends ViewPart {
 		FormToolkit ft = new FormToolkit(getViewSite().getShell().getDisplay());
 		Form f = ft.createForm(parent);
 		f.setImage(Activator.getImageDescriptor("icons/immobile.png").createImage());
-		f.setText("Immobili Propietà");
+		f.setText("Immobili Proprietà");
 		f.getBody().setLayout(new GridLayout());
 		
 		GridData gdFillHV = new GridData();

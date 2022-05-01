@@ -53,12 +53,12 @@ public class AnagrafichePropietarieView extends ViewPart {
 		FormToolkit ft = new FormToolkit(getViewSite().getShell().getDisplay());
 		Form f = ft.createForm(parent);
 		f.setImage(Activator.getImageDescriptor("icons/anagraficaImmobile.png").createImage());
-		f.setText("Anagrafiche Propietarie");
+		f.setText("Anagrafiche Proprietarie");
 		f.getBody().setLayout(new GridLayout());
 
 		openPopUpAnagrafiche = new OpenPopUpAnagrafiche();
 		
-		cancellaAnagraficaPropietariaAction = new CancellaAnagraficaPropietariaAction("elimina propietario da immobile",
+		cancellaAnagraficaPropietariaAction = new CancellaAnagraficaPropietariaAction("elimina proprietario da immobile",
 																					  Activator.getImageDescriptor("icons/edittrash.png"));
 		
 		refreshAnagrafichePropietarieAction = new RefreshAnagrafichePropietarieAction("rileggi dati da archivio",

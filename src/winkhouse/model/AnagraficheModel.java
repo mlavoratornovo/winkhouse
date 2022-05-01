@@ -14,6 +14,7 @@ import winkhouse.dao.EntityDAO;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.engine.search.ImmobiliSearchEngine;
 import winkhouse.helper.ProfilerHelper;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.AnagraficheVO;
@@ -55,6 +56,10 @@ public class AnagraficheModel extends AnagraficheVO implements IEntityAttribute{
 	}
 	
 	public AnagraficheModel(ResultSet rs) throws SQLException {
+		super(rs);
+	}
+
+	public AnagraficheModel(Anagrafiche rs) {
 		super(rs);
 	}
 

@@ -270,7 +270,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti AgentiVO, che hanno le propietà di nome, cognome, citta e indirizzo uguali 
+	 * Ritorna una lista di oggetti AgentiVO, che hanno le proprietà di nome, cognome, citta e indirizzo uguali 
 	 * all'oggetto passato in input.
 	 * 
 	 * @param agente
@@ -307,7 +307,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti TipiAppuntamentiVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipiAppuntamentiVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipoAppuntamento
@@ -346,7 +346,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti ClassiClientiVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti ClassiClientiVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeCliente
@@ -386,7 +386,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti ClasseEnergeticaVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti ClasseEnergeticaVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeEnergetica
@@ -426,7 +426,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti RiscaldamentiVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti RiscaldamentiVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeCliente
@@ -466,7 +466,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti StatoConservativoVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti StatoConservativoVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param statoConservativo
@@ -506,7 +506,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti TipologieImmobiliVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipologieImmobiliVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipologiaImmobile
@@ -575,7 +575,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti AllegatiImmobiliVO, con propietà nome uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti AllegatiImmobiliVO, con proprietà nome uguale a quella dell'oggetto, 
 	 * di tipo AllegatiImmobiliVO passato in input.
 	 * Vengono inoltre filtrati per l'immobile passato in input. (Utilizzare il metodo getImmobiliExist 
 	 * della classe winkhouse.export.helpers.ImmobiliHelper.getImmobiliExist per individuare una lista di immobili da passare
@@ -610,7 +610,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti AllegatiColloquiVO, con propietà nome uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti AllegatiColloquiVO, con proprietà nome uguale a quella dell'oggetto, 
 	 * di tipo AllegatiColloquiVO passato in input.
 	 * Vengono inoltre filtrati per l'immobile passato in input. (Utilizzare il metodo getImmobiliExist 
 	 * della classe winkhouse.export.helpers.getImmobiliExist per individuare una lista di immobili da passare
@@ -645,7 +645,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti DatiCatastaliVO, con propietà categoria, foglio, particella, subalterno uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti DatiCatastaliVO, con proprietà categoria, foglio, particella, subalterno uguale a quella dell'oggetto, 
 	 * di tipo DatiCatastaliVO passato in input.
 	 * Vengono inoltre filtrati per l'immobile passato in input. (Utilizzare il metodo getImmobiliExist 
 	 * della classe winkhouse.export.helpers.ImmobiliHelper.getImmobiliExist per individuare una lista di immobili da passare
@@ -685,7 +685,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti CriteriRicercaModel, con propietà getterMethodName, fromValue, toValue, logicalOperator, lineNumber,
+	 * Ritorna una lista di oggetti CriteriRicercaModel, con proprietà getterMethodName, fromValue, toValue, logicalOperator, lineNumber,
 	 * uguale a quella dell'oggetto di tipo CriteriRicercaModel passato in input.
 	 * Vengono inoltre filtrati per il colloquio passato in input. (Utilizzare il metodo getColloquiExist 
 	 * della classe winkhouse.export.helpers.ColloquiHelper.getColloquiExist per individuare una lista di immobili da passare
@@ -725,7 +725,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti ContattiVO, con propietà contatto uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti ContattiVO, con proprietà contatto uguale a quella dell'oggetto, 
 	 * di tipo ContattiVO passato in input.
 	 * 
 	 * @param contatto
@@ -744,7 +744,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti TipologiaStanzeVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipologiaStanzeVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipologiaStanze
@@ -764,7 +764,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna un oggetto ImmobiliPropietariVO, con propietà descrizione uguale a quella  
+	 * Ritorna un oggetto ImmobiliPropietariVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param immobiliPropietariVO
@@ -800,7 +800,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti TipologiaContattiVO, con propietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipologiaContattiVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipologiaStanze

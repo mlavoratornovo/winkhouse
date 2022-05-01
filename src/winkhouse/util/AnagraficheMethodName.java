@@ -3,6 +3,7 @@ package winkhouse.util;
 
 public interface AnagraficheMethodName {
 	
+	public String GET_CODANAGRAFICA = "getCodAnagrafica";
 	public String GET_NOME = "getNome";
 	public String GET_COGNOME = "getCognome";
 	public String GET_INDIRIZZO = "getIndirizzo";

@@ -3,7 +3,12 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Colloqui;
 
 public class ColloquiVO implements Serializable{
 
@@ -70,6 +75,36 @@ public class ColloquiVO implements Serializable{
 		}
 		
 		dateUpdate = rs.getTimestamp("DATEUPDATE");		
+		
+	}
+
+	public ColloquiVO(Colloqui rs) {
+		codColloquio = (int) Cayenne.longPKForObject(rs);
+		descrizione = rs.getDescrizione();
+		codAgenteInseritore = (rs.getAgenti1() != null)?Cayenne.intPKForObject(rs.getAgenti1()):null;
+		
+		codImmobileAbbinato = (rs.getImmobili() != null)?Cayenne.intPKForObject(rs.getImmobili()):null;
+		
+		codTipologiaColloquio = rs.getCodtipologiacolloquio();
+		
+		dataInserimento = (rs.getDatainserimento() != null)
+				? java.util.Date.from(rs.getDatainserimento().atZone(ZoneId.systemDefault()).toInstant())
+				:null;
+		dataColloquio = (rs.getDatacolloquio() != null)
+				? java.util.Date.from(rs.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant())
+				:null;		
+		luogoIncontro = rs.getLuogo();
+		scadenziere = rs.isScadenziere();
+		commentoAgenzia = rs.getCommentoagenzia();
+		commentoCliente = rs.getCommentocliente();
+		codParent = (rs.getColloqui() != null)?Cayenne.intPKForObject(rs.getColloqui()):null;
+		
+		iCalUid = rs.getIcaluid();
+		codUserUpdate = (rs.getAgenti() != null)?Cayenne.intPKForObject(rs.getAgenti()):null;
+		
+		dateUpdate = (rs.getDateupdate() != null)
+				? java.util.Date.from(rs.getDateupdate().atZone(ZoneId.systemDefault()).toInstant())
+				:null;		
 		
 	}
 	

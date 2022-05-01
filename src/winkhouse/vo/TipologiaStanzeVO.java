@@ -3,7 +3,12 @@ package winkhouse.vo;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
+
+import org.apache.cayenne.Cayenne;
+
+import winkhouse.orm.Tipologiastanze;
 
 public class TipologiaStanzeVO implements Serializable{
 
@@ -25,6 +30,16 @@ public class TipologiaStanzeVO implements Serializable{
 		}
 		
 		dateUpdate = rs.getTimestamp("DATEUPDATE");		
+
+	}
+
+	public TipologiaStanzeVO(Tipologiastanze rs){
+		codTipologiaStanza = (int) Cayenne.longPKForObject(rs);
+		descrizione = rs.getDescrizione();	
+		codUserUpdate = (rs.getAgenti() != null)?(int) Cayenne.longPKForObject(rs):null;
+		
+		dateUpdate = (rs.getDateupdate() != null)?java.util.Date.from(rs.getDateupdate()
+				.atZone(ZoneId.systemDefault()).toInstant()):null;
 
 	}
 

@@ -1,5 +1,8 @@
 package winkhouse.wizard;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoObservables;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -31,10 +34,20 @@ public class PopUpEditRicerca {
 	private Text nome = null;
 	private Text descrizione = null;
 	private RicercheModel ricerche = null;
-	
+	private Object callerObj = null;
+	private String setterMethodName = null;
+
 	public PopUpEditRicerca() {
 		createContent();
 	}
+	
+	public PopUpEditRicerca(Object callerObj, String methodName) {
+		createContent();
+		setSetterMethodName(methodName);
+		setCallerObj(callerObj);
+	}
+	
+	
 	
 	private void createContent(){
 		popup = new Shell(Activator.getDefault().getWorkbench()
@@ -116,6 +129,7 @@ public class PopUpEditRicerca {
 		  						  						  		.getShell(), 
 		  						  					 "Salvataggio ricerca", 
 													 "Salvataggio ricerca eseguito correttamente");
+						returnValue(ricerche);
 						popup.close();
 						
 					}
@@ -191,5 +205,46 @@ public class PopUpEditRicerca {
 				                 null, 
 				                 null);
 	}
+	
+	public Object getCallerObj() {
+		return callerObj;
+	}
+
+	private void setCallerObj(Object callerObj) {
+		this.callerObj = callerObj;
+	}
+
+	public String getSetterMethodName() {
+		return setterMethodName;
+	}
+
+	private void setSetterMethodName(String setterMethodName) {
+		this.setterMethodName = setterMethodName;
+	}
+	
+	private void returnValue(RicercheModel returnObj){
+		
+		if ((callerObj != null) && (setterMethodName != null)){
+		
+				try {
+					Method m = callerObj.getClass().getMethod(setterMethodName, RicercheModel.class);
+					m.invoke(callerObj, returnObj);			
+					popup.close();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			
+		}
+		
+	}
+
 
 }
