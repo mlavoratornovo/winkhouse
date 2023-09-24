@@ -1,0 +1,1041 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<javolution.util.FastMap>
+<Key class="java.lang.String" value="SET_TRANSACTION_CONTROL_MVLOCK"/>
+<Value class="java.lang.String" value="SET DATABASE TRANSACTION CONTROL MVLOCKS"/>
+<Key class="java.lang.String" value="DELETE_APPUNTAMENTO"/>
+<Value class="java.lang.String" value="DELETE FROM APPUNTAMENTI WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="INSERT_APPUNTAMENTO"/>
+<Value class="java.lang.String" value="INSERT INTO APPUNTAMENTI (DATAINSERIMENTO,DATAAPPUNTAMENTO,DESCRIZIONE,LUOGO,DATAFINEAPPUNTAMENTO,ICALUID,CODTIPOAPPUNTAMENTO,CODPADRE,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_APPUNTAMENTO"/>
+<Value class="java.lang.String" value="UPDATE APPUNTAMENTI SET DATAINSERIMENTO = ?,DATAAPPUNTAMENTO = ?,DESCRIZIONE = ?,LUOGO = ?,DATAFINEAPPUNTAMENTO = ?,ICALUID = ?,CODTIPOAPPUNTAMENTO = ?,CODPADRE = ?, CODUSERUPDATE = ?,DATEUPDATE = ? WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="LIST_APPUNTAMENTI_AGENTI_DA_A"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI A INNER JOIN AGENTIAPPUNTAMENTI AP ON A.CODAPPUNTAMENTO = AP.CODAPPUNTAMENTO WHERE AP.CODAGENTE = ? AND A.DATAAPPUNTAMENTO >= ? AND A.DATAAPPUNTAMENTO <= ?"/>
+<Key class="java.lang.String" value="LIST_APPUNTAMENTI_DA_A"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI A INNER JOIN AGENTIAPPUNTAMENTI AP ON A.CODAPPUNTAMENTO = AP.CODAPPUNTAMENTO WHERE A.DATAAPPUNTAMENTO >= ? AND A.DATAAPPUNTAMENTO <= ?"/>
+<Key class="java.lang.String" value="LIST_APPUNTAMENTI_BY_ANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI A INNER JOIN ANAGRAFICHEAPPUNTAMENTI AP ON A.CODAPPUNTAMENTO = AP.CODAPPUNTAMENTO WHERE AP.CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="DELETE_AGENTIAPPUNTAMENTI"/>
+<Value class="java.lang.String" value="DELETE FROM AGENTIAPPUNTAMENTI WHERE CODAGENTIAPPUNTAMENTI = ?"/>
+<Key class="java.lang.String" value="DELETE_AGENTIAPPUNTAMENTI_BY_CODAGENTE"/>
+<Value class="java.lang.String" value="DELETE FROM AGENTIAPPUNTAMENTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="DELETE_AGENTIAPPUNTAMENTI_BY_CODAPPUNTAMENTO"/>
+<Value class="java.lang.String" value="DELETE FROM AGENTIAPPUNTAMENTI WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="INSERT_AGENTIAPPUNTAMENTI"/>
+<Value class="java.lang.String" value="INSERT INTO AGENTIAPPUNTAMENTI (CODAGENTE,CODAPPUNTAMENTO,NOTE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AGENTIAPPUNTAMENTI"/>
+<Value class="java.lang.String" value="UPDATE AGENTIAPPUNTAMENTI SET CODAGENTE = ?,CODAPPUNTAMENTO = ?,NOTE = ? WHERE CODAGENTIAPPUNTAMENTI = ?"/>
+<Key class="java.lang.String" value="LIST_AGENTIAPPUNTAMENTI_BY_CODAPPUNTAMENTO"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTIAPPUNTAMENTI WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="LIST_AGENTIAPPUNTAMENTI_BY_CODAGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTIAPPUNTAMENTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="UPDATE_AGENTIAPPUNTAMENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AGENTIAPPUNTAMENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_ANAGRAFICHEAPPUNTAMENTI"/>
+<Value class="java.lang.String" value="DELETE FROM ANAGRAFICHEAPPUNTAMENTI WHERE CODAGENTEAPPUNTAMENTI = ?"/>
+<Key class="java.lang.String" value="DELETE_ANAGRAFICHEAPPUNTAMENTI_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM ANAGRAFICHEAPPUNTAMENTI WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="DELETE_ANAGRAFICHEAPPUNTAMENTI_BY_CODAPPUNTAMENTO"/>
+<Value class="java.lang.String" value="DELETE FROM ANAGRAFICHEAPPUNTAMENTI WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="INSERT_ANAGRAFICHEAPPUNTAMENTI"/>
+<Value class="java.lang.String" value="INSERT INTO ANAGRAFICHEAPPUNTAMENTI (CODANAGRAFICA,CODAPPUNTAMENTO,NOTE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ANAGRAFICHEAPPUNTAMENTI"/>
+<Value class="java.lang.String" value="UPDATE ANAGRAFICHEAPPUNTAMENTI SET CODANAGRAFICA = ?,CODAPPUNTAMENTO = ?,NOTE = ? WHERE CODANAGRAFICHEAPPUNTAMENTI = ?"/>
+<Key class="java.lang.String" value="LIST_ANAGRAFICHEAPPUNTAMENTI_BY_CODAPPUNTAMENTO"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHEAPPUNTAMENTI WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="LIST_ANAGRAFICHEAPPUNTAMENTI_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHEAPPUNTAMENTI WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="UPDATE_ANAGRAFICHEAPPUNTAMENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ANAGRAFICHEAPPUNTAMENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="FIND_ABBINAMENTI_BY_CODIMMOBILE_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM ABBINAMENTI WHERE CODIMMOBILE = ? AND CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="FIND_ABBINAMENTI_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM ABBINAMENTI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_ABBINAMENTI_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM ABBINAMENTI WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="FIND_ABBINAMENTO_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ABBINAMENTI WHERE CODABBINAMENTO = ?"/>
+<Key class="java.lang.String" value="INSERT_ABBINAMENTO"/>
+<Value class="java.lang.String" value="INSERT INTO ABBINAMENTI (CODIMMOBILE,CODANAGRAFICA) VALUES (?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ABBINAMENTO"/>
+<Value class="java.lang.String" value="UPDATE ABBINAMENTI SET CODIMMOBILE = ?, CODANAGRAFICA = ? WHERE CODABBINAMENTO = ?"/>
+<Key class="java.lang.String" value="UPDATE_ABBINAMENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ABBINAMENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_ABBINAMENTO"/>
+<Value class="java.lang.String" value="DELETE FROM ABBINAMENTI WHERE CODABBINAMENTO = ?"/>
+<Key class="java.lang.String" value="DELETE_ABBINAMENTO_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM ABBINAMENTI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="DELETE_ABBINAMENTO_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM ABBINAMENTI WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="LIST_TIPOLOGIE_IMMOBILI"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIEIMMOBILI"/>
+<Key class="java.lang.String" value="TIPOLOGIE_IMMOBILI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIEIMMOBILI WHERE CODTIPOLOGIAIMMOBILE = ?"/>
+<Key class="java.lang.String" value="INSERT_TIPOLOGIE_IMMOBILI"/>
+<Value class="java.lang.String" value="INSERT INTO TIPOLOGIEIMMOBILI (DESCRIZIONE) VALUES (?)"/>
+<Key class="java.lang.String" value="UPDATE_TIPOLOGIE_IMMOBILI"/>
+<Value class="java.lang.String" value="UPDATE TIPOLOGIEIMMOBILI SET DESCRIZIONE = ? WHERE CODTIPOLOGIAIMMOBILE = ?"/>
+<Key class="java.lang.String" value="DELETE_TIPOLOGIE_IMMOBILI"/>
+<Value class="java.lang.String" value="DELETE FROM TIPOLOGIEIMMOBILI WHERE CODTIPOLOGIAIMMOBILE = ?"/>
+<Key class="java.lang.String" value="TIPOLOGIE_IMMOBILI_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIEIMMOBILI WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="UPDATE_TIPOLOGIEIMMOBILI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE TIPOLOGIEIMMOBILI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_CLASSI_CLIENTI"/>
+<Value class="java.lang.String" value="SELECT * FROM CLASSICLIENTE ORDER BY ORDINE DESC"/>
+<Key class="java.lang.String" value="CLASSI_CLIENTI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM CLASSICLIENTE WHERE CODCLASSECLIENTE = ?"/>
+<Key class="java.lang.String" value="INSERT_CLASSI_CLIENTI"/>
+<Value class="java.lang.String" value="INSERT INTO CLASSICLIENTE (DESCRIZIONE,ORDINE) VALUES (?,?)"/>
+<Key class="java.lang.String" value="UPDATE_CLASSI_CLIENTI"/>
+<Value class="java.lang.String" value="UPDATE CLASSICLIENTE SET DESCRIZIONE = ?, ORDINE = ? WHERE CODCLASSECLIENTE = ?"/>
+<Key class="java.lang.String" value="DELETE_CLASSI_CLIENTI"/>
+<Value class="java.lang.String" value="DELETE FROM CLASSICLIENTE WHERE CODCLASSECLIENTE = ?"/>
+<Key class="java.lang.String" value="CLASSI_CLIENTI_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM CLASSICLIENTE WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="LISTA_RISCALDAMENTI"/>
+<Value class="java.lang.String" value="SELECT * FROM RISCALDAMENTI"/>
+<Key class="java.lang.String" value="RISCALDAMENTI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM RISCALDAMENTI WHERE CODRISCALDAMENTO = ?"/>
+<Key class="java.lang.String" value="INSERT_RISCALDAMENTI"/>
+<Value class="java.lang.String" value="INSERT INTO RISCALDAMENTI (DESCRIZIONE) VALUES (?)"/>
+<Key class="java.lang.String" value="UPDATE_RISCALDAMENTI"/>
+<Value class="java.lang.String" value="UPDATE RISCALDAMENTI SET DESCRIZIONE = ? WHERE CODRISCALDAMENTO = ?"/>
+<Key class="java.lang.String" value="DELETE_RISCALDAMENTI"/>
+<Value class="java.lang.String" value="DELETE FROM RISCALDAMENTI WHERE CODRISCALDAMENTO = ?"/>
+<Key class="java.lang.String" value="RISCALDAMENTI_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM RISCALDAMENTI WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="UPDATE_RISCALDAMENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE RISCALDAMENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_STATO_CONSERVATIVO"/>
+<Value class="java.lang.String" value="SELECT * FROM STATOCONSERVATIVO"/>
+<Key class="java.lang.String" value="UPDATE_STATOCONSERVATIVO_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE STATOCONSERVATIVO SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="STATO_CONSERVATIVO_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM STATOCONSERVATIVO WHERE CODSTATOCONSERVATIVO = ?"/>
+<Key class="java.lang.String" value="INSERT_STATO_CONSERVATIVO"/>
+<Value class="java.lang.String" value="INSERT INTO STATOCONSERVATIVO (DESCRIZIONE) VALUES (?)"/>
+<Key class="java.lang.String" value="UPDATE_STATO_CONSERVATIVO"/>
+<Value class="java.lang.String" value="UPDATE STATOCONSERVATIVO SET DESCRIZIONE = ? WHERE CODSTATOCONSERVATIVO = ?"/>
+<Key class="java.lang.String" value="DELETE_STATO_CONSERVATIVO"/>
+<Value class="java.lang.String" value="DELETE FROM STATOCONSERVATIVO WHERE CODSTATOCONSERVATIVO = ?"/>
+<Key class="java.lang.String" value="STATO_CONSERVATIVO_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM STATOCONSERVATIVO WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="LIST_STANZE"/>
+<Value class="java.lang.String" value="SELECT * FROM STANZEIMMOBILI"/>
+<Key class="java.lang.String" value="LISTA_STANZE_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM STANZEIMMOBILI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="LISTA_STANZE_BY_TIPOLOGIA"/>
+<Value class="java.lang.String" value="SELECT * FROM STANZEIMMOBILI WHERE CODTIPOLOGIASTANZA = ?"/>
+<Key class="java.lang.String" value="LISTA_STANZE_BY_IMMOBILE_TIPOLOGIA"/>
+<Value class="java.lang.String" value="SELECT * FROM STANZEIMMOBILI WHERE CODIMMOBILE = ? AND CODTIPOLOGIASTANZA = ?"/>
+<Key class="java.lang.String" value="STANZA_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM STANZEIMMOBILI WHERE CODSTANZEIMMOBILI = ?"/>
+<Key class="java.lang.String" value="INSERT_STANZA"/>
+<Value class="java.lang.String" value="INSERT INTO STANZEIMMOBILI (CODIMMOBILE,CODTIPOLOGIASTANZA,MQ) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_STANZA"/>
+<Value class="java.lang.String" value="UPDATE STANZEIMMOBILI SET CODIMMOBILE = ?, CODTIPOLOGIASTANZA = ?, MQ = ? WHERE CODSTANZEIMMOBILI = ?"/>
+<Key class="java.lang.String" value="UPDATE_STANZA_TIPOLOGIA"/>
+<Value class="java.lang.String" value="UPDATE STANZEIMMOBILI SET CODTIPOLOGIASTANZA = ? WHERE CODTIPOLOGIASTANZA = ?"/>
+<Key class="java.lang.String" value="UPDATE_STANZA_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE STANZEIMMOBILI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_STANZA"/>
+<Value class="java.lang.String" value="DELETE FROM STANZEIMMOBILI WHERE CODSTANZEIMMOBILI = ?"/>
+<Key class="java.lang.String" value="DELETE_STANZA_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM STANZEIMMOBILI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="LIST_TIPOLOGIE_STANZE"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIASTANZE"/>
+<Key class="java.lang.String" value="TIPOLOGIE_STANZE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIASTANZE WHERE CODTIPOLOGIASTANZE = ?"/>
+<Key class="java.lang.String" value="INSERT_TIPOLOGIE_STANZE"/>
+<Value class="java.lang.String" value="INSERT INTO TIPOLOGIASTANZE (DESCRIZIONE) VALUES (?)"/>
+<Key class="java.lang.String" value="UPDATE_TIPOLOGIE_STANZE"/>
+<Value class="java.lang.String" value="UPDATE TIPOLOGIASTANZE SET DESCRIZIONE = ? WHERE CODTIPOLOGIASTANZE = ?"/>
+<Key class="java.lang.String" value="DELETE_TIPOLOGIE_STANZE"/>
+<Value class="java.lang.String" value="DELETE FROM TIPOLOGIASTANZE WHERE CODTIPOLOGIASTANZE = ?"/>
+<Key class="java.lang.String" value="TIPOLOGIE_STANZE_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIASTANZE WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="UPDATE_TIPOLOGIESTANZE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE TIPOLOGIASTANZE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_TIPOLOGIE_CONTATTI"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIECONTATTI"/>
+<Key class="java.lang.String" value="UPDATE_TIPOLOGIECONTATTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE TIPOLOGIECONTATTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="TIPOLOGIE_CONTATTI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIECONTATTI WHERE CODTIPOLOGIACONTATTO = ?"/>
+<Key class="java.lang.String" value="INSERT_TIPOLOGIE_CONTATTI"/>
+<Value class="java.lang.String" value="INSERT INTO TIPOLOGIECONTATTI (DESCRIZIONE) VALUES (?)"/>
+<Key class="java.lang.String" value="UPDATE_TIPOLOGIE_CONTATTI"/>
+<Value class="java.lang.String" value="UPDATE TIPOLOGIECONTATTI SET DESCRIZIONE = ? WHERE CODTIPOLOGIACONTATTO = ?"/>
+<Key class="java.lang.String" value="DELETE_TIPOLOGIE_CONTATTI"/>
+<Value class="java.lang.String" value="DELETE FROM TIPOLOGIECONTATTI WHERE CODTIPOLOGIACONTATTO = ?"/>
+<Key class="java.lang.String" value="TIPOLOGIE_CONTATTI_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPOLOGIECONTATTI WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="LISTA_CONTATTI_ANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM CONTATTI WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="LISTA_CONTATTI_TIPOLOGIA"/>
+<Value class="java.lang.String" value="SELECT * FROM CONTATTI WHERE CODTIPOLOGIACONTATTO = ?"/>
+<Key class="java.lang.String" value="LISTA_CONTATTI_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM CONTATTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="LISTA_CONTATTI_CONTATTO"/>
+<Value class="java.lang.String" value="SELECT * FROM CONTATTI WHERE CONTATTO = ?"/>
+<Key class="java.lang.String" value="INSERT_CONTATTI"/>
+<Value class="java.lang.String" value="INSERT INTO CONTATTI (CONTATTO,DESCRIZIONE,CODTIPOLOGIACONTATTO,CODANAGRAFICA,CODAGENTE) VALUES (?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_CONTATTI"/>
+<Value class="java.lang.String" value="UPDATE CONTATTI SET CONTATTO = ?,DESCRIZIONE = ?,CODTIPOLOGIACONTATTO = ?,CODANAGRAFICA = ?,CODAGENTE = ? WHERE CODCONTATTO = ?"/>
+<Key class="java.lang.String" value="UPDATE_CONTATTI_TIPOLOGIA"/>
+<Value class="java.lang.String" value="UPDATE CONTATTI SET CODTIPOLOGIACONTATTO = ? WHERE CODTIPOLOGIACONTATTO = ?"/>
+<Key class="java.lang.String" value="DELETE_CONTATTI"/>
+<Value class="java.lang.String" value="DELETE FROM CONTATTI WHERE CODCONTATTO = ?"/>
+<Key class="java.lang.String" value="DELETE_CONTATTI_ANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM CONTATTI WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="DELETE_CONTATTI_AGENTE"/>
+<Value class="java.lang.String" value="DELETE FROM CONTATTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="CONTATTI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM CONTATTI WHERE CODCONTATTO = ?"/>
+<Key class="java.lang.String" value="LISTA_AGENTI"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTI"/>
+<Key class="java.lang.String" value="FIND_AGENTE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="DELETE_AGENTE"/>
+<Value class="java.lang.String" value="DELETE FROM AGENTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="INSERT_AGENTE"/>
+<Value class="java.lang.String" value="INSERT INTO AGENTI (COGNOME,NOME,INDIRIZZO,PROVINCIA,CAP,CITTA,USERNAME,PASSWORD) VALUES (?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AGENTE"/>
+<Value class="java.lang.String" value="UPDATE AGENTI SET COGNOME = ?,NOME = ?,INDIRIZZO = ?,PROVINCIA = ?,CAP = ?,CITTA = ?,USERNAME = ?,PASSWORD = ? WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="UPDATE_CONTATTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE CONTATTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="FIND_AGENTE_BY_NOME_COGNOME_CITTA_INDIRIZZO"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTI WHERE COGNOME = ? AND NOME = ? AND CITTA = ? AND INDIRIZZO = ?"/>
+<Key class="java.lang.String" value="LOGIN_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AGENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_IMMOBILI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LISTA_IMMOBILI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_ANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI I INNER JOIN IMMOBILIPROPIETARI IP ON I.CODIMMOBILE = IP.CODIMMOBILE WHERE IP.CODANAGRAFICA = ? AND STORICO = FALSE ORDER BY I.CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_ANAGRAFICA_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI I INNER JOIN IMMOBILIPROPIETARI IP ON I.CODIMMOBILE = IP.CODIMMOBILE WHERE IP.CODANAGRAFICA = ? AND STORICO = TRUE ORDER BY I.CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_ISAFFITTI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_ISAFFITTI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIA_ISAFFITTI_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_TIPOLOGIANULL_ISAFFITTI_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODTIPOLOGIA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODAGENTEINSERITORE = ? AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_AGENTENULL_INSERITORE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODAGENTEINSERITORE IS NULL AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_AGENTE_INSERITORE_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODAGENTEINSERITORE = ? AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_AGENTENULL_INSERITORE_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODAGENTEINSERITORE IS NULL AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_ISAFFITTI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_ISAFFITTI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTO_ISAFFITTI_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RISCALDAMENTONULL_ISAFFITTI_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODRISCALDAMENTO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_ISAFFITTI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_ISAFFITTI_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVO_ISAFFITTI_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_STATO_CONSERVATIVONULL_ISAFFITTI_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODSTATO IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="INSERT_IMMOBILI"/>
+<Value class="java.lang.String" value="INSERT INTO IMMOBILI (RIF,INDIRIZZO,NCIVICO,PROVINCIA,CAP,CITTA,ZONA,DATAINSERIMENTO,DATALIBERO,DESCRIZIONE,MUTUODESCRIZIONE,PREZZO,MUTUO,SPESE,VARIE,VISIONE,STORICO,AFFITTO,MQ,ANNOCOSTRUZIONE,CODAGENTEINSERITORE,CODANAGRAFICA,CODRISCALDAMENTO,CODSTATO,CODTIPOLOGIA,CODCLASSEENERGETICA,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET RIF = ?,INDIRIZZO = ?,NCIVICO = ?,PROVINCIA = ?,CAP = ?,CITTA = ?,ZONA = ?,DATAINSERIMENTO = ?,DATALIBERO = ?,DESCRIZIONE = ?,MUTUODESCRIZIONE = ?,PREZZO = ?,MUTUO = ?,SPESE = ?,VARIE = ?,VISIONE = ?,STORICO = ?,AFFITTO = ?,MQ = ?,ANNOCOSTRUZIONE = ?,CODAGENTEINSERITORE = ?,CODANAGRAFICA = ?,CODRISCALDAMENTO = ?,CODSTATO = ?,CODTIPOLOGIA = ?,CODCLASSEENERGETICA = ?, CODUSERUPDATE = ?, DATEUPDATE = ? WHERE CODIMMOBILE=?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODAGENTEINSERITORE = ? WHERE CODAGENTEINSERITORE = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_RISCALDAMENTO"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODRISCALDAMENTO = ? WHERE CODRISCALDAMENTO = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_STATO_CONSERVATIVO"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODSTATO = ? WHERE CODSTATO = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_TIPOLOGIA_IMMOBILI"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODTIPOLOGIA = ? WHERE CODTIPOLOGIA = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_IMMOBILI"/>
+<Value class="java.lang.String" value="DELETE FROM IMMOBILI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_RIF"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE RIF = ?"/>
+<Key class="java.lang.String" value="GET_MAX_CODIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI ORDER BY CODIMMOBILE DESC LIMIT 1"/>
+<Key class="java.lang.String" value="LISTA_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE STORICO = FALSE ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="LISTA_ANAGRAFICHE_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE STORICO = TRUE ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_CLASSE"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODCLASSECLIENTE = ? AND STORICO=FALSE ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_CLASSENULL"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODCLASSECLIENTE IS NULL AND STORICO=FALSE ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_CLASSE_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODCLASSECLIENTE = ? AND STORICO=TRUE ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_CLASSENULL_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODCLASSECLIENTE IS NULL AND STORICO=TRUE ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODAGENTEINSERITORE = ? ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_AGENTE_INSERITORENULL"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODAGENTEINSERITORE IS NULL ORDER BY CODANAGRAFICA"/>
+<Key class="java.lang.String" value="INSERT_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="INSERT INTO ANAGRAFICHE (NOME,COGNOME,RAGSOC,INDIRIZZO,NCIVICO,PROVINCIA,CAP,CITTA,DATAINSERIMENTO,COMMENTO,STORICO,CODCLASSECLIENTE,CODAGENTEINSERITORE,CODICEFISCALE,PIVA,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="UPDATE ANAGRAFICHE SET NOME=?,COGNOME=?,RAGSOC=?,INDIRIZZO=?,NCIVICO=?,PROVINCIA=?,CAP=?,CITTA=?,DATAINSERIMENTO=?,COMMENTO=?,STORICO=?,CODCLASSECLIENTE=?,CODAGENTEINSERITORE=?,CODICEFISCALE=?,PIVA=?,CODUSERUPDATE=?,DATEUPDATE=? WHERE CODANAGRAFICA=?"/>
+<Key class="java.lang.String" value="UPDATE_ANAGRAFICHE_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="UPDATE ANAGRAFICHE SET CODAGENTEINSERITORE=? WHERE CODAGENTEINSERITORE=?"/>
+<Key class="java.lang.String" value="UPDATE_ANAGRAFICHE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ANAGRAFICHE SET CODUSERUPDATE=? WHERE CODUSERUPDATE=?"/>
+<Key class="java.lang.String" value="UPDATE_ANAGRAFICHE_CLASSE"/>
+<Value class="java.lang.String" value="UPDATE ANAGRAFICHE SET CODCLASSECLIENTE=? WHERE CODCLASSECLIENTE=?"/>
+<Key class="java.lang.String" value="DELETE_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="DELETE FROM ANAGRAFICHE WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE CODIMMOBILEABBINATO = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE CODAGENTEINSERITORE = ?"/>
+<Key class="java.lang.String" value="INSERT_COLLOQUI"/>
+<Value class="java.lang.String" value="INSERT INTO COLLOQUI (DESCRIZIONE,CODAGENTEINSERITORE,CODIMMOBILEABBINATO,CODTIPOLOGIACOLLOQUIO,DATAINSERIMENTO,DATACOLLOQUIO,LUOGO,SCADENZIERE,COMMENTOAGENZIA,COMMENTOCLIENTE,CODPARENT,ICALUID,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUI"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUI SET DESCRIZIONE = ?,CODAGENTEINSERITORE = ?,CODIMMOBILEABBINATO = ?,CODTIPOLOGIACOLLOQUIO = ?,DATAINSERIMENTO = ?,DATACOLLOQUIO = ?,LUOGO = ?,SCADENZIERE = ?,COMMENTOAGENZIA = ?,COMMENTOCLIENTE = ?,CODPARENT = ?,ICALUID = ?,CODUSERUPDATE = ?,DATEUPDATE = ? WHERE CODCOLLOQUIO=?"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUI_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUI SET CODAGENTEINSERITORE = ? WHERE CODAGENTEINSERITORE = ?"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUI"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUI WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_ICALID"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C JOIN WINKGCALENDAR W ON C.CODCOLLOQUIO = W.CODCOLLOQUIO WHERE W.EVENTID = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_ANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT C.* FROM COLLOQUI C INNER JOIN COLLOQUIANAGRAFICHE CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODANAGRAFICA = ? AND C.CODTIPOLOGIACOLLOQUIO <> 1"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_ANAGRAFICA_ALLTYPES"/>
+<Value class="java.lang.String" value="SELECT C.* FROM COLLOQUI C INNER JOIN COLLOQUIANAGRAFICHE CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_ANAGRAFICA_RICERCA"/>
+<Value class="java.lang.String" value="SELECT C.* FROM COLLOQUI C INNER JOIN COLLOQUIANAGRAFICHE CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODANAGRAFICA = ? AND C.CODTIPOLOGIACOLLOQUIO = 1"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_TYPE"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE CODTIPOLOGIACOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_SCADENZIERE_AGENTI_DA_A"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C INNER JOIN COLLOQUIAGENTI CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODAGENTE = ? AND C.DATACOLLOQUIO >= ? AND C.DATACOLLOQUIO <= ? AND C.SCADENZIERE = TRUE"/>
+<Key class="java.lang.String" value="COLLOQUI_AGENTI_DA_A"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C INNER JOIN COLLOQUIAGENTI CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODAGENTE = ? AND C.DATACOLLOQUIO >= ? AND C.DATACOLLOQUIO <= ?"/>
+<Key class="java.lang.String" value="COLLOQUI_ANAGRAFICHE_DA_A"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C INNER JOIN COLLOQUIANAGRAFICHE CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODANAGRAFICA = ? AND C.DATACOLLOQUIO >= ? AND C.DATACOLLOQUIO <= ?"/>
+<Key class="java.lang.String" value="COLLOQUI_SCADENZIERE_DA_A"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C INNER JOIN COLLOQUIAGENTI CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE C.DATACOLLOQUIO >= ? AND C.DATACOLLOQUIO <= ? AND C.SCADENZIERE = TRUE"/>
+<Key class="java.lang.String" value="LIST_COLLOQUI_BY_PROPERTIES"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE DATACOLLOQUIO = ? AND DATAINSERIMENTO = ? AND SCADENZIERE = ? AND LUOGO = ? AND COMMENTOAGENZIA = ? AND COMMENTOCLIENTE = ? AND DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="LISTA_ALLEGATI_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM ALLEGATICOLLOQUIO WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="ALLEGATI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ALLEGATICOLLOQUIO WHERE CODALLEGATICOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="DELETE_ALLEGATI"/>
+<Value class="java.lang.String" value="DELETE FROM ALLEGATICOLLOQUIO WHERE CODALLEGATICOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="DELETE_ALLEGATI_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="DELETE FROM ALLEGATICOLLOQUIO WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="INSERT_ALLEGATI"/>
+<Value class="java.lang.String" value="INSERT INTO ALLEGATICOLLOQUIO (CODCOLLOQUIO,COMMENTO,NOME) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ALLEGATI"/>
+<Value class="java.lang.String" value="UPDATE ALLEGATICOLLOQUIO SET CODCOLLOQUIO = ?,COMMENTO = ?,NOME = ? WHERE CODALLEGATICOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="UPDATE_ALLEGATI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ALLEGATICOLLOQUIO SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_AGENTI_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIAGENTI WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_AGENTI_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIAGENTI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_AGENTI_BY_AGENTE_COLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIAGENTI WHERE CODAGENTE = ? AND CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="COLLOQUIO_AGENTI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIAGENTI WHERE CODCOLLOQUIOAGENTE = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_AGENTI"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUIAGENTI WHERE CODCOLLOQUIOAGENTE = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_AGENTI_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUIAGENTI WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="INSERT_COLLOQUIO_AGENTI"/>
+<Value class="java.lang.String" value="INSERT INTO COLLOQUIAGENTI (CODCOLLOQUIO,CODAGENTE,COMMENTO) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUIO_AGENTI"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUIAGENTI SET CODCOLLOQUIO = ?,CODAGENTE = ?,COMMENTO = ? WHERE CODCOLLOQUIOAGENTE = ?"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUIO_AGENTI_AGENTE"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUIAGENTI SET CODAGENTE = ? WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUIO_AGENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUIAGENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_ANAGRAFICHE_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIANAGRAFICHE WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="COLLOQUIO_ANAGRAFICHE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIANAGRAFICHE WHERE CODCOLLOQUIANAGRAFICHE = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUIANAGRAFICHE WHERE CODCOLLOQUIANAGRAFICHE = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_ANAGRAFICHE_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUIANAGRAFICHE WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIOANAGRAFICHE_BY_ANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUIANAGRAFICHE WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_ANAGRAFICA_BY_ANAGRAFICA_COLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUIANAGRAFICHE WHERE CODANAGRAFICA = ? AND CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="INSERT_COLLOQUIO_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="INSERT INTO COLLOQUIANAGRAFICHE (CODCOLLOQUIO,CODANAGRAFICA,DESCRIZIONE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUIO_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUIANAGRAFICHE SET CODCOLLOQUIO = ?,CODANAGRAFICA = ?,DESCRIZIONE = ? WHERE CODCOLLOQUIANAGRAFICHE = ?"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUIOANAGRAFICA_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUIANAGRAFICHE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIOCRITERIRICERCA_BY_CRITERIA"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUICRITERIRICERCA WHERE GETTERMETHODNAME = ? AND FROMVALUE = ? AND TOVALUE = ? AND LOGICALOPERATOR = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_CRITERI_RICERCA_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUICRITERIRICERCA WHERE CODCOLLOQUIO = ? AND CODRICERCA IS NULL"/>
+<Key class="java.lang.String" value="COLLOQUIO_CRITERI_RICERCA_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUICRITERIRICERCA WHERE CODCRITERIORICERCA = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_CRITERI_RICERCA"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUICRITERIRICERCA WHERE CODCRITERIORICERCA = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_CRITERI_RICERCA_BY_COLLOQUIO"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUICRITERIRICERCA WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="DELETE_COLLOQUIO_CRITERI_RICERCA_BY_RICERCA"/>
+<Value class="java.lang.String" value="DELETE FROM COLLOQUICRITERIRICERCA WHERE CODRICERCA = ? AND CODCOLLOQUIO IS NULL"/>
+<Key class="java.lang.String" value="INSERT_COLLOQUIO_CRITERI_RICERCA"/>
+<Value class="java.lang.String" value="INSERT INTO COLLOQUICRITERIRICERCA (CODCOLLOQUIO,GETTERMETHODNAME,FROMVALUE,TOVALUE,LOGICALOPERATOR,CODRICERCA,ISPERSONAL) VALUES (?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_COLLOQUIO_CRITERI_RICERCA"/>
+<Value class="java.lang.String" value="UPDATE COLLOQUICRITERIRICERCA SET CODCOLLOQUIO = ?,GETTERMETHODNAME = ?,FROMVALUE = ?,TOVALUE = ?,LOGICALOPERATOR = ?,CODRICERCA = ?,ISPERSONAL = ? WHERE CODCRITERIORICERCA = ?"/>
+<Key class="java.lang.String" value="LISTA_COLLOQUIO_CRITERI_RICERCA_BY_RICERCA"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUICRITERIRICERCA WHERE CODRICERCA = ?"/>
+<Key class="java.lang.String" value="GET_MAX_ORDINE_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="SELECT MAX(ORDINE) AS MAX FROM IMMAGINI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="IMMAGINI_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMAGINI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="IMMAGINI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMAGINI WHERE CODIMMAGINE = ?"/>
+<Key class="java.lang.String" value="DELETE_IMMAGINI_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM IMMAGINI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="DELETE_IMMAGINI"/>
+<Value class="java.lang.String" value="DELETE FROM IMMAGINI WHERE CODIMMAGINE = ?"/>
+<Key class="java.lang.String" value="INSERT_IMMAGINI"/>
+<Value class="java.lang.String" value="INSERT INTO IMMAGINI (CODIMMOBILE,ORDINE,PATHIMMAGINE,IMGPROPS) VALUES (?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_IMMAGINI"/>
+<Value class="java.lang.String" value="UPDATE IMMAGINI SET CODIMMOBILE = ?,ORDINE = ?,PATHIMMAGINE = ?,IMGPROPS = ? WHERE CODIMMAGINE = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMAGINI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE IMMAGINI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="REPORT_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM REPORT WHERE CODREPORT = ?"/>
+<Key class="java.lang.String" value="UPDATE_REPORT_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE REPORT SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="REPORT_BY_TIPOLOGIA"/>
+<Value class="java.lang.String" value="SELECT * FROM REPORT WHERE TIPO = ? AND ISLIST = FALSE"/>
+<Key class="java.lang.String" value="REPORT_LISTA_BY_TIPOLOGIA"/>
+<Value class="java.lang.String" value="SELECT * FROM REPORT WHERE TIPO = ? AND ISLIST = TRUE"/>
+<Key class="java.lang.String" value="INSERT_REPORT"/>
+<Value class="java.lang.String" value="INSERT INTO REPORT (NOME,TIPO,TEMPLATE,DESCRIZIONE,ISLIST,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_REPORT"/>
+<Value class="java.lang.String" value="UPDATE REPORT SET NOME = ?,TIPO = ?,TEMPLATE = ?,DESCRIZIONE = ?, ISLIST = ?, CODUSERUPDATE = ?, DATEUPDATE = ? WHERE CODREPORT = ?"/>
+<Key class="java.lang.String" value="DELETE_REPORT"/>
+<Value class="java.lang.String" value="DELETE FROM REPORT WHERE CODREPORT = ?"/>
+<Key class="java.lang.String" value="REPORTMARKERS_BY_CODREPORT"/>
+<Value class="java.lang.String" value="SELECT * FROM REPORTMARKERS WHERE CODREPORT = ?"/>
+<Key class="java.lang.String" value="UPDATE_REPORTMARKERS_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE REPORTMARKERS SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_REPORTMARKERS_BY_CODREPORT"/>
+<Value class="java.lang.String" value="DELETE FROM REPORTMARKERS WHERE CODREPORT = ?"/>
+<Key class="java.lang.String" value="DELETE_REPORTMARKERS_BY_ID"/>
+<Value class="java.lang.String" value="DELETE FROM REPORTMARKERS WHERE CODMARKER = ?"/>
+<Key class="java.lang.String" value="INSERT_REPORTMARKERS"/>
+<Value class="java.lang.String" value="INSERT INTO REPORTMARKERS (CODREPORT,TIPO,NOME,GETMETHODNAME,PARAMS,PARAMSDESC) VALUES (?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_REPORTMARKERS"/>
+<Value class="java.lang.String" value="UPDATE REPORTMARKERS SET CODREPORT = ?,TIPO = ?,NOME = ?,GETMETHODNAME = ?,PARAMS = ?,PARAMSDESC = ? WHERE CODMARKER = ?"/>
+<Key class="java.lang.String" value="LISTA_ALLEGATI_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM ALLEGATIIMMOBILI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="ALLEGATIIMMOBILE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ALLEGATIIMMOBILI WHERE CODALLEGATIIMMOBILI = ?"/>
+<Key class="java.lang.String" value="DELETE_ALLEGATIIMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM ALLEGATIIMMOBILI WHERE CODALLEGATIIMMOBILI = ?"/>
+<Key class="java.lang.String" value="DELETE_ALLEGATI_BY_IMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM ALLEGATIIMMOBILI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="INSERT_ALLEGATIIMMOBILE"/>
+<Value class="java.lang.String" value="INSERT INTO ALLEGATIIMMOBILI (CODIMMOBILE,COMMENTO,NOME) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ALLEGATIIMMOBILE"/>
+<Value class="java.lang.String" value="UPDATE ALLEGATIIMMOBILI SET CODIMMOBILE = ?,COMMENTO = ?,NOME = ? WHERE CODALLEGATIIMMOBILI = ?"/>
+<Key class="java.lang.String" value="UPDATE_ALLEGATIIMMOBILE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ALLEGATIIMMOBILI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTO_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE CODAFFITTI = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_BY_CODAGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE CODAGENTEINS = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE CODIMMOBILE = ? ORDER BY DATAINIZIO DESC"/>
+<Key class="java.lang.String" value="INSERT_AFFITTO"/>
+<Value class="java.lang.String" value="INSERT INTO AFFITTI (CODIMMOBILE,CODAGENTEINS,DATAINIZIO,DATAFINE,CAUZIONE,RATA,DESCRIZIONE,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTO"/>
+<Value class="java.lang.String" value="UPDATE AFFITTI SET CODIMMOBILE = ?,CODAGENTEINS = ?,DATAINIZIO = ?,DATAFINE = ?,CAUZIONE = ?,RATA = ?,DESCRIZIONE = ?,CODUSERUPDATE = ?,DATEUPDATE = ? WHERE CODAFFITTI = ?"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTI_AGENTE_INSERITORE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTI SET CODAGENTEINS = ? WHERE CODAGENTEINS = ?"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTI_IMMOBILE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTO"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTI WHERE CODAFFITTI = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTO_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_DATAINIZIO"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE (DATAINIZIO >= ? OR DATAFINE >= ? OR DATAFINE IS NULL) AND CODIMMOBILE = ? AND CODAFFITTI <> ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_NEXT_BETWEEN"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO >= ? AND DATAINIZIO <= ? AND CODIMMOBILE = ? AND CODAFFITTI <> ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_PREVIOUS_BETWEEN"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAFINE >= ? AND DATAFINE <= ? AND CODIMMOBILE = ? AND CODAFFITTI <> ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_CONTAIN_BETWEEN"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO <= ? AND DATAFINE >= ? AND CODIMMOBILE = ? AND CODAFFITTI <> ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_MIDDLE_BETWEEN"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO >= ? AND DATAINIZIO <= ? AND DATAFINE >= ? AND DATAFINE <= ? AND CODIMMOBILE = ? AND CODAFFITTI <> ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_NEXT_BETWEEN_2"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO >= ? AND DATAINIZIO <= ? AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_PREVIOUS_BETWEEN_2"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAFINE >= ? AND DATAFINE <= ? AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_CONTAIN_BETWEEN_2"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO <= ? AND DATAFINE >= ? AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_MIDDLE_BETWEEN_2"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO >= ? AND DATAINIZIO <= ? AND DATAFINE >= ? AND DATAFINE <= ? AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_DATAINIZIO_2"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE (DATAINIZIO >= ?  OR DATAFINE >= ? OR DATAFINE IS NULL) AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_IMMOBILE_DATA"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTI WHERE DATAINIZIO = ? AND DATAFINE = ? AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIANAGRAFICHE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIANAGRAFICHE WHERE CODAFFITTIANAGRAFICHE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIANAGRAFICHE_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIANAGRAFICHE WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIANAGRAFICHE_BY_CODAFFITTO_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIANAGRAFICHE WHERE CODAFFITTO = ? AND CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="INSERT_AFFITTIANAGRAFICHE"/>
+<Value class="java.lang.String" value="INSERT INTO AFFITTIANAGRAFICHE (CODAFFITTO,CODANAGRAFICA,NOTA) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTIANAGRAFICHE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTIANAGRAFICHE SET CODAFFITTO = ?,CODANAGRAFICA = ?,NOTA = ? WHERE CODAFFITTIANAGRAFICHE = ?"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTIANAGRAFICHE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTIANAGRAFICHE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIANAGRAFICHE"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIANAGRAFICHE WHERE CODAFFITTIANAGRAFICHE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIANAGRAFICHE_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIANAGRAFICHE WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIANAGRAFICHE_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIANAGRAFICHE WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIALLEGATI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIALLEGATI WHERE CODAFFITTIALLEGATI = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIALLEGATI_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIALLEGATI WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="INSERT_AFFITTIALLEGATI"/>
+<Value class="java.lang.String" value="INSERT INTO AFFITTIALLEGATI (CODAFFITTO,NOME,DESCRIZIONE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTIALLEGATI"/>
+<Value class="java.lang.String" value="UPDATE AFFITTIALLEGATI SET CODAFFITTO = ?, NOME = ?, DESCRIZIONE = ? WHERE CODAFFITTIALLEGATI = ?"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTIALLEGATI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTIALLEGATI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIALLEGATI"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIALLEGATI WHERE CODAFFITTIALLEGATI = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIALLEGATI_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIALLEGATI WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="CHK_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE LIMIT 1"/>
+<Key class="java.lang.String" value="CHK_COLLOQUI"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI LIMIT 1"/>
+<Key class="java.lang.String" value="FIND_AFFITTIRATE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIRATE WHERE CODAFFITTIRATE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIRATE_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIRATE WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="INSERT_AFFITTIRATE"/>
+<Value class="java.lang.String" value="INSERT INTO AFFITTIRATE (CODAFFITTO,CODPARENT,MESE,SCADENZA,DATAPAGATO,IMPORTO,CODANAGRAFICA,NOTA) VALUES (?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTIRATE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTIRATE SET CODAFFITTO = ? ,CODPARENT = ?,MESE = ?,SCADENZA = ?,DATAPAGATO = ?,IMPORTO = ?,CODANAGRAFICA = ?,NOTA = ? WHERE CODAFFITTIRATE = ?"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTIRATE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTIRATE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIRATE"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIRATE WHERE CODAFFITTIRATE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIRATE_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIRATE WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTIRATE_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTIRATE WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTIRATE_BY_PROPERTIES"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTIRATE WHERE CODANAGRAFICA = ? AND CODAFFITTO = ? AND IMPORTO = ? AND DATAPAGATO = ? AND MESE = ? AND SCADENZA = ? AND NOTA = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTISPESE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTISPESE WHERE CODAFFITTISPESE = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTISPESE_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTISPESE WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="INSERT_AFFITTISPESE"/>
+<Value class="java.lang.String" value="INSERT INTO AFFITTISPESE (CODAFFITTO,CODPARENT,DATAINIZIO,DATAFINE,SCADENZA,IMPORTO,VERSATO,DESCRIZIONE,DATAPAGATO,CODANAGRAFICA) VALUES (?,?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTISPESE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTISPESE SET CODAFFITTO = ? ,CODPARENT = ?,DATAINIZIO = ?,DATAFINE = ?,SCADENZA = ?,IMPORTO = ?,VERSATO = ?,DESCRIZIONE = ?,DATAPAGATO = ?,CODANAGRAFICA = ? WHERE CODAFFITTISPESE = ?"/>
+<Key class="java.lang.String" value="UPDATE_AFFITTISPESE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE AFFITTISPESE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTISPESE"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTISPESE WHERE CODAFFITTISPESE = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTISPESE_BY_CODAFFITTO"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTISPESE WHERE CODAFFITTO = ?"/>
+<Key class="java.lang.String" value="DELETE_AFFITTISPESE_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM AFFITTISPESE WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTISPESE_BY_PROPERTIES"/>
+<Value class="java.lang.String" value="SELECT * FROM AFFITTISPESE WHERE CODANAGRAFICA = ? AND CODAFFITTO = ? AND SCADENZA = ? AND DATAPAGATO = ? AND DATAINIZIO = ? AND DATAFINE = ? AND IMPORTO = ? AND VERSATO = ? AND DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="CHK_COLLOQUICRITERIRICERCA"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUICRITERIRICERCA LIMIT 1"/>
+<Key class="java.lang.String" value="RICERCHE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM RICERCHE WHERE CODRICERCA = ?"/>
+<Key class="java.lang.String" value="UPDATE_RICERCHE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE RICERCHE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="RICERCHE_BY_TIPO"/>
+<Value class="java.lang.String" value="SELECT * FROM RICERCHE WHERE TIPO = ?"/>
+<Key class="java.lang.String" value="INSERT_RICERCHE"/>
+<Value class="java.lang.String" value="INSERT INTO RICERCHE (NOME,DESCRIZIONE,TIPO) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_RICERCHE"/>
+<Value class="java.lang.String" value="UPDATE RICERCHE SET NOME = ?, DESCRIZIONE = ?, TIPO = ? WHERE CODRICERCA = ?"/>
+<Key class="java.lang.String" value="DELETE_RICERCHE"/>
+<Value class="java.lang.String" value="DELETE FROM RICERCHE WHERE CODRICERCA = ?"/>
+<Key class="java.lang.String" value="FIND_DATI_CATASTALI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM DATICATASTALI WHERE CODDATICATASTALI = ?"/>
+<Key class="java.lang.String" value="FIND_DATI_CATASTALI_BY_PROPERTIES"/>
+<Value class="java.lang.String" value="SELECT * FROM DATICATASTALI WHERE FOGLIO = ? AND PARTICELLA = ? AND SUBALTERNO = ? AND CATEGORIA = ? AND RENDITA = ? AND REDDITODOMENICALE = ? AND REDDITOAGRARIO = ? AND DIMENSIONE = ? AND CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="FIND_DATI_CATASTALI_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM DATICATASTALI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="DELETE_DATI_CATASTALI_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM DATICATASTALI WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="DELETE_DATI_CATASTALI_BY_ID"/>
+<Value class="java.lang.String" value="DELETE FROM DATICATASTALI WHERE CODDATICATASTALI = ?"/>
+<Key class="java.lang.String" value="INSERT_DATI_CATASTALI"/>
+<Value class="java.lang.String" value="INSERT INTO DATICATASTALI (FOGLIO,PARTICELLA,SUBALTERNO,CATEGORIA,RENDITA,REDDITODOMENICALE,REDDITOAGRARIO,DIMENSIONE,CODIMMOBILE) VALUES (?,?,?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_DATI_CATASTALI"/>
+<Value class="java.lang.String" value="UPDATE DATICATASTALI SET FOGLIO = ?,PARTICELLA = ?,SUBALTERNO = ?,CATEGORIA = ?,RENDITA = ?,REDDITODOMENICALE = ?,REDDITOAGRARIO = ?,DIMENSIONE = ?,CODIMMOBILE = ? WHERE CODDATICATASTALI = ?"/>
+<Key class="java.lang.String" value="UPDATE_DATI_CATASTALI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE DATICATASTALI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="GOOGLE_DATA_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM GDATA WHERE CODGDATA = ?"/>
+<Key class="java.lang.String" value="GOOGLE_DATA_BY_CODCONTATTO"/>
+<Value class="java.lang.String" value="SELECT * FROM GDATA WHERE CODCONTATTO = ?"/>
+<Key class="java.lang.String" value="GOOGLE_DATA_SAVE"/>
+<Value class="java.lang.String" value="INSERT INTO GDATA (CODCONTATTO,PWSKEY,DESCRIZIONE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="GOOGLE_DATA_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE GDATA SET CODCONTATTO = ?,PWSKEY = ?,DESCRIZIONE = ? WHERE CODGDATA = ?"/>
+<Key class="java.lang.String" value="UPDATE_GOOGLE_DATA_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE GDATA SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="GOOGLE_CALENDAR_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM GCALENDAR WHERE CODGCALENDAR = ?"/>
+<Key class="java.lang.String" value="GOOGLE_CALENDAR_BY_CODGDATA"/>
+<Value class="java.lang.String" value="SELECT * FROM GCALENDAR WHERE CODGDATA = ?"/>
+<Key class="java.lang.String" value="GOOGLE_CALENDAR_SAVE"/>
+<Value class="java.lang.String" value="INSERT INTO GCALENDAR (PRIVATEURL,ALLURL,CODGDATA) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="GOOGLE_CALENDAR_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE GCALENDAR SET PRIVATEURL = ?,ALLURL = ?,CODGDATA = ? WHERE CODGCALENDAR = ?"/>
+<Key class="java.lang.String" value="UPDATE_CALENDAR_DATA_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE GCALENDAR SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="CHK_APPUNTAMENTI"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI LIMIT 1"/>
+<Key class="java.lang.String" value="LISTA_TIPI_APPUNTAMENTI"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPIAPPUNTAMENTI"/>
+<Key class="java.lang.String" value="TIPI_APPUNTAMENTI_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPIAPPUNTAMENTI WHERE CODTIPOAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="TIPI_APPUNTAMENTI_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM TIPIAPPUNTAMENTI WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="INSERT_TIPI_APPUNTAMENTI"/>
+<Value class="java.lang.String" value="INSERT INTO TIPIAPPUNTAMENTI (DESCRIZIONE,GCALCOLOR,ORDINE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_TIPI_APPUNTAMENTI"/>
+<Value class="java.lang.String" value="UPDATE TIPIAPPUNTAMENTI SET DESCRIZIONE = ?, GCALCOLOR = ?,ORDINE = ? WHERE CODTIPOAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="DELETE_TIPI_APPUNTAMENTI"/>
+<Value class="java.lang.String" value="DELETE FROM TIPIAPPUNTAMENTI WHERE CODTIPOAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="UPDATE_TIPI_APPUNTAMENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE TIPIAPPUNTAMENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="UPDATE_APPUNTAMENTI_CODTIPO"/>
+<Value class="java.lang.String" value="UPDATE APPUNTAMENTI SET CODTIPOAPPUNTAMENTO = ? WHERE CODTIPOAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="LIST_APPUNTAMENTI_BY_CODTIPOAPPUNTAMENTO"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI WHERE CODTIPOAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="UPDATE_APPUNTAMENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE APPUNTAMENTI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_CALENDAR_BY_ID"/>
+<Value class="java.lang.String" value="DELETE FROM GCALENDAR WHERE CODGCALENDAR = ?"/>
+<Key class="java.lang.String" value="DELETE_CALENDAR_BY_CODGDATA"/>
+<Value class="java.lang.String" value="DELETE FROM GCALENDAR WHERE CODGDATA = ?"/>
+<Key class="java.lang.String" value="GOOGLE_DATA_DELETE"/>
+<Value class="java.lang.String" value="DELETE FROM GDATA WHERE CODCONTATTO = ?"/>
+<Key class="java.lang.String" value="LIST_APPUNTAMENTI_AGENTI_DA_A_ICAL_NULL"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI A INNER JOIN AGENTIAPPUNTAMENTI AP ON A.CODAPPUNTAMENTO = AP.CODAPPUNTAMENTO WHERE AP.CODAGENTE = ? AND A.DATAAPPUNTAMENTO >= ? AND A.DATAAPPUNTAMENTO <= ? AND A.CODAPPUNTAMENTO NOT IN (SELECT CODAPPUNTAMENTO FROM WINKGCALENDAR WHERE CODAGENTE = ?)"/>
+<Key class="java.lang.String" value="LIST_APPUNTAMENTI_AGENTI_DA_A_NOT_ICAL_NULL"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI A INNER JOIN AGENTIAPPUNTAMENTI AP ON A.CODAPPUNTAMENTO = AP.CODAPPUNTAMENTO WHERE AP.CODAGENTE = ? AND A.DATAAPPUNTAMENTO >= ? AND A.DATAAPPUNTAMENTO <= ? AND A.CODAPPUNTAMENTO IN (SELECT CODAPPUNTAMENTO FROM WINKGCALENDAR WHERE CODAGENTE = ?)"/>
+<Key class="java.lang.String" value="GET_APPUNTAMENTO_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM APPUNTAMENTI WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="GET_APPUNTAMENTO_BY_ICALID"/>
+<Value class="java.lang.String" value="SELECT DISTINCT A.* FROM APPUNTAMENTI A JOIN WINKGCALENDAR W ON A.CODAPPUNTAMENTO = W.CODAPPUNTAMENTO WHERE W.EVENTID = ?"/>
+<Key class="java.lang.String" value="GOOGLE_DATA_LIST"/>
+<Value class="java.lang.String" value="SELECT * FROM GDATA"/>
+<Key class="java.lang.String" value="LIST_COLLOQUI_AGENTI_DA_A_ICAL_NULL"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C INNER JOIN COLLOQUIAGENTI CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODAGENTE = ? AND C.DATACOLLOQUIO >= ? AND C.DATACOLLOQUIO <= ? AND C.SCADENZIERE = TRUE AND C.CODCOLLOQUIO NOT IN (SELECT CODCOLLOQUIO FROM WINKGCALENDAR WHERE CODAGENTE = ?)"/>
+<Key class="java.lang.String" value="LIST_COLLOQUI_AGENTI_DA_A_NOT_ICAL_NULL"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI C INNER JOIN COLLOQUIAGENTI CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODAGENTE = ? AND C.DATACOLLOQUIO >= ? AND C.DATACOLLOQUIO <= ? AND C.SCADENZIERE = TRUE AND C.CODCOLLOQUIO IN (SELECT CODCOLLOQUIO FROM WINKGCALENDAR WHERE CODAGENTE = ?)"/>
+<Key class="java.lang.String" value="LISTA_CLASSI_ENERGETICHE"/>
+<Value class="java.lang.String" value="SELECT * FROM CLASSIENERGETICHE"/>
+<Key class="java.lang.String" value="GET_CLASSI_ENERGETICHE_AFFITTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT CE.* FROM CLASSIENERGETICHE CE INNER JOIN (SELECT CODCLASSEENERGETICA FROM IMMOBILI WHERE AFFITTO = TRUE) SI ON CE.CODCLASSEENERGETICA = SI.CODCLASSEENERGETICA"/>
+<Key class="java.lang.String" value="CLASSI_ENERGETICHE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM CLASSIENERGETICHE WHERE CODCLASSEENERGETICA = ?"/>
+<Key class="java.lang.String" value="CLASSI_ENERGETICHE_BY_NAME"/>
+<Value class="java.lang.String" value="SELECT * FROM CLASSIENERGETICHE WHERE DESCRIZIONE = ?"/>
+<Key class="java.lang.String" value="INSERT_CLASSI_ENERGETICHE"/>
+<Value class="java.lang.String" value="INSERT INTO CLASSIENERGETICHE (NOME,DESCRIZIONE,ORDINE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_CLASSI_ENERGETICHE"/>
+<Value class="java.lang.String" value="UPDATE CLASSIENERGETICHE SET NOME = ?, DESCRIZIONE = ?, ORDINE = ? WHERE CODCLASSEENERGETICA = ?"/>
+<Key class="java.lang.String" value="DELETE_CLASSI_ENERGETICHE"/>
+<Value class="java.lang.String" value="DELETE FROM CLASSIENERGETICHE WHERE CODCLASSEENERGETICA = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_ANAGRAFICA"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODANAGRAFICA = ? WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="UPDATE_IMMOBILI_CODCLASSEENERGETICA"/>
+<Value class="java.lang.String" value="UPDATE IMMOBILI SET CODCLASSEENERGETICA = ? WHERE CODCLASSEENERGETICA = ?"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_STORICO"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_STORICO_ISAFFITTI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_STORICO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = FALSE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA = ? AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_IMMOBILI_BY_CODCLASSEENERGETICANULL_STORICO_ISAFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI WHERE CODCLASSEENERGETICA IS NULL AND UCASE(CITTA) = UCASE(?) AND STORICO = TRUE AND AFFITTO = TRUE ORDER BY CODIMMOBILE"/>
+<Key class="java.lang.String" value="CHK_IMMOBILI"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILI LIMIT 1"/>
+<Key class="java.lang.String" value="FIND_ENTITY_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ENTITY WHERE IDCLASSENTITY = ?"/>
+<Key class="java.lang.String" value="FIND_ENTITY_BY_CLASSNAME"/>
+<Value class="java.lang.String" value="SELECT * FROM ENTITY WHERE CLASSNAME = ?"/>
+<Key class="java.lang.String" value="INSERT_ENTITY"/>
+<Value class="java.lang.String" value="INSERT INTO ENTITY (IDCLASSENTITY,CLASSNAME,DESCRIPTION) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ENTITY_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ENTITY SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTE WHERE IDATTRIBUTE = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTES_BY_IDENTITY"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTE WHERE IDCLASSENTITY = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTE_BY_IDENTITY_ATTRIBUTENAME"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTE WHERE IDCLASSENTITY = ? AND ATTRIBUTENAME = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTE_BY_ENTITYCLASSNAME_ATTRIBUTENAME_ATTRIBUTETYPE"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTE A INNER JOIN ENTITY E ON A.IDCLASSENTITY = E.IDCLASSENTITY WHERE E.CLASSNAME = ? AND A.ATTRIBUTENAME = ? AND A.FIELDTYPE = ?"/>
+<Key class="java.lang.String" value="INSERT_ATTRIBUTE"/>
+<Value class="java.lang.String" value="INSERT INTO ATTRIBUTE (IDCLASSENTITY,ATTRIBUTENAME,FIELDTYPE,LINKEDIDENTITY,ENUMFIELDVALUES) VALUES (?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ATTRIBUTE"/>
+<Value class="java.lang.String" value="UPDATE ATTRIBUTE SET IDCLASSENTITY = ?, ATTRIBUTENAME = ?, FIELDTYPE = ?, LINKEDIDENTITY = ?, ENUMFIELDVALUES = ? WHERE IDATTRIBUTE = ?"/>
+<Key class="java.lang.String" value="DELETE_ATTRIBUTE_BY_ID"/>
+<Value class="java.lang.String" value="DELETE FROM ATTRIBUTE WHERE IDATTRIBUTE = ?"/>
+<Key class="java.lang.String" value="UPDATE_ATTRIBUTE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ATTRIBUTE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTEVALUE_BY_ID"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTEVALUE WHERE IDVALUE = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTEVALUE_BY_IDATTRIBUTE_IDOBJECT"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTEVALUE WHERE IDFIELD = ? AND IDOBJECT = ?"/>
+<Key class="java.lang.String" value="INSERT_ATTRIBUTEVALUE"/>
+<Value class="java.lang.String" value="INSERT INTO ATTRIBUTEVALUE (IDFIELD,IDOBJECT,FIELDVALUE) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_ATTRIBUTEVALUE"/>
+<Value class="java.lang.String" value="UPDATE ATTRIBUTEVALUE SET IDFIELD = ?, IDOBJECT = ?, FIELDVALUE = ? WHERE IDVALUE = ?"/>
+<Key class="java.lang.String" value="DELETE_ATTRIBUTEVALUE_BY_IDATTRIBUTE"/>
+<Value class="java.lang.String" value="DELETE FROM ATTRIBUTEVALUE WHERE IDFIELD = ?"/>
+<Key class="java.lang.String" value="DELETE_ATTRIBUTEVALUE_BY_IDATTRIBUTE_IDOBJECT"/>
+<Value class="java.lang.String" value="DELETE FROM ATTRIBUTEVALUE WHERE IDFIELD = ? AND IDOBJECT = ?"/>
+<Key class="java.lang.String" value="DELETE_ATTRIBUTEVALUE_BY_CLASSNAME_IDOBJECT"/>
+<Value class="java.lang.String" value="DELETE FROM ATTRIBUTEVALUE AV WHERE AV.IDFIELD IN (SELECT A.IDATTRIBUTE FROM ENTITY E JOIN ATTRIBUTE A ON E.IDCLASSENTITY = A.IDCLASSENTITY WHERE CLASSNAME = ?) AND IDOBJECT = ?"/>
+<Key class="java.lang.String" value="FIND_ATTRIBUTEVALUE_BY_IDATTRIBUTE"/>
+<Value class="java.lang.String" value="SELECT * FROM ATTRIBUTEVALUE WHERE IDVALUE = ?"/>
+<Key class="java.lang.String" value="UPDATE_ATTRIBUTEVALUE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE ATTRIBUTEVALUE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="GET_TIPOLOGIE_IMMOBILI_AFFITTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT TI.* FROM TIPOLOGIEIMMOBILI TI INNER JOIN (SELECT CODTIPOLOGIA FROM IMMOBILI WHERE AFFITTO = TRUE) TIA ON TI.CODTIPOLOGIAIMMOBILE = TIA.CODTIPOLOGIA"/>
+<Key class="java.lang.String" value="GET_RISCALDAMENTI_AFFITTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT R.* FROM RISCALDAMENTI R INNER JOIN (SELECT CODRISCALDAMENTO FROM IMMOBILI WHERE AFFITTO = TRUE) RI ON R.CODRISCALDAMENTO = RI.CODRISCALDAMENTO"/>
+<Key class="java.lang.String" value="GET_STATOCONSERVATIVO_AFFITTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT S.* FROM STATOCONSERVATIVO S INNER JOIN (SELECT CODSTATO FROM IMMOBILI WHERE AFFITTO = TRUE) SI ON S.CODSTATOCONSERVATIVO = SI.CODSTATO"/>
+<Key class="java.lang.String" value="CHK_SET_PASSWORDS"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTI WHERE USERNAME IS NOT NULL AND PASSWORD IS NOT NULL"/>
+<Key class="java.lang.String" value="LOGIN_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM AGENTI WHERE USERNAME = ? AND PASSWORD = ?"/>
+<Key class="java.lang.String" value="DELETE_PERMESSO"/>
+<Value class="java.lang.String" value="DELETE FROM PERMESSI WHERE CODPERMESSO = ?"/>
+<Key class="java.lang.String" value="UPDATE_PERMESSI_AGENTEUPDATE"/>
+<Value class="java.lang.String" value="UPDATE PERMESSI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="DELETE_PERMESSO_BY_CODRICERCA"/>
+<Value class="java.lang.String" value="DELETE FROM PERMESSI WHERE CODRICERCA = ?"/>
+<Key class="java.lang.String" value="DELETE_PERMESSO_BY_CODAGENTE"/>
+<Value class="java.lang.String" value="DELETE FROM PERMESSI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="INSERT_PERMESSO"/>
+<Value class="java.lang.String" value="INSERT INTO PERMESSI (CODAGENTE,CODRICERCA,DESCRIZIONE,ISNOT,CANWRITE,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_PERMESSO"/>
+<Value class="java.lang.String" value="UPDATE PERMESSI SET CODAGENTE = ?,CODRICERCA = ?,DESCRIZIONE = ?,ISNOT = ?, CANWRITE = ?,CODUSERUPDATE = ?,DATEUPDATE = ? WHERE CODPERMESSO = ?"/>
+<Key class="java.lang.String" value="LIST_PERMESSI_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="DELETE_PERMESSOUI"/>
+<Value class="java.lang.String" value="DELETE FROM PERMESSIUI WHERE CODPERMESSOUI = ?"/>
+<Key class="java.lang.String" value="DELETE_PERMESSOUI_BY_AGENTE"/>
+<Value class="java.lang.String" value="DELETE FROM PERMESSIUI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="INSERT_PERMESSOUI"/>
+<Value class="java.lang.String" value="INSERT INTO PERMESSIUI (CODAGENTE,PERSPECTIVEID,VIEWID,DIALOGID,ISNOT,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_PERMESSOUI"/>
+<Value class="java.lang.String" value="UPDATE PERMESSIUI SET CODAGENTE = ?,PERSPECTIVEID = ?,VIEWID = ?,DIALOGID = ?,ISNOT = ?,CODUSERUPDATE = ?,DATEUPDATE = ? WHERE CODPERMESSOUI = ?"/>
+<Key class="java.lang.String" value="UPDATE_PERMESSOUI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE PERMESSIUI SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LIST_PERMESSIUI_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSIUI WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="LIST_PERMESSIUI_PERSPECTIVE_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSIUI WHERE CODAGENTE = ? AND PERSPECTIVEID IS NOT NULL AND VIEWID IS NULL AND DIALOGID IS NULL"/>
+<Key class="java.lang.String" value="LIST_PERMESSIUI_VIEW_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSIUI WHERE CODAGENTE = ? AND PERSPECTIVEID IS NULL AND VIEWID IS NOT NULL AND DIALOGID IS NULL"/>
+<Key class="java.lang.String" value="LIST_PERMESSIUI_DIALOG_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSIUI WHERE CODAGENTE = ? AND PERSPECTIVEID IS NULL AND VIEWID IS NULL AND DIALOGID IS NOT NULL"/>
+<Key class="java.lang.String" value="UPDATE_PERMESSOUI_AGENTE"/>
+<Value class="java.lang.String" value="UPDATE PERMESSIUI CODAGENTE = ? WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="UPDATE_PERMESSOUI_AGENTEUPDATE"/>
+<Value class="java.lang.String" value="UPDATE PERMESSIUI CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LIST_PERMESSIIMMOBILI_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSI P JOIN RICERCHE R ON P.CODRICERCA = R.CODRICERCA WHERE CODAGENTE = ? AND R.TIPO = 4"/>
+<Key class="java.lang.String" value="LIST_PERMESSIANAGRAFICHE_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSI P JOIN RICERCHE R ON P.CODRICERCA = R.CODRICERCA WHERE CODAGENTE = ? AND R.TIPO = 6"/>
+<Key class="java.lang.String" value="LIST_PERMESSIAFFITTI_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PERMESSI P JOIN RICERCHE R ON P.CODRICERCA = R.CODRICERCA WHERE CODAGENTE = ? AND R.TIPO = 5"/>
+<Key class="java.lang.String" value="GET_WINKSYS_PROPERTY"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKSYS WHERE PROPERTYNAME = ?"/>
+<Key class="java.lang.String" value="GET_WINKSYS_PROPERTIES"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKSYS"/>
+<Key class="java.lang.String" value="INSERT_WINKSYS_PROPERTY"/>
+<Value class="java.lang.String" value="INSERT INTO WINKSYS (PROPERTYNAME,PROPERTYVALUE) VALUES (?,?)"/>
+<Key class="java.lang.String" value="UPDATE_WINKSYS_PROPERTY"/>
+<Value class="java.lang.String" value="UPDATE WINKSYS SET PROPERTYVALUE = ? WHERE PROPERTYNAME = ?"/>
+<Key class="java.lang.String" value="UPDATE_PROMEMORIA"/>
+<Value class="java.lang.String" value="UPDATE PROMEMORIA SET CODAGENTE = ?, DESCRIZIONE = ?, CODUSERUPDATE = ?,DATEUPDATE = ? WHERE CODPROMEMORIA = ?"/>
+<Key class="java.lang.String" value="INSERT_PROMEMORIA"/>
+<Value class="java.lang.String" value="INSERT INTO PROMEMORIA (CODAGENTE,DESCRIZIONE,CODUSERUPDATE,DATEUPDATE) VALUES (?,?,?,?)"/>
+<Key class="java.lang.String" value="DELETE_PROMEMORIA"/>
+<Value class="java.lang.String" value="DELETE FROM PROMEMORIA WHERE CODPROMEMORIA = ?"/>
+<Key class="java.lang.String" value="LIST_PROMEMORIA_BY_AGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM PROMEMORIA WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="LIST_PROMEMORIA"/>
+<Value class="java.lang.String" value="SELECT * FROM PROMEMORIA"/>
+<Key class="java.lang.String" value="LIST_PROMEMORIA_AGENTE_IS_NULL"/>
+<Value class="java.lang.String" value="SELECT * FROM PROMEMORIA WHERE CODAGENTE IS NULL"/>
+<Key class="java.lang.String" value="UPDATE_PROMEMORIA_AGENTE"/>
+<Value class="java.lang.String" value="UPDATE PROMEMORIA SET CODAGENTE = ? WHERE CODAGENTE = ? "/>
+<Key class="java.lang.String" value="UPDATE_PROMEMORIA_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE PROMEMORIA SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="INSERT_IMMOBILIPROPIETARI"/>
+<Value class="java.lang.String" value="INSERT INTO IMMOBILIPROPIETARI (CODIMMOBILE,CODANAGRAFICA) VALUES (?,?)"/>
+<Key class="java.lang.String" value="DELETE_IMMOBILEPROPIETARIO"/>
+<Value class="java.lang.String" value="DELETE FROM IMMOBILIPROPIETARI  WHERE CODIMMOBILE = ? AND CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="DELETE_IMMOBILEPROPIETARIO_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="DELETE FROM IMMOBILIPROPIETARI  WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="DELETE_IMMOBILEPROPIETARIO_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="DELETE FROM IMMOBILIPROPIETARI  WHERE CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="IMMOBILIPROPIETARI_BY_CODIMMOBILE_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILIPROPIETARI  WHERE CODIMMOBILE = ? AND CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="LIST_IMMOBILIPROPIETARI_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT * FROM IMMOBILIPROPIETARI  WHERE CODIMMOBILE = ?"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_BY_CODIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT A.* FROM ANAGRAFICHE A INNER JOIN IMMOBILIPROPIETARI IP ON A.CODANAGRAFICA = IP.CODANAGRAFICA WHERE IP.CODIMMOBILE = ? ORDER BY A.CODANAGRAFICA"/>
+<Key class="java.lang.String" value="IMMOBILI_BY_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT I.* FROM IMMOBILI I INNER JOIN IMMOBILIPROPIETARI IP ON I.CODIMMOBILE = IP.CODIMMOBILE WHERE IP.CODANAGRAFICA = ? ORDER BY I.CODIMMOBILE"/>
+<Key class="java.lang.String" value="LIST_COMUNI_LIKE"/>
+<Value class="java.lang.String" value="SELECT * FROM COMUNI WHERE LCASE(COMUNE) LIKE ?"/>
+<Key class="java.lang.String" value="LIST_COMUNI_MATCH"/>
+<Value class="java.lang.String" value="SELECT * FROM COMUNI WHERE LCASE(COMUNE) = ?"/>
+<Key class="java.lang.String" value="GET_COMUNE_BY_CODCOMUNE"/>
+<Value class="java.lang.String" value="SELECT * FROM COMUNI WHERE CODCOMUNE = ?"/>
+<Key class="java.lang.String" value="GET_PROVINCIE_BY_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT UCASE(PROVINCIA) AS PROVINCIA, 0 AS CODCOMUNE, '' AS CODISTAT, '' AS COMUNE, '' AS REGIONE, '' AS PREFISSO, '' AS CAP, '' AS CODFISCO, 0 AS ABITANTI, '' AS LINK  FROM ANAGRAFICHE"/>
+<Key class="java.lang.String" value="GET_COMUNI_BY_PROVINCIA"/>
+<Value class="java.lang.String" value="SELECT DISTINCT UCASE(COMUNE) AS COMUNE, 0 AS CODCOMUNE, '' AS CODISTAT, '' AS PROVINCIA, '' AS REGIONE, '' AS PREFISSO, '' AS CAP, '' AS CODFISCO, 0 AS ABITANTI, '' AS LINK  FROM COMUNI WHERE UCASE(PROVINCIA) = ?"/>
+<Key class="java.lang.String" value="GET_ANAGRAFICHE_BY_COMUNE_CLASSE"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE UCASE(CITTA) = ? AND CODCLASSECLIENTE = ?"/>
+<Key class="java.lang.String" value="GET_ANAGRAFICHE_BY_COMUNE_CLASSENULL"/>
+<Value class="java.lang.String" value="SELECT * FROM ANAGRAFICHE WHERE UCASE(CITTA) = ? AND CODCLASSECLIENTE IS NULL"/>
+<Key class="java.lang.String" value="GET_PROVINCIE_BY_IMMOBILI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT UCASE(PROVINCIA) AS PROVINCIA, 0 AS CODCOMUNE, '' AS CODISTAT, '' AS COMUNE, '' AS REGIONE, '' AS PREFISSO, '' AS CAP, '' AS CODFISCO, 0 AS ABITANTI, '' AS LINK  FROM IMMOBILI"/>
+<Key class="java.lang.String" value="INSERT_PROMEMORIAOGGETTI"/>
+<Value class="java.lang.String" value="INSERT INTO PROMEMORIAOGGETTI (CODPROMEMORIA,CODOGGETTO,TIPO) VALUES (?,?,?)"/>
+<Key class="java.lang.String" value="DELETE_PROMEMORIAOGGETTI"/>
+<Value class="java.lang.String" value="DELETE FROM PROMEMORIAOGGETTI WHERE CODPROMEMORIA = ? AND CODOGGETTO = ? AND TIPO = ?"/>
+<Key class="java.lang.String" value="GET_PROMEMORIAOGGETTI_BY_CODPROMEMORIA"/>
+<Value class="java.lang.String" value="SELECT * FROM PROMEMORIAOGGETTI WHERE CODPROMEMORIA = ?"/>
+<Key class="java.lang.String" value="DELETE_PROMEMORIAOGGETTI_BY_CODPROMEMORIA"/>
+<Value class="java.lang.String" value="DELETE FROM PROMEMORIAOGGETTI WHERE CODPROMEMORIA = ?"/>
+<Key class="java.lang.String" value="INSERT_PROMEMORIALINKS"/>
+<Value class="java.lang.String" value="INSERT INTO PROMEMORIALINKS (CODPROMEMORIA,DESCRIZIONE,URILINK,ISFILE) VALUES (?,?,?,?)"/>
+<Key class="java.lang.String" value="DELETE_PROMEMORIALINKS"/>
+<Value class="java.lang.String" value="DELETE FROM PROMEMORIALINKS WHERE CODPROMEMORIA = ? AND DESCRIZIONE = ? AND URILINK = ? AND ISFILE = ?"/>
+<Key class="java.lang.String" value="GET_PROMEMORIALINKS_BY_CODPROMEMORIA"/>
+<Value class="java.lang.String" value="SELECT * FROM PROMEMORIALINKS WHERE CODPROMEMORIA = ?"/>
+<Key class="java.lang.String" value="DELETE_PROMEMORIALINKS_BY_CODPROMEMORIA"/>
+<Value class="java.lang.String" value="DELETE FROM PROMEMORIALINKS WHERE CODPROMEMORIA = ?"/>
+<Key class="java.lang.String" value="FIND_AFFITTI_CODANAGRAFICA"/>
+<Value class="java.lang.String" value="SELECT DISTINCT A.* FROM AFFITTI A JOIN AFFITTIANAGRAFICHE AA ON A.CODAFFITTI = AA.CODAFFITTO WHERE AA.CODANAGRAFICA = ?"/>
+<Key class="java.lang.String" value="GET_COMUNI_BY_PROVINCIA_IMMOBILI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(UCASE(CITTA)) AS COMUNE, '' AS PROVINCIA, 0 AS CODCOMUNE, '' AS CODISTAT, '' AS COMUNE, '' AS REGIONE, '' AS PREFISSO, '' AS CAP, '' AS CODFISCO, 0 AS ABITANTI, '' AS LINK  FROM IMMOBILI WHERE UCASE(PROVINCIA) = UCASE(?)"/>
+<Key class="java.lang.String" value="GET_COMUNI_BY_PROVINCIA_ANAGRAFICHE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(UCASE(CITTA)) AS COMUNE, '' AS PROVINCIA, 0 AS CODCOMUNE, '' AS CODISTAT, '' AS COMUNE, '' AS REGIONE, '' AS PREFISSO, '' AS CAP, '' AS CODFISCO, 0 AS ABITANTI, '' AS LINK  FROM ANAGRAFICHE WHERE UCASE(PROVINCIA) = UCASE(?)"/>
+<Key class="java.lang.String" value="LIST_TIPOLOGIEIMMOBILI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(TI.CODTIPOLOGIAIMMOBILE) AS CODTIPOLOGIAIMMOBILE, TI.CODUSERUPDATE, TI.DESCRIZIONE, TI.DATEUPDATE FROM IMMOBILI I JOIN TIPOLOGIEIMMOBILI TI ON I.CODTIPOLOGIA = TI.CODTIPOLOGIAIMMOBILE WHERE UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="GET_TIPOLOGIEIMMOBILI_AFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(TI.CODTIPOLOGIAIMMOBILE) AS CODTIPOLOGIAIMMOBILE, TI.CODUSERUPDATE, TI.DESCRIZIONE, TI.DATEUPDATE FROM IMMOBILI I JOIN TIPOLOGIEIMMOBILI TI ON I.CODTIPOLOGIA = TI.CODTIPOLOGIAIMMOBILE WHERE I.AFFITTO = TRUE AND UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="GET_RISCALDAMENTI_COMUNE_AFFITTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(R.CODRISCALDAMENTO) AS CODRISCALDAMENTO, R.CODUSERUPDATE, R.DESCRIZIONE, R.DATEUPDATE FROM IMMOBILI I JOIN RISCALDAMENTI R ON I.CODRISCALDAMENTO = R.CODRISCALDAMENTO WHERE I.AFFITTO = TRUE AND UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="LISTA_RISCALDAMENTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(R.CODRISCALDAMENTO) AS CODRISCALDAMENTO, R.CODUSERUPDATE, R.DESCRIZIONE, R.DATEUPDATE FROM IMMOBILI I JOIN RISCALDAMENTI R ON I.CODRISCALDAMENTO = R.CODRISCALDAMENTO WHERE UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="GET_STATOCONSERVATIVO_AFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(SC.CODSTATOCONSERVATIVO) AS CODSTATOCONSERVATIVO, SC.CODUSERUPDATE, SC.DESCRIZIONE, SC.DATEUPDATE FROM IMMOBILI I JOIN STATOCONSERVATIVO SC ON I.CODSTATO = SC.CODSTATOCONSERVATIVO WHERE I.AFFITTO = TRUE AND UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="LISTA_STATO_CONSERVATIVO_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(SC.CODSTATOCONSERVATIVO) AS CODSTATOCONSERVATIVO, SC.CODUSERUPDATE, SC.DESCRIZIONE, SC.DATEUPDATE FROM IMMOBILI I JOIN STATOCONSERVATIVO SC ON I.CODSTATO = SC.CODSTATOCONSERVATIVO WHERE UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="GET_CLASSI_ENERGETICHE_AFFITTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(CE.CODCLASSEENERGETICA) AS CODCLASSEENERGETICA, CE.CODUSERUPDATE, CE.NOME, CE.DESCRIZIONE, CE.DATEUPDATE, CE.ORDINE FROM IMMOBILI I JOIN CLASSIENERGETICHE CE ON I.CODCLASSEENERGETICA = CE.CODCLASSEENERGETICA WHERE I.AFFITTO = TRUE AND UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="LISTA_CLASSI_ENERGETICHE_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(CE.CODCLASSEENERGETICA) AS CODCLASSEENERGETICA, CE.CODUSERUPDATE, CE.NOME, CE.DESCRIZIONE, CE.DATEUPDATE, CE.ORDINE FROM IMMOBILI I JOIN CLASSIENERGETICHE CE ON I.CODCLASSEENERGETICA = CE.CODCLASSEENERGETICA WHERE UCASE(I.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="UPDATE_CLASSI_ENERGETICHE_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE CLASSIENERGETICHE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="LISTA_CLASSICLIENTI_COMUNE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT(CC.CODCLASSECLIENTE) AS CODCLASSECLIENTE, CC.CODUSERUPDATE, CC.DESCRIZIONE, CC.DATEUPDATE, CC.ORDINE FROM ANAGRAFICHE A JOIN CLASSICLIENTE CC ON A.CODCLASSECLIENTE = CC.CODCLASSECLIENTE WHERE UCASE(A.CITTA) = UCASE(?)"/>
+<Key class="java.lang.String" value="UPDATE_CLASSICLIENTI_AGENTE_UPDATE"/>
+<Value class="java.lang.String" value="UPDATE CLASSICLIENTE SET CODUSERUPDATE = ? WHERE CODUSERUPDATE = ?"/>
+<Key class="java.lang.String" value="INSERT_WINKCALENDAR"/>
+<Value class="java.lang.String" value="INSERT INTO WINKGCALENDAR (CODAGENTE,CODAPPUNTAMENTO,CODCOLLOQUIO,CALENDARID,EVENTID) VALUES (?,?,?,?,?)"/>
+<Key class="java.lang.String" value="UPDATE_WINKCALENDAR"/>
+<Value class="java.lang.String" value="UPDATE WINKGCALENDAR SET CODAGENTE = ?, CODAPPUNTAMENTO = ? ,CODCOLLOQUIO = ?, CALENDARID = ?, EVENTID = ?  WHERE CODWINKGCALENDAR = ?"/>
+<Key class="java.lang.String" value="GET_WINKCALENDAR_BY_CODAPPUNTAMENTO"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKGCALENDAR WHERE CODAPPUNTAMENTO = ?"/>
+<Key class="java.lang.String" value="GET_WINKCALENDAR_BY_CODCOLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKGCALENDAR WHERE CODCOLLOQUIO = ?"/>
+<Key class="java.lang.String" value="GET_WINKCALENDAR_BY_CODAGENTE"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKGCALENDAR WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="GET_WINKCALENDAR_BY_CODAGENTE_CALENDARID_EVENTID"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKGCALENDAR WHERE CODAGENTE = ? AND CALENDARID = ? AND EVENTID = ?"/>
+<Key class="java.lang.String" value="GET_WINKCALENDAR_BY_CODAGENTE_CODAPPUNTAMENTO_CALENDARID"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKGCALENDAR WHERE CODAGENTE = ? AND CODAPPUNTAMENTO = ? AND CALENDARID = ?"/>
+<Key class="java.lang.String" value="GET_WINKCALENDAR_BY_CODAGENTE_CODCOLLOQUIO_CALENDARID"/>
+<Value class="java.lang.String" value="SELECT * FROM WINKGCALENDAR WHERE CODAGENTE = ? AND CODCOLLOQUIO = ? AND CALENDARID = ?"/>
+<Key class="java.lang.String" value="DELETE_WINKCALENDAR_BY_ID"/>
+<Value class="java.lang.String" value="DELETE FROM WINKGCALENDAR WHERE CODWINKGCALENDAR = ?"/>
+<Key class="java.lang.String" value="UPDATE_WINKCALENDAR_AGENTE"/>
+<Value class="java.lang.String" value="UPDATE WINKGCALENDAR SET CODAGENTE = ? WHERE CODAGENTE = ?"/>
+<Key class="java.lang.String" value="AGENTI_COLLOQUI_PARTECIPANTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT A.*, 0 AS agenti_colloquio_type FROM AGENTI A JOIN COLLOQUIAGENTI CA ON A.CODAGENTE = CA.CODAGENTE"/>
+<Key class="java.lang.String" value="AGENTI_COLLOQUI_INSERITORI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT A.*, 1 AS agenti_colloquio_type FROM AGENTI A JOIN COLLOQUI C ON A.CODAGENTE = C.CODAGENTEINSERITORE"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_AGENTE_PARTECIPANTE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT C.* FROM COLLOQUI C JOIN COLLOQUIAGENTI CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO WHERE CA.CODAGENTE = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_TIPOLOGIEIMMOBILE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT C.* FROM COLLOQUI C JOIN  IMMOBILI I ON C.CODIMMOBILEABBINATO = I.CODIMMOBILE WHERE I.CODTIPOLOGIA = ?"/>
+<Key class="java.lang.String" value="COLLOQUI_BY_CLASSECLIENTE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT C.* FROM COLLOQUI C JOIN COLLOQUIANAGRAFICHE CA ON C.CODCOLLOQUIO = CA.CODCOLLOQUIO JOIN ANAGRAFICHE A ON CA.CODANAGRAFICA = A.CODANAGRAFICA WHERE A.CODCLASSECLIENTE = ?"/>
+<Key class="java.lang.String" value="IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT I.* FROM IMMOBILI I WHERE I.CODIMMOBILE NOT IN (SELECT DISTINCT C.CODIMMOBILEABBINATO FROM COLLOQUI C JOIN  IMMOBILI I ON C.CODIMMOBILEABBINATO = I.CODIMMOBILE WHERE I.CODTIPOLOGIA = ?) AND I.STORICO = TRUE"/>
+<Key class="java.lang.String" value="IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI_STORICO"/>
+<Value class="java.lang.String" value="SELECT DISTINCT I.* FROM IMMOBILI I WHERE I.CODIMMOBILE NOT IN (SELECT DISTINCT C.CODIMMOBILEABBINATO FROM COLLOQUI C JOIN  IMMOBILI I ON C.CODIMMOBILEABBINATO = I.CODIMMOBILE WHERE I.CODTIPOLOGIA = ?) AND I.STORICO = FALSE"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_IN_COLLOQUI_BY_CLASSECLIENTE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT A.* FROM ANAGRAFICHE A JOIN PUBLIC.COLLOQUIANAGRAFICHE CA ON A.CODANAGRAFICA = CA.CODANAGRAFICA WHERE A.CODCLASSECLIENTE = ? AND A.STORICO = FALSE"/>
+<Key class="java.lang.String" value="ANAGRAFICHE_IN_COLLOQUI_BY_CLASSECLIENTE_STORICO"/>
+<Value class="java.lang.String" value="SELECT DISTINCT A.* FROM ANAGRAFICHE A JOIN PUBLIC.COLLOQUIANAGRAFICHE CA ON A.CODANAGRAFICA = CA.CODANAGRAFICA WHERE A.CODCLASSECLIENTE = ? AND A.STORICO = TRUE"/>
+<Key class="java.lang.String" value="COLLOQUI_SENZA_PARTECIPANTI"/>
+<Value class="java.lang.String" value="SELECT DISTINCT * FROM COLLOQUI WHERE CODCOLLOQUIO NOT IN (SELECT CODCOLLOQUIO FROM COLLOQUIAGENTI)"/>
+<Key class="java.lang.String" value="COLLOQUI_SENZA_INSERITORE"/>
+<Value class="java.lang.String" value="SELECT DISTINCT * FROM COLLOQUI WHERE CODAGENTEINSERITORE IS NULL"/>
+<Key class="java.lang.String" value="COLLOQUI_YEARS_DATAINSERIMENTO"/>
+<Value class="java.lang.String" value="SELECT DISTINCT EXTRACT(YEAR FROM DATAINSERIMENTO) AS NUMTIME FROM COLLOQUI GROUP BY EXTRACT(YEAR FROM DATAINSERIMENTO)"/>
+<Key class="java.lang.String" value="COLLOQUI_MONTHS_DATAINSERIMENTO_BY_YEAR"/>
+<Value class="java.lang.String" value="SELECT DISTINCT EXTRACT(MONTH FROM DATAINSERIMENTO) AS NUMTIME FROM COLLOQUI WHERE EXTRACT(YEAR FROM DATAINSERIMENTO) = ? GROUP BY EXTRACT(MONTH FROM DATAINSERIMENTO)"/>
+<Key class="java.lang.String" value="COLLOQUI_DATAINSERIMENTO_BY_YEAR_MONTH"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE EXTRACT(YEAR FROM DATAINSERIMENTO) = ? AND EXTRACT(MONTH FROM DATAINSERIMENTO) = ? "/>
+<Key class="java.lang.String" value="COLLOQUI_YEARS_DATACOLLOQUIO"/>
+<Value class="java.lang.String" value="SELECT DISTINCT EXTRACT(YEAR FROM DATACOLLOQUIO) AS NUMTIME FROM COLLOQUI GROUP BY EXTRACT(YEAR FROM DATACOLLOQUIO)"/>
+<Key class="java.lang.String" value="COLLOQUI_MONTHS_DATACOLLOQUIO_BY_YEAR"/>
+<Value class="java.lang.String" value="SELECT DISTINCT EXTRACT(MONTH FROM DATACOLLOQUIO) AS NUMTIME FROM COLLOQUI WHERE EXTRACT(YEAR FROM DATACOLLOQUIO) = ? GROUP BY EXTRACT(MONTH FROM DATACOLLOQUIO)"/>
+<Key class="java.lang.String" value="COLLOQUI_DATACOLLOQUIO_BY_YEAR_MONTH"/>
+<Value class="java.lang.String" value="SELECT * FROM COLLOQUI WHERE EXTRACT(YEAR FROM DATACOLLOQUIO) = ? AND EXTRACT(MONTH FROM DATACOLLOQUIO) = ?"/>
+</javolution.util.FastMap>

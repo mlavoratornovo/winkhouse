@@ -1,0 +1,99 @@
+
+#SearchField {
+    visibility: hidden; 
+}
+
+.MTrimmedWindow {
+margin-top: 3px;
+margin-bottom: 3px;
+margin-left: 3px;
+margin-right: 3px;
+padding: 0px;
+}
+ 
+.MTrimmedWindow.topLevel {
+margin-top: 0px;
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px;
+padding: 0px;
+}
+ 
+.MTrimBar#org-eclipse-ui-main-toolbar {
+margin-top: 0px;
+margin-bottom: 0px;
+margin-left: 0px;
+margin-right: 0px;
+border-top: 0px;
+padding: 0px;
+}
+ 
+.MTrimBar#org-eclipse-ui-trim-status {
+margin-bottom: 1px;
+padding: 1px;
+}
+ 
+.MPartStack {
+font-size: 10;
+font-family: 'Ubuntu Condensed';
+swt-corner-radius: 14;
+swt-mru-visible: true;
+swt-shadow-visible: false;
+swt-simple: false;
+ 
+swt-inner-keyline-color: #ededed;
+swt-outer-keyline-color: #e0e0e0;
+swt-tab-outline: #e0e0e0;
+swt-unselected-tabs-color: #f0f0f0 #e0e0e0 #e0e0e0 100% 100%;
+ 
+padding: 0px;
+marging: 0px;
+}
+ 
+.MToolControl.TrimStack {
+/* frame-image: url(./macTSFrame.png); */
+frame-image: none;
+handle-image: url('./macHandle.png');
+/* frame-cuts: 5px 1px 5px 16px; */
+}
+/* Active border */
+.MPartStack.active {
+swt-selected-tab-fill: #fafafa;
+swt-unselected-tabs-color: #fafafa #e0e0e0 #e0e0e0 100% 100%;
+swt-outer-keyline-color: #e0e0e0;
+swt-inner-keyline-color: #e0e0e0;
+swt-shadow-visible: false;
+swt-tab-outline: #e0e0e0;
+}
+ 
+#PerspectiveSwitcher {
+color: #333;
+padding: 0px;
+}
+ 
+CTabFolder {
+swt-unselected-tabs-color: #ededed;
+swt-outer-keyline-color: #ededed;
+swt-inner-keyline-color: #ededed;
+swt-tab-outline: #ededed;
+swt-selected-tab-fill: #f0f0f0;
+swt-shadow-visible: true;
+}
+ 
+ 
+/* View's background */
+CTabFolder Tree {
+background-color: #fafafa;
+color: #333;
+}
+ 
+/* Rulers */
+CTabFolder Canvas {
+background-color: #e0e0e0;
+color: #333;
+}
+ 
+CTabItem {
+background-color: #fafafa;
+color: #333;
+}
