@@ -79,7 +79,7 @@ public class ContattiHelper {
 						if (!cDAO.saveUpdate(contatto, con, doCommit)){					
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"Errore salvataggio contatto", 
-														"Si è verificato un errore nel salvataggio del contatto : " + 
+														"Si ï¿½ verificato un errore nel salvataggio del contatto : " + 
 														contatto.getContatto());
 								returnValue = false;
 						}
@@ -94,7 +94,7 @@ public class ContattiHelper {
 				if (!cDAO.delete(cVO.getCodContatto(), con, doCommit)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 							"Errore cancellazione contatto", 
-							"Si è verificato un errore nella cancellazione del contatto : " + 
+							"Si ï¿½ verificato un errore nella cancellazione del contatto : " + 
 							cVO.getContatto());
 					returnValue = false;
 					
@@ -138,7 +138,7 @@ public class ContattiHelper {
 				if (!cDAO.saveUpdate(contatto, con, doCommit)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio contatto", 
-												"Si è verificato un errore nel salvataggio del contatto : " + 
+												"Si ï¿½ verificato un errore nel salvataggio del contatto : " + 
 												contatto.getContatto());
 						returnValue = false;
 				}					
@@ -151,7 +151,7 @@ public class ContattiHelper {
 				if (!cDAO.delete(cVO.getCodContatto(), con, doCommit)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 							"Errore cancellazione contatto", 
-							"Si è verificato un errore nella cancellazione del contatto : " + 
+							"Si ï¿½ verificato un errore nella cancellazione del contatto : " + 
 							cVO.getContatto());
 					returnValue = false;
 					

@@ -165,7 +165,7 @@ public class AffittiHelper {
 	
 	/**
 	 * Inserisce un record nella tabella affitti ritornando true o false.
-	 * Se il campo codAffitti, del parametro affitto, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAffitti, del parametro affitto, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -181,7 +181,7 @@ public class AffittiHelper {
 
 	/**
 	 * Inserisce un record nella tabella affittiallegati ritornando true o false.
-	 * Se il campo codAffittiAllegati, del parametro affittiallegati, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAffittiAllegati, del parametro affittiallegati, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -197,7 +197,7 @@ public class AffittiHelper {
 	
 	/**
 	 * Inserisce un record nella tabella affittiRate ritornando true o false.
-	 * Se il campo codAffittiRate, del parametro affittiRate, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAffittiRate, del parametro affittiRate, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -213,7 +213,7 @@ public class AffittiHelper {
 	
 	/**
 	 * Inserisce un record nella tabella affittiSpese ritornando true o false.
-	 * Se il campo codAffittiSpese, del parametro affittiSpese, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAffittiSpese, del parametro affittiSpese, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -229,7 +229,7 @@ public class AffittiHelper {
 
 	/**
 	 * Inserisce un record nella tabella affittianagrafiche ritornando true o false.
-	 * Se il campo codAffittiAnagrafiche, del parametro affittianagrafiche, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAffittiAnagrafiche, del parametro affittianagrafiche, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 

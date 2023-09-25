@@ -273,7 +273,7 @@ public class AgentiHelper {
 											}
 											MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 																	"Errore", 
-																	"Errore aggiornamento affitti \n la cancellazione dell'agente è annullata");
+																	"Errore aggiornamento affitti \n la cancellazione dell'agente ï¿½ annullata");
 										}
 									}else{
 										try {
@@ -283,7 +283,7 @@ public class AgentiHelper {
 										}
 										MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 																"Errore", 
-																"Errore aggiornamento affitti \n la cancellazione dell'agente è annullata");
+																"Errore aggiornamento affitti \n la cancellazione dell'agente ï¿½ annullata");
 									}
 									
 								}else{
@@ -294,7 +294,7 @@ public class AgentiHelper {
 									}
 									MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 															"Errore", 
-															"Errore aggiornamento affitti \n la cancellazione dell'agente è annullata");
+															"Errore aggiornamento affitti \n la cancellazione dell'agente ï¿½ annullata");
 								}
 	
 							}else{
@@ -305,7 +305,7 @@ public class AgentiHelper {
 								}
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 														"Errore", 
-														"Errore aggiornamento affitti \n la cancellazione dell'agente è annullata");
+														"Errore aggiornamento affitti \n la cancellazione dell'agente ï¿½ annullata");
 							}
 						
 						}else{
@@ -316,7 +316,7 @@ public class AgentiHelper {
 							}
 							MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 													"Errore", 
-													"Errore aggiornamento immobili \n la cancellazione dell'agente è annullata");
+													"Errore aggiornamento immobili \n la cancellazione dell'agente ï¿½ annullata");
 						}
 					
 					}else{
@@ -327,7 +327,7 @@ public class AgentiHelper {
 						}
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 												"Errore", 
-												"Errore aggiornamento commenti agenti \n la cancellazione dell'agente è annullata");
+												"Errore aggiornamento commenti agenti \n la cancellazione dell'agente ï¿½ annullata");
 					}
 				
 				}else{
@@ -338,7 +338,7 @@ public class AgentiHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento colloqui \n la cancellazione dell'agente è annullata");
+											"Errore aggiornamento colloqui \n la cancellazione dell'agente ï¿½ annullata");
 				}
 			
 			}else{
@@ -349,7 +349,7 @@ public class AgentiHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore aggiornamento anagrafiche \n la cancellazione dell'agente è annullata");
+										"Errore aggiornamento anagrafiche \n la cancellazione dell'agente ï¿½ annullata");
 			}
 				
 		}else{
@@ -360,7 +360,7 @@ public class AgentiHelper {
 			}
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 									"Errore", 
-									"Errore cancellazione agente \n la cancellazione dell'agente è annullata");
+									"Errore cancellazione agente \n la cancellazione dell'agente ï¿½ annullata");
 		}
 
 		}
@@ -486,7 +486,7 @@ public class AgentiHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio agente", 
-											"Si è verificato un errore nel salvataggio dell'agente : " + 
+											"Si ï¿½ verificato un errore nel salvataggio dell'agente : " + 
 											agente.getCognome() + " " + agente.getNome());					
 				}
 			}

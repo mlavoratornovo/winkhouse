@@ -184,7 +184,7 @@ public class AffittiHelper {
 		} catch (Exception e) {
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione allegato", 
-									"Si è verificato un errore nella cancellazione dell' allegato da : " + 									 
+									"Si ï¿½ verificato un errore nella cancellazione dell' allegato da : " + 									 
 									pathAllegatiDestinazione+allegato.getNome());
 			returnValue = false;
 		}
@@ -224,7 +224,7 @@ public class AffittiHelper {
 						if (!aaDAO.saveUpdate(affittiAllegato, con, false)){					
 							MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 													"Errore salvataggio allegato", 
-													"Si è verificato un errore nel salvataggio dell' allegato : " + 
+													"Si ï¿½ verificato un errore nel salvataggio dell' allegato : " + 
 													affittiAllegato.getCodAffittiAllegati());
 							returnValue.put(RESULT_ALLEGATI_DB, false);
 							return returnValue;
@@ -242,7 +242,7 @@ public class AffittiHelper {
 				if (!aaDAO.deleteAffittiAllegatiByID(affittoAllegati.getCodAffittiAllegati(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione allegato", 
-											"Si è verificato un errore nella cancellazione dell' allegato : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell' allegato : " + 
 											affittoAllegati.getCodAffittiAllegati());
 					returnValue.put(RESULT_ALLEGATI_DB, false);
 					return returnValue;
@@ -297,7 +297,7 @@ public class AffittiHelper {
 						if (!caDAO.saveUpdate(affittiAnagrafica, con, false)){					
 							MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 													"Errore salvataggio colloqui anagrafica", 
-													"Si è verificato un errore nel salvataggio dell'associazione affitto anagrafica : " + 
+													"Si ï¿½ verificato un errore nel salvataggio dell'associazione affitto anagrafica : " + 
 													affittiAnagrafica.getCodAffittiAnagrafiche());
 							returnValue = false;
 						}					
@@ -310,7 +310,7 @@ public class AffittiHelper {
 					if (!caDAO.deleteAffittiAnagraficheByID(affittoAnagrafiche.getCodAffittiAnagrafiche(), con, false)){
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore cancellazione anagrafiche affitto", 
-												"Si è verificato un errore nella cancellazione dell'associazione affitto anagrafica : " + 
+												"Si ï¿½ verificato un errore nella cancellazione dell'associazione affitto anagrafica : " + 
 												affittoAnagrafiche.getCodAffittiAnagrafiche());
 						returnValue = false;
 	
@@ -379,7 +379,7 @@ public class AffittiHelper {
 					if (!arDAO.saveUpdate(affittiRata, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 								"Errore salvataggio colloqui rata", 
-								"Si è verificato un errore nel salvataggio dell'associazione affitto rata : " + 
+								"Si ï¿½ verificato un errore nel salvataggio dell'associazione affitto rata : " + 
 								affittiRata.getCodAffittiRate());
 						returnValue = false;
 					}					
@@ -392,7 +392,7 @@ public class AffittiHelper {
 				if (!arDAO.deleteAffittiRateByID(affittoRata.getCodAffittiRate(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione colloqui rate", 
-											"Si è verificato un errore nella cancellazione dell'associazione affitto rata : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell'associazione affitto rata : " + 
 											affittoRata.getCodAffittiRate());
 					returnValue = false;
 
@@ -431,7 +431,7 @@ public class AffittiHelper {
 					if (!asDAO.saveUpdate(affittiSpesa, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 								"Errore salvataggio colloqui rata", 
-								"Si è verificato un errore nel salvataggio dell'associazione affitto spesa : " + 
+								"Si ï¿½ verificato un errore nel salvataggio dell'associazione affitto spesa : " + 
 								affittiSpesa.getCodAffittiSpese());
 						returnValue = false;
 					}					
@@ -444,7 +444,7 @@ public class AffittiHelper {
 				if (!asDAO.deleteAffittiSpeseByID(affittoSpesa.getCodAffittiSpese(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione colloqui spese", 
-											"Si è verificato un errore nella cancellazione dell'associazione affitto spesa : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell'associazione affitto spesa : " + 
 											affittoSpesa.getCodAffittiSpese());
 					returnValue = false;
 
@@ -537,7 +537,7 @@ public class AffittiHelper {
 											  .getActiveWorkbenchWindow()
 											  .getShell(),
 									"Errore salvataggio affitto", 
-									"L'immobile risulta già affittato nel periodo selezionato");
+									"L'immobile risulta giï¿½ affittato nel periodo selezionato");
 			returnValue.put(RESULT_AFFITTI_DB, false);
 		}
 		return returnValue;

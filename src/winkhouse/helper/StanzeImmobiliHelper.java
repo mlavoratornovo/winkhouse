@@ -56,7 +56,7 @@ public class StanzeImmobiliHelper {
 						     					  .getActiveWorkbenchWindow()
 						     					  .getShell(),
 						     			"ERRORE", 
-										"La stanza che si sta cercando di aggiornare è stata cancellata da un altro utente");
+										"La stanza che si sta cercando di aggiornare ï¿½ stata cancellata da un altro utente");
 				stanzeImmobiliVO = null;
 			
 /*			if (new StanzeDAO().getStanzaById(StanzeImmobiliVO.class.getName(), 
@@ -65,8 +65,8 @@ public class StanzeImmobiliHelper {
 														.getActiveWorkbenchWindow()
 														.getShell(), 
 											  "ATTENZIONE", 
-											  "Si sta cercando di aggiornare la stanza " + stanzeImmobiliVO.getTipologia().getDescrizione() + " già cancellato da un altro utente. \n" +
-											  "Se si prosegue con l'operazione la stanza verrà inserito nella base dati." +
+											  "Si sta cercando di aggiornare la stanza " + stanzeImmobiliVO.getTipologia().getDescrizione() + " giï¿½ cancellato da un altro utente. \n" +
+											  "Se si prosegue con l'operazione la stanza verrï¿½ inserito nella base dati." +
 			      							  "Procedere con l'operazione ?")){
 					stanzeImmobiliVO.setCodStanzeImmobili(0);
 				}else{
@@ -112,7 +112,7 @@ public class StanzeImmobiliHelper {
 								
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"Errore salvataggio stanza", 
-														"Si è verificato un errore nel salvataggio della stanza : " + 
+														"Si ï¿½ verificato un errore nel salvataggio della stanza : " + 
 														((stanza.getTipologia()!= null)?"":stanza.getTipologia().getDescrizione()));
 								returnValue = false;
 						}					
@@ -126,7 +126,7 @@ public class StanzeImmobiliHelper {
 				if (!sDAO.delete(siVO.getCodStanzeImmobili(), con, doCommit)){					
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 							"Errore cancellazione stanza", 
-							"Si è verificato un errore nella cancellazione della stanza: " + 
+							"Si ï¿½ verificato un errore nella cancellazione della stanza: " + 
 							((siVO.getTipologia()!= null)?"":siVO.getTipologia().getDescrizione()));
 					returnValue = false;
 					

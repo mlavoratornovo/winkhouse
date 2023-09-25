@@ -181,7 +181,7 @@ public class ReportHelper {
 					if (!rmDAO.saveUpdate(reportMarker, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio marker", 
-												"Si è verificato un errore nel salvataggio del marker : " + 
+												"Si ï¿½ verificato un errore nel salvataggio del marker : " + 
 												reportMarker.getCodMarker());
 
 					}					
@@ -194,7 +194,7 @@ public class ReportHelper {
 				if (!rmDAO.deleteReportMarkersByID(reportMarker.getCodMarker(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione marker", 
-											"Si è verificato un errore nella cancellazione del marker : " + 
+											"Si ï¿½ verificato un errore nella cancellazione del marker : " + 
 											reportMarker.getCodMarker());
 
 				}
@@ -269,7 +269,7 @@ public class ReportHelper {
 				MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench()
 						 										   .getActiveWorkbenchWindow()
 						 										   .getShell(), 
-														 "unico file / più file", 
+														 "unico file / piï¿½ file", 
 														 null,
 														 "Desideri il risultato su un unico file o un file per ogni elemento ?", 
 														 MessageDialog.QUESTION, 
@@ -334,7 +334,7 @@ public class ReportHelper {
 											  .getActiveWorkbenchWindow()
 											  .getShell(), 
 									"Errore di stampa",
-									"Si è verificato un errore durante la stampa");
+									"Si ï¿½ verificato un errore durante la stampa");
 		}
 		
 	}

@@ -22,7 +22,4 @@ public class WrongCriteriaSequenceException extends Exception {
 		return sqlQuery;
 	}
 	
-	
-
-
 }

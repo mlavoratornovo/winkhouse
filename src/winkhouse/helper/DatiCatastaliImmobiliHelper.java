@@ -56,7 +56,7 @@ public class DatiCatastaliImmobiliHelper {
 						     					  .getActiveWorkbenchWindow()
 						     					  .getShell(),
 						     			"ERRORE", 
-										"La stanza che si sta cercando di aggiornare è stata cancellata da un altro utente");
+										"La stanza che si sta cercando di aggiornare ï¿½ stata cancellata da un altro utente");
 				datiCatastaliVO = null;
 			
 /*			if (new StanzeDAO().getStanzaById(StanzeImmobiliVO.class.getName(), 
@@ -65,8 +65,8 @@ public class DatiCatastaliImmobiliHelper {
 														.getActiveWorkbenchWindow()
 														.getShell(), 
 											  "ATTENZIONE", 
-											  "Si sta cercando di aggiornare la stanza " + stanzeImmobiliVO.getTipologia().getDescrizione() + " già cancellato da un altro utente. \n" +
-											  "Se si prosegue con l'operazione la stanza verrà inserito nella base dati." +
+											  "Si sta cercando di aggiornare la stanza " + stanzeImmobiliVO.getTipologia().getDescrizione() + " giï¿½ cancellato da un altro utente. \n" +
+											  "Se si prosegue con l'operazione la stanza verrï¿½ inserito nella base dati." +
 			      							  "Procedere con l'operazione ?")){
 					stanzeImmobiliVO.setCodStanzeImmobili(0);
 				}else{
@@ -112,7 +112,7 @@ public class DatiCatastaliImmobiliHelper {
 								
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"Errore salvataggio dato catastale", 
-														"Si è verificato un errore nel salvataggio del dato catastale : " + 
+														"Si ï¿½ verificato un errore nel salvataggio del dato catastale : " + 
 														"Foglio : " + datiCatastali.getFoglio() + " , Particella : " + datiCatastali.getParticella() +
 														"Subalterno : " + datiCatastali.getSubalterno() + " , Categoria : " + datiCatastali.getCategoria());
 								returnValue = false;
@@ -127,7 +127,7 @@ public class DatiCatastaliImmobiliHelper {
 				if (!dcDAO.deleteDatiCatastaliById(dcVO.getCodDatiCatastali(), con, doCommit)){					
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 							"Errore cancellazione dato catastale", 
-							"Si è verificato un errore nella cancellazione del dato catastale: " + 
+							"Si ï¿½ verificato un errore nella cancellazione del dato catastale: " + 
 							"Foglio : " + dcVO.getFoglio() + " , Particella : " + dcVO.getParticella() +
 							"Subalterno : " + dcVO.getSubalterno() + " , Categoria : " + dcVO.getCategoria());
 

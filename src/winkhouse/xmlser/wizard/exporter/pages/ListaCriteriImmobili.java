@@ -328,7 +328,7 @@ public class ListaCriteriImmobili extends WizardPage {
 														  .getActiveWorkbenchWindow()
 														  .getShell(), 
 												"Errore cancellazione ricerca", 
-												"Si è verificato un errore nella cancellazione della ricerca");		
+												"Si ï¿½ verificato un errore nella cancellazione della ricerca");		
 					}else{
 						MessageDialog.openInformation(PlatformUI.getWorkbench()
 								  								.getActiveWorkbenchWindow()

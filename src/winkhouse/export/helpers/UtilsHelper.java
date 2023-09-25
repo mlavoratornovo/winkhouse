@@ -270,7 +270,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti AgentiVO, che hanno le proprietà di nome, cognome, citta e indirizzo uguali 
+	 * Ritorna una lista di oggetti AgentiVO, che hanno le proprietï¿½ di nome, cognome, citta e indirizzo uguali 
 	 * all'oggetto passato in input.
 	 * 
 	 * @param agente
@@ -307,7 +307,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti TipiAppuntamentiVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipiAppuntamentiVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipoAppuntamento
@@ -346,7 +346,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti ClassiClientiVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti ClassiClientiVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeCliente
@@ -386,7 +386,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti ClasseEnergeticaVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti ClasseEnergeticaVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeEnergetica
@@ -426,7 +426,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti RiscaldamentiVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti RiscaldamentiVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeCliente
@@ -466,7 +466,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti StatoConservativoVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti StatoConservativoVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param statoConservativo
@@ -506,7 +506,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti TipologieImmobiliVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipologieImmobiliVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipologiaImmobile
@@ -575,7 +575,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti AllegatiImmobiliVO, con proprietà nome uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti AllegatiImmobiliVO, con proprietï¿½ nome uguale a quella dell'oggetto, 
 	 * di tipo AllegatiImmobiliVO passato in input.
 	 * Vengono inoltre filtrati per l'immobile passato in input. (Utilizzare il metodo getImmobiliExist 
 	 * della classe winkhouse.export.helpers.ImmobiliHelper.getImmobiliExist per individuare una lista di immobili da passare
@@ -610,7 +610,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti AllegatiColloquiVO, con proprietà nome uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti AllegatiColloquiVO, con proprietï¿½ nome uguale a quella dell'oggetto, 
 	 * di tipo AllegatiColloquiVO passato in input.
 	 * Vengono inoltre filtrati per l'immobile passato in input. (Utilizzare il metodo getImmobiliExist 
 	 * della classe winkhouse.export.helpers.getImmobiliExist per individuare una lista di immobili da passare
@@ -645,7 +645,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti DatiCatastaliVO, con proprietà categoria, foglio, particella, subalterno uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti DatiCatastaliVO, con proprietï¿½ categoria, foglio, particella, subalterno uguale a quella dell'oggetto, 
 	 * di tipo DatiCatastaliVO passato in input.
 	 * Vengono inoltre filtrati per l'immobile passato in input. (Utilizzare il metodo getImmobiliExist 
 	 * della classe winkhouse.export.helpers.ImmobiliHelper.getImmobiliExist per individuare una lista di immobili da passare
@@ -685,7 +685,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti CriteriRicercaModel, con proprietà getterMethodName, fromValue, toValue, logicalOperator, lineNumber,
+	 * Ritorna una lista di oggetti CriteriRicercaModel, con proprietï¿½ getterMethodName, fromValue, toValue, logicalOperator, lineNumber,
 	 * uguale a quella dell'oggetto di tipo CriteriRicercaModel passato in input.
 	 * Vengono inoltre filtrati per il colloquio passato in input. (Utilizzare il metodo getColloquiExist 
 	 * della classe winkhouse.export.helpers.ColloquiHelper.getColloquiExist per individuare una lista di immobili da passare
@@ -725,7 +725,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti ContattiVO, con proprietà contatto uguale a quella dell'oggetto, 
+	 * Ritorna una lista di oggetti ContattiVO, con proprietï¿½ contatto uguale a quella dell'oggetto, 
 	 * di tipo ContattiVO passato in input.
 	 * 
 	 * @param contatto
@@ -744,7 +744,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti TipologiaStanzeVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipologiaStanzeVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipologiaStanze
@@ -764,7 +764,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna un oggetto ImmobiliPropietariVO, con proprietà descrizione uguale a quella  
+	 * Ritorna un oggetto ImmobiliPropietariVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param immobiliPropietariVO
@@ -800,7 +800,7 @@ public class UtilsHelper {
 	}
 	
 	/**
-	 * Ritorna una lista di oggetti TipologiaContattiVO, con proprietà descrizione uguale a quella  
+	 * Ritorna una lista di oggetti TipologiaContattiVO, con proprietï¿½ descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param tipologiaStanze
@@ -858,7 +858,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella tipologieimmobili ritornando true o false.
-	 * Se il campo codTipologieImmobili, del parametro tipologiaImmobile, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codTipologieImmobili, del parametro tipologiaImmobile, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -874,7 +874,7 @@ public class UtilsHelper {
 	
 	/**
 	 * Inserisce un record nella tabella CLASSICLIENTE ritornando true o false.
-	 * Se il campo codClasseCliente, del parametro classiClienti, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codClasseCliente, del parametro classiClienti, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -890,7 +890,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella riscaldamenti ritornando true o false.
-	 * Se il campo codRiscaldamento, del parametro riscaldamento, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codRiscaldamento, del parametro riscaldamento, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -906,7 +906,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella statoconservativo ritornando true o false.
-	 * Se il campo codStatoConservativo, del parametro statoConservativo, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codStatoConservativo, del parametro statoConservativo, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -922,7 +922,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella statoconservativo ritornando true o false.
-	 * Se il campo codClasseEnergetica : Integer, del parametro classeEnergetica, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codClasseEnergetica : Integer, del parametro classeEnergetica, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -938,7 +938,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella tipologiacontatti ritornando true o false.
-	 * Se il campo codTipologiaContatto : Integer, del parametro tipologiaContatti, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codTipologiaContatto : Integer, del parametro tipologiaContatti, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -954,7 +954,7 @@ public class UtilsHelper {
 	
 	/**
 	 * Inserisce un record nella tabella tipologiastanze ritornando true o false.
-	 * Se il campo codTipologiaStanza : Integer, del parametro tipologiaStanze, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codTipologiaStanza : Integer, del parametro tipologiaStanze, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -970,7 +970,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella agenti ritornando true o false.
-	 * Se il campo codAgente : Integer, del parametro agente, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAgente : Integer, del parametro agente, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -986,7 +986,7 @@ public class UtilsHelper {
 
 	/**
 	 * Inserisce un record nella tabella contatti ritornando true o false.
-	 * Se il campo codContatto : Integer, del parametro contatto, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codContatto : Integer, del parametro contatto, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 

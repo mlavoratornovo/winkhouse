@@ -140,7 +140,7 @@ public class RicercheHelper {
 					if (!ccrDAO.saveUpdate(colloquioCriteriRicerca, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio criterio ricerca", 
-												"Si è verificato un errore nel salvataggio del criterio ricerca : " + 
+												"Si ï¿½ verificato un errore nel salvataggio del criterio ricerca : " + 
 												colloquioCriteriRicerca.getCodCriterioRicerca());
 						returnValue = false;
 					}
@@ -154,7 +154,7 @@ public class RicercheHelper {
 				if (!ccrDAO.delete(colloquioCriteriRicerca.getCodCriterioRicerca(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione criterio ricerca", 
-											"Si è verificato un errore nella cancellazione del criterio ricerca : " + 
+											"Si ï¿½ verificato un errore nella cancellazione del criterio ricerca : " + 
 											colloquioCriteriRicerca.getCodCriterioRicerca());
 					returnValue = false;
 

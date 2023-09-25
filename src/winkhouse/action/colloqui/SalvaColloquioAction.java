@@ -82,7 +82,7 @@ public class SalvaColloquioAction extends Action {
 				}else{
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio colloquio", 
-											"Si è verificato un errore nel salvataggio del colloquio");
+											"Si ï¿½ verificato un errore nel salvataggio del colloquio");
 	
 				}
 				

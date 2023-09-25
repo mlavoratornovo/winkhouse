@@ -12,8 +12,8 @@ import winkhouse.util.WinkhouseUtils.ObjectSearchGetters;
 public class ColloquiCriteriRicercaVO implements Serializable{
 	
 	/**
-	 * La classe rappresenta una condizione di ricerca da passare alle funzioni di ricerca per proprietà
-	 * La classe può essere serializzata nella tabella COLLOQUICRITERIRICERCA
+	 * La classe rappresenta una condizione di ricerca da passare alle funzioni di ricerca per proprietï¿½
+	 * La classe puï¿½ essere serializzata nella tabella COLLOQUICRITERIRICERCA
 	 */
 	
 	private Integer codCriterioRicerca = null;
@@ -67,7 +67,7 @@ public class ColloquiCriteriRicercaVO implements Serializable{
 	}
 
 	/**
-	 * Il nome del metodo di get che verrà invocato per ottenere il valore che rappresenta il campo della classe
+	 * Il nome del metodo di get che verrï¿½ invocato per ottenere il valore che rappresenta il campo della classe
 	 * @param String getterMethodName
 	 */
 	public void setGetterMethodName(String getterMethodName) {
@@ -75,7 +75,7 @@ public class ColloquiCriteriRicercaVO implements Serializable{
 	}
 
 	/**
-	 * Operatore logico con il quale verrà concatenata la condizione di ricerca (AND/OR)
+	 * Operatore logico con il quale verrï¿½ concatenata la condizione di ricerca (AND/OR)
 	 * @return
 	 */
 	public String getLogicalOperator() {
@@ -118,7 +118,7 @@ public class ColloquiCriteriRicercaVO implements Serializable{
 	}
 
 	/**
-	 * Se fromValue è valorizzato rappresenta il valore di fine entro il quale cercare il valore generato dall'invocazione
+	 * Se fromValue ï¿½ valorizzato rappresenta il valore di fine entro il quale cercare il valore generato dall'invocazione
 	 * del metodo ritornato da getGetterMethodname
 	 * @return String
 	 */

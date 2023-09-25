@@ -38,16 +38,16 @@ public class OptimisticLockHelper {
 				
 				if (im_DB.getDateUpdate().after(immobile.getDateUpdate())){
 					
-					String message = "ATTENZIONE : l'immobile " + immobile.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					String message = "ATTENZIONE : l'immobile " + immobile.toString() + "\n ï¿½ stato modificato da un altro agente mentre lo stavi editando.\n";
 					if (im_DB.getCodUserUpdate() != null){
 						AgentiDAO aDAO = new AgentiDAO();
 						AgentiVO aVO = (AgentiVO)aDAO.getAgenteById(AgentiVO.class.getName(), im_DB.getCodUserUpdate());
 						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
+							message += "L'agente che ha effettuato le modifiche ï¿½ " + aVO.toString();
 						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'immobile è stato modificato", null,
+															 "Winkhouse : l'immobile ï¿½ stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){
@@ -82,16 +82,16 @@ public class OptimisticLockHelper {
 				
 				if (am_DB.getDateUpdate().after(anagrafica.getDateUpdate())){
 					
-					String message = "ATTENZIONE : l'anagrafica " + anagrafica.toString() + "\n è stata modificata da un altro agente mentre lo stavi editando.\n";
+					String message = "ATTENZIONE : l'anagrafica " + anagrafica.toString() + "\n ï¿½ stata modificata da un altro agente mentre lo stavi editando.\n";
 					if (am_DB.getCodUserUpdate() != null){
 						AgentiDAO agDAO = new AgentiDAO();
 						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
 						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
+							message += "L'agente che ha effettuato le modifiche ï¿½ " + aVO.toString();
 						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'anagrafica è stata modificata", null,
+															 "Winkhouse : l'anagrafica ï¿½ stata modificata", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){
@@ -126,16 +126,16 @@ public class OptimisticLockHelper {
 				
 				if (am_DB.getDateUpdate().after(affitto.getDateUpdate())){
 					
-					String message = "ATTENZIONE : l'affitto " + affitto.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					String message = "ATTENZIONE : l'affitto " + affitto.toString() + "\n ï¿½ stato modificato da un altro agente mentre lo stavi editando.\n";
 					if (am_DB.getCodUserUpdate() != null){
 						AgentiDAO agDAO = new AgentiDAO();
 						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
 						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
+							message += "L'agente che ha effettuato le modifiche ï¿½ " + aVO.toString();
 						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'affitto è stato modificato", null,
+															 "Winkhouse : l'affitto ï¿½ stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){
@@ -173,16 +173,16 @@ public class OptimisticLockHelper {
 					
 					if (cm_DB.getDateUpdate().after(colloquio.getDateUpdate())){
 						
-						String message = "ATTENZIONE : il colloquio " + colloquio.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+						String message = "ATTENZIONE : il colloquio " + colloquio.toString() + "\n ï¿½ stato modificato da un altro agente mentre lo stavi editando.\n";
 						if (cm_DB.getCodUserUpdate() != null){
 							AgentiDAO agDAO = new AgentiDAO();
 							AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), cm_DB.getCodUserUpdate());
 							if (aVO != null){
-								message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
+								message += "L'agente che ha effettuato le modifiche ï¿½ " + aVO.toString();
 							}
 						}
 						MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-																 "Winkhouse : il colloquio è stato modificato", null,
+																 "Winkhouse : il colloquio ï¿½ stato modificato", null,
 																 message,
 																 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 						switch (dialog.open()){
@@ -219,16 +219,16 @@ public class OptimisticLockHelper {
 				
 				if (am_DB.getDateUpdate().after(appuntamento.getDateUpdate())){
 					
-					String message = "ATTENZIONE : l'appuntamento " + appuntamento.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					String message = "ATTENZIONE : l'appuntamento " + appuntamento.toString() + "\n ï¿½ stato modificato da un altro agente mentre lo stavi editando.\n";
 					if (am_DB.getCodUserUpdate() != null){
 						AgentiDAO agDAO = new AgentiDAO();
 						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
 						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
+							message += "L'agente che ha effettuato le modifiche ï¿½ " + aVO.toString();
 						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'appuntamento è stato modificato", null,
+															 "Winkhouse : l'appuntamento ï¿½ stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){
@@ -263,16 +263,16 @@ public class OptimisticLockHelper {
 				
 				if (rm_DB.getDateUpdate().after(report.getDateUpdate())){
 					
-					String message = "ATTENZIONE : il report " + report.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					String message = "ATTENZIONE : il report " + report.toString() + "\n ï¿½ stato modificato da un altro agente mentre lo stavi editando.\n";
 					if (rm_DB.getCodUserUpdate() != null){
 						AgentiDAO agDAO = new AgentiDAO();
 						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), rm_DB.getCodUserUpdate());
 						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
+							message += "L'agente che ha effettuato le modifiche ï¿½ " + aVO.toString();
 						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : il report è stato modificato", null,
+															 "Winkhouse : il report ï¿½ stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){

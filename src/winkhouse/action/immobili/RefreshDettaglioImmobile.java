@@ -49,7 +49,7 @@ public class RefreshDettaglioImmobile extends Action {
 					((DettaglioImmobileView)iwp).setImmobile(im);
 				}else{
 					if (MessageDialog.openQuestion(iwp.getSite().getShell(), 
-							"Attenzione l'anagrafica è stata cancellata", 
+							"Attenzione l'anagrafica ï¿½ stata cancellata", 
 							"########################################## \n" +
 							"                       L'IMMOBILE E' STATO CANCELLATO ! \n" +
 							"########################################## \n\n" +

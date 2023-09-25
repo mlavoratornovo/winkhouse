@@ -51,7 +51,7 @@ public class GCalendarHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio indirizzo calendario ", 
-											"Si è verificato un errore nel salvataggio indirizzo calendario : " + 
+											"Si ï¿½ verificato un errore nel salvataggio indirizzo calendario : " + 
 											gcal.getPrivateUrl());
 				}
 			}
@@ -289,8 +289,8 @@ public class GCalendarHelper {
 													  .getActiveWorkbenchWindow()
 													  .getShell(),
 													  SWT.ICON_ERROR);
-			mb.setText("Si è verificato un errore nella sincronizzazione");
-			mb.setMessage("Si è verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
+			mb.setText("Si ï¿½ verificato un errore nella sincronizzazione");
+			mb.setMessage("Si ï¿½ verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
 						  "Impossibile determinare gli appuntamenti di winkhouse da pubblicare su Google calendar");			
 			mb.open();
 		} catch (InterruptedException e) {
@@ -300,8 +300,8 @@ public class GCalendarHelper {
 													  .getActiveWorkbenchWindow()
 													  .getShell(),
 													  SWT.ICON_ERROR);
-			mb.setText("Si è verificato un errore nella sincronizzazione");
-			mb.setMessage("Si è verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
+			mb.setText("Si ï¿½ verificato un errore nella sincronizzazione");
+			mb.setMessage("Si ï¿½ verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
 						  "Impossibile determinare gli appuntamenti di winkhouse da pubblicare su Google calendar");			
 			mb.open();
 		}
@@ -325,8 +325,8 @@ public class GCalendarHelper {
 													  .getShell(),
 													  SWT.ICON_ERROR);
 			
-			mb.setText("Si è verificato un errore nella sincronizzazione");
-			mb.setMessage("Si è verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
+			mb.setText("Si ï¿½ verificato un errore nella sincronizzazione");
+			mb.setMessage("Si ï¿½ verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
 						  "Impossibile determinare gli appuntamenti di winkhouse da pubblicare su Google calendar");			
 			mb.open();
 		} catch (InterruptedException e) {
@@ -336,8 +336,8 @@ public class GCalendarHelper {
 													  .getActiveWorkbenchWindow()
 													  .getShell(),
 													  SWT.ICON_ERROR);
-			mb.setText("Si è verificato un errore nella sincronizzazione");
-			mb.setMessage("Si è verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
+			mb.setText("Si ï¿½ verificato un errore nella sincronizzazione");
+			mb.setMessage("Si ï¿½ verificato un errore nella sincronizzazione degli appuntamenti di winkhouse \n" +
 						  "Impossibile determinare gli appuntamenti di winkhouse da pubblicare su Google calendar");			
 			mb.open();
 		}

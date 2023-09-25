@@ -261,23 +261,23 @@ public class WinkCloudHelper {
 										 HashMap hm_agenti_colloqui) throws NullPointerException{
 		
 		if (hm_anagrafiche == null){
-			throw new NullPointerException("HashMap hm_anagrafiche è null");
+			throw new NullPointerException("HashMap hm_anagrafiche ï¿½ null");
 		}
 
 		if (hm_colloqui == null){
-			throw new NullPointerException("HashMap hm_colloqui è null");
+			throw new NullPointerException("HashMap hm_colloqui ï¿½ null");
 		}
 		
 		if (hm_contatti == null){
-			throw new NullPointerException("HashMap hm_contatti è null");
+			throw new NullPointerException("HashMap hm_contatti ï¿½ null");
 		}
 						 
 		if (hm_anagrafiche_colloqui == null){
-			throw new NullPointerException("HashMap hm_anagrafiche_colloqui è null");
+			throw new NullPointerException("HashMap hm_anagrafiche_colloqui ï¿½ null");
 		}
 
 		if (hm_agenti_colloqui == null){
-			throw new NullPointerException("HashMap hm_agenti_colloqui è null");
+			throw new NullPointerException("HashMap hm_agenti_colloqui ï¿½ null");
 		}
 
 		AnagraficheXMLModel axmModel = new AnagraficheXMLModel(anagrafica);

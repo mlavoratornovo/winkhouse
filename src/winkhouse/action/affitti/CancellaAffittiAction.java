@@ -47,7 +47,7 @@ public class CancellaAffittiAction extends Action {
 								  						  .getActiveWorkbenchWindow()
 								  						  .getShell(), 
 								  				"Errore cancellazione affitto", 
-												"L'affitto non è stato cancellato a causa di un errore durante l'operazione");
+												"L'affitto non ï¿½ stato cancellato a causa di un errore durante l'operazione");
 
 					}else{
 						IViewReference ivr = PlatformUI.getWorkbench()
@@ -91,7 +91,7 @@ public class CancellaAffittiAction extends Action {
 												  .getActiveWorkbenchWindow()
 												  .getShell(), 
 										"Errore cancellazione affitto", 
-										"L'affitto non è stato cancellato a causa di un errore durante l'operazione");
+										"L'affitto non ï¿½ stato cancellato a causa di un errore durante l'operazione");
 			}
 			
 		}

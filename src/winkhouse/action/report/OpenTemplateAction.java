@@ -74,7 +74,7 @@ public class OpenTemplateAction extends Action {
 		}else{
 			MessageBox mb = new MessageBox(drv.getSite().getShell(),SWT.ERROR);
 			mb.setText("Errore");
-			mb.setMessage("OpenOffice Writer non è il programma di default per i file ODT");			
+			mb.setMessage("OpenOffice Writer non ï¿½ il programma di default per i file ODT");			
 			mb.open();			
 		}
 	}

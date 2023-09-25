@@ -520,7 +520,7 @@ public class XMLExportHelper {
 				if (MessageDialog.openConfirm(Activator.getDefault()
 													   .getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											  "File esistente", 
-											  "Negli archivi è presente un file con lo stesso nome \n" + 
+											  "Negli archivi ï¿½ presente un file con lo stesso nome \n" + 
 										 	  "sovrascrivo il file in archivio con quello attuale ?")){
 					
 					returnValue = doCopy(pathOrigine, pathDestinazione);

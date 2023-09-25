@@ -109,7 +109,7 @@ public class PermessiUIHelper {
 						if (!pDAO.saveUpdate(permesso, con, doCommit)){					
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"Errore salvataggio permesso", 
-														"Si è verificato un errore nel salvataggio del permesso : " + 
+														"Si ï¿½ verificato un errore nel salvataggio del permesso : " + 
 														permesso.getCodPermessoUi());
 								returnValue = false;
 						}
@@ -124,7 +124,7 @@ public class PermessiUIHelper {
 				if (!pDAO.deletePermesso(pVO.getCodPermessoUi(), con, doCommit)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio permesso", 
-											"Si è verificato un errore nel salvataggio del permesso : " + 
+											"Si ï¿½ verificato un errore nel salvataggio del permesso : " + 
 											pVO.getCodPermessoUi());
 					returnValue = false;
 					
@@ -162,7 +162,7 @@ public class PermessiUIHelper {
 						if (!pDAO.saveUpdate(permesso, con, doCommit)){					
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"Errore salvataggio permesso", 
-														"Si è verificato un errore nel salvataggio del permesso : " + 
+														"Si ï¿½ verificato un errore nel salvataggio del permesso : " + 
 														permesso.getCodPermesso());
 								returnValue = false;
 						}
@@ -177,7 +177,7 @@ public class PermessiUIHelper {
 				if (!pDAO.deletePermesso(pVO.getCodPermesso(), con, doCommit)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio permesso", 
-											"Si è verificato un errore nel salvataggio del permesso : " + 
+											"Si ï¿½ verificato un errore nel salvataggio del permesso : " + 
 											pVO.getCodPermesso());
 					returnValue = false;
 					

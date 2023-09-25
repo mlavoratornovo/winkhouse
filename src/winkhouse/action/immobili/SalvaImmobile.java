@@ -130,7 +130,7 @@ public class SalvaImmobile extends Action {
 					}else{
 						MessageBox mb = new MessageBox(div.getSite().getShell(),SWT.ERROR);
 						mb.setText("Errore salvataggio");
-						mb.setMessage("Si è verificato un errore nel salvataggio dell'immobile ");			
+						mb.setMessage("Si ï¿½ verificato un errore nel salvataggio dell'immobile ");			
 						mb.open();
 	
 					}
@@ -156,7 +156,7 @@ public class SalvaImmobile extends Action {
 			}else{
 				MessageBox mb = new MessageBox(div.getSite().getShell(),SWT.ERROR);
 				mb.setText("Errore salvataggio");
-				mb.setMessage("Inserire cognome e nome anagrafica proprietaria \ne inserire città e indirizzo immobile ");			
+				mb.setMessage("Inserire cognome e nome anagrafica proprietaria \ne inserire cittï¿½ e indirizzo immobile ");			
 				mb.open();
 			}
 			ImmobiliTreeView itv = (ImmobiliTreeView)PlatformUI.getWorkbench()

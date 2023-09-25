@@ -539,19 +539,19 @@ public class CalendarioView extends ViewPart {
 		dayNumber = new Font(null,"Arial",8,SWT.BOLD); 
 		Font dayNames = new Font(null,"Arial",12,SWT.BOLD); 
 		
-		Label lunedi = ft.createLabel(form.getBody(), "Lunedì");
+		Label lunedi = ft.createLabel(form.getBody(), "Lunedï¿½");
 		lunedi.setFont(dayNames);
 		lunedi.setForeground(new Color(null,12,0,126));
-		Label martedi = ft.createLabel(form.getBody(), "Martedì");
+		Label martedi = ft.createLabel(form.getBody(), "Martedï¿½");
 		martedi.setFont(dayNames);
 		martedi.setForeground(new Color(null,12,0,126));
-		Label mercoledi = ft.createLabel(form.getBody(), "Mercoledì");
+		Label mercoledi = ft.createLabel(form.getBody(), "Mercoledï¿½");
 		mercoledi.setFont(dayNames);
 		mercoledi.setForeground(new Color(null,12,0,126));
-		Label giovedi = ft.createLabel(form.getBody(), "Giovedì");
+		Label giovedi = ft.createLabel(form.getBody(), "Giovedï¿½");
 		giovedi.setFont(dayNames);
 		giovedi.setForeground(new Color(null,12,0,126));
-		Label venerdi = ft.createLabel(form.getBody(), "Venerdì");
+		Label venerdi = ft.createLabel(form.getBody(), "Venerdï¿½");
 		venerdi.setFont(dayNames);
 		venerdi.setForeground(new Color(null,12,0,126));
 		Label sabato = ft.createLabel(form.getBody(), "Sabato");

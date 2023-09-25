@@ -161,7 +161,7 @@ public class DeletePromemoriaAction extends Action {
 			} catch (SQLException e) {
 				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 										"Errore cancellazione promemoria",
-										"Si è verificato un errore durante la cancellazione dei promemoria");
+										"Si ï¿½ verificato un errore durante la cancellazione dei promemoria");
 			}
 			
 		}else{
@@ -203,7 +203,7 @@ public class DeletePromemoriaAction extends Action {
 
 //			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 //									  "Funzione non disponibile",
-//									  "La funzione di cancellazione non è disponibile in modalità struttura, \n per pulire la scrivania passare alla modalità promemoria e poi ritornare in modalità struttura");			
+//									  "La funzione di cancellazione non ï¿½ disponibile in modalitï¿½ struttura, \n per pulire la scrivania passare alla modalitï¿½ promemoria e poi ritornare in modalitï¿½ struttura");			
 			
 		}
 	}

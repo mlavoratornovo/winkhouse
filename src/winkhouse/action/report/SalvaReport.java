@@ -84,7 +84,7 @@ public class SalvaReport extends Action {
 									if (!rh.saveReport(rm)){
 										MessageBox mb = new MessageBox(drv.getSite().getShell(),SWT.ERROR);
 										mb.setText("Errore salvataggio");
-										mb.setMessage("Si è verificato un errore nel salvataggio del report");			
+										mb.setMessage("Si ï¿½ verificato un errore nel salvataggio del report");			
 										mb.open();
 										
 									}

@@ -63,7 +63,7 @@ public class AnagraficheHelper {
 					returnvalue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio anagrafica", 
-											"Si è verificato un errore nel salvataggio dell'anagrafica : " + 
+											"Si ï¿½ verificato un errore nel salvataggio dell'anagrafica : " + 
 											anagrafica.getCognome() + " " + anagrafica.getNome());
 					
 				}else{
@@ -93,15 +93,15 @@ public class AnagraficheHelper {
 						     					  .getActiveWorkbenchWindow()
 						     					  .getShell(),
 						     			"ERRORE", 
-										"Il contatto che si sta cercando di aggiornare è stata cancellata da un altro utente");
+										"Il contatto che si sta cercando di aggiornare ï¿½ stata cancellata da un altro utente");
 				cModel = null;
 
 		/*		if (MessageDialog.openConfirm(PlatformUI.getWorkbench()
 														.getActiveWorkbenchWindow()
 														.getShell(), 
 											  "ATTENZIONE", 
-											  "Si sta cercando di aggiornare il contatto " + cModel.toString() + " già cancellato da un altro utente. \n" +
-											  "Se si prosegue con l'operazione li contatto verrà inserito nella base dati." +
+											  "Si sta cercando di aggiornare il contatto " + cModel.toString() + " giï¿½ cancellato da un altro utente. \n" +
+											  "Se si prosegue con l'operazione li contatto verrï¿½ inserito nella base dati." +
 			      							  "Procedere con l'operazione ?")){
 					cModel.setCodContatto(0);
 				}else{
@@ -125,7 +125,7 @@ public class AnagraficheHelper {
 												  .getActiveWorkbenchWindow()
 												  .getShell(),
 										"ERRORE", 
-										"L'anagrafica che si sta cercando di aggiornare è stata cancellata da un altro utente");
+										"L'anagrafica che si sta cercando di aggiornare ï¿½ stata cancellata da un altro utente");
 				aModel = null;
 			}
 			

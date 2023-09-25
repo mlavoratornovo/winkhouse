@@ -232,7 +232,7 @@ public class AnagraficheHelper {
 
 	/**
 	 * Inserisce un record nella tabella anagrafiche ritornando true o false.
-	 * Se il campo codAnagrafica, del parametro anagrafica, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAnagrafica, del parametro anagrafica, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 

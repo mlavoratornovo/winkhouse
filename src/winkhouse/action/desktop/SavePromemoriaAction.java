@@ -61,7 +61,7 @@ public class SavePromemoriaAction extends Action {
 								}
 								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						  				"Inserimento promemoria",
-						  				"Si è verificato un errore durante il salvataggio");
+						  				"Si ï¿½ verificato un errore durante il salvataggio");
 								
 
 							}
@@ -81,7 +81,7 @@ public class SavePromemoriaAction extends Action {
 						}
 						MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 								  				"Inserimento promemoria",
-								  				"Si è verificato un errore durante il salvataggio");
+								  				"Si ï¿½ verificato un errore durante il salvataggio");
 					}
 
 					if (plDAO.deleteByCodPromemoria(pm.getCodPromemoria(), con, false)){
@@ -95,7 +95,7 @@ public class SavePromemoriaAction extends Action {
 								}
 								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						  				"Inserimento promemoria",
-						  				"Si è verificato un errore durante il salvataggio");
+						  				"Si ï¿½ verificato un errore durante il salvataggio");
 								
 
 							}
@@ -115,7 +115,7 @@ public class SavePromemoriaAction extends Action {
 						}
 						MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 								  				"Inserimento promemoria",
-								  				"Si è verificato un errore durante il salvataggio");
+								  				"Si ï¿½ verificato un errore durante il salvataggio");
 					}
 					
 			}else{
@@ -126,7 +126,7 @@ public class SavePromemoriaAction extends Action {
 				}
 				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						  				"Inserimento promemoria",
-						  				"Si è verificato un errore durante il salvataggio");
+						  				"Si ï¿½ verificato un errore durante il salvataggio");
 			}
 		}else{
 			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),

@@ -419,7 +419,7 @@ public class ElementsDescriptors {
 			return "riscaldamento";
 		}
 		if (element instanceof EntityXMLModel){
-			return "entità";
+			return "entitï¿½";
 		}
 		if (element instanceof AttributeXMLModel){
 			return "campo personale";

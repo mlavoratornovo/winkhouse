@@ -72,15 +72,15 @@ public class ImmaginiHelper {
    					  							  .getActiveWorkbenchWindow()
    					  							  .getShell(),
    					  					"ERRORE", 
-										"L'immagine che si sta cercando di aggiornare è stata cancellata da un altro utente");
+										"L'immagine che si sta cercando di aggiornare ï¿½ stata cancellata da un altro utente");
 				immagineVO = null;
 
 /*				if (MessageDialog.openConfirm(PlatformUI.getWorkbench()
 														.getActiveWorkbenchWindow()
 														.getShell(), 
 											  "ATTENZIONE", 
-											  "Si sta cercando di aggiornare l'immagine " + immagineVO.getPathImmagine() + " già cancellata da un altro utente. \n" +
-											  "Se si prosegue con l'operazione l'immagine verrà inserito nella base dati." +
+											  "Si sta cercando di aggiornare l'immagine " + immagineVO.getPathImmagine() + " giï¿½ cancellata da un altro utente. \n" +
+											  "Se si prosegue con l'operazione l'immagine verrï¿½ inserito nella base dati." +
 			      							  "Procedere con l'operazione ?")){
 					immagineVO.setCodImmagine(0);
 				}else{
@@ -133,7 +133,7 @@ public class ImmaginiHelper {
 						if (!iDAO.saveUpdate(immagine, con, doCommit)){						
 								MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"Errore salvataggio immagine", 
-														"Si è verificato un errore nel salvataggio dell' immagine : " + 
+														"Si ï¿½ verificato un errore nel salvataggio dell' immagine : " + 
 														immagine.getPathImmagine());
 								counterrors++;
 								
@@ -154,7 +154,7 @@ public class ImmaginiHelper {
 				if (!iDAO.delete(immagine.getCodImmagine(), con, doCommit)){					
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione immagine", 
-											"Si è verificato un errore nella cancellazione dell' immagine : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell' immagine : " + 
 											immagine.getPathImmagine());
 					counterrors++;
 					
@@ -186,7 +186,7 @@ public class ImmaginiHelper {
 		} catch (Exception e) {
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione immagine", 
-									"Si è verificato un errore nella copia dell' immagine da : " + 
+									"Si ï¿½ verificato un errore nella copia dell' immagine da : " + 
 									pathImmaginiOrigine+immagine.getPathImmagine() + " \n a : " + 
 									pathImmaginiDestinazione+immagine.getPathImmagine());
 			returnValue = false;
@@ -207,7 +207,7 @@ public class ImmaginiHelper {
 		} catch (Exception e) {
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione immagine", 
-									"Si è verificato un errore nella cancellazione dell' immagine da : " + 									 
+									"Si ï¿½ verificato un errore nella cancellazione dell' immagine da : " + 									 
 									pathImmaginiDestinazione+immagine.getPathImmagine());
 			returnValue = false;
 		}

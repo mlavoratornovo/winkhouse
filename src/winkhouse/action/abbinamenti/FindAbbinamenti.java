@@ -45,8 +45,8 @@ public class FindAbbinamenti extends Action {
 															  .getActiveWorkbenchWindow()
 															  .getShell(),
 															  SWT.ICON_ERROR);
-					mb.setText("Si è verificato un errore nella ricerca delle anagrafiche");
-					mb.setMessage("Si è verificato un errore nella ricerca delle anagrafiche");			
+					mb.setText("Si ï¿½ verificato un errore nella ricerca delle anagrafiche");
+					mb.setMessage("Si ï¿½ verificato un errore nella ricerca delle anagrafiche");			
 					mb.open();
 				} catch (InterruptedException e) {
 					MessageBox mb = new MessageBox(winkhouse.Activator
@@ -55,8 +55,8 @@ public class FindAbbinamenti extends Action {
 															  .getActiveWorkbenchWindow()
 															  .getShell(),
 															  SWT.ICON_ERROR);
-					mb.setText("Si è verificato un errore nella ricerca de anagrafiche");
-					mb.setMessage("Si è verificato un errore nella ricerca delle anagrafiche");			
+					mb.setText("Si ï¿½ verificato un errore nella ricerca de anagrafiche");
+					mb.setMessage("Si ï¿½ verificato un errore nella ricerca delle anagrafiche");			
 					mb.open();
 				}
 				av.setRicerca(anagrafiche);
@@ -90,8 +90,8 @@ public class FindAbbinamenti extends Action {
 							  								  .getActiveWorkbenchWindow()
 							  								  .getShell(),
 							  								  SWT.ICON_ERROR);
-					mb.setText("Si è verificato un errore nella ricerca degli immobili");
-					mb.setMessage("Si è verificato un errore nella ricerca degli immobili");			
+					mb.setText("Si ï¿½ verificato un errore nella ricerca degli immobili");
+					mb.setMessage("Si ï¿½ verificato un errore nella ricerca degli immobili");			
 					mb.open();
 				} catch (InterruptedException e) {
 					MessageBox mb = new MessageBox(winkhouse.Activator
@@ -100,8 +100,8 @@ public class FindAbbinamenti extends Action {
 							  				 			      .getActiveWorkbenchWindow()
 							  				 			      .getShell(),
 							  				 			      SWT.ICON_ERROR);
-					mb.setText("Si è verificato un errore nella ricerca degli immobili");
-					mb.setMessage("Si è verificato un errore nella ricerca degli immobili");			
+					mb.setText("Si ï¿½ verificato un errore nella ricerca degli immobili");
+					mb.setMessage("Si ï¿½ verificato un errore nella ricerca degli immobili");			
 					mb.open();
 				}
 				av.setRicerca(immobili);
@@ -134,8 +134,8 @@ public class FindAbbinamenti extends Action {
 						  								  .getActiveWorkbenchWindow()
 						  								  .getShell(),
 						  								  SWT.ICON_ERROR);
-				mb.setText("Si è verificato un errore nella ricerca degli immobili");
-				mb.setMessage("Si è verificato un errore nella ricerca degli immobili");			
+				mb.setText("Si ï¿½ verificato un errore nella ricerca degli immobili");
+				mb.setMessage("Si ï¿½ verificato un errore nella ricerca degli immobili");			
 				mb.open();
 			} catch (InterruptedException e) {
 				MessageBox mb = new MessageBox(winkhouse.Activator
@@ -144,8 +144,8 @@ public class FindAbbinamenti extends Action {
 						  				 			      .getActiveWorkbenchWindow()
 						  				 			      .getShell(),
 						  				 			      SWT.ICON_ERROR);
-				mb.setText("Si è verificato un errore nella ricerca degli immobili");
-				mb.setMessage("Si è verificato un errore nella ricerca degli immobili");			
+				mb.setText("Si ï¿½ verificato un errore nella ricerca degli immobili");
+				mb.setMessage("Si ï¿½ verificato un errore nella ricerca degli immobili");			
 				mb.open();
 			}
 			av.setRicerca(immobili);

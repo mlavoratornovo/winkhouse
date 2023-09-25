@@ -29,7 +29,7 @@ public class ChangeDesktopTypeAction extends Action {
 	public ChangeDesktopTypeAction(String text, int style) {
 		super(text, style);
 		setImageDescriptor(Activator.getImageDescriptor("icons/view_tree.png"));
-		setToolTipText("Attiva la modalità struttura");
+		setToolTipText("Attiva la modalitï¿½ struttura");
 	}
 
 	
@@ -42,7 +42,7 @@ public class ChangeDesktopTypeAction extends Action {
 			dv.setDesktop_type(DesktopView.STRUTTURA_TYPE);
 			dv.getDesktop().setInput(new ArrayList());
 			setImageDescriptor(Activator.getImageDescriptor("icons/postit16.png"));
-			setToolTipText("Attiva la modalità promemoria");
+			setToolTipText("Attiva la modalitï¿½ promemoria");
 			dv.getDpa().setToolTipText("Cancella elemento dalla scrivania, non nell'archivio");
 			dv.getSelettoreStructureLevel().getcLayout().setEnabled(true);
 			dv.getAgenti().getCombo().setEnabled(false);
@@ -51,7 +51,7 @@ public class ChangeDesktopTypeAction extends Action {
 			dv.setDesktop_type(DesktopView.PROMEMORIA_TYPE);
 			dv.setAgente(WinkhouseUtils.getInstance().getLoggedAgent());
 			setImageDescriptor(Activator.getImageDescriptor("icons/view_tree.png"));
-			setToolTipText("Attiva la modalità struttura");
+			setToolTipText("Attiva la modalitï¿½ struttura");
 			dv.getDpa().setToolTipText("Cancella promemoria dall'archivio");
 			dv.getSelettoreStructureLevel().getcLayout().setEnabled(false);
 			dv.getAgenti().getCombo().setEnabled(true);

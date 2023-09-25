@@ -77,7 +77,7 @@ public class TipologieImmobiliHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento tipologia immobili \n la cancellazione della tipologia immobile è annullata");
+											"Errore aggiornamento tipologia immobili \n la cancellazione della tipologia immobile ï¿½ annullata");
 				}
 				
 			}else{
@@ -88,7 +88,7 @@ public class TipologieImmobiliHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione della tipolgia immobile\n la cancellazione della tipolgia immobile è annullata");
+										"Errore cancellazione della tipolgia immobile\n la cancellazione della tipolgia immobile ï¿½ annullata");
 			}
 			MobiliaDatiBaseCache.getInstance().setTipologieImmobili(null);
 		}
@@ -111,7 +111,7 @@ public class TipologieImmobiliHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio tipologia immobile", 
-											"Si è verificato un errore nel salvataggio della tipologia immobile : " + 
+											"Si ï¿½ verificato un errore nel salvataggio della tipologia immobile : " + 
 											tipologiaImmobiliVO.getDescrizione());					
 				}
 			}

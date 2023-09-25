@@ -85,7 +85,7 @@ public class NuovoColloquioAction extends Action {
 						MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 			   					   					   SWT.ICON_WARNING);
 						mb.setText("Attenzione, selezione immobile non valida");
-						mb.setMessage("L'immobile selezionato non è presente in archivio, \n " +
+						mb.setMessage("L'immobile selezionato non ï¿½ presente in archivio, \n " +
 									  "potrebbe essere stato cancellato da un altro utente");			
 						mb.open();																    	
 				 					
@@ -146,7 +146,7 @@ public class NuovoColloquioAction extends Action {
 					MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 		   					   					   SWT.ICON_WARNING);
 					mb.setText("Attenzione, selezione anagrafica non valida");
-					mb.setMessage("L'anagrafica selezionata non è presente in archivio, \n " +
+					mb.setMessage("L'anagrafica selezionata non ï¿½ presente in archivio, \n " +
 								  "potrebbe essere stata cancellata da un altro utente");			
 					mb.open();																    	
 			    }

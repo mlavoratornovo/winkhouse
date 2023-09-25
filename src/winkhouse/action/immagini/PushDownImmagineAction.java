@@ -44,7 +44,7 @@ public class PushDownImmagineAction extends Action {
 														  .getActiveWorkbenchWindow()
 														  .getShell(), 
 														  "Errore salvaggio immagine", 
-														  "Si è verificato un errore nell'aggiornamento dell'ordine dell'immagine");
+														  "Si ï¿½ verificato un errore nell'aggiornamento dell'ordine dell'immagine");
 					}
 				}
 				

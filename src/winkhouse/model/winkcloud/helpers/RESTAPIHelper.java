@@ -530,6 +530,7 @@ public class RESTAPIHelper {
 		if (criteri.size()>0){
 			criteri.get(criteri.size()-1).setLogicalOperator("");
 		}
+
 		if (retval.size() > 0 && retval.get(0).getSearchType().equalsIgnoreCase("SEARCH_IMMOBILI")){
 			
 			try {

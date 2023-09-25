@@ -398,7 +398,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 			
 			cLayout = new Combo(parent,SWT.BORDER);
 			
-			cLayout.setToolTipText("Livello profondità struttura");
+			cLayout.setToolTipText("Livello profonditï¿½ struttura");
 			cLayout.add("1");
 			cLayout.add("2");
 			cLayout.add("3");

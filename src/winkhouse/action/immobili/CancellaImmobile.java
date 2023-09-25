@@ -47,7 +47,7 @@ public ImageDescriptor getImageDescriptor() {
 														.getShell(), 
 											  "Cancellazione immobile", 
 											  "La cancellazione elimina in modo permanente tutti i dati relativi all'immobile. \n" +
-											  "Per evitare la cancellazione permanente è possibile spostare l'immobile nell'archivo storico. \n" +
+											  "Per evitare la cancellazione permanente ï¿½ possibile spostare l'immobile nell'archivo storico. \n" +
 			  	  							  "Per procedere con la cancellazione permanente premere OK altrimenti premere Cancel ")){
 	
 					ImmobiliModel immobile = div.getImmobile();
@@ -72,7 +72,7 @@ public ImageDescriptor getImageDescriptor() {
 														.getShell(), 
 											  "Cancellazione immobile", 
 											  "La cancellazione elimina in modo permanente tutti i dati relativi all'immobile. \n" +
-											  "Per evitare la cancellazione permanente è possibile spostare l'immobile nell'archivo storico. \n" +
+											  "Per evitare la cancellazione permanente ï¿½ possibile spostare l'immobile nell'archivo storico. \n" +
 											  "Per procedere con la cancellazione permanente premere OK altrimenti premere Cancel ")){
 
 					ImmobiliHelper ih = new ImmobiliHelper();

@@ -65,7 +65,7 @@ public class AppuntamentiHelper {
 			}else{
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 										"Errore salvataggio appuntamento", 
-										"Si è verificato un errore nel salvataggio dell'appuntamento ");
+										"Si ï¿½ verificato un errore nel salvataggio dell'appuntamento ");
 				returnValue = false;
 				try {
 					con.rollback();
@@ -131,7 +131,7 @@ public class AppuntamentiHelper {
 				if (!aaDAO.saveUpdate(agentiAppuntamentiVO, con, false)){					
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio appuntamento agenti", 
-											"Si è verificato un errore nel salvataggio dell'associazione appuntamento agente : " + 
+											"Si ï¿½ verificato un errore nel salvataggio dell'associazione appuntamento agente : " + 
 											agentiAppuntamentiVO.getCodAgentiAppuntamenti());
 					returnValue = false;
 				}					
@@ -144,7 +144,7 @@ public class AppuntamentiHelper {
 				if (!aaDAO.deleteAgentiAppuntamenti(agentiAppuntamentiVO.getCodAgentiAppuntamenti(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione appuntamento agenti", 
-											"Si è verificato un errore nella cancellazione dell'associazione appuntamento agente : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell'associazione appuntamento agente : " + 
 											agentiAppuntamentiVO.getCodAgentiAppuntamenti());
 					returnValue = false;
 	
@@ -205,7 +205,7 @@ public class AppuntamentiHelper {
 				if (!aaDAO.saveUpdate(anagraficheAppuntamentiVO, con, false)){					
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio appuntamento anagrafica", 
-											"Si è verificato un errore nel salvataggio dell'associazione appuntamento anagrafica : " + 
+											"Si ï¿½ verificato un errore nel salvataggio dell'associazione appuntamento anagrafica : " + 
 											anagraficheAppuntamentiVO.getCodAnagraficheAppuntamenti());
 					returnValue = false;
 				}					
@@ -218,7 +218,7 @@ public class AppuntamentiHelper {
 				if (!aaDAO.deleteAnagraficheAppuntamenti(anagraficheAppuntamentiVO.getCodAnagraficheAppuntamenti(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione appuntamento anagrafica", 
-											"Si è verificato un errore nella cancellazione dell'associazione appuntamento anagrafica : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell'associazione appuntamento anagrafica : " + 
 											anagraficheAppuntamentiVO.getCodAnagraficheAppuntamenti());
 					returnValue = false;
 	
@@ -273,7 +273,7 @@ public class AppuntamentiHelper {
 			if (connection == null){
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 										"Errore cancellazione appuntamento", 
-										"Si è verificato un errore nella cancellazione dell'appuntamento ");
+										"Si ï¿½ verificato un errore nella cancellazione dell'appuntamento ");
 			}
 			try {
 				if (connection == null){

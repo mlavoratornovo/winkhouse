@@ -237,7 +237,7 @@ public class DataWriter implements IRunnableWithProgress {
 				writeAffittiSpese((AffittiSpeseXMLModel)o);																	
 			}
 			if (o instanceof EntityXMLModel){
-				monitor.setTaskName("scrittura entità : " + ((EntityXMLModel)o).getDescription());			
+				monitor.setTaskName("scrittura entitï¿½ : " + ((EntityXMLModel)o).getDescription());			
 				writeEntity((EntityXMLModel)o);																	
 			}
 			if (o instanceof AttributeXMLModel){

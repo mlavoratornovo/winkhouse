@@ -376,18 +376,18 @@ public class DataBasePage extends PreferencePage {
 		
 		if (oldbundlevalue != bundleDB.getSelection()){
 			if (bundleDB.getSelection()){
-				if (MessageDialog.openConfirm(getShell(), "Riavvio winkhouse", "La voce \"Utilizza base dati autonoma\" è stata selezionata.\n"
-						 												 + "Se nel pc è attivo il programma winkhouseDBAgent, chiuderlo tramite File -> Exit."
+				if (MessageDialog.openConfirm(getShell(), "Riavvio winkhouse", "La voce \"Utilizza base dati autonoma\" ï¿½ stata selezionata.\n"
+						 												 + "Se nel pc ï¿½ attivo il programma winkhouseDBAgent, chiuderlo tramite File -> Exit."
 						 												 + "Per rendere effettivo il cambiamento della base dati \n"
-						 												 + "è necessario riavviare il programma, RIAVVIARE ORA ?")){
+						 												 + "ï¿½ necessario riavviare il programma, RIAVVIARE ORA ?")){
 					HSQLDBHelper.getInstance().chiudiDatabase();
 					PlatformUI.getWorkbench().restart();	 													 
 						 												 }
 				
 			}else{
-				if (MessageDialog.openConfirm(getShell(), "Riavvio winkhouse", "La voce \"Utilizza base dati autonoma\" è stata cambiata, \n"
+				if (MessageDialog.openConfirm(getShell(), "Riavvio winkhouse", "La voce \"Utilizza base dati autonoma\" ï¿½ stata cambiata, \n"
 																	 + " per rendere effettivo il cambiamento della base dati \n"
-																	 + "è necessario riavviare il programma, RIAVVIARE ORA ?")){
+																	 + "ï¿½ necessario riavviare il programma, RIAVVIARE ORA ?")){
 					HSQLDBHelper.getInstance().chiudiDatabase();
 					PlatformUI.getWorkbench().restart();
 				}

@@ -139,7 +139,7 @@ public class PopUpRicercaImmobile extends Dialog {
 
 		indirizzo = new Text(c,SWT.BORDER);
 		indirizzo.setLayoutData(gdH);
-		indirizzo.setToolTipText("Città indirizzo");
+		indirizzo.setToolTipText("Cittï¿½ indirizzo");
 		
 		ImageHyperlink cerca = new ImageHyperlink(c,SWT.WRAP);
 //		cerca.setLayoutData(gdH);

@@ -49,7 +49,7 @@ public class RefreshDettaglioAnagrafica extends Action {
 					((DettaglioAnagraficaView)iwp).setAnagrafica(am);
 				}else{
 					if (MessageDialog.openQuestion(iwp.getSite().getShell(), 
-											   "Attenzione l'anagrafica è stata cancellata", 
+											   "Attenzione l'anagrafica ï¿½ stata cancellata", 
 											   "########################################## \n" +
 											   "                       L'ANAGRAFICA E' STATA CANCELLATA ! \n" +
 											   "########################################## \n\n" +

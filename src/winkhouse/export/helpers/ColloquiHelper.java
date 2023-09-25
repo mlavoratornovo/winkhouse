@@ -28,7 +28,7 @@ public class ColloquiHelper {
 	 * 
 	 * data colloquio AND scadenziere AND iCalUid AND luogo incontro
 	 * 
-	 * controllando tra colloqui in cui è presente l'anagrafica passata in input 
+	 * controllando tra colloqui in cui ï¿½ presente l'anagrafica passata in input 
 	 * Utilizzare il metodo getAnagraficheExist della classe winkhouse.export.helpers.AnagraficheHelper 
 	 * per individuare una lista di anagrafiche da passare al metodo.
 	 *  
@@ -244,7 +244,7 @@ public class ColloquiHelper {
 	 	
 	/**
 	 * Inserisce un record nella tabella colloqui ritornando true o false.
-	 * Se il campo codColloquio, del parametro colloquio, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codColloquio, del parametro colloquio, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -260,7 +260,7 @@ public class ColloquiHelper {
 
 	/**
 	 * Inserisce un record nella tabella colloquiagenti ritornando true o false.
-	 * Se il campo codColloquioAgenti, del parametro colloquiagenti, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codColloquioAgenti, del parametro colloquiagenti, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -276,7 +276,7 @@ public class ColloquiHelper {
 		
 	/**
 	 * Inserisce un record nella tabella colloquiagenti ritornando true o false.
-	 * Se il campo codColloquioAnagrafica, del parametro colloquianagrafiche, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codColloquioAnagrafica, del parametro colloquianagrafiche, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * 
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
@@ -293,7 +293,7 @@ public class ColloquiHelper {
 
 	/**
 	 * Inserisce un record nella tabella allegaticolloqui ritornando true o false.
-	 * Se il campo codAllegatiColloqui, del parametro allegatiColloqui, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAllegatiColloqui, del parametro allegatiColloqui, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * 
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
@@ -311,7 +311,7 @@ public class ColloquiHelper {
 	
 	/**
 	 * Inserisce un record nella tabella colloquicriteriricerca ritornando true o false.
-	 * Se il campo codColloquioCriterioRicerca, del parametro colloquiCriteriRicerca, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codColloquioCriterioRicerca, del parametro colloquiCriteriRicerca, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * 
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 

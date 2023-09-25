@@ -491,7 +491,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 					}else{
 						MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 								  				  "Attenzione", 
-												  "L'anagrafica selezionata non è stato ancora salvato nel database \n " +
+												  "L'anagrafica selezionata non ï¿½ stato ancora salvato nel database \n " +
 												  "eseguirne il salvataggio prima di aggiungere i recapiti");						
 
 					}
@@ -808,7 +808,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 		if (this.anagrafiche == null){
 			this.anagrafiche = new ArrayList<AnagraficheModel>();
 		}
-		//inserire controllo se già presente
+		//inserire controllo se giï¿½ presente
 		this.anagrafiche.add(anagrafica);
 		tvanagrafica.refresh();
 	}

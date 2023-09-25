@@ -225,7 +225,7 @@ public class ColloquiHelper {
 					if (!(Boolean)colloquioDelResult.get(this.RESULT_DELETE_COLLOQUIO_DB)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore cancellazione colloquio", 
-												"Si è verificato un errore nella cancellazione del colloquio : " +							
+												"Si ï¿½ verificato un errore nella cancellazione del colloquio : " +							
 												((cModel.getTipologia()!= null)?"":cModel.getTipologia().getDescrizione()) + "\n" +
 												"descrizione : " + cModel.getDescrizione());
 				
@@ -318,7 +318,7 @@ public class ColloquiHelper {
 		} catch (Exception e) {
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione allegato", 
-									"Si è verificato un errore nella cancellazione dell' allegato da : " + 									 
+									"Si ï¿½ verificato un errore nella cancellazione dell' allegato da : " + 									 
 									pathAllegatiDestinazione+allegato.getNome());
 			returnValue = false;
 		}
@@ -333,7 +333,7 @@ public class ColloquiHelper {
 						  	 					  .getActiveWorkbenchWindow()
 						  	 					  .getShell(),
 						  	 		    "ERRORE", 
-										"Il colloquio che si sta cercando di aggiornare è stato cancellato da un altro utente");
+										"Il colloquio che si sta cercando di aggiornare ï¿½ stato cancellato da un altro utente");
 				cModel = null;
 				
 			}
@@ -348,7 +348,7 @@ public class ColloquiHelper {
 						  	 					  .getActiveWorkbenchWindow()
 						  	 					  .getShell(),
 						  	 		    "ERRORE", 
-										"Il colloquio agente che si sta cercando di aggiornare è stato cancellato da un altro utente");
+										"Il colloquio agente che si sta cercando di aggiornare ï¿½ stato cancellato da un altro utente");
 				cModel = null;
 				
 			}
@@ -364,7 +364,7 @@ public class ColloquiHelper {
 						  	 					  .getActiveWorkbenchWindow()
 						  	 					  .getShell(),
 						  	 		    "ERRORE", 
-										"Il colloquio anagrafica che si sta cercando di aggiornare è stato cancellato da un altro utente");
+										"Il colloquio anagrafica che si sta cercando di aggiornare ï¿½ stato cancellato da un altro utente");
 				cModel = null;
 				
 			}
@@ -379,7 +379,7 @@ public class ColloquiHelper {
 						  	 					  .getActiveWorkbenchWindow()
 						  	 					  .getShell(),
 						  	 		    "ERRORE", 
-										"Il colloquio criterio ricerca che si sta cercando di aggiornare è stato cancellato da un altro utente");
+										"Il colloquio criterio ricerca che si sta cercando di aggiornare ï¿½ stato cancellato da un altro utente");
 				cModel = null;
 				
 			}
@@ -394,7 +394,7 @@ public class ColloquiHelper {
 						  	 					  .getActiveWorkbenchWindow()
 						  	 					  .getShell(),
 						  	 		    "ERRORE", 
-										"Il colloquio allegato che si sta cercando di aggiornare è stato cancellato da un altro utente");
+										"Il colloquio allegato che si sta cercando di aggiornare ï¿½ stato cancellato da un altro utente");
 				cModel = null;
 				
 			}
@@ -434,9 +434,9 @@ public class ColloquiHelper {
 									SearchEngineImmobili sei = new SearchEngineImmobili(listaCriteri);
 									if (sei.verifyQuery() == false){
 										nextsave = MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-																			  "Validità criteri ricerca", 
+																			  "Validitï¿½ criteri ricerca", 
 																			  "I criteri di ricerca inseriti non producono una interrogazione valida.\n "
-																			  + "Salvare comunque il colloquio ? (Non produrrà effetti nelle ricerche degli abbinamenti)");
+																			  + "Salvare comunque il colloquio ? (Non produrrï¿½ effetti nelle ricerche degli abbinamenti)");
 											
 										
 									}
@@ -555,7 +555,7 @@ public class ColloquiHelper {
 					if (!caDAO.saveUpdate(colloquiAgenti, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio colloqui agenti", 
-												"Si è verificato un errore nel salvataggio dell'associazione colloquio agente : " + 
+												"Si ï¿½ verificato un errore nel salvataggio dell'associazione colloquio agente : " + 
 												colloquiAgenti.getCodColloquioAgenti());
 						returnValue = false;
 					}					
@@ -568,7 +568,7 @@ public class ColloquiHelper {
 				if (!caDAO.delete(colloquiAgenti.getCodColloquioAgenti(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione colloqui agenti", 
-											"Si è verificato un errore nella cancellazione dell'associazione colloquio agente : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell'associazione colloquio agente : " + 
 											colloquiAgenti.getCodColloquioAgenti());
 					returnValue = false;
 
@@ -607,7 +607,7 @@ public class ColloquiHelper {
 					if (!caDAO.saveUpdate(colloquiAnagrafiche, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio colloqui anagrafica", 
-												"Si è verificato un errore nel salvataggio dell'associazione colloquio anagrafica : " + 
+												"Si ï¿½ verificato un errore nel salvataggio dell'associazione colloquio anagrafica : " + 
 												colloquiAnagrafiche.getCodColloquioAnagrafiche());
 						returnValue = false;
 					}					
@@ -620,7 +620,7 @@ public class ColloquiHelper {
 				if (!caDAO.delete(colloquiAnagrafiche.getCodColloquioAnagrafiche(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione colloqui anagrafiche", 
-											"Si è verificato un errore nella cancellazione dell'associazione colloquio anagrafica : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell'associazione colloquio anagrafica : " + 
 											colloquiAnagrafiche.getCodColloquioAnagrafiche());
 					returnValue = false;
 
@@ -660,7 +660,7 @@ public class ColloquiHelper {
 					if (!ccrDAO.saveUpdate(colloquioCriteriRicerca, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio criterio ricerca", 
-												"Si è verificato un errore nel salvataggio del criterio ricerca : " + 
+												"Si ï¿½ verificato un errore nel salvataggio del criterio ricerca : " + 
 												colloquioCriteriRicerca.getCodCriterioRicerca());
 						returnValue = false;
 					}
@@ -674,7 +674,7 @@ public class ColloquiHelper {
 				if (!ccrDAO.delete(colloquioCriteriRicerca.getCodCriterioRicerca(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione criterio ricerca", 
-											"Si è verificato un errore nella cancellazione del criterio ricerca : " + 
+											"Si ï¿½ verificato un errore nella cancellazione del criterio ricerca : " + 
 											colloquioCriteriRicerca.getCodCriterioRicerca());
 					returnValue = false;
 
@@ -715,7 +715,7 @@ public class ColloquiHelper {
 					if (!acDAO.saveUpdate(colloquioAllegati, con, false)){					
 						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"Errore salvataggio allegato", 
-												"Si è verificato un errore nel salvataggio dell' allegato : " + 
+												"Si ï¿½ verificato un errore nel salvataggio dell' allegato : " + 
 												colloquioAllegati.getCodAllegatiColloquio());
 						
 					}else{
@@ -730,7 +730,7 @@ public class ColloquiHelper {
 				if (!acDAO.delete(colloquioAllegati.getCodAllegatiColloquio(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione allegato", 
-											"Si è verificato un errore nella cancellazione dell' allegato : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell' allegato : " + 
 											colloquioAllegati.getCodAllegatiColloquio());
 					
 				}else{
@@ -743,4 +743,3 @@ public class ColloquiHelper {
 	}
 
 }
-

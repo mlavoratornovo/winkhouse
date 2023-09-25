@@ -36,7 +36,7 @@ public class RestoreBackUpAction extends Action {
 		
 		if (MessageDialog.openConfirm(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 			"ATTENZIONE Riavvio dopo ripristino", 
-			"Per ripristinare i dati sarà necessario riavviare il programma, eseguire il ripristino e RIAVVIARE ORA ?")){
+			"Per ripristinare i dati sarï¿½ necessario riavviare il programma, eseguire il ripristino e RIAVVIARE ORA ?")){
 			
 			BackUpHelper uDBHelper = new BackUpHelper();
 			uDBHelper.restoreDBBackUp();

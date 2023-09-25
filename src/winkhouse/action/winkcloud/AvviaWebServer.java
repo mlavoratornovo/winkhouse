@@ -72,6 +72,5 @@ public class AvviaWebServer extends Action {
     public void setSal(QueryFilesView.serverAliveLabel sal) {
         this.sal = sal;
     }
-	
 
 }

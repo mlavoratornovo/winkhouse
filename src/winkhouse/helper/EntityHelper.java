@@ -135,7 +135,7 @@ public class EntityHelper {
 							if (checkAttributeNameExist(attributeDBMap_finder, attributeModel.getAttributeName())){
 								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 														"ATTENZIONE !",
-														entityModel.getDescription() + " : Il nome campo è gia presente in archivio");
+														entityModel.getDescription() + " : Il nome campo ï¿½ gia presente in archivio");
 								returnValue = false;
 								break;
 
@@ -193,7 +193,7 @@ public class EntityHelper {
 					}else{
 						MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 												"ATTENZIONE !",
-												entityModel.getDescription() + " : Il nome campo è gia presente in archivio");
+												entityModel.getDescription() + " : Il nome campo ï¿½ gia presente in archivio");
 						returnValue = false;
 						break;
 					}

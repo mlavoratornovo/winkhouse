@@ -116,7 +116,7 @@ public class RicercaWizard extends Wizard {
 					}else{
 						MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 												"Errore creazione ricerca",
-												"Si è verificato un errore durante il salvataggio della ricerca");
+												"Si ï¿½ verificato un errore durante il salvataggio della ricerca");
 					}
 //				}else{
 //					dpav.getTvRegole().refresh();
@@ -129,7 +129,7 @@ public class RicercaWizard extends Wizard {
 				
 				if (!getRicerca().getRicerca().equals(rmDB)){
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-							 								 "Winkhouse : la regola è stata modificata", null,
+							 								 "Winkhouse : la regola ï¿½ stata modificata", null,
 							 								 "Vuoi usare la regola originale, salvare ed usare una nuova regola o \n" +
 							 								 "aggiornare ed usare la regola originale ?",
 							 								 MessageDialog.WARNING, new String[] {"Usa originale","Salva ed usa nuova","Aggiorna ed usa originale"}, 0);
@@ -144,7 +144,7 @@ public class RicercaWizard extends Wizard {
 							 }else{
 								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 														"Errore creazione ricerca",
-														"Si è verificato un errore durante il salvataggio della ricerca");
+														"Si ï¿½ verificato un errore durante il salvataggio della ricerca");
 							 }
 							 break;
 					case 2 : RicercheHelper rh1 = new RicercheHelper();
@@ -153,7 +153,7 @@ public class RicercaWizard extends Wizard {
 							 }else{
 								 MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										 				 "Errore creazione ricerca",
-										 				 "Si è verificato un errore durante il salvataggio della ricerca");
+										 				 "Si ï¿½ verificato un errore durante il salvataggio della ricerca");
 								 
 							 }
 					default : break;

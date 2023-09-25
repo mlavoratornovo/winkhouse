@@ -190,7 +190,7 @@ public class ImmobiliHelper {
 	}
 	
 	/**
-	 * Ritorna la lista degli immobili che hanno come tipologia (appartamento,villa,ecc...) quella passata in input tramite il codice e che hanno la proprietà
+	 * Ritorna la lista degli immobili che hanno come tipologia (appartamento,villa,ecc...) quella passata in input tramite il codice e che hanno la proprietï¿½
 	 * affittabile == True.
 	 * @param codStatoConservativo
 	 * @return ArrayList<ImmobiliModel>
@@ -337,7 +337,7 @@ public class ImmobiliHelper {
 	
 	/**
 	 * Inserisce un record nella tabella immobili ritornando true o false.
-	 * Se il campo codImmobile, del parametro immobile, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codImmobile, del parametro immobile, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -353,7 +353,7 @@ public class ImmobiliHelper {
 	
 	/**
 	 * Inserisce un record nella tabella stanzeimmobili ritornando true o false.
-	 * Se il campo codStanzaImmobile, del parametro stanzeimmobili, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codStanzaImmobile, del parametro stanzeimmobili, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -369,7 +369,7 @@ public class ImmobiliHelper {
 
 	/**
 	 * Inserisce un record nella tabella immagini ritornando true o false.
-	 * Se il campo codImmagine, del parametro immagine, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codImmagine, del parametro immagine, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -385,7 +385,7 @@ public class ImmobiliHelper {
 
 	/**
 	 * Inserisce un record nella tabella allegatiimmobili ritornando true o false.
-	 * Se il campo codAllegatiImmobili, del parametro allegatoimmobile, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAllegatiImmobili, del parametro allegatoimmobile, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -401,7 +401,7 @@ public class ImmobiliHelper {
 
 	/**
 	 * Inserisce un record nella tabella datiCatastali ritornando true o false.
-	 * Se il campo codDatiCatastali, del parametro datiCatastali, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codDatiCatastali, del parametro datiCatastali, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -417,7 +417,7 @@ public class ImmobiliHelper {
 
 	/**
 	 * Inserisce un record nella tabella abbinamento ritornando true o false.
-	 * Se il campo codAbbinamento, del parametro abbinamento, è zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAbbinamento, del parametro abbinamento, ï¿½ zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 
@@ -433,7 +433,7 @@ public class ImmobiliHelper {
 
 	/**
 	 * Inserisce un record nella tabella immobilipropietari ritornando true o false.
-	 * Se la combinazione di codimmobile e codanagrafica è già presente nel database non viene eseguito nessun inserimento,
+	 * Se la combinazione di codimmobile e codanagrafica ï¿½ giï¿½ presente nel database non viene eseguito nessun inserimento,
 	 * in questo caso viene ritornato true, in caso di inserimento viene ritornato il risultato dell'operazione di inserimento.
 	 * SQL di inserimento.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 

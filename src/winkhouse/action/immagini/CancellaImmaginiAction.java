@@ -80,7 +80,7 @@ public class CancellaImmaginiAction extends Action {
 														.getActiveWorkbenchWindow().getShell(),
 											   SWT.ICON_WARNING);
 				
-				mb.setMessage("Riferimenti dell'immagine in banca dati eliminati. \n Il file di immagine non è presente su disco");
+				mb.setMessage("Riferimenti dell'immagine in banca dati eliminati. \n Il file di immagine non ï¿½ presente su disco");
 				mb.open();
 				
 			}

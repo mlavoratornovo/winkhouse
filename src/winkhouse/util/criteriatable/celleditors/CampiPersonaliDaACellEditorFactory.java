@@ -121,7 +121,7 @@ public class CampiPersonaliDaACellEditorFactory extends DaACellEditorFactory {
 		if (cellEditor instanceof CellEditor){
 			cellEditors.add(cellEditor);
 		}else{
-			throw new ClassCastException("Il prametro passato non è di tipo org.eclipse.jface.viewers.CellEditor");
+			throw new ClassCastException("Il prametro passato non ï¿½ di tipo org.eclipse.jface.viewers.CellEditor");
 		}
 		
 	}

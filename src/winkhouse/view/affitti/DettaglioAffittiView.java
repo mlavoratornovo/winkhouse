@@ -2898,6 +2898,3 @@ public class DettaglioAffittiView extends ViewPart {
 	}
 
 }
-
-
-

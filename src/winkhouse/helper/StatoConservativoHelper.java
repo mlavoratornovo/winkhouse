@@ -76,7 +76,7 @@ public class StatoConservativoHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento immobili \n la cancellazione dello stato conservativo è annullata");
+											"Errore aggiornamento immobili \n la cancellazione dello stato conservativo ï¿½ annullata");
 				}
 				
 			}else{
@@ -87,7 +87,7 @@ public class StatoConservativoHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione del riscaldamento \n la cancellazione dello stato conservativo è annullata");
+										"Errore cancellazione del riscaldamento \n la cancellazione dello stato conservativo ï¿½ annullata");
 			}
 			MobiliaDatiBaseCache.getInstance().setStatiConservativi(null);
 		}
@@ -110,7 +110,7 @@ public class StatoConservativoHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio stato conservativo", 
-											"Si è verificato un errore nel salvataggio dello stato conservativo : " + 
+											"Si ï¿½ verificato un errore nel salvataggio dello stato conservativo : " + 
 											statoconservativo.getDescrizione());					
 				}
 			}

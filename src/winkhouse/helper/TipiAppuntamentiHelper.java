@@ -75,7 +75,7 @@ public class TipiAppuntamentiHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento appuntamenti \n la cancellazione del tipo appuntamento è annullata");
+											"Errore aggiornamento appuntamenti \n la cancellazione del tipo appuntamento ï¿½ annullata");
 				}
 				
 			}else{
@@ -86,7 +86,7 @@ public class TipiAppuntamentiHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione del tipo appuntamento \n la cancellazione del tipo appuntamento è annullata");
+										"Errore cancellazione del tipo appuntamento \n la cancellazione del tipo appuntamento ï¿½ annullata");
 			}
 			
 			MobiliaDatiBaseCache.getInstance().setTipiAppuntamenti(null);
@@ -111,7 +111,7 @@ public class TipiAppuntamentiHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio tipo appuntamento ", 
-											"Si è verificato un errore nel salvataggio della tipo appuntamento : " + 
+											"Si ï¿½ verificato un errore nel salvataggio della tipo appuntamento : " + 
 											tipo.getDescrizione());					
 				}
 			}

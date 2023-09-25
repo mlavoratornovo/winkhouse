@@ -1,3 +1,4 @@
+
 package winkhouse.view.common.celleditors;
 
 import org.eclipse.jface.viewers.TextCellEditor;

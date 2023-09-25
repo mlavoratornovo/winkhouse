@@ -92,8 +92,8 @@ public class ImmobiliHelper {
 														.getActiveWorkbenchWindow()
 														.getShell(), 
 											  "ATTENZIONE", 
-											  "Si sta cercando di aggiornare l'allegato " + allegatiImmobiliVO.getNome() + " già cancellato da un altro utente. \n" +
-											  "Se si prosegue con l'operazione l'allegato verrà inserito nella base dati." +
+											  "Si sta cercando di aggiornare l'allegato " + allegatiImmobiliVO.getNome() + " giï¿½ cancellato da un altro utente. \n" +
+											  "Se si prosegue con l'operazione l'allegato verrï¿½ inserito nella base dati." +
 			      							  "Procedere con l'operazione ?")){
 					allegatiImmobiliVO.setCodAllegatiImmobili(0);
 				}else{
@@ -246,7 +246,7 @@ public class ImmobiliHelper {
 						if (!aiDAO.saveUpdate(immobileAllegati, con, false)){					
 							MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 													"Errore salvataggio allegato", 
-													"Si è verificato un errore nel salvataggio dell' allegato : " + 
+													"Si ï¿½ verificato un errore nel salvataggio dell' allegato : " + 
 													immobileAllegati.getCodAllegatiImmobili());
 							returnValue.put(RESULT_ALLEGATI_DB, false);
 							return returnValue;
@@ -264,7 +264,7 @@ public class ImmobiliHelper {
 				if (!aiDAO.delete(immobileAllegati.getCodAllegatiImmobili(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione allegato", 
-											"Si è verificato un errore nella cancellazione dell' allegato : " + 
+											"Si ï¿½ verificato un errore nella cancellazione dell' allegato : " + 
 											immobileAllegati.getCodAllegatiImmobili());
 					returnValue.put(RESULT_ALLEGATI_DB, false);
 					return returnValue;
@@ -286,7 +286,7 @@ public class ImmobiliHelper {
 						  	 					  .getActiveWorkbenchWindow()
 						  	 					  .getShell(),
 						  	 		    "ERRORE", 
-										"L'immobile che si sta cercando di aggiornare è stata cancellata da un altro utente");
+										"L'immobile che si sta cercando di aggiornare ï¿½ stata cancellata da un altro utente");
 				iModel = null;
 				
 				
@@ -294,8 +294,8 @@ public class ImmobiliHelper {
 														.getActiveWorkbenchWindow()
 														.getShell(), 
 											  "ATTENZIONE", 
-											  "Si sta cercando di aggiornare l'immobile " + iModel.toString() + " già cancellato da un altro utente. \n" +
-											  "Se si prosegue con l'operazione l'immobile verrà inserito nella base dati." +
+											  "Si sta cercando di aggiornare l'immobile " + iModel.toString() + " giï¿½ cancellato da un altro utente. \n" +
+											  "Se si prosegue con l'operazione l'immobile verrï¿½ inserito nella base dati." +
 			      							  "Procedere con l'operazione ?")){
 					iModel.setCodImmobile(0);
 				}else{
@@ -326,7 +326,7 @@ public class ImmobiliHelper {
 						if ( codimm.intValue() != immobile.getCodImmobile().intValue()){
 							MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 														  "Codice riferimento presente nella base dati",
-														  "Il codice di riferimento inserito è gia presente nella base dati \n viene sostituito con il codice assegnato dal programma");
+														  "Il codice di riferimento inserito ï¿½ gia presente nella base dati \n viene sostituito con il codice assegnato dal programma");
 							immobile.setRif(String.valueOf(immobiliDAO.getMaxCodImmobile() + 1));
 
 						}
@@ -346,7 +346,7 @@ public class ImmobiliHelper {
 					returnvalue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio immobile", 
-											"Si è verificato un errore nel salvataggio dell'immobile : " + 
+											"Si ï¿½ verificato un errore nel salvataggio dell'immobile : " + 
 											immobile.getCitta() + " " + immobile.getIndirizzo());
 					try {
 						if (doCommit){
@@ -557,7 +557,7 @@ public class ImmobiliHelper {
 		} catch (Exception e) {
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione allegato", 
-									"Si è verificato un errore nella cancellazione dell' allegato da : " + 									 
+									"Si ï¿½ verificato un errore nella cancellazione dell' allegato da : " + 									 
 									pathAllegatiDestinazione+allegato.getNome());
 			returnValue = false;
 		}
@@ -578,7 +578,7 @@ public class ImmobiliHelper {
 		} catch (Exception e) {
 			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione allegato", 
-									"Si è verificato un errore nella cancellazione dell' allegato da : " + 									 
+									"Si ï¿½ verificato un errore nella cancellazione dell' allegato da : " + 									 
 									pathAllegatiDestinazione+allegato.getNome());
 			returnValue = false;
 		}

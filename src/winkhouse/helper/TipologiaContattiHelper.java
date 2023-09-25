@@ -76,7 +76,7 @@ public class TipologiaContattiHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento contatti \n la cancellazione della tipologia contatto è annullata");
+											"Errore aggiornamento contatti \n la cancellazione della tipologia contatto ï¿½ annullata");
 				}
 				
 			}else{
@@ -87,7 +87,7 @@ public class TipologiaContattiHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione del tipologia contatti \n la cancellazione della tipologia contatto è annullata");
+										"Errore cancellazione del tipologia contatti \n la cancellazione della tipologia contatto ï¿½ annullata");
 			}
 			MobiliaDatiBaseCache.getInstance().setTipologieContatti(null);
 		}
@@ -110,7 +110,7 @@ public class TipologiaContattiHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio tipologia contatto", 
-											"Si è verificato un errore nel salvataggio della tipologia contatto : " + 
+											"Si ï¿½ verificato un errore nel salvataggio della tipologia contatto : " + 
 											tipologiaContattiVO.getDescrizione());					
 				}
 			}

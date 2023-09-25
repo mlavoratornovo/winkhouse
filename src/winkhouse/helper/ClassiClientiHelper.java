@@ -75,7 +75,7 @@ public class ClassiClientiHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento anagrafiche \n la cancellazione della classe cliente è annullata");
+											"Errore aggiornamento anagrafiche \n la cancellazione della classe cliente ï¿½ annullata");
 				}
 				
 			}else{
@@ -86,7 +86,7 @@ public class ClassiClientiHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione della classe cliente \n la cancellazione della classe cliente è annullata");
+										"Errore cancellazione della classe cliente \n la cancellazione della classe cliente ï¿½ annullata");
 			}
 			
 			MobiliaDatiBaseCache.getInstance().setClassiClienti(null);
@@ -111,7 +111,7 @@ public class ClassiClientiHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio classe cliente", 
-											"Si è verificato un errore nel salvataggio della classe : " + 
+											"Si ï¿½ verificato un errore nel salvataggio della classe : " + 
 											classe.getDescrizione());					
 				}
 			}

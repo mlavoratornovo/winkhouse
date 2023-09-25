@@ -91,7 +91,7 @@ public class MergeConflictPage extends WizardPage {
 	@Override
 	public void createControl(Composite arg0) {
 		
-		setDescription("Risoluzione dei conflitti, elementi da importare già presenti nella base dati. Selezionare gli elementi da sovrascrivere");
+		setDescription("Risoluzione dei conflitti, elementi da importare giï¿½ presenti nella base dati. Selezionare gli elementi da sovrascrivere");
 		setTitle(((ImporterWizard)getWizard()).getVersion());
 		
 		descriptor = new ElementsDescriptors(((ImporterWizard)getWizard()).getImporterVO());

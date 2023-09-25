@@ -76,7 +76,7 @@ public class RiscaldamentiHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento immobili \n la cancellazione del riscaldamento è annullata");
+											"Errore aggiornamento immobili \n la cancellazione del riscaldamento ï¿½ annullata");
 				}
 				
 			}else{
@@ -87,7 +87,7 @@ public class RiscaldamentiHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione del riscaldamento \n la cancellazione del riscaldamento è annullata");
+										"Errore cancellazione del riscaldamento \n la cancellazione del riscaldamento ï¿½ annullata");
 			}
 			
 			MobiliaDatiBaseCache.getInstance().setRiscaldamenti(null);
@@ -112,7 +112,7 @@ public class RiscaldamentiHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio riscaldamento", 
-											"Si è verificato un errore nel salvataggio del riscaldamento : " + 
+											"Si ï¿½ verificato un errore nel salvataggio del riscaldamento : " + 
 											riscaldamento.getDescrizione());					
 				}
 			}

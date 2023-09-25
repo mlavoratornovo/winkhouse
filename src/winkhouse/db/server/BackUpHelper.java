@@ -133,12 +133,12 @@ public class BackUpHelper {
 			} catch (IOException e) {
 				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 										"Errore ripristino database",
-										"Si è verificato un errore nella lettura del file di backup");
+										"Si ï¿½ verificato un errore nella lettura del file di backup");
 				return_value = false;
 			} catch (TarMalformatException e) {
 				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 										"Errore ripristino database",
-										"Si è verificato un errore nella apertura del file di backup");
+										"Si ï¿½ verificato un errore nella apertura del file di backup");
 				return_value = false;
 			}
 		}

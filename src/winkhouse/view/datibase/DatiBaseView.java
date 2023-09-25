@@ -280,7 +280,7 @@ public class DatiBaseView extends ViewPart {
 //				}else{
 //					MessageDialog.openInformation(getSite().getShell(), 
 //												  "Password duplicate", 
-//												  "Sono presenti due o più coppie di username password uguali");
+//												  "Sono presenti due o piï¿½ coppie di username password uguali");
 //				}
 			}
 
@@ -775,7 +775,7 @@ public class DatiBaseView extends ViewPart {
 					}else{
 						MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 												  "Attenzione", 
-								"L'agente selezionato non è stato ancora salvato nel database \n eseguirne il salvataggio prima di aggiungere i recapiti");						
+								"L'agente selezionato non ï¿½ stato ancora salvato nel database \n eseguirne il salvataggio prima di aggiungere i recapiti");						
 					}
 				}else{
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),

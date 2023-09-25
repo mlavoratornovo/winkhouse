@@ -74,7 +74,7 @@ public class ClassiEnergeticheHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento immobili \n la cancellazione della classe energetica è annullata");
+											"Errore aggiornamento immobili \n la cancellazione della classe energetica ï¿½ annullata");
 				}
 				
 			}else{
@@ -85,7 +85,7 @@ public class ClassiEnergeticheHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione della classe energetica \n la cancellazione della classe energetica è annullata");
+										"Errore cancellazione della classe energetica \n la cancellazione della classe energetica ï¿½ annullata");
 			}
 			
 			MobiliaDatiBaseCache.getInstance().setClassiEnergetiche(null);
@@ -110,7 +110,7 @@ public class ClassiEnergeticheHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio classe energetica ", 
-											"Si è verificato un errore nel salvataggio della classe energetica : " + 
+											"Si ï¿½ verificato un errore nel salvataggio della classe energetica : " + 
 											classe.getNome());					
 				}
 			}

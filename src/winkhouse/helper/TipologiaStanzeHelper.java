@@ -77,7 +77,7 @@ public class TipologiaStanzeHelper {
 					}
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 											"Errore", 
-											"Errore aggiornamento tipologia stanze \n la cancellazione della tipologia stanze è annullata");
+											"Errore aggiornamento tipologia stanze \n la cancellazione della tipologia stanze ï¿½ annullata");
 				}
 				
 			}else{
@@ -88,7 +88,7 @@ public class TipologiaStanzeHelper {
 				}
 				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										"Errore", 
-										"Errore cancellazione della tipolgia stanze \n la cancellazione della tipolgia stanze è annullata");
+										"Errore cancellazione della tipolgia stanze \n la cancellazione della tipolgia stanze ï¿½ annullata");
 			}
 			MobiliaDatiBaseCache.getInstance().setTipologieStanze(null);
 		}
@@ -111,7 +111,7 @@ public class TipologiaStanzeHelper {
 					returnValue = false;
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore salvataggio tipologia stanze", 
-											"Si è verificato un errore nel salvataggio della tipologia stanze : " + 
+											"Si ï¿½ verificato un errore nel salvataggio della tipologia stanze : " + 
 											tipologiaStanzeVO.getDescrizione());					
 				}
 			}
