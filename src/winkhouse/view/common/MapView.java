@@ -122,7 +122,7 @@ public class MapView extends ViewPart {
 		
 		Label lNumero = ft.createLabel(cindirizzi, "Numero");
 		Label lIndirizzo = ft.createLabel(cindirizzi, "Indirizzo");
-		Label lCitta = ft.createLabel(cindirizzi, "Citt�");
+		Label lCitta = ft.createLabel(cindirizzi, "Città");
 		Label ldummy = ft.createLabel(cindirizzi, "");
 			
 		GridData gd_numero = new GridData();

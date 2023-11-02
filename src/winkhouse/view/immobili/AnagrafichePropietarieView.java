@@ -176,7 +176,7 @@ public class AnagrafichePropietarieView extends ViewPart {
 
 		TableColumn tcDescrizione = new TableColumn(tvAnagrafichePropietarie.getTable(),SWT.CENTER,3);
 		tcDescrizione.setWidth(150);
-		tcDescrizione.setText("Citt�");
+		tcDescrizione.setText("Città");
 
 		TableColumn tcPrezzo = new TableColumn(tvAnagrafichePropietarie.getTable(),SWT.CENTER,4);
 		tcPrezzo.setWidth(50);

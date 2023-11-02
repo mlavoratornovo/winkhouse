@@ -287,10 +287,10 @@ public class DettaglioColloquioView extends ViewPart {
 
 		Label l_tipocolloquio = ft.createLabel(cdata,"Tipologia colloquio");		
 		
-		c_agenteinseritore = new ComboViewer(cdata);
+		c_agenteinseritore = new ComboViewer(cdata,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		c_agenteinseritore.getCombo().setLayoutData(gdExpH);
 		
-		c_tipologiacolloquio = new ComboViewer(cdata);
+		c_tipologiacolloquio = new ComboViewer(cdata,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		c_tipologiacolloquio.getCombo().setLayoutData(gdExpH);
 		
 		Label l_Data = ft.createLabel(cdata,"Data/Ora");

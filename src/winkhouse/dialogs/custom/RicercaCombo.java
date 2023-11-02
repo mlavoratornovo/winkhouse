@@ -55,7 +55,7 @@ public class RicercaCombo extends ControlContribution {
 	@Override
 	protected Control createControl(Composite parent) {
 		
-		cv = new ComboViewer(parent, SWT.BORDER);
+		cv = new ComboViewer(parent,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED | SWT.BORDER);
 		cv.getCombo().addMouseListener(new MouseListener() {
 			
 			@Override

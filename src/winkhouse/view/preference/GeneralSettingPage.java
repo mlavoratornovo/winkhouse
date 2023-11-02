@@ -77,7 +77,7 @@ public class GeneralSettingPage extends PreferencePage {
 		Label prospettivaLabel = toolkit.createLabel(form.getBody(), "Prospettiva di avvio ");
 		prospettivaLabel.setBackground(prospettivaLabel.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		
-		cbvce = new ComboViewer(form.getBody());
+		cbvce = new ComboViewer(form.getBody(),SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		
 		cbvce.setLabelProvider(new ILabelProvider() {
 			

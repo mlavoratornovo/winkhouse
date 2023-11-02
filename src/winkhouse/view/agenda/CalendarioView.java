@@ -411,7 +411,7 @@ public class CalendarioView extends ViewPart {
 			c.setLayout(gl);
 			Label lAgente = new Label(c, SWT.NONE);
 			lAgente.setText("Filtro agente :");
-			cvAgenti = new ComboViewer(c, SWT.READ_ONLY);
+			cvAgenti = new ComboViewer(c, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 			cvAgenti.addSelectionChangedListener(new ISelectionChangedListener() {
 				
 				@Override

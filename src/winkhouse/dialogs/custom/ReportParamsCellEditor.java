@@ -570,7 +570,7 @@ public class ReportParamsCellEditor extends DialogCellEditor {
 			llista.setText("Lista opzioni");
 			llista.setLayoutData(gd2H);
 			
-			c = new ComboViewer(cIntervallo,SWT.BORDER);			
+			c = new ComboViewer(cIntervallo,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED | SWT.BORDER);			
 			c.getCombo().setLayoutData(gdText);
 			c.setContentProvider(new IStructuredContentProvider(){
 

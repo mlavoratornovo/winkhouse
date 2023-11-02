@@ -227,10 +227,10 @@ public class DettaglioAnagraficaView extends ViewPart {
 		Label lagente = ft.createLabel(canagraficaimmobile, "Agente inseritore");
 		lagente.setLayoutData(gdExpH2);
 		 
-		cvclassiclienti = new ComboViewer(canagraficaimmobile);
+		cvclassiclienti = new ComboViewer(canagraficaimmobile,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvclassiclienti.getCombo().setLayoutData(gdExpH);
 		
-		cvagenteinseritoreanagrafica = new ComboViewer(canagraficaimmobile);
+		cvagenteinseritoreanagrafica = new ComboViewer(canagraficaimmobile,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvagenteinseritoreanagrafica.getCombo().setLayoutData(gdExpH2);
 		
 		Label lcommento = ft.createLabel(canagraficaimmobile, "Commento"); 

@@ -510,7 +510,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 		@Override
 		protected Control createControl(Composite parent) {
 			
-			agenti = new ComboViewer(parent,SWT.BORDER);
+			agenti = new ComboViewer(parent,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED |SWT.BORDER);
 			agenti.setLabelProvider(new ILabelProvider() {
 				
 				@Override

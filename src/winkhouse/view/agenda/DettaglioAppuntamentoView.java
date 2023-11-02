@@ -552,7 +552,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 		});
 
 		Label ltipoappuntamento = ft.createLabel(f.getBody(),"Tipo appuntamento");		
-		cvtipologia = new ComboViewer(f.getBody(),SWT.DOUBLE_BUFFERED);
+		cvtipologia = new ComboViewer(f.getBody(),SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvtipologia.getCombo().setLayoutData(gdtipo);
 		
 		Label lluogo = ft.createLabel(f.getBody(),"Luogo appuntamento");		

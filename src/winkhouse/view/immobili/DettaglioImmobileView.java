@@ -594,20 +594,20 @@ public class DettaglioImmobileView extends ViewPart
 		//lstato.setLayoutData(gdExpHLabel2);
 		Label lriscaldamenti = ft.createLabel(cdati, "Impianto riscaldamento");
 
-		cvtipologia = new ComboViewer(cdati,SWT.DOUBLE_BUFFERED);
+		cvtipologia = new ComboViewer(cdati,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvtipologia.getCombo().setLayoutData(gdExpHSC);
 
-		cvstato = new ComboViewer(cdati,SWT.DOUBLE_BUFFERED);
+		cvstato = new ComboViewer(cdati,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvstato.getCombo().setLayoutData(gdExpHSC);
 
-		cvriscaldamenti = new ComboViewer(cdati,SWT.DOUBLE_BUFFERED);
+		cvriscaldamenti = new ComboViewer(cdati,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvriscaldamenti.getCombo().setLayoutData(gdExpHSC);
 
 		Label lclasseenergetica = ft.createLabel(cdati, "Classe energetica");
 		Label lannoCostruzione = ft.createLabel(cdati, "Anno costruzione");
 		Label lmq = ft.createLabel(cdati, "Metri quadrati");
 
-		cvclasseenergetica = new ComboViewer(cdati,SWT.DOUBLE_BUFFERED);
+		cvclasseenergetica = new ComboViewer(cdati,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvclasseenergetica.getCombo().setLayoutData(gdExpHSC);
 		
 		tannoCostruzione = ft.createText(cdati, "",SWT.DOUBLE_BUFFERED);
@@ -1202,25 +1202,32 @@ public class DettaglioImmobileView extends ViewPart
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				StanzeImmobiliModel siModel = new StanzeImmobiliModel();
-				siModel.setCodImmobile(immobile.getCodImmobile());
-				immobile.getStanze().add(siModel);
-				tvStanze.setInput(immobile.getStanze());
-				tvStanze.refresh();
-				
-				TableItem ti = tvStanze.getTable().getItem(tvStanze.getTable().getItemCount()-1);
-				Object[] sel = new Object[1];
-				sel[0] = ti.getData();
+				if (immobile.getCodImmobile()!= null && immobile.getCodImmobile() != 0) {
+					StanzeImmobiliModel siModel = new StanzeImmobiliModel();
+					siModel.setCodImmobile(immobile.getCodImmobile());
+					immobile.getStanze().add(siModel);
+					tvStanze.setInput(immobile.getStanze());
+					tvStanze.refresh();
+					
+					TableItem ti = tvStanze.getTable().getItem(tvStanze.getTable().getItemCount()-1);
+					Object[] sel = new Object[1];
+					sel[0] = ti.getData();
 
-				StructuredSelection ss = new StructuredSelection(sel);
-				
-				tvStanze.setSelection(ss, true);
+					StructuredSelection ss = new StructuredSelection(sel);
+					
+					tvStanze.setSelection(ss, true);
 
-				Event ev = new Event();
-				ev.item = ti;
-				ev.data = ti.getData();
-				ev.widget = tvStanze.getTable();
-				tvStanze.getTable().notifyListeners(SWT.Selection, ev);
+					Event ev = new Event();
+					ev.item = ti;
+					ev.data = ti.getData();
+					ev.widget = tvStanze.getTable();
+					tvStanze.getTable().notifyListeners(SWT.Selection, ev);
+					
+				}else {
+					MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+							"Inserimento stanza", 
+							"Eseguire il salvataggio dell'immobile");
+				}
 
 			}
 
@@ -2530,7 +2537,7 @@ public class DettaglioImmobileView extends ViewPart
 
         });
 //		dcdatainserimento.setLayoutData(gdExpH);
-		cvagenteinseritore = new ComboViewer(cdatiagenzia,SWT.DOUBLE_BUFFERED);
+		cvagenteinseritore = new ComboViewer(cdatiagenzia,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvagenteinseritore.getCombo().setLayoutData(gdExpH);
 		visibile = new Button(cdatiagenzia,SWT.CHECK);
 		affitto = new Button(cdatiagenzia,SWT.CHECK);

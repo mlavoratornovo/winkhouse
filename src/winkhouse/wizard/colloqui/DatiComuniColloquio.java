@@ -254,7 +254,7 @@ public class DatiComuniColloquio extends WizardPage {
 		gdExpH.grabExcessHorizontalSpace = true;		
 		gdExpH.horizontalAlignment = SWT.FILL;
 
-		cvagenteinseritore = new ComboViewer(container,SWT.BORDER);
+		cvagenteinseritore = new ComboViewer(container,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED | SWT.BORDER);
 		cvagenteinseritore.getCombo().setLayoutData(gdExpH);
 
 		cvagenteinseritore.setContentProvider(new IStructuredContentProvider(){

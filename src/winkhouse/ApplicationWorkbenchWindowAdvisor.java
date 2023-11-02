@@ -171,21 +171,21 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	@Override
 	public boolean preWindowShellClose() {
 		
-		Activator.getDefault().getWorkbench()
+		PlatformUI.getWorkbench()
 							 .getActiveWorkbenchWindow()
 							 .getPartService()
 							 .removePartListener(dil);
 		
-		Activator.getDefault().getWorkbench()
+		PlatformUI.getWorkbench()
 							  .getActiveWorkbenchWindow()
 							  .removePerspectiveListener(apa);
 		
-		Activator.getDefault().getWorkbench()
-		 					  .getActiveWorkbenchWindow()
-		 					  .getPartService()
-		 					  .removePartListener(dal);
+		PlatformUI.getWorkbench()
+		 		  .getActiveWorkbenchWindow()
+		 	      .getPartService()
+		 	      .removePartListener(dal);
 		
-		Activator.getDefault().getWorkbench()
+		PlatformUI.getWorkbench()
 		 					  .getActiveWorkbenchWindow()
 		 					  .getPartService()
 		 					  .removePartListener(dcl);

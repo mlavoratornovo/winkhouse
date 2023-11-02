@@ -212,7 +212,7 @@ public class DettaglioReportView extends ViewPart {
 		tNome.setLayoutData(gdH);
 				
 		Label lTipo = ft.createLabel(f.getBody(), "Tipologia report");				
-		cbvTipo = new ComboViewer(f.getBody());
+		cbvTipo = new ComboViewer(f.getBody(),SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cbvTipo.getCombo().setLayoutData(gdH);
 		
 		Label lspace = ft.createLabel(f.getBody(), "");

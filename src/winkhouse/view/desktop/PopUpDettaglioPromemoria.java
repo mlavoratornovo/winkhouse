@@ -259,7 +259,7 @@ public class PopUpDettaglioPromemoria {
 		c.setLayoutData(gdHR);
 				
 		Label l_agente = ft.createLabel(c, "Agente");
-		cAgente = new ComboViewer(c);
+		cAgente = new ComboViewer(c,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cAgente.getCombo().setLayoutData(gdH);
 		
 		Label l_promemoria = ft.createLabel(c, "Promemoria");		

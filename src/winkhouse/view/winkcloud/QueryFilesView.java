@@ -385,7 +385,7 @@ public class QueryFilesView extends ViewPart {
             c.setLayout((Layout)gl);
             Label lAgente = new Label(c, 0);
             lAgente.setText("Filtro tipo :");
-            QueryFilesView.this.cvTipiRichieste = new ComboViewer(c, 8);
+            QueryFilesView.this.cvTipiRichieste = new ComboViewer(c, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
             QueryFilesView.this.cvTipiRichieste.addSelectionChangedListener(new ISelectionChangedListener(){
 
                 public void selectionChanged(SelectionChangedEvent event) {
