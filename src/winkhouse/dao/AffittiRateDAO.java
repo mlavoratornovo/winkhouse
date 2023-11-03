@@ -30,13 +30,14 @@ public class AffittiRateDAO extends BaseDAO {
 		return super.getObjectById(className, FIND_AFFITTIRATE_BY_ID, codAffittoRate);
 	}
 	
-	public ArrayList getAffittiRateByCodAffitto(String className, Integer codAffitto){
+	public <T> ArrayList<T> getAffittiRateByCodAffitto(String className, Integer codAffitto){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTIRATE_BY_CODAFFITTO, codAffitto);
 	}
 	
-	public ArrayList getAffittiRateByProperties(String className,AffittiRateVO affittiRate){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiRateByProperties(String className,AffittiRateVO affittiRate){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -55,7 +56,7 @@ public class AffittiRateDAO extends BaseDAO {
 			
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(className, rs));
+				returnValue.add((T) getRowObject(className, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();

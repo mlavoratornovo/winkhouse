@@ -29,7 +29,7 @@ public class AffittiAnagraficheDAO extends BaseDAO {
 		return super.getObjectById(className, FIND_AFFITTIANAGRAFICHE_BY_ID, codAffittiAnagrafiche);
 	}
 	
-	public ArrayList getAffittiAnagraficheByAffitto(String className, Integer codAffitto){
+	public <T> ArrayList<T> getAffittiAnagraficheByAffitto(String className, Integer codAffitto){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTIANAGRAFICHE_BY_CODAFFITTO, codAffitto);
 	}
 

@@ -40,11 +40,11 @@ public class AppuntamentiDAO extends BaseDAO {
 		return super.deleteObjectById(DELETE_APPUNTAMENTO, codAppuntamento, con, doCommit);
 	}
 	
-	public ArrayList listAppuntamentiByCodAnagrafica(String ClassName,Integer codAngrafica){
+	public <T> ArrayList<T> listAppuntamentiByCodAnagrafica(String ClassName,Integer codAngrafica){
 		return super.getObjectsByIntFieldValue(ClassName, LIST_APPUNTAMENTI_BY_ANAGRAFICA, codAngrafica);
 	}
 
-	public ArrayList listAppuntamentiByCodTipoAppuntamento(String ClassName,Integer codTipoAppuntamento){
+	public <T> ArrayList<T> listAppuntamentiByCodTipoAppuntamento(String ClassName,Integer codTipoAppuntamento){
 		return super.getObjectsByIntFieldValue(ClassName, LIST_APPUNTAMENTI_BY_CODTIPOAPPUNTAMENTO, codTipoAppuntamento);
 	}	
 	
@@ -151,9 +151,10 @@ public class AppuntamentiDAO extends BaseDAO {
 		return returnValue;
 	}
 	
-	public ArrayList listAppuntamentiByAgenteDaA(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listAppuntamentiByAgenteDaA(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -166,7 +167,7 @@ public class AppuntamentiDAO extends BaseDAO {
 			ps.setTimestamp(3, new Timestamp(dataA.getTime()));
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -192,9 +193,10 @@ public class AppuntamentiDAO extends BaseDAO {
 		return returnValue;
 	}
 
-	public ArrayList listAppuntamentiByAgenteDaAICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listAppuntamentiByAgenteDaAICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -208,7 +210,7 @@ public class AppuntamentiDAO extends BaseDAO {
 			ps.setInt(4, codAgente);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -223,20 +225,16 @@ public class AppuntamentiDAO extends BaseDAO {
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList listAppuntamentiByAgenteDaA_Not_ICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listAppuntamentiByAgenteDaA_Not_ICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -250,7 +248,7 @@ public class AppuntamentiDAO extends BaseDAO {
 			ps.setInt(4, codAgente);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -265,20 +263,16 @@ public class AppuntamentiDAO extends BaseDAO {
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 	
-	public ArrayList listAppuntamentiByDaA(String classType, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listAppuntamentiByDaA(String classType, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -290,7 +284,7 @@ public class AppuntamentiDAO extends BaseDAO {
 			ps.setTimestamp(2, new Timestamp(dataA.getTime()));
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -316,7 +310,7 @@ public class AppuntamentiDAO extends BaseDAO {
 		return returnValue;
 	}
 
-	public ArrayList getAppuntamentoByICalID(String classType, String icalid){
+	public <T> ArrayList<T> getAppuntamentoByICalID(String classType, String icalid){
 		return super.getObjectsByStringFieldValue(classType, GET_APPUNTAMENTO_BY_ICALID, icalid);		
 	}
 	

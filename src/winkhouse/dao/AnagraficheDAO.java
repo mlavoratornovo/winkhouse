@@ -43,7 +43,7 @@ public class AnagraficheDAO extends BaseDAO{
 	public AnagraficheDAO() {
 	}
 
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		
 		if (WinkhouseUtils.getInstance()
 							.getTipoArchivio()){
@@ -284,7 +284,7 @@ public class AnagraficheDAO extends BaseDAO{
 		return super.getObjectById(classType, ANAGRAFICHE_BY_ID, codAnagrafica);
 	}	
 	
-	public ArrayList getAnagraficheByClasse(String classType,Integer codClasse){
+	public <T> ArrayList<T> getAnagraficheByClasse(String classType,Integer codClasse){
 		if (WinkhouseUtils.getInstance()
 							.getTipoArchivio()){
 			if (codClasse != null){
@@ -301,7 +301,7 @@ public class AnagraficheDAO extends BaseDAO{
 		}
 	}
 
-	public ArrayList getAnagraficheColloquiByClasse(String classType,Integer codClasse){
+	public <T> ArrayList<T> getAnagraficheColloquiByClasse(String classType,Integer codClasse){
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_IN_COLLOQUI_BY_CLASSECLIENTE_STORICO, codClasse);
 		}else{
@@ -309,7 +309,7 @@ public class AnagraficheDAO extends BaseDAO{
 		}
 	}
 
-	public ArrayList getAnagraficheByAgenteInseritore(String classType,Integer codAgenteInseritore){
+	public <T> ArrayList<T> getAnagraficheByAgenteInseritore(String classType,Integer codAgenteInseritore){
 		if (codAgenteInseritore != null){
 			return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_AGENTEINSERITORE, codAgenteInseritore);
 		}else{
@@ -317,13 +317,14 @@ public class AnagraficheDAO extends BaseDAO{
 		}
 	}
 	
-	public ArrayList getAnagraficheByCodImmobile(String classType,Integer codImmobile){
+	public <T> ArrayList<T> getAnagraficheByCodImmobile(String classType,Integer codImmobile){
 		return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CODIMMOBILE, codImmobile);
 	}
 
-	public ArrayList getAnagraficheByComuneClasse(String classType, String comune, Integer codClasse){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAnagraficheByComuneClasse(String classType, String comune, Integer codClasse){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -345,7 +346,7 @@ public class AnagraficheDAO extends BaseDAO{
 				}
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					returnValue.add(getRowObject(classType, rs));
+					returnValue.add((T) getRowObject(classType, rs));
 				}
 			}
 		}catch(SQLException sql){

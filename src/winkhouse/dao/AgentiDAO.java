@@ -34,15 +34,15 @@ public class AgentiDAO extends BaseDAO{
 		return super.getObjectById(classType, FIND_AGENTE_BY_ID, idAgente);
 	}	
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_AGENTI);
 	}
 
-	public ArrayList listAgentiColloquiPartecipanti(String classType){
+	public <T> ArrayList<T> listAgentiColloquiPartecipanti(String classType){
 		return super.list(classType, AGENTI_COLLOQUI_PARTECIPANTI);
 	}
 
-	public ArrayList listAgentiColloquiInseritori(String classType){
+	public <T> ArrayList<T> listAgentiColloquiInseritori(String classType){
 		return super.list(classType, AGENTI_COLLOQUI_INSERITORI);
 	}
 	
@@ -215,11 +215,12 @@ public class AgentiDAO extends BaseDAO{
 		return returnValue;
 	}
 	
-	public ArrayList findAgentiByNomeCognomeCittaIndirizzo(String classType,
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> findAgentiByNomeCognomeCittaIndirizzo(String classType,
 														   AgentiVO aVO, 
 														   Connection connection){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		
 		ResultSet rs = null;
 		Connection con = (connection == null)? ConnectionManager.getInstance().getConnection():connection;
@@ -235,7 +236,7 @@ public class AgentiDAO extends BaseDAO{
 			ps.setString(4, aVO.getIndirizzo());
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -256,7 +257,7 @@ public class AgentiDAO extends BaseDAO{
 		return returnValue;
 	}
 	
-	public ArrayList checkSetPassword(String classType){
+	public <T> ArrayList<T> checkSetPassword(String classType){
 		return super.list(classType, CHK_SET_PASSWORDS);
 	}
 

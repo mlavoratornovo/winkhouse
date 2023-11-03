@@ -25,13 +25,13 @@ public class AgentiAppuntamentiDAO extends BaseDAO {
 	
 	public AgentiAppuntamentiDAO() {}
 
-	public ArrayList listAgentiAppuntamentiByAppuntamento(String classType, Integer codAppuntamento){
+	public <T> ArrayList<T> listAgentiAppuntamentiByAppuntamento(String classType, Integer codAppuntamento){
 		return super.getObjectsByIntFieldValue(classType, 
 											   LIST_AGENTIAPPUNTAMENTI_BY_CODAPPUNTAMENTO, 
 											   codAppuntamento);
 	} 
 	
-	public ArrayList listAgentiAppuntamentiByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> listAgentiAppuntamentiByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, 
 											   LIST_AGENTIAPPUNTAMENTI_BY_CODAGENTE, 
 											   codAgente);

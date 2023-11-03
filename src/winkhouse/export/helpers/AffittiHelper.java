@@ -59,13 +59,14 @@ public class AffittiHelper {
 		ArrayList<AffittiModel> returnValue = new ArrayList<AffittiModel>();
 		
 		ImmobiliDAO iDAO = new ImmobiliDAO();
-		Object o = iDAO.getImmobileByRif(ImmobiliModel.class.getName(), rifImmobile);
+		@SuppressWarnings("unchecked")
+		ArrayList<ImmobiliModel> o = (ArrayList<ImmobiliModel>)iDAO.getImmobileByRif(ImmobiliModel.class.getName(), rifImmobile);
 		
 		if (o != null){
 			
-			if (((ArrayList)o).size() > 0){
+			if (((ArrayList<ImmobiliModel>)o).size() > 0){
 				
-				ImmobiliModel im = ((ImmobiliModel)((ArrayList)o).get(0));
+				ImmobiliModel im = o.get(0);
 				AffittiDAO aDAO = new AffittiDAO();
 				returnValue =  aDAO.getAffittiData(AffittiModel.class.getName(), 
 											 				dataInizio, 
@@ -92,8 +93,8 @@ public class AffittiHelper {
 		AffittiAllegatiVO returnValue = null;
 		
 		AffittiAllegatiDAO aadao = new AffittiAllegatiDAO();
-		ArrayList al = aadao.getAffittiAllegatiByCodAffitto(AffittiAllegatiVO.class.getName(), codAffitto);
-		Iterator it = al.iterator();
+		ArrayList<AffittiAllegatiVO> al = aadao.getAffittiAllegatiByCodAffitto(AffittiAllegatiVO.class.getName(), codAffitto);
+		Iterator<AffittiAllegatiVO> it = al.iterator();
 		
 		while (it.hasNext()) {
 			
@@ -142,7 +143,7 @@ public class AffittiHelper {
 		ArrayList<AffittiSpeseVO> returnValue = null;
 		
 		AffittiSpeseDAO asdao = new AffittiSpeseDAO();
-		returnValue = asdao.getAffittiSpeseByProperties(AffittiSpeseVO.class.getName(), affittiSpese);
+		returnValue = new ArrayList<AffittiSpeseVO>(asdao.getAffittiSpeseByProperties(AffittiSpeseVO.class.getName(), affittiSpese));
 		return returnValue;
 	} 
 
@@ -153,19 +154,20 @@ public class AffittiHelper {
 	 * @param affittiRate
 	 * @return AffittiRateVO 
 	 */
+	@SuppressWarnings("unchecked")
 	public ArrayList<AffittiRateVO> getAffittiRateExist(AffittiRateVO affittiRate){
 		
 		ArrayList<AffittiRateVO> returnValue = null;
 		
 		AffittiRateDAO ardao = new AffittiRateDAO();
-		returnValue = ardao.getAffittiRateByProperties(AffittiRateVO.class.getName(), affittiRate);
+		returnValue = new ArrayList<AffittiRateVO>(ardao.getAffittiRateByProperties(AffittiRateVO.class.getName(), affittiRate));
 		return returnValue;
 	} 
 
 	
 	/**
 	 * Inserisce un record nella tabella affitti ritornando true o false.
-	 * Se il campo codAffitti, del parametro affitto, � zero viene inserito un nuovo record, altrimenti esegue una operazione
+	 * Se il campo codAffitti, del parametro affitto, è zero viene inserito un nuovo record, altrimenti esegue una operazione
 	 * SQL di update.
 	 * Se durante l'operazione avviene un errore viene ritornata una eccezione di tipo java.sql.SQLException 
 	 * 

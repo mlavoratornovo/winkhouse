@@ -29,11 +29,11 @@ public class BaseDAO {
 		return query;
 	}
 	
-	public Object getRowObject(String classType, ResultSet rs){
+	public <T> Object getRowObject(String classType, ResultSet rs){
 		Object returnValue = null;
 		try {			
-			Class cl = Class.forName(classType);
-			Constructor c = cl.getConstructor(ResultSet.class);
+			Class<?> cl = Class.forName(classType);
+			Constructor<?> c = cl.getConstructor(ResultSet.class);
 			returnValue = c.newInstance(rs);
 		} catch (SecurityException e) {
 			e.printStackTrace();
@@ -55,9 +55,10 @@ public class BaseDAO {
 		
 	}
 	
-	public ArrayList list(String classType, String queryName){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> list(String classType, String queryName){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -68,7 +69,7 @@ public class BaseDAO {
 				ps = con.prepareStatement(query);
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					returnValue.add(getRowObject(classType, rs));
+					returnValue.add((T) getRowObject(classType, rs));
 				}
 			}
 		}catch(SQLException sql){
@@ -88,11 +89,6 @@ public class BaseDAO {
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
@@ -127,11 +123,6 @@ public class BaseDAO {
 			} catch (SQLException e) {
 				ps = null;
 			}
-		/*	try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 				
@@ -139,11 +130,12 @@ public class BaseDAO {
 		
 	}	
 
-	public ArrayList getObjectsByStringFieldValue(String classType, 
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getObjectsByStringFieldValue(String classType, 
 												  String queryName, 
 												  String stringFieldValue){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -156,7 +148,7 @@ public class BaseDAO {
 				ps.setString(1, stringFieldValue);
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					returnValue.add(getRowObject(classType, rs));
+					returnValue.add((T) getRowObject(classType, rs));
 				}
 			}catch(SQLException sql){
 				sql.printStackTrace();
@@ -171,11 +163,6 @@ public class BaseDAO {
 				} catch (SQLException e) {
 					ps = null;
 				}
-			/*	try {
-					con.close();
-				} catch (SQLException e) {
-					con = null;
-				}*/
 				
 			}
 		}
@@ -184,11 +171,12 @@ public class BaseDAO {
 		
 	}
 	
-	public ArrayList getObjectsByIntFieldValue(String classType, 
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getObjectsByIntFieldValue(String classType, 
 											   String queryName, 
 											   Integer integerFieldValue){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -203,7 +191,7 @@ public class BaseDAO {
 				}				
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					returnValue.add(getRowObject(classType, rs));
+					returnValue.add((T) getRowObject(classType, rs));
 				}
 			}catch(SQLException sql){
 				sql.printStackTrace();
@@ -225,12 +213,13 @@ public class BaseDAO {
 	}	
 
 	
-	public ArrayList getObjectsByIntStrFieldValue(String classType, 
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getObjectsByIntStrFieldValue(String classType, 
 											      String queryName, 
 											      Integer integerFieldValue,
 											      String stringFieldValue){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -248,7 +237,7 @@ public class BaseDAO {
 				}
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					returnValue.add(getRowObject(classType, rs));
+					returnValue.add((T) getRowObject(classType, rs));
 				}
 			}catch(SQLException sql){
 				sql.printStackTrace();
@@ -366,9 +355,10 @@ public class BaseDAO {
 		return returnValue;
 	}
 	
-	public ArrayList listFinder(String classType, String querysql){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listFinder(String classType, String querysql){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -378,7 +368,7 @@ public class BaseDAO {
 			ps = con.prepareStatement(querysql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -393,11 +383,6 @@ public class BaseDAO {
 			} catch (SQLException e) {
 				ps = null;
 			}
-/*			try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		

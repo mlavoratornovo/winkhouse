@@ -27,7 +27,7 @@ public class ColloquiAnagraficheDAO extends BaseDAO {
 	public ColloquiAnagraficheDAO() {
 	}
 
-	public ArrayList getColloquiAnagraficheByColloquio(String classType, Integer codColloquio){
+	public <T> ArrayList<T> getColloquiAnagraficheByColloquio(String classType, Integer codColloquio){
 		return super.getObjectsByIntFieldValue(ColloquiAnagraficheModel_Ang.class.getName(), LISTA_COLLOQUIOANAGRAFICHE_BY_COLLOQUIO, codColloquio);
 	}
 

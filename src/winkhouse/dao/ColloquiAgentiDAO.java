@@ -28,11 +28,11 @@ public class ColloquiAgentiDAO extends BaseDAO {
 	public ColloquiAgentiDAO() {
 	}
 
-	public ArrayList getColloquiAgentiByColloquio(String classType, Integer codColloquio){
+	public <T> ArrayList<T> getColloquiAgentiByColloquio(String classType, Integer codColloquio){
 		return super.getObjectsByIntFieldValue(ColloquiAgentiModel_Age.class.getName(), LISTA_COLLOQUIOAGENTI_BY_COLLOQUIO, codColloquio);
 	}
 	
-	public ArrayList getColloquiAgentiByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getColloquiAgentiByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(ColloquiAgentiModel_Age.class.getName(), LISTA_COLLOQUIOAGENTI_BY_AGENTE, codAgente);
 	}	
 

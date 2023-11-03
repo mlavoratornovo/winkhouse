@@ -295,7 +295,7 @@ public class DettaglioAffittiView extends ViewPart {
 		gdSpan2Combo.horizontalAlignment = SWT.FILL;
 		gdSpan2Combo.heightHint = 15;
 		
-		cvagenteinseritoreanagrafica = new ComboViewer(f.getBody(), ,SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
+		cvagenteinseritoreanagrafica = new ComboViewer(f.getBody(), SWT.DROP_DOWN | SWT.READ_ONLY | SWT.DOUBLE_BUFFERED);
 		cvagenteinseritoreanagrafica.getCombo().setLayoutData(gdSpan2Combo);		
 		
 		Label lDataInizio = ft.createLabel(f.getBody(), "Data inizio");

@@ -28,11 +28,11 @@ public class ClassiEnergeticheDAO extends BaseDAO {
 	}
 
 	
-	public ArrayList listByAffitti(String classType){
+	public <T> ArrayList<T> listByAffitti(String classType){
 		return super.list(classType, GET_CLASSI_ENERGETICHE_AFFITTI);
 	}	
 	
-	public ArrayList listClassiEnergetiche(String className){
+	public <T> ArrayList<T> listClassiEnergetiche(String className){
 		return super.list(className, LISTA_CLASSI_ENERGETICHE);
 	};
 	
@@ -133,7 +133,7 @@ public class ClassiEnergeticheDAO extends BaseDAO {
 		return super.getObjectById(className, CLASSI_ENERGETICHE_BY_ID, codClassiEnergetiche);
 	}
 	
-	public ArrayList getClassiEnergeticheByName(String className,String name){
+	public <T> ArrayList<T> getClassiEnergeticheByName(String className,String name){
 		return super.getObjectsByStringFieldValue(className, CLASSI_ENERGETICHE_BY_NAME, name);
 	}
 	

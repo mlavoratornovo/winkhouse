@@ -43,12 +43,12 @@ import winkhouse.util.WinkhouseUtils;
 public class WinkCloudPage extends PreferencePage {
 	
 	private Form form = null;
-	private TableViewer turls = null;
-	private ArrayList<String> urlsvalue = new ArrayList<String>();
+//	private TableViewer turls = null;
+//	private ArrayList<String> urlsvalue = new ArrayList<String>();
 	private TextCellEditor tceurl = null;
-	private Image addbutton = Activator.getImageDescriptor("icons/filenew.png").createImage();
-	private Image delbutton = Activator.getImageDescriptor("icons/edittrash.png").createImage();
-	private Image winkcloudbutton = Activator.getImageDescriptor("icons/winkclouid.png").createImage();
+//	private Image addbutton = Activator.getImageDescriptor("icons/filenew.png").createImage();
+//	private Image delbutton = Activator.getImageDescriptor("icons/edittrash.png").createImage();
+//	private Image winkcloudbutton = Activator.getImageDescriptor("icons/winkclouid.png").createImage();
 	private Text winkID = null;
 	private Button add = null; 
 	

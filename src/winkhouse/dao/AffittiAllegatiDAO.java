@@ -27,7 +27,7 @@ public class AffittiAllegatiDAO extends BaseDAO {
 		return super.getObjectById(className, FIND_AFFITTIALLEGATI_BY_ID, codAffittoAllegato);
 	}
 	
-	public ArrayList getAffittiAllegatiByCodAffitto(String className, Integer codAffitto){
+	public <T> ArrayList<T> getAffittiAllegatiByCodAffitto(String className, Integer codAffitto){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTIALLEGATI_BY_CODAFFITTO, codAffitto);
 	}
 	

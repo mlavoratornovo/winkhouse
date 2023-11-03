@@ -28,21 +28,32 @@ public class WinkGCalendarDAO extends BaseDAO {
 		
 	}
 
-	public ArrayList getWinkGCalendarByCodAppuntamento(Integer codAppuntamento){
-		return (ArrayList<WinkGCalendarModel>)super.getObjectsByIntFieldValue(WinkGCalendarModel.class.getName(), GET_WINKCALENDAR_BY_CODAPPUNTAMENTO, codAppuntamento);
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<WinkGCalendarModel> getWinkGCalendarByCodAppuntamento(Integer codAppuntamento){
+		ArrayList<WinkGCalendarModel> retval = new ArrayList<WinkGCalendarModel>();
+		ArrayList<T> ret = super.getObjectsByIntFieldValue(WinkGCalendarModel.class.getName(), GET_WINKCALENDAR_BY_CODAPPUNTAMENTO, codAppuntamento);
+		retval.addAll((ArrayList<WinkGCalendarModel>)ret);
+		return retval;
 	}
 
-	public ArrayList getWinkGCalendarByCodColloquio(Integer codColloquio){
-		return (ArrayList<WinkGCalendarModel>)super.getObjectsByIntFieldValue(WinkGCalendarModel.class.getName(), GET_WINKCALENDAR_BY_CODCOLLOQUIO, codColloquio);
+	public <T> ArrayList<WinkGCalendarModel> getWinkGCalendarByCodColloquio(Integer codColloquio){
+		ArrayList<WinkGCalendarModel> retval = new ArrayList<WinkGCalendarModel>();
+		ArrayList<WinkGCalendarModel> ret = super.getObjectsByIntFieldValue(WinkGCalendarModel.class.getName(), GET_WINKCALENDAR_BY_CODCOLLOQUIO, codColloquio);
+		retval.addAll((ArrayList<WinkGCalendarModel>)ret);
+		return retval;
 	}
 
-	public ArrayList<WinkGCalendarModel> getWinkGCalendarByCodAgente(Integer codAgente){
-		return (ArrayList<WinkGCalendarModel>)super.getObjectsByIntFieldValue(WinkGCalendarModel.class.getName(), GET_WINKCALENDAR_BY_CODAGENTE, codAgente);
+	public <T> ArrayList<WinkGCalendarModel> getWinkGCalendarByCodAgente(Integer codAgente){
+		ArrayList<WinkGCalendarModel> retval = new ArrayList<WinkGCalendarModel>();
+		ArrayList<WinkGCalendarModel> ret = super.getObjectsByIntFieldValue(WinkGCalendarModel.class.getName(), GET_WINKCALENDAR_BY_CODAGENTE, codAgente);
+		retval.addAll((ArrayList<WinkGCalendarModel>)ret);
+		return retval;
+		
 	}
 
-	public ArrayList getWinkGCalendarByCodAgenteCalendarIdEventId(Integer codAgente,String calendarid, String eventid){
+	public ArrayList<WinkGCalendarModel> getWinkGCalendarByCodAgenteCalendarIdEventId(Integer codAgente,String calendarid, String eventid){
 
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<WinkGCalendarModel> returnValue = new ArrayList<WinkGCalendarModel>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -58,7 +69,7 @@ public class WinkGCalendarDAO extends BaseDAO {
 				
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					returnValue.add(getRowObject(WinkGCalendarModel.class.getName(), rs));
+					returnValue.add((WinkGCalendarModel)getRowObject(WinkGCalendarModel.class.getName(), rs));
 				}
 			}catch(SQLException sql){
 				sql.printStackTrace();

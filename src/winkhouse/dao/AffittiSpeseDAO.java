@@ -30,7 +30,7 @@ public class AffittiSpeseDAO extends BaseDAO {
 		return super.getObjectById(className, FIND_AFFITTISPESE_BY_ID, codAffittoSpese);
 	}
 	
-	public ArrayList getAffittiSpeseByCodAffitto(String className, Integer codAffitto){
+	public <T> ArrayList<T> getAffittiSpeseByCodAffitto(String className, Integer codAffitto){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTISPESE_BY_CODAFFITTO, codAffitto);
 	}
 
@@ -46,9 +46,10 @@ public class AffittiSpeseDAO extends BaseDAO {
 		return super.deleteObjectById(DELETE_AFFITTISPESE_BY_CODAFFITTO, codAffitto, connection, doCommit);
 	}
 
-	public ArrayList getAffittiSpeseByProperties(String className,AffittiSpeseVO affittiSpese){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiSpeseByProperties(String className,AffittiSpeseVO affittiSpese){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -69,7 +70,7 @@ public class AffittiSpeseDAO extends BaseDAO {
 			
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(className, rs));
+				returnValue.add((T) getRowObject(className, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();

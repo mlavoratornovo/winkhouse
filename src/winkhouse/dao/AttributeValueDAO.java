@@ -146,7 +146,7 @@ public class AttributeValueDAO extends BaseDAO {
 		return super.deleteObjectById(DELETE_ATTRIBUTEVALUE_BY_IDATTRIBUTE, codAttribute, con, doCommit);		
 	}
 	
-	public ArrayList getAttributeValuesByIdAttribute(String classType, Integer idAttribute, Connection con){
+	public <T> ArrayList<T> getAttributeValuesByIdAttribute(String classType, Integer idAttribute, Connection con){
 		return super.getObjectsByIntFieldValue(classType, FIND_ATTRIBUTEVALUE_BY_IDATTRIBUTE, idAttribute);
 	}
 	

@@ -151,7 +151,7 @@ public class AffittiHelper {
 	public boolean saveAllegatiAffitti(ArrayList<AffittiAllegatiVO> allegati){
 		Boolean returnValue = true;
 		try {
-			Iterator it = allegati.iterator();
+			Iterator<AffittiAllegatiVO> it = allegati.iterator();
 			while (it.hasNext()){
 				AffittiAllegatiVO acVO = (AffittiAllegatiVO)it.next();
 				if ((acVO.getFromPath() != null) && 
@@ -182,7 +182,7 @@ public class AffittiHelper {
 				f.delete();
 			}
 		} catch (Exception e) {
-			MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 									"Errore cancellazione allegato", 
 									"Si � verificato un errore nella cancellazione dell' allegato da : " + 									 
 									pathAllegatiDestinazione+allegato.getNome());
@@ -192,22 +192,24 @@ public class AffittiHelper {
 		
 	}
 	
-	public HashMap updateListaAllegati(AffittiModel affitto,
+	@SuppressWarnings("unchecked")
+	public <T> HashMap<String, Object> updateListaAllegati(AffittiModel affitto,
 			   						   Connection con){
 
-		HashMap returnValue = new HashMap();
+		HashMap<String, Object> returnValue = new HashMap<String, Object>();
 		returnValue.put(RESULT_ALLEGATI_DB, true);
-		returnValue.put(LIST_SAVE_ALLEGATI_FILE, new ArrayList());
-		returnValue.put(LIST_DELETE_ALLEGATI_FILE, new ArrayList());
+		returnValue.put(LIST_SAVE_ALLEGATI_FILE, new ArrayList<T>());
+		returnValue.put(LIST_DELETE_ALLEGATI_FILE, new ArrayList<T>());
 	
-		ArrayList affittiAllegati = new AffittiAllegatiDAO().getAffittiAllegatiByCodAffitto(AffittiAllegatiVO.class.getName(),
-																							affitto.getCodAffitti()); 
+		ArrayList<AffittiAllegatiVO> affittiAllegati = new AffittiAllegatiDAO().getAffittiAllegatiByCodAffitto(
+				AffittiAllegatiVO.class.getName(),
+				affitto.getCodAffitti()); 
 		Collections.sort(affittiAllegati,comparerAffittiAllegati);
-		ArrayList listaAffittiAllegati = affitto.getAllegati();
+		ArrayList<AffittiAllegatiVO> listaAffittiAllegati = affitto.getAllegati();
 		if (listaAffittiAllegati != null){
 	
 			AffittiAllegatiDAO aaDAO = new AffittiAllegatiDAO();			
-			Iterator it  = listaAffittiAllegati.iterator();
+			Iterator<AffittiAllegatiVO> it  = listaAffittiAllegati.iterator();
 	
 			while (it.hasNext()){
 				Object o = it.next();
@@ -222,33 +224,33 @@ public class AffittiHelper {
 	//checkAllegatoImmobileDB(immobileAllegati);
 					if (affittiAllegato != null){
 						if (!aaDAO.saveUpdate(affittiAllegato, con, false)){					
-							MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+							MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 													"Errore salvataggio allegato", 
-													"Si � verificato un errore nel salvataggio dell' allegato : " + 
+													"Si è verificato un errore nel salvataggio dell' allegato : " + 
 													affittiAllegato.getCodAffittiAllegati());
 							returnValue.put(RESULT_ALLEGATI_DB, false);
 							return returnValue;
 	
 						}else{
-							((ArrayList)returnValue.get(LIST_SAVE_ALLEGATI_FILE)).add(affittiAllegato);
+							((ArrayList<AffittiAllegatiVO>)returnValue.get(LIST_SAVE_ALLEGATI_FILE)).add(affittiAllegato);
 						}					
 					}
 				}	
 			}
 	
-			Iterator ite = affittiAllegati.iterator();
+			Iterator<AffittiAllegatiVO> ite = affittiAllegati.iterator();
 			while (ite.hasNext()){
 				AffittiAllegatiVO affittoAllegati = (AffittiAllegatiVO)ite.next();
 				if (!aaDAO.deleteAffittiAllegatiByID(affittoAllegati.getCodAffittiAllegati(), con, false)){
 					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
 											"Errore cancellazione allegato", 
-											"Si � verificato un errore nella cancellazione dell' allegato : " + 
+											"Si è verificato un errore nella cancellazione dell' allegato : " + 
 											affittoAllegati.getCodAffittiAllegati());
 					returnValue.put(RESULT_ALLEGATI_DB, false);
 					return returnValue;
 		
 				}else{
-					((ArrayList)returnValue.get(LIST_DELETE_ALLEGATI_FILE)).add(affittoAllegati);
+					((ArrayList<AffittiAllegatiVO>)returnValue.get(LIST_DELETE_ALLEGATI_FILE)).add(affittoAllegati);
 				}
 			}
 		}

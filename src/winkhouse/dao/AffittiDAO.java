@@ -48,11 +48,11 @@ public class AffittiDAO extends BaseDAO {
 		return super.getObjectById(className, FIND_AFFITTO_BY_ID, codAffitto);
 	}
 	
-	public ArrayList getAffittiByCodImmobile(String className, Integer codImmobile){
+	public <T> ArrayList<T> getAffittiByCodImmobile(String className, Integer codImmobile){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTI_BY_CODIMMOBILE, codImmobile);
 	}
 
-	public ArrayList getAffittiByCodAgente(String className, Integer codAgente){
+	public <T> ArrayList<T> getAffittiByCodAgente(String className, Integer codAgente){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTI_BY_CODAGENTE, codAgente);
 	}
 
@@ -280,9 +280,10 @@ public class AffittiDAO extends BaseDAO {
 		
 	}
 
-	public ArrayList getAffittiByDataInizio(String classType, Date dataInizio, Integer codImmobile, Integer codAffitto){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiByDataInizio(String classType, Date dataInizio, Integer codImmobile, Integer codAffitto){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -306,7 +307,7 @@ public class AffittiDAO extends BaseDAO {
 			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -328,13 +329,14 @@ public class AffittiDAO extends BaseDAO {
 		
 	}
 	
-	public ArrayList getAffittiNextBetWeen(String classType, 
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiNextBetWeen(String classType, 
 											Date dataInizio, 
 											Date dataFine, 
 											Integer codImmobile, 
 											Integer codAffitto){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -359,7 +361,7 @@ public class AffittiDAO extends BaseDAO {
 			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -381,9 +383,10 @@ public class AffittiDAO extends BaseDAO {
 		
 	}
 
-	public ArrayList getAffittiPreviousBetWeen(String classType, Date dataInizio, Date dataFine, Integer codImmobile, Integer codAffitto){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiPreviousBetWeen(String classType, Date dataInizio, Date dataFine, Integer codImmobile, Integer codAffitto){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -408,7 +411,7 @@ public class AffittiDAO extends BaseDAO {
 			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -430,9 +433,10 @@ public class AffittiDAO extends BaseDAO {
 		
 	}
 	
-	public ArrayList getAffittiContainBetWeen(String classType, Date dataInizio, Date dataFine, Integer codImmobile, Integer codAffitto){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiContainBetWeen(String classType, Date dataInizio, Date dataFine, Integer codImmobile, Integer codAffitto){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -457,7 +461,7 @@ public class AffittiDAO extends BaseDAO {
 			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -479,9 +483,10 @@ public class AffittiDAO extends BaseDAO {
 		
 	}
 
-	public ArrayList getAffittiMiddleBetWeen(String classType, Date dataInizio, Date dataFine, Integer codImmobile, Integer codAffitto){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiMiddleBetWeen(String classType, Date dataInizio, Date dataFine, Integer codImmobile, Integer codAffitto){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -508,7 +513,7 @@ public class AffittiDAO extends BaseDAO {
 			}
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -530,12 +535,13 @@ public class AffittiDAO extends BaseDAO {
 		
 	}
 	
-	public ArrayList getAffittiData(String classType, 
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getAffittiData(String classType, 
 									Date dataInizio,
 									Date dataFine,
 									Integer codImmobile){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -552,7 +558,7 @@ public class AffittiDAO extends BaseDAO {
 			ps.setInt(3, codImmobile);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -579,7 +585,7 @@ public class AffittiDAO extends BaseDAO {
 		
 	}	
 	
-	public ArrayList getAffittiByCodAnagrafica(String classType,Integer codAnagrafica){
+	public <T> ArrayList<T> getAffittiByCodAnagrafica(String classType,Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, FIND_AFFITTI_CODANAGRAFICA, codAnagrafica);
 	}
 	

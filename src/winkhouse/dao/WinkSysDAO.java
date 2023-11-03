@@ -19,9 +19,9 @@ public class WinkSysDAO extends BaseDAO {
 	
 	public WinkSysDAO() {}
 
-	public WinkSysVO getPropertyByName(String propertyName){
+	public <T> WinkSysVO getPropertyByName(String propertyName){
 		
-		ArrayList al = getObjectsByStringFieldValue(WinkSysVO.class.getName(), GET_WINKSYS_PROPERTY, propertyName);
+		ArrayList<T> al = getObjectsByStringFieldValue(WinkSysVO.class.getName(), GET_WINKSYS_PROPERTY, propertyName);
 		if ((al != null) && (al.size() > 0)){
 			return (WinkSysVO)al.get(0);
 		}
@@ -29,17 +29,19 @@ public class WinkSysDAO extends BaseDAO {
 		
 	}
 	
-	public ArrayList<WinkSysVO> getProperties(){
-		
-		return (ArrayList<WinkSysVO>)list("winkhouse.vo.WinkSysVO", GET_WINKSYS_PROPERTIES);
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<WinkSysVO> getProperties(){
+		ArrayList<WinkSysVO> retval = new ArrayList<WinkSysVO>();
+		ArrayList<T> ret = super.list("winkhouse.vo.WinkSysVO", GET_WINKSYS_PROPERTIES);
+		retval.addAll((ArrayList<WinkSysVO>)ret);
+		return retval;		
 		
 	}
 	
 	public boolean insert(WinkSysVO wsVO, Connection connection, Boolean doCommit){
 		
 		boolean returnValue = false;
-		
-		ResultSet rs = null;
+				
 		Connection con = (connection == null)? ConnectionManager.getInstance().getConnection():connection;
 		PreparedStatement ps = null;
 		String query = getQuery(INSERT_WINKSYS_PROPERTY);
@@ -86,7 +88,6 @@ public class WinkSysDAO extends BaseDAO {
 		
 		boolean returnValue = false;
 		
-		ResultSet rs = null;
 		Connection con = (connection == null)? ConnectionManager.getInstance().getConnection():connection;
 		PreparedStatement ps = null;
 		String query = getQuery(UPDATE_WINKSYS_PROPERTY);

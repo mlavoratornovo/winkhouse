@@ -197,13 +197,13 @@ public class AbbinamentiDAO extends BaseDAO {
 		return returnValue;
 	}
 	
-	public ArrayList findAbbinamentiByCodImmobile(String classType, Integer codImmobile){
+	public <T> ArrayList<T> findAbbinamentiByCodImmobile(String classType, Integer codImmobile){
 		return super.getObjectsByIntFieldValue(classType, 
 											   FIND_ABBINAMENTI_BY_CODIMMOBILE, 
 											   codImmobile);
 	}
 
-	public ArrayList findAbbinamentiByCodAnagrafica(String classType, Integer codAnagrafica){
+	public <T> ArrayList<T> findAbbinamentiByCodAnagrafica(String classType, Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, 
 											   FIND_ABBINAMENTI_BY_CODANAGRAFICA, 
 											   codAnagrafica);

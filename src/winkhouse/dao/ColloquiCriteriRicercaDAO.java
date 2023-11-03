@@ -27,11 +27,11 @@ public class ColloquiCriteriRicercaDAO extends BaseDAO {
 		
 	}
 	
-	public ArrayList getColloquiCriteriRicercaByColloquio(String classType, Integer codColloquio){
+	public <T> ArrayList<T> getColloquiCriteriRicercaByColloquio(String classType, Integer codColloquio){
 		return super.getObjectsByIntFieldValue(classType, LISTA_COLLOQUIOCRITERIRICERCA_BY_COLLOQUIO, codColloquio);
 	}
 
-	public ArrayList getColloquiCriteriRicercaByRicerca(String classType, Integer codRicerca){
+	public <T> ArrayList<T> getColloquiCriteriRicercaByRicerca(String classType, Integer codRicerca){
 		return super.getObjectsByIntFieldValue(classType, LISTA_COLLOQUIOCRITERIRICERCA_BY_RICERCA, codRicerca);
 	}
 	
@@ -211,13 +211,14 @@ public class ColloquiCriteriRicercaDAO extends BaseDAO {
 	}	
 	
 	
-	public ArrayList getCriteriRicercaByCriteria(String classType,
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getCriteriRicercaByCriteria(String classType,
 												 String getterMethodName, 
 												 String fromValue,
 												 String toValue,
 												 String logicalOperator){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -232,7 +233,7 @@ public class ColloquiCriteriRicercaDAO extends BaseDAO {
 			
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T) getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();

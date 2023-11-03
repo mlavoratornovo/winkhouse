@@ -25,7 +25,7 @@ public class AllegatiColloquiDAO extends BaseDAO {
 
 	}
 	
-	public ArrayList getAllegatiByColloquio(String classType, Integer codColloquio){
+	public <T> ArrayList<T> getAllegatiByColloquio(String classType, Integer codColloquio){
 		return super.getObjectsByIntFieldValue(AllegatiColloquiVO.class.getName(), LISTA_ALLEGATI_BY_COLLOQUIO, codColloquio);
 	}
 

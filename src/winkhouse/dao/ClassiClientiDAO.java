@@ -26,7 +26,7 @@ public class ClassiClientiDAO extends BaseDAO{
 	public final static String DELETE_CLASSICLIENTI = "DELETE_CLASSI_CLIENTI";
 	public final static String UPDATE_CLASSICLIENTI_AGENTEUPDATE = "UPDATE_CLASSICLIENTI_AGENTE_UPDATE";
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_CLASSICLIENTI);
 	}
 
@@ -206,7 +206,7 @@ public class ClassiClientiDAO extends BaseDAO{
 		return super.getObjectById(classType, CLASSICLIENTI_BY_ID, idClasseClienti);
 	}	
 
-	public ArrayList getClasseClienteByDescrizione(String classType, String descrizione){
+	public <T> ArrayList<T> getClasseClienteByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, CLASSICLIENTI_BY_NAME, descrizione);
 	}	
 	

@@ -24,13 +24,13 @@ public class AnagraficheAppuntamentiDAO extends BaseDAO {
 	
 	public AnagraficheAppuntamentiDAO() {}
 
-	public ArrayList listAnagraficheAppuntamentiByAppuntamento(String classType, Integer codAppuntamento){
+	public <T> ArrayList<T> listAnagraficheAppuntamentiByAppuntamento(String classType, Integer codAppuntamento){
 		return super.getObjectsByIntFieldValue(classType, 
 											   LIST_ANAGRAFICHEAPPUNTAMENTI_BY_CODAPPUNTAMENTO, 
 											   codAppuntamento);
 	} 
 	
-	public ArrayList listAnagraficheAppuntamentiByAnagrafica(String classType, Integer codAnagrafica){
+	public <T> ArrayList<T> listAnagraficheAppuntamentiByAnagrafica(String classType, Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, 
 											   LIST_ANAGRAFICHEAPPUNTAMENTI_BY_CODANAGRAFICA, 
 											   codAnagrafica);

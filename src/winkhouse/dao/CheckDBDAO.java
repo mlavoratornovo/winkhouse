@@ -385,7 +385,6 @@ public class CheckDBDAO extends BaseDAO {
 				   				   .getResourceAsStream("winkhouse/configuration/winkGCalendar.sql");
 		InputStreamReader isr = new InputStreamReader(is);
 		
-		File f;
 		try {
 			
 			SqlFile sqlf = new SqlFile(isr, "create_gcalendar", null, "Cp1252", false, null);

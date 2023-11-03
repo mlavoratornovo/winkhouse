@@ -24,7 +24,7 @@ public class AllegatiImmobiliDAO extends BaseDAO {
 	public AllegatiImmobiliDAO() {
 	}
 
-	public ArrayList getAllegatiByImmobile(String classType, Integer codImmobile){
+	public <T> ArrayList<T> getAllegatiByImmobile(String classType, Integer codImmobile){
 		return super.getObjectsByIntFieldValue(AllegatiImmobiliVO.class.getName(), LISTA_ALLEGATI_BY_IMMOBILE, codImmobile);
 	}
 

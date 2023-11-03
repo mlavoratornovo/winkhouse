@@ -51,15 +51,14 @@ public class AbbinamentiView extends ViewPart {
 	private ImmobiliModel immobile = null;
 	private ColloquiModel colloquio = null;
 	private AnagraficheModel anagrafica = null;
-	private ArrayList ricerca = null;
-	private ArrayList manuale = null;
+	private ArrayList<?> ricerca = null;
+	private ArrayList<?> manuale = null;
 	
-	private ArrayList abbinnameti = new ArrayList(2);
+	private ArrayList<Abbinamenti> abbinnameti = new ArrayList<Abbinamenti>(2);
 	
 	private AbbinamentiManuali abbinamentiManuali = null;
 	private AbbinamentiRicerca abbinamentiRicerca = null;
-	
-	private Image abbinamentiImg = Activator.getImageDescriptor("icons/anagraficheabbinate12.png").createImage();
+		
 	private Image abbinamentiManualiImg = Activator.getImageDescriptor("icons/abbinamenti12.png").createImage();
 	private Image abbinamentiRicercaImg = Activator.getImageDescriptor("icons/kfind14.png").createImage();
 	private Image anagraficheImg = Activator.getImageDescriptor("icons/anagrafica12.png").createImage();
@@ -69,41 +68,43 @@ public class AbbinamentiView extends ViewPart {
 	private CancellaAbbinamenti ca = null;
 	private ColumnSorter comparator = null;
 	
-	private class AbbinamentiRicerca{
+	private interface Abbinamenti{};
+	
+	private class AbbinamentiRicerca implements Abbinamenti{
 		
-		private ArrayList abbinamenti = null;
+		private ArrayList<?> abbinamenti = null;
 		
 		public AbbinamentiRicerca(){}
 
-		public ArrayList getAbbinamenti() {
+		public ArrayList<?> getAbbinamenti() {
 			return this.abbinamenti;
 		}
 
-		public void setAbbinamenti(ArrayList abbinamenti) {
+		public void setAbbinamenti(ArrayList<?> abbinamenti) {
 			this.abbinamenti = abbinamenti;
 		}
 		
 	}
 	
-	private class AbbinamentiManuali{
+	private class AbbinamentiManuali implements Abbinamenti{
 		
-		private ArrayList abbinamenti = null;
+		private ArrayList<?> abbinamenti = null;
 		
 		public AbbinamentiManuali(){}
 
-		public ArrayList getAbbinamenti() {
+		public ArrayList<?> getAbbinamenti() {
 			return this.abbinamenti;
 		}
 
-		public void setAbbinamenti(ArrayList abbinamenti) {
+		public void setAbbinamenti(ArrayList<?> abbinamenti) {
 			this.abbinamenti = abbinamenti;
 		}
 		
 	}
 	
-	private class StartModel{
-		public StartModel(){}
-	};
+//	private class StartModel{
+//		public StartModel(){}
+//	};
 	
 	
 	public AbbinamentiView() {	
@@ -132,15 +133,15 @@ public class AbbinamentiView extends ViewPart {
 			if (inputElement instanceof AbbinamentiManuali){
 				return (((AbbinamentiManuali)inputElement).getAbbinamenti() != null)
 					   ?((AbbinamentiManuali)inputElement).getAbbinamenti().toArray()
-					   : new ArrayList().toArray();
+					   : new Object[0];
 			}else if (inputElement instanceof AbbinamentiRicerca){
 				return (((AbbinamentiRicerca)inputElement).getAbbinamenti() != null)
 					   ?((AbbinamentiRicerca)inputElement).getAbbinamenti().toArray()
-					   : new ArrayList().toArray();
+					   : new Object[0];
 			}else if (inputElement instanceof ArrayList){
-				return ((ArrayList)inputElement).toArray();
+				return ((ArrayList<?>)inputElement).toArray();
 			}else{
-				return new ArrayList().toArray();
+				return new Object[0];
 			}
 
 		}
@@ -738,11 +739,11 @@ public class AbbinamentiView extends ViewPart {
 		return tvAbinamenti;
 	}
 
-	public ArrayList getRicerca() {
+	public ArrayList<?> getRicerca() {
 		return ricerca;
 	}
 
-	public void setRicerca(ArrayList resultRicerca) {
+	public void setRicerca(ArrayList<?> resultRicerca) {
 		this.ricerca = resultRicerca;
 		abbinamentiRicerca = new AbbinamentiRicerca();
 		abbinamentiRicerca.setAbbinamenti(this.ricerca);
@@ -751,11 +752,11 @@ public class AbbinamentiView extends ViewPart {
 		
 	}
 
-	public ArrayList getManuale() {
+	public ArrayList<?> getManuale() {
 		return manuale;
 	}
 
-	public void setManuale(ArrayList resultManuale) {
+	public void setManuale(ArrayList<?> resultManuale) {
 		this.manuale = resultManuale;
 		abbinamentiManuali = new AbbinamentiManuali();
 		abbinamentiManuali.setAbbinamenti(this.manuale);
@@ -777,11 +778,11 @@ public class AbbinamentiView extends ViewPart {
 					this.colloquio = null;
 					if (this.immobile.getCodImmobile() != null){
 						AbbinamentiDAO aDAO = new AbbinamentiDAO();
-						ArrayList abbinamentiImmobili = aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), 
+						ArrayList<AbbinamentiModel> abbinamentiImmobili = aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), 
 								                                                  		  this.immobile.getCodImmobile());
 						setManuale(abbinamentiImmobili);
 					}
-					setRicerca(new ArrayList());	
+					setRicerca(new ArrayList<AbbinamentiModel>());	
 
 				}
 			}else if ((immobileModel != null) && 
@@ -792,11 +793,11 @@ public class AbbinamentiView extends ViewPart {
 					this.colloquio = null;
 					if (this.immobile.getCodImmobile() != null){
 						AbbinamentiDAO aDAO = new AbbinamentiDAO();
-						ArrayList abbinamentiImmobili = aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), 
+						ArrayList<AbbinamentiModel> abbinamentiImmobili = aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), 
 								                                                  		  this.immobile.getCodImmobile());
 						setManuale(abbinamentiImmobili);
 					}
-					setRicerca(new ArrayList());	
+					setRicerca(new ArrayList<AbbinamentiModel>());	
 				
 			}else{
 				tvAbinamenti.refresh();
@@ -804,7 +805,7 @@ public class AbbinamentiView extends ViewPart {
 		}else{
 			this.immobile = null;
 			this.colloquio = null;
-			tvAbinamenti.setInput(new ArrayList());
+			tvAbinamenti.setInput(new ArrayList<Abbinamenti>());
 			tvAbinamenti.refresh();
 		}
 	}
@@ -823,11 +824,11 @@ public class AbbinamentiView extends ViewPart {
 					this.colloquio = null;
 					AbbinamentiDAO aDAO = new AbbinamentiDAO();
 					if (this.anagrafica.getCodAnagrafica() != null){
-						ArrayList abbinamentiAnagrafica = aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), 
+						ArrayList<AbbinamentiModel> abbinamentiAnagrafica = aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), 
 								                                                    		  this.anagrafica.getCodAnagrafica());
 						setManuale(abbinamentiAnagrafica);
 					}
-					setRicerca(new ArrayList());	
+					setRicerca(new ArrayList<AbbinamentiModel>());	
 					
 				}
 			}else if ((anagraficaModel != null) && 
@@ -837,11 +838,11 @@ public class AbbinamentiView extends ViewPart {
 					this.immobile = null;
 					this.colloquio = null;
 					AbbinamentiDAO aDAO = new AbbinamentiDAO();
-					ArrayList abbinamentiAnagrafica = aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), 
+					ArrayList<AbbinamentiModel> abbinamentiAnagrafica = aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), 
 							                                                    		  this.anagrafica.getCodAnagrafica());
 					setManuale(abbinamentiAnagrafica);
 					
-					setRicerca(new ArrayList());	
+					setRicerca(new ArrayList<AbbinamentiModel>());	
 
 			}else{
 				tvAbinamenti.refresh();

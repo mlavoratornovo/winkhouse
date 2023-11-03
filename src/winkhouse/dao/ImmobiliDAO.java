@@ -119,7 +119,7 @@ public class ImmobiliDAO extends BaseDAO{
 		super();
 	}
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		if (WinkhouseUtils.getInstance()
 							.getTipoArchivio()){
 			return super.list(classType, LISTA_IMMOBILI_STORICO);
@@ -128,7 +128,7 @@ public class ImmobiliDAO extends BaseDAO{
 		}
 	}
 	
-	public ArrayList listImmobiliByCodClasseEnergetica(String ClassName,Integer codClasseEnergetica){
+	public <T> ArrayList<T> listImmobiliByCodClasseEnergetica(String ClassName,Integer codClasseEnergetica){
 		return super.getObjectsByIntFieldValue(ClassName, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   								? LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO
@@ -136,7 +136,7 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   codClasseEnergetica);
 	}		
 
-	public ArrayList listImmobiliByCodClasseEnergeticaIsAffitti(String ClassName,Integer codClasseEnergetica){
+	public <T> ArrayList<T> listImmobiliByCodClasseEnergeticaIsAffitti(String ClassName,Integer codClasseEnergetica){
 		return super.getObjectsByIntFieldValue(ClassName, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   								? LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO_ISAFFITTI
@@ -144,7 +144,7 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   codClasseEnergetica);
 	}		
 
-	public ArrayList listImmobiliByCodClasseEnergeticaComune(String ClassName,Integer codClasseEnergetica,String comune){
+	public <T> ArrayList<T> listImmobiliByCodClasseEnergeticaComune(String ClassName,Integer codClasseEnergetica,String comune){
 		return super.getObjectsByIntStrFieldValue(ClassName, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   								? LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO_COMUNE
@@ -154,7 +154,7 @@ public class ImmobiliDAO extends BaseDAO{
 		
 	}		
 
-	public ArrayList listImmobiliByCodClasseEnergeticaIsAffittiComune(String ClassName,Integer codClasseEnergetica,String comune){
+	public <T> ArrayList<T> listImmobiliByCodClasseEnergeticaIsAffittiComune(String ClassName,Integer codClasseEnergetica,String comune){
 		return super.getObjectsByIntStrFieldValue(ClassName, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   								? LIST_IMMOBILI_BY_CODCLASSEENERGETICA_STORICO_ISAFFITTI_COMUNE
@@ -163,7 +163,7 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   comune);
 	}		
 	
-	public ArrayList getImmobiliByTipologia(String classType, Integer codTipologia){
+	public <T> ArrayList<T> getImmobiliByTipologia(String classType, Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											    ? (codTipologia != null)
@@ -175,7 +175,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   codTipologia);
 	}
 
-	public ArrayList getImmobiliColloquiByTipologiaImmobile(String classType, Integer codTipologia){
+	public <T> ArrayList<T> getImmobiliColloquiByTipologiaImmobile(String classType, Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, 
 											   ((WinkhouseUtils.getInstance().getTipoArchivio())
 											     ? IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI_STORICO
@@ -183,7 +183,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   codTipologia);
 	}
 
-	public ArrayList getImmobiliByTipologiaComune(String classType, Integer codTipologia, String comune){
+	public <T> ArrayList<T> getImmobiliByTipologiaComune(String classType, Integer codTipologia, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											    ? (codTipologia != null)
@@ -196,7 +196,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   comune);
 	}
 
-	public ArrayList getImmobiliByTipologiaIsAffitti(String classType, Integer codTipologia){
+	public <T> ArrayList<T> getImmobiliByTipologiaIsAffitti(String classType, Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							   ? (codTipologia != null)
@@ -208,7 +208,7 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   codTipologia);
 	}
 
-	public ArrayList getImmobiliByTipologiaIsAffittiComune(String classType, Integer codTipologia, String comune){
+	public <T> ArrayList<T> getImmobiliByTipologiaIsAffittiComune(String classType, Integer codTipologia, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							   ? (codTipologia != null)
@@ -221,7 +221,7 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   comune);
 	}
 	
-	public ArrayList getImmobiliByAgente(String classType, Integer codAgenteInseritore){
+	public <T> ArrayList<T> getImmobiliByAgente(String classType, Integer codAgenteInseritore){
 		return super.getObjectsByIntFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							   	? (codAgenteInseritore != null)
@@ -233,7 +233,7 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   	codAgenteInseritore);
 	}
 	
-	public ArrayList getImmobiliByRiscaldamento(String classType, Integer codRiscaldamento){
+	public <T> ArrayList<T> getImmobiliByRiscaldamento(String classType, Integer codRiscaldamento){
 		return super.getObjectsByIntFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							    ? (codRiscaldamento != null)
@@ -245,7 +245,7 @@ public class ImmobiliDAO extends BaseDAO{
 					   						   codRiscaldamento);
 	}
 	
-	public ArrayList getImmobiliByRiscaldamentoIsAffitti(String classType, Integer codRiscaldamento){
+	public <T> ArrayList<T> getImmobiliByRiscaldamentoIsAffitti(String classType, Integer codRiscaldamento){
 		return super.getObjectsByIntFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							    ? (codRiscaldamento != null)
@@ -257,7 +257,7 @@ public class ImmobiliDAO extends BaseDAO{
 					   						   codRiscaldamento);
 	}
 
-	public ArrayList getImmobiliByRiscaldamentoComune(String classType, Integer codRiscaldamento, String comune){
+	public <T> ArrayList<T> getImmobiliByRiscaldamentoComune(String classType, Integer codRiscaldamento, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							    ? (codRiscaldamento != null)
@@ -269,7 +269,7 @@ public class ImmobiliDAO extends BaseDAO{
 					   						   codRiscaldamento,comune);
 	}
 	
-	public ArrayList getImmobiliByRiscaldamentoIsAffittiComune(String classType, Integer codRiscaldamento, String comune){
+	public <T> ArrayList<T> getImmobiliByRiscaldamentoIsAffittiComune(String classType, Integer codRiscaldamento, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
 				   							    ? (codRiscaldamento != null)
@@ -281,7 +281,7 @@ public class ImmobiliDAO extends BaseDAO{
 					   						   codRiscaldamento, comune);
 	}
 
-	public ArrayList getImmobiliByStatoConservativo(String classType, Integer codStatoConservativo){
+	public <T> ArrayList<T> getImmobiliByStatoConservativo(String classType, Integer codStatoConservativo){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codStatoConservativo != null)
@@ -293,7 +293,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   codStatoConservativo);
 	}
 
-	public ArrayList getImmobiliByStatoConservativoIsAffitti(String classType, Integer codStatoConservativo){
+	public <T> ArrayList<T> getImmobiliByStatoConservativoIsAffitti(String classType, Integer codStatoConservativo){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codStatoConservativo != null)
@@ -305,7 +305,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   codStatoConservativo);
 	}
 
-	public ArrayList getImmobiliByClasseEnergeticaIsAffitti(String classType, Integer codClasseEnergetica){
+	public <T> ArrayList<T> getImmobiliByClasseEnergeticaIsAffitti(String classType, Integer codClasseEnergetica){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codClasseEnergetica != null)
@@ -317,7 +317,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   	codClasseEnergetica);
 	}
 
-	public ArrayList getImmobiliByClasseEnergetica(String classType, Integer codClasseEnergetica){
+	public <T> ArrayList<T> getImmobiliByClasseEnergetica(String classType, Integer codClasseEnergetica){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codClasseEnergetica != null)
@@ -329,7 +329,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   	codClasseEnergetica);
 	}
 
-	public ArrayList getImmobiliByClasseEnergeticaIsAffittiComune(String classType, Integer codClasseEnergetica, String comune){
+	public <T> ArrayList<T> getImmobiliByClasseEnergeticaIsAffittiComune(String classType, Integer codClasseEnergetica, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codClasseEnergetica != null)
@@ -342,7 +342,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   	comune);
 	}
 
-	public ArrayList getImmobiliByClasseEnergeticaComune(String classType, Integer codClasseEnergetica, String comune){
+	public <T> ArrayList<T> getImmobiliByClasseEnergeticaComune(String classType, Integer codClasseEnergetica, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codClasseEnergetica != null)
@@ -355,7 +355,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   	comune);
 	}
 
-	public ArrayList getImmobiliByStatoConservativoComune(String classType, Integer codStatoConservativo,String comune){
+	public <T> ArrayList<T> getImmobiliByStatoConservativoComune(String classType, Integer codStatoConservativo,String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codStatoConservativo != null)
@@ -368,7 +368,7 @@ public class ImmobiliDAO extends BaseDAO{
 											   comune);
 	}
 
-	public ArrayList getImmobiliByStatoConservativoIsAffittiComune(String classType, Integer codStatoConservativo,String comune){
+	public <T> ArrayList<T> getImmobiliByStatoConservativoIsAffittiComune(String classType, Integer codStatoConservativo,String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
 											   	? (codStatoConservativo != null)
@@ -681,16 +681,16 @@ public class ImmobiliDAO extends BaseDAO{
 		return returnValue;
 	}
 
-	public ArrayList getImmobiliByAnagrafica(String classType, Integer codAnagrafica){
+	public <T> ArrayList<T> getImmobiliByAnagrafica(String classType, Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, IMMOBILI_BY_ANAGRAFICA, codAnagrafica);
 	}
 
 	public Integer getMaxCodImmobile(){
-		ArrayList al = super.list(ImmobiliVO.class.getName(), GET_MAX_CODIMMOBILE);
+		ArrayList<ImmobiliVO> al = super.list(ImmobiliVO.class.getName(), GET_MAX_CODIMMOBILE);
 		return (al.size() == 0)?0:((ImmobiliVO)al.get(0)).getCodImmobile();
 	}
 
-	public ArrayList getImmobiliByAnagraficaPropietario(String classType, Integer codAnagrafica){
+	public <T> ArrayList<T> getImmobiliByAnagraficaPropietario(String classType, Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, IMMOBILI_BY_CODANAGRAFICA, codAnagrafica);
 	}
 
