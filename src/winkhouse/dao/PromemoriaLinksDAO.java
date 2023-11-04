@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.vo.PromemoriaLinksVO;
-import winkhouse.vo.PromemoriaOggettiVO;
 
 public class PromemoriaLinksDAO extends BaseDAO {
 
@@ -135,8 +134,8 @@ public class PromemoriaLinksDAO extends BaseDAO {
 		return super.deleteObjectById(DELETE_PROMEMORIALINKS_BY_CODPROMEMORIA, codPromemoria, connection, doCommit);
 	}
 	
-	public ArrayList listByCodPromemoria(String classType, Integer codPromemoria){
-		return (ArrayList)super.getObjectsByIntFieldValue(classType, GET_PROMEMORIALINKS_BY_CODPROMEMORIA, codPromemoria);
+	public <T> ArrayList<T> listByCodPromemoria(String classType, Integer codPromemoria){
+		return super.getObjectsByIntFieldValue(classType, GET_PROMEMORIALINKS_BY_CODPROMEMORIA, codPromemoria);
 	}
 
 }

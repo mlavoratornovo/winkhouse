@@ -24,7 +24,7 @@ public class ReportMarkersDAO extends BaseDAO {
 	public ReportMarkersDAO() {
 	}
 
-	public ArrayList getMarkersByReport(Integer codReport){
+	public <T> ArrayList<T> getMarkersByReport(Integer codReport){
 		return getObjectsByIntFieldValue(ReportMarkersModel.class.getName(), REPORTMARKERS_BY_CODREPORT, codReport);
 	}
 	

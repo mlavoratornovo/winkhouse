@@ -27,15 +27,15 @@ public class PromemoriaDAO extends BaseDAO {
 		
 	}
 
-	public ArrayList getPromemoriaByAgente(String className, Integer codAgente){
+	public <T> ArrayList<T> getPromemoriaByAgente(String className, Integer codAgente){
 		return super.getObjectsByIntFieldValue(className, LIST_PROMEMORIA_BY_AGENTE, codAgente);
 	}
 
-	public ArrayList getAllPromemoria(String className){
+	public <T> ArrayList<T> getAllPromemoria(String className){
 		return super.list(className, LIST_PROMEMORIA);
 	}
 	
-	public ArrayList getAllPromemoriaAgenteIsNull(String className){
+	public <T> ArrayList<T> getAllPromemoriaAgenteIsNull(String className){
 		return super.list(className, LIST_PROMEMORIA_AGENTE_IS_NULL);
 	}
 	

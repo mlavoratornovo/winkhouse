@@ -30,15 +30,15 @@ public class ContattiDAO extends BaseDAO{
 	public ContattiDAO() {
 	}
 	
-	public ArrayList listByAnagrafica(String classType, Integer codAnagrafica){
+	public <T> ArrayList<T> listByAnagrafica(String classType, Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, LISTA_CONTATTI_ANAGRAFICA, codAnagrafica);
 	}
 
-	public ArrayList listByTipologia(String classType, Integer codTipologiaContatti){
+	public <T> ArrayList<T> listByTipologia(String classType, Integer codTipologiaContatti){
 		return super.getObjectsByIntFieldValue(classType, LISTA_CONTATTI_TIPOLOGIA, codTipologiaContatti);
 	}
 	
-	public ArrayList listByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> listByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LISTA_CONTATTI_AGENTE, codAgente);
 	}
 	
@@ -62,7 +62,7 @@ public class ContattiDAO extends BaseDAO{
 		return super.updateByIdWhereId(UPDATE_CONTATTI_TIPOLOGIA, codTipologiaContattiNew, codTipologiaContattiOld, con, doCommit);
 	}	
 
-	public ArrayList getContattoByContatto(String classType, String contatto){
+	public <T> ArrayList<T> getContattoByContatto(String classType, String contatto){
 		return super.getObjectsByStringFieldValue(classType, LISTA_CONTATTI_CONTATTO, contatto);
 	}
 	

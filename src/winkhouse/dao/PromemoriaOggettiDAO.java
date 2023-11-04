@@ -132,7 +132,7 @@ public class PromemoriaOggettiDAO extends BaseDAO {
 		return super.deleteObjectById(DELETE_PROMEMORIAOGGETTI_BY_CODPROMEMORIA, codPromemoria, connection, doCommit);
 	}
 	
-	public ArrayList listByCodPromemoria(String classType, Integer codPromemoria){
-		return (ArrayList)super.getObjectsByIntFieldValue(classType, GET_PROMEMORIAOGGETTI_BY_CODPROMEMORIA, codPromemoria);
+	public <T> ArrayList<T> listByCodPromemoria(String classType, Integer codPromemoria){
+		return super.getObjectsByIntFieldValue(classType, GET_PROMEMORIAOGGETTI_BY_CODPROMEMORIA, codPromemoria);
 	}
 }

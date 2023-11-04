@@ -24,7 +24,7 @@ public class TipiAppuntamentiDAO extends BaseDAO {
 
 	}
 	
-	public ArrayList listTipiAppuntamenti(String className){
+	public <T> ArrayList<T> listTipiAppuntamenti(String className){
 		return super.list(className, LISTA_TIPI_APPUNTAMENTI);
 	};
 	
@@ -32,7 +32,7 @@ public class TipiAppuntamentiDAO extends BaseDAO {
 		return super.getObjectById(className, TIPI_APPUNTAMENTI_BY_ID, codTipiAppuntamenti);
 	}
 	
-	public ArrayList getTipiAppuntamentiByName(String className,String name){
+	public <T> ArrayList<T> getTipiAppuntamentiByName(String className,String name){
 		return super.getObjectsByStringFieldValue(className, TIPI_APPUNTAMENTI_BY_NAME, name);
 	}
 	

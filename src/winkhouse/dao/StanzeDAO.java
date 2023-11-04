@@ -28,23 +28,24 @@ public class StanzeDAO extends BaseDAO {
 	public StanzeDAO() {
 	}
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_STANZE);
 	}
 
-	public ArrayList listByImmobile(String classType, 
+	public <T> ArrayList<T> listByImmobile(String classType, 
 			 						Integer codImmobile){
 		return super.getObjectsByIntFieldValue(classType, LISTA_STANZE_BY_IMMOBILE, codImmobile);
 	}
 	
-	public ArrayList listByTipologia(String classType, 
+	public <T> ArrayList<T> listByTipologia(String classType, 
 									 Integer codTipologiaStanze){
 		return super.getObjectsByIntFieldValue(classType, LISTA_STANZE_BY_TIPOLOGIA, codTipologiaStanze);
 }		
 
-	public ArrayList listByImmobileTipologia(String classType,Integer codImmobile, Integer codTipologia){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listByImmobileTipologia(String classType,Integer codImmobile, Integer codTipologia){
 		
-		ArrayList returnValue = new ArrayList();		
+		ArrayList<T> returnValue = new ArrayList<T>();		
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -56,7 +57,7 @@ public class StanzeDAO extends BaseDAO {
 			ps.setInt(2, codTipologia);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();

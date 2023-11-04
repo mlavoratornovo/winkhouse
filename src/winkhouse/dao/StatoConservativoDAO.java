@@ -29,7 +29,7 @@ public class StatoConservativoDAO extends BaseDAO{
 
 	}
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_STATOCONSERVATIVO);
 	}	
 
@@ -67,11 +67,6 @@ public class StatoConservativoDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
@@ -126,7 +121,7 @@ public class StatoConservativoDAO extends BaseDAO{
 	}
 
 	
-	public ArrayList listByAffitti(String classType){
+	public <T> ArrayList<T> listByAffitti(String classType){
 		return super.list(classType, GET_STATOCONSERVATIVO_AFFITTI);
 	}	
 	
@@ -260,7 +255,7 @@ public class StatoConservativoDAO extends BaseDAO{
 		return super.getObjectById(classType, STATOCONSERVATIVO_BY_ID, codStatoConservativo);
 	}	
 
-	public ArrayList getStatoConservativoByDescrizione(String classType, String descrizione){
+	public <T> ArrayList<T> getStatoConservativoByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, STATOCONSERVATIVO_BY_NAME, descrizione);
 	}	
 

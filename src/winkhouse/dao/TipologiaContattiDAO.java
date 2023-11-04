@@ -25,7 +25,7 @@ public class TipologiaContattiDAO extends BaseDAO{
 
 	}
 
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_TIPOLOGIECONTATTI);
 	}
 	
@@ -33,7 +33,7 @@ public class TipologiaContattiDAO extends BaseDAO{
 		return super.getObjectById(classType, TIPOLOGIECONTATTI_BY_ID, codTipologiaContatto);
 	}
 	
-	public ArrayList getTipologiaContattoByDescrizione(String classType, String descrizione){
+	public <T> ArrayList<T> getTipologiaContattoByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, TIPOLOGIECONTATTI_BY_NAME, descrizione);
 	}
 	

@@ -29,7 +29,7 @@ public class PermessiDAO extends BaseDAO {
 
 	}
 	
-	public ArrayList getPermessiByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSI_BY_AGENTE, codAgente);
 	}
 	
@@ -132,15 +132,15 @@ public class PermessiDAO extends BaseDAO {
 		return returnValue;
 	}
 	
-	public ArrayList getPermessiImmobiliByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiImmobiliByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIIMMOBILI_BY_AGENTE, codAgente);
 	}
 	
-	public ArrayList getPermessiAnagraficheByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiAnagraficheByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIANAGRAFICHE_BY_AGENTE, codAgente);
 	}
 
-	public ArrayList getPermessiAffittiByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiAffittiByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIAFFITTI_BY_AGENTE, codAgente);
 	}
 

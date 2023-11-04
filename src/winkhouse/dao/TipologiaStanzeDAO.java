@@ -25,7 +25,7 @@ public class TipologiaStanzeDAO extends BaseDAO{
 
 	}
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_TIPOLOGIESTANZE);
 	}
 	
@@ -33,7 +33,7 @@ public class TipologiaStanzeDAO extends BaseDAO{
 		return super.getObjectById(classType, TIPOLOGIESTANZE_BY_ID, codTipologiaStanza);
 	}
 	
-	public ArrayList getTipologiaStanzaByDescrizione(String classType, String descrizione){
+	public <T> ArrayList<T> getTipologiaStanzaByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, TIPOLOGIESTANZE_BY_NAME, descrizione);
 	}
 	

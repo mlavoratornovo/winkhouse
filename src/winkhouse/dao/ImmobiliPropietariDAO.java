@@ -242,7 +242,7 @@ public class ImmobiliPropietariDAO extends BaseDAO {
 		return returnValue;
 	}
 
-	public ArrayList getImmobiliPropietariByCodImmobile(Integer codImmobile){
+	public <T> ArrayList<T> getImmobiliPropietariByCodImmobile(Integer codImmobile){
 		return super.getObjectsByIntFieldValue(ImmobiliPropietariVO.class.getName(), LIST_IMMOBILIPROPIETARI_BY_CODIMMOBILE, codImmobile);
 	}
 

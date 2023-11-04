@@ -38,7 +38,7 @@ public class DatiCatastaliDAO extends BaseDAO {
 		return super.getObjectById(classType, FIND_DATI_CATASTALI_BY_ID, idDatoCatastale);
 	}	
 	
-	public ArrayList findADatiCatastaliByCodImmobile(String classType, Integer codImmobile){
+	public <T> ArrayList<T> findADatiCatastaliByCodImmobile(String classType, Integer codImmobile){
 		return super.getObjectsByIntFieldValue(classType, 
 											   FIND_DATI_CATASTALI_BY_CODIMMOBILE, 
 											   codImmobile);

@@ -28,19 +28,19 @@ public class PermessiUIDAO extends BaseDAO {
 
 	public PermessiUIDAO() {}	
 	
-	public ArrayList getPermessiByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_BY_AGENTE, codAgente);
 	}
 
-	public ArrayList getPermessiPerspectiveByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiPerspectiveByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_PERSPECTIVE_BY_AGENTE, codAgente);
 	}
 
-	public ArrayList getPermessiViewByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiViewByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_VIEW_BY_AGENTE, codAgente);
 	}
 
-	public ArrayList getPermessiDialogByAgente(String classType, Integer codAgente){
+	public <T> ArrayList<T> getPermessiDialogByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_DIALOG_BY_AGENTE, codAgente);
 	}
 

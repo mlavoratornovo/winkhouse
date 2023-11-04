@@ -29,7 +29,7 @@ public class TipologieImmobiliDAO extends BaseDAO{
 
 	}
 
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		
 		return super.list(classType, LISTA_TIPOLOGIEIMMOBILI);
 		
@@ -81,13 +81,13 @@ public class TipologieImmobiliDAO extends BaseDAO{
 
 	}
 
-    public ArrayList listByAffitti(String classType){
+    public <T> ArrayList<T> listByAffitti(String classType){
 		
 		return super.list(classType, GET_TIPOLOGIEIMMOBILI_AFFITTI);
 		
 	}
 
-    public ArrayList listByAffittiComune(String comune){
+    public ArrayList<TipologieImmobiliModel> listByAffittiComune(String comune){
 		
 		ArrayList<TipologieImmobiliModel> returnValue = new ArrayList<TipologieImmobiliModel>();
 		ResultSet rs = null;
@@ -263,7 +263,7 @@ public class TipologieImmobiliDAO extends BaseDAO{
 		return super.getObjectById(classType, TIPOLOGIEIMMOBILI_BY_ID, codTipologiaImmobile);
 	}	
 
-	public ArrayList getTipologieImmobiliByDescrizione(String classType, String descrizione){
+	public <T> ArrayList<T> getTipologieImmobiliByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, TIPOLOGIEIMMOBILI_BY_NAME, descrizione);
 	}	
 

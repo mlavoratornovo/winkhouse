@@ -32,9 +32,9 @@ public class EntityDAO extends BaseDAO {
 		
 	}
 
-	public EntityModel getEntityByClassName(String className){
+	public <T> EntityModel getEntityByClassName(String className){
 		
-		ArrayList al = super.getObjectsByStringFieldValue(EntityModel.class.getName(),
+		ArrayList<T> al = super.getObjectsByStringFieldValue(EntityModel.class.getName(),
 													  FIND_ENTITY_BY_CLASSNAME,
 													  className);
 		if (al.size() > 0){

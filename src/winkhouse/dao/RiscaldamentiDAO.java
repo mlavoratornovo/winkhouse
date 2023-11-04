@@ -29,7 +29,7 @@ public class RiscaldamentiDAO extends BaseDAO{
 		
 	}
 	
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_RISCALDAMENTI);
 	}
 
@@ -125,7 +125,7 @@ public class RiscaldamentiDAO extends BaseDAO{
 
 	}
 	
-	public ArrayList listByAffitti(String classType){
+	public <T> ArrayList<T> listByAffitti(String classType){
 		return super.list(classType, GET_RISCALDAMENTI_AFFITTI);
 	}
 
@@ -260,7 +260,7 @@ public class RiscaldamentiDAO extends BaseDAO{
 		return super.getObjectById(classType, RISCALDAMENTI_BY_ID, codRiscaldamento);
 	}	
 
-	public ArrayList getRiscaldamentoByDescrizione(String classType, String descrizione){
+	public <T> ArrayList<T> getRiscaldamentoByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, RISCALDAMENTI_BY_NAME, descrizione);
 	}	
 

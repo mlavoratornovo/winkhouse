@@ -27,11 +27,11 @@ public class ReportDAO extends BaseDAO {
 	public ReportDAO() {
 	}
 	
-	public ArrayList getReportByTipologia(String classType, String tipologia){
+	public <T> ArrayList<T> getReportByTipologia(String classType, String tipologia){
 		return super.getObjectsByStringFieldValue(classType, REPORT_BY_TIPOLOGIA,tipologia);
 	}
 
-	public ArrayList getReportListByTipologia(String classType, String tipologia){
+	public <T> ArrayList<T> getReportListByTipologia(String classType, String tipologia){
 		return super.getObjectsByStringFieldValue(classType, REPORT_LISTA_BY_TIPOLOGIA,tipologia);
 	}
 

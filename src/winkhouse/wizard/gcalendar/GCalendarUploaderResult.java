@@ -3,7 +3,6 @@ package winkhouse.wizard.gcalendar;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,8 +48,7 @@ import com.google.gdata.data.calendar.CalendarEventEntry;
 
 public class GCalendarUploaderResult extends WizardPage {
 
-	private TableViewer tvRisultatiUPDAppuntamenti = null;
-	private SimpleDateFormat formatterDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private TableViewer tvRisultatiUPDAppuntamenti = null;	
 	private Button startButton = null;
 	private ArrayList<AppuntamentiResult> appuntamentiResult = null;
 	private ArrayList<ColloquiResult> colloquiResult = null;
@@ -61,6 +59,7 @@ public class GCalendarUploaderResult extends WizardPage {
 
 	public class AppuntamentiResult extends AppuntamentiModel{
 		
+		private static final long serialVersionUID = 1L;
 		private ContattiModel cm = null;
 		
 		public AppuntamentiResult(AppuntamentiModel m){			
@@ -79,6 +78,7 @@ public class GCalendarUploaderResult extends WizardPage {
 	
 	public class ColloquiResult extends ColloquiModel{
 		
+		private static final long serialVersionUID = 1L;
 		private ContattiModel cm = null;
 		
 		public ColloquiResult(ColloquiModel m){			
@@ -192,8 +192,9 @@ public class GCalendarUploaderResult extends WizardPage {
 					
 					if (((GCalendarSyncWizard)getWizard()).getGcalsyncVO().getOperarationType() == GCalendarSyncWizard.GCalSyncVO.UPLOAD_APPUNTAMENTI_MODEL){
 						
-						ArrayList<GoogleCalendarSyncEngine.ItemUpload> aliu = new ArrayList(((GCalendarSyncWizard)getWizard()).getGcalsyncVO()
-							    																						  	  .getHm_item_upload().values());
+						ArrayList<GoogleCalendarSyncEngine.ItemUpload> aliu = new ArrayList<GoogleCalendarSyncEngine.ItemUpload>(((GCalendarSyncWizard)getWizard())
+								.getGcalsyncVO()
+							    .getHm_item_upload().values());
 						
 						Iterator<GoogleCalendarSyncEngine.ItemUpload> it = aliu.iterator();
 						
@@ -235,7 +236,7 @@ public class GCalendarUploaderResult extends WizardPage {
 						tvRisultatiUPDAppuntamenti.setInput(aliu);
 
 					}else{
-						ArrayList<GoogleCalendarSyncEngine.ItemDownload> aliu = new ArrayList(((GCalendarSyncWizard)getWizard()).getGcalsyncVO()
+						ArrayList<GoogleCalendarSyncEngine.ItemDownload> aliu = new ArrayList<GoogleCalendarSyncEngine.ItemDownload>(((GCalendarSyncWizard)getWizard()).getGcalsyncVO()
 							  	  																								.getAl_item_download().values());
 
 						Iterator<GoogleCalendarSyncEngine.ItemDownload> it = aliu.iterator();
@@ -245,7 +246,7 @@ public class GCalendarUploaderResult extends WizardPage {
 							GoogleCalendarSyncEngine.ItemDownload id = it.next();
 							try{
 								
-								ArrayList<AppuntamentiModel> al_am = (ArrayList<AppuntamentiModel>)appDAO.getAppuntamentoByICalID(AppuntamentiModel.class.getName(), id.getEvento().getId());
+								ArrayList<AppuntamentiModel> al_am = appDAO.getAppuntamentoByICalID(AppuntamentiModel.class.getName(), id.getEvento().getId());
 								
 								if (al_am.size() > 0){
 									
@@ -265,7 +266,7 @@ public class GCalendarUploaderResult extends WizardPage {
 									
 								}else{
 									
-									ArrayList<ColloquiModel> al_cm = (ArrayList<ColloquiModel>)cDAO.getColloquiByICalId(ColloquiModel.class.getName(), id.getEvento().getId());
+									ArrayList<ColloquiModel> al_cm = cDAO.getColloquiByICalId(ColloquiModel.class.getName(), id.getEvento().getId());
 									
 									if (al_cm.size() > 0){
 										
@@ -371,6 +372,7 @@ public class GCalendarUploaderResult extends WizardPage {
 					Object newInput) {
 			}
 
+			@SuppressWarnings("rawtypes")
 			@Override
 			public Object[] getElements(Object inputElement) {
 				if (inputElement instanceof ArrayList){

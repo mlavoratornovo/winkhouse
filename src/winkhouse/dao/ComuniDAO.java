@@ -18,43 +18,43 @@ public class ComuniDAO extends BaseDAO {
  	public ComuniDAO() {
 	}
 
- 	public ArrayList getComuniStartWith(String comune){
+ 	public <T> ArrayList<T> getComuniStartWith(String comune){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_LIKE, comune+"%");
  	}
  	
- 	public ArrayList getComuniEndWith(String comune){
+ 	public <T> ArrayList<T> getComuniEndWith(String comune){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_LIKE, "%"+comune);
  	}
 
- 	public ArrayList getComuniBetWeenWith(String comune){
+ 	public <T> ArrayList<T> getComuniBetWeenWith(String comune){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_LIKE, "%"+comune+"%");
  	}
  	
- 	public ArrayList getComuniMatchWith(String comune){
+ 	public <T> ArrayList<T> getComuniMatchWith(String comune){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_MATCH, comune);
  	}
  	
- 	public Object getComuniByCodComune(Integer codComune){
- 		return super.getObjectById(ComuniVO.class.getName(), GET_COMUNE_BY_CODCOMUNE, codComune);
+ 	public ComuniVO getComuniByCodComune(Integer codComune){
+ 		return (ComuniVO) super.getObjectById(ComuniVO.class.getName(), GET_COMUNE_BY_CODCOMUNE, codComune);
  	}
  	
- 	public ArrayList getProvincieAnagrafiche(){
+ 	public <T> ArrayList<T> getProvincieAnagrafiche(){
  		return super.list(ComuniVO.class.getName(), GET_PROVINCIE_BY_ANAGRAFICHE);
  	}
  	
- 	public ArrayList getComuniByProvincia(String provincia){
+ 	public <T> ArrayList<T> getComuniByProvincia(String provincia){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), GET_COMUNI_BY_PROVINCIA, provincia);
  	}
 
- 	public ArrayList getProvincieImmobili(){
+ 	public <T> ArrayList<T> getProvincieImmobili(){
  		return super.list(ComuniVO.class.getName(), GET_PROVINCIE_BY_IMMOBILI);
  	}
 
- 	public ArrayList getComuniByProvinciaImmobili(String provincia){
+ 	public <T> ArrayList<T> getComuniByProvinciaImmobili(String provincia){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), GET_COMUNI_BY_PROVINCIA_IMMOBILI,provincia);
  	}
 
- 	public ArrayList getComuniByProvinciaAnagrafiche(String provincia){
+ 	public <T> ArrayList<T> getComuniByProvinciaAnagrafiche(String provincia){
  		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), GET_COMUNI_BY_PROVINCIA_ANAGRAFICHE,provincia);
  	}
 

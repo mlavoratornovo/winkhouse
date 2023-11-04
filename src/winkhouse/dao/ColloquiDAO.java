@@ -52,29 +52,30 @@ public class ColloquiDAO extends BaseDAO{
 
 	}
 
-	public ArrayList list(String classType){
+	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_COLLOQUI);
 	}
 
-	public ArrayList listYearsByDataInserimento(String classType){
+	public <T> ArrayList<T> listYearsByDataInserimento(String classType){
 		return super.list(classType, COLLOQUI_YEARS_DATAINSERIMENTO);
 	}
 
-	public ArrayList listYearsByDataColloquio(String classType){
+	public <T> ArrayList<T> listYearsByDataColloquio(String classType){
 		return super.list(classType, COLLOQUI_YEARS_DATACOLLOQUIO);
 	}
 
-	public ArrayList listMonthsByYearDataInserimento(String classType, Integer year){
+	public <T> ArrayList<T> listMonthsByYearDataInserimento(String classType, Integer year){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_MONTHS_DATAINSERIMENTO_BY_YEAR, year);
 	}
 
-	public ArrayList listMonthsByYearDataColloquio(String classType, Integer year){
+	public <T> ArrayList<T> listMonthsByYearDataColloquio(String classType, Integer year){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_MONTHS_DATACOLLOQUIO_BY_YEAR, year);
 	}
 
-	public ArrayList listColloquiDataInserimentoBy(String classType, Integer year, Integer month){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiDataInserimentoBy(String classType, Integer year, Integer month){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -86,7 +87,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setInt(2, month);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -101,20 +102,15 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
-			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList listColloquiDataColloquioBy(String classType, Integer year, Integer month){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiDataColloquioBy(String classType, Integer year, Integer month){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -126,7 +122,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setInt(2, month);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -141,11 +137,6 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
@@ -376,53 +367,54 @@ public class ColloquiDAO extends BaseDAO{
 		return super.getObjectById(classType, COLLOQUI_BY_ID, codColloquio);
 	}	
 	
-	public ArrayList getColloquiByImmobile(String classType,Integer codClasse){
+	public <T> ArrayList<T> getColloquiByImmobile(String classType,Integer codClasse){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_IMMOBILE, codClasse);
 	}
 
-	public ArrayList getColloquiByAgenteInseritore(String classType,Integer codAgenteInseritore){
+	public <T> ArrayList<T> getColloquiByAgenteInseritore(String classType,Integer codAgenteInseritore){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_AGENTEINSERITORE, codAgenteInseritore);
 	}
 	
-	public ArrayList getColloquiWithoutAgenteInseritore(String classType){
+	public <T> ArrayList<T> getColloquiWithoutAgenteInseritore(String classType){
 		return super.list(classType, COLLOQUI_SENZA_INSERITORE);
 	}
 
-	public ArrayList getColloquiByAnagrafica(String classType,Integer codAnagrafica){
+	public <T> ArrayList<T> getColloquiByAnagrafica(String classType,Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA, codAnagrafica);
 	}
 
-	public ArrayList getColloquiByAnagraficaAllTypes(String classType,Integer codAnagrafica){
+	public <T> ArrayList<T> getColloquiByAnagraficaAllTypes(String classType,Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_ALLTYPES, codAnagrafica);
 	}
 
-	public ArrayList getColloquiByAnagraficaRicerca(String classType,Integer codAnagrafica){
+	public <T> ArrayList<T> getColloquiByAnagraficaRicerca(String classType,Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_RICERCA, codAnagrafica);
 	}
 	
-	public ArrayList getColloquiByTipologia(String classType,Integer codTipologia){
+	public <T> ArrayList<T> getColloquiByTipologia(String classType,Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_TYPE, codTipologia);
 	}
 
-	public ArrayList getColloquiByTipologiaImmobile(String classType,Integer codTipologiaImmobile){
+	public <T> ArrayList<T> getColloquiByTipologiaImmobile(String classType,Integer codTipologiaImmobile){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_TIPOLOGIEIMMOBILE, codTipologiaImmobile);
 	}
 
-	public ArrayList getColloquiByAgentePartecipante(String classType,Integer codAgente){
+	public <T> ArrayList<T> getColloquiByAgentePartecipante(String classType,Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_AGENTE_PARTECIPANTE, codAgente);
 	}
 
-	public ArrayList getColloquiWithoutAgentePartecipante(String classType){
+	public <T> ArrayList<T> getColloquiWithoutAgentePartecipante(String classType){
 		return super.list(classType, COLLOQUI_SENZA_PARTECIPANTI);
 	}
 
-	public ArrayList getColloquiByClasseCliente(String classType,Integer codClasseCliente){
+	public <T> ArrayList<T> getColloquiByClasseCliente(String classType,Integer codClasseCliente){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_CLASSECLIENTE, codClasseCliente);
 	}
 
-	public ArrayList listColloquiByAgenteDaA(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiByAgenteDaA(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -435,7 +427,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setTimestamp(3, new Timestamp(dataA.getTime()));
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -450,20 +442,16 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList listColloquiByAgenteDaAInNotScadenziere(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiByAgenteDaAInNotScadenziere(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -476,7 +464,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setTimestamp(3, new Timestamp(dataA.getTime()));
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -491,20 +479,16 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList listColloquiByAnagraficheDaAInNotScadenziere(String classType, Integer codAnagrafica, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiByAnagraficheDaAInNotScadenziere(String classType, Integer codAnagrafica, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -517,7 +501,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setTimestamp(3, new Timestamp(dataA.getTime()));
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -532,20 +516,16 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList listColloquiByAgenteDaA_ICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiByAgenteDaA_ICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -559,7 +539,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setInt(4, codAgente);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -574,20 +554,16 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList listColloquiByAgenteDaA_Not_ICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiByAgenteDaA_Not_ICALL_Null(String classType, Integer codAgente, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -601,7 +577,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setInt(4, codAgente);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -616,20 +592,16 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}	
 	
-	public ArrayList listColloquiByDaA(String classType, Date dataDA, Date dataA){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> listColloquiByDaA(String classType, Date dataDA, Date dataA){
 		
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -641,7 +613,7 @@ public class ColloquiDAO extends BaseDAO{
 			ps.setTimestamp(2, new Timestamp(dataA.getTime()));
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -656,20 +628,16 @@ public class ColloquiDAO extends BaseDAO{
 			} catch (SQLException e) {
 				ps = null;
 			}
-	/*		try {
-				con.close();
-			} catch (SQLException e) {
-				con = null;
-			}*/
 			
 		}		
 		
 		return returnValue;
 	}
 
-	public ArrayList getColloquiByProperties(String classType, ColloquiVO colloquio){
+	@SuppressWarnings("unchecked")
+	public <T> ArrayList<T> getColloquiByProperties(String classType, ColloquiVO colloquio){
 	
-		ArrayList returnValue = new ArrayList();
+		ArrayList<T> returnValue = new ArrayList<T>();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -688,7 +656,7 @@ public class ColloquiDAO extends BaseDAO{
 			
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				returnValue.add(getRowObject(classType, rs));
+				returnValue.add((T)getRowObject(classType, rs));
 			}
 		}catch(SQLException sql){
 			sql.printStackTrace();
@@ -710,7 +678,7 @@ public class ColloquiDAO extends BaseDAO{
 		
 	}
 
-	public ArrayList getColloquiByICalId(String classType, String icalid){
+	public <T> ArrayList<T> getColloquiByICalId(String classType, String icalid){
 		return super.getObjectsByStringFieldValue(classType, COLLOQUI_BY_ICALID, icalid);		
 	}
 

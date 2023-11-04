@@ -28,7 +28,7 @@ public class RicercheDAO extends BaseDAO {
 		return super.getObjectById(classType, RICERCHE_BY_ID, codRicerca);
 	}
 
-	public ArrayList getRichercheByTipo(String classType, Integer codTipo){
+	public <T> ArrayList<T> getRichercheByTipo(String classType, Integer codTipo){
 		return super.getObjectsByIntFieldValue(classType, RICERCHE_BY_TIPO, codTipo);
 	}
 	

@@ -63,7 +63,7 @@ public class ImmaginiDAO extends BaseDAO{
 			
 		}		
 		
-		return (returnValue == null)?new Integer(0):returnValue;
+		return (returnValue == null)?0:returnValue;
 		
 	}
 
@@ -79,7 +79,7 @@ public class ImmaginiDAO extends BaseDAO{
 		return super.getObjectById(classType, IMMAGINI_BY_ID, codImmagine);
 	}	
 	
-	public ArrayList getImmaginiByImmobile(String classType,Integer codImmobile){
+	public <T> ArrayList<T> getImmaginiByImmobile(String classType,Integer codImmobile){
 		return super.getObjectsByIntFieldValue(classType, IMMAGINI_BY_IMMOBILE, codImmobile);
 	}
 	
