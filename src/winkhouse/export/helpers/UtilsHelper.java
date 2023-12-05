@@ -88,7 +88,7 @@ public class UtilsHelper {
 	}
 	
 	public ArrayList<ClassiClientiVO> getClassiClienti() {
-		return MobiliaDatiBaseCache.getInstance().getClassiClienti();
+		return new ArrayList<ClassiClientiVO>(); //MobiliaDatiBaseCache.getInstance().getClassiClienti();
 	}
 	
 	/**
@@ -376,7 +376,7 @@ public class UtilsHelper {
 		ArrayList<ClassiClientiVO> returnValue = new ArrayList<ClassiClientiVO>();
 		
 		ClassiClientiDAO clDAO = new ClassiClientiDAO();
-		returnValue = clDAO.list(ClassiClientiVO.class.getName());
+		returnValue = new ArrayList<ClassiClientiVO>();//clDAO.list(ClassiClientiVO.class.getName());
 		
 		return returnValue;
 	}	

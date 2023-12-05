@@ -39,6 +39,7 @@ import winkhouse.action.anagrafiche.SalvaAnagrafica;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.action.stampa.StampaAnagraficheAction;
 import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Classicliente;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.affitti.ListaAffittiView;
@@ -523,7 +524,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public String getText(Object element) {				
-					return ((ClassiClientiVO)element).getDescrizione();
+					return ((Classicliente)element).getDescrizione();
 				}
 				
 			});
@@ -532,11 +533,12 @@ public class DettaglioAnagraficaView extends ViewPart {
 			
 			if ((anagrafica != null) && 
 				(anagrafica.getClasseCliente() != null)){
-				ArrayList<ClassiClientiVO> classi = MobiliaDatiBaseCache.getInstance().getClassiClienti();
-				//Collections.sort(classi,comparatorClassiCliente);
-				int index = Collections.binarySearch(classi, 
-													 anagrafica.getClasseCliente(), 
-													 comparatorClassiCliente);
+				ArrayList<Classicliente> classi = MobiliaDatiBaseCache.getInstance().getClassiClienti();
+
+//				int index = Collections.binarySearch(classi, 
+//													 anagrafica.getClasseCliente(), 
+//													 comparatorClassiCliente);
+				int index = -1;
 				if (index > -1){
 					Object[] sel = new Object[1];
 					sel[0] = MobiliaDatiBaseCache.getInstance().getClassiClienti().get(index);

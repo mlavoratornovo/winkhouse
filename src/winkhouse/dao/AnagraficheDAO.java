@@ -1,5 +1,6 @@
 package winkhouse.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +10,19 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.exp.Expression;
+import org.apache.cayenne.exp.ExpressionFactory;
+import org.apache.cayenne.query.ObjectSelect;
+import org.apache.cayenne.query.SelectQuery;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.db.orm.CayenneContextManager;
+import winkhouse.model.AnagraficheModel;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AnagraficheVO;
+
+import winkhouse.orm.Anagrafiche;
 
 
 public class AnagraficheDAO extends BaseDAO{
@@ -44,16 +55,24 @@ public class AnagraficheDAO extends BaseDAO{
 	}
 
 	public <T> ArrayList<T> list(String classType){
-		
-		if (WinkhouseUtils.getInstance()
-							.getTipoArchivio()){
-			return super.list(classType, LISTA_ANAGRAFICHE_STORICO);
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){
+			Expression exp = ExpressionFactory.matchExp("storico", true);
+			SelectQuery<Anagrafiche> query = new SelectQuery<Anagrafiche>(Anagrafiche.class, exp);
+			return new ArrayList<T>(context.performQuery(query));
 		}else{
-			return super.list(classType, LISTA_ANAGRAFICHE);
+			
+			return new ArrayList(ObjectSelect.query(Anagrafiche.class).select(context));			
 		}
 		
 	}
 
+	public boolean saveUpate(AnagraficheModel aM) {
+		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		
+		return true;
+	}
+	
 	public boolean saveUpdate(AnagraficheVO aVO, Connection connection, Boolean doCommit){
 		
 		boolean returnValue = false;
@@ -284,9 +303,25 @@ public class AnagraficheDAO extends BaseDAO{
 		return super.getObjectById(classType, ANAGRAFICHE_BY_ID, codAnagrafica);
 	}	
 	
+	public ArrayList<Anagrafiche> getAnagraficheByNullClasse(){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){
+			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+														  .where(Anagrafiche.CLASSICLIENTE.isNull())
+														  .and(Anagrafiche.STORICO.eq(true))
+														  .select(context));						
+		}else{
+			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+														  .where(Anagrafiche.CLASSICLIENTE.isNull())
+														  .and(Anagrafiche.STORICO.eq(false))
+														  .select(context));			
+		}
+		
+	}
+	
 	public <T> ArrayList<T> getAnagraficheByClasse(String classType,Integer codClasse){
-		if (WinkhouseUtils.getInstance()
-							.getTipoArchivio()){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 			if (codClasse != null){
 				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSE_STORICO, codClasse);
 			}else{

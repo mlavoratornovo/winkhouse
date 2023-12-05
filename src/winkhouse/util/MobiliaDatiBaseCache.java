@@ -14,6 +14,7 @@ import winkhouse.dao.TipiAppuntamentiDAO;
 import winkhouse.dao.TipologiaContattiDAO;
 import winkhouse.dao.TipologiaStanzeDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
+import winkhouse.orm.Classicliente;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.vo.ClassiClientiVO;
@@ -34,7 +35,7 @@ public class MobiliaDatiBaseCache {
 	private ArrayList<RiscaldamentiVO> riscaldamenti = null;
 	private ArrayList<AgentiVO> agenti = null;
 	
-	private ArrayList<ClassiClientiVO> classiClienti = null;
+	private ArrayList<Classicliente> classiClienti = null;
 	private ArrayList<TipologiaContattiVO> tipologieContatti = null;
 	private ArrayList<TipologieColloquiVO> tipologieColloqui = null;
 	private ArrayList<TipologiaStanzeVO> tipologieStanze = null;
@@ -273,15 +274,15 @@ public class MobiliaDatiBaseCache {
 		this.agenti = agenti;
 	}
 
-	public ArrayList<ClassiClientiVO> getClassiClienti() {
+	public ArrayList<Classicliente> getClassiClienti() {
 		if(classiClienti == null){
 			ClassiClientiDAO ccDAO = new ClassiClientiDAO();
-			classiClienti = ccDAO.list(ClassiClientiVO.class.getName());
+			classiClienti = ccDAO.list(null);
 		}
 		return classiClienti;
 	}
 
-	public void setClassiClienti(ArrayList<ClassiClientiVO> classiClienti) {
+	public void setClassiClienti(ArrayList<Classicliente> classiClienti) {
 		this.classiClienti = classiClienti;
 	}
 

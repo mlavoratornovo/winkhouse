@@ -7,8 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.model.ClassiClientiModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classicliente;
 import winkhouse.vo.ClassiClientiVO;
 
 
@@ -26,8 +32,9 @@ public class ClassiClientiDAO extends BaseDAO{
 	public final static String DELETE_CLASSICLIENTI = "DELETE_CLASSI_CLIENTI";
 	public final static String UPDATE_CLASSICLIENTI_AGENTEUPDATE = "UPDATE_CLASSICLIENTI_AGENTE_UPDATE";
 	
-	public <T> ArrayList<T> list(String classType){
-		return super.list(classType, LISTA_CLASSICLIENTI);
+	public ArrayList<Classicliente> list(String classType){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		return new ArrayList<Classicliente>(ObjectSelect.query(Classicliente.class).select(context));
 	}
 
 	public ArrayList<ClassiClientiModel> listByComune(String comune){

@@ -2,7 +2,11 @@ package winkhouse.view.anagrafica;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.access.types.ValueObjectTypeFactory;
+import org.apache.cayenne.query.ObjectSelect;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -34,14 +38,15 @@ import winkhouse.action.anagrafiche.RefreshAnagraficheAction;
 import winkhouse.dao.AnagraficheDAO;
 import winkhouse.dao.ClassiClientiDAO;
 import winkhouse.dao.ComuniDAO;
+import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ClassiClientiModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classicliente;
 import winkhouse.vo.AnagraficheVO;
 import winkhouse.vo.ClassiClientiVO;
 import winkhouse.vo.ComuniVO;
-
-
 
 public class AnagraficaTreeView extends ViewPart 
 								{
@@ -51,9 +56,9 @@ public class AnagraficaTreeView extends ViewPart
 	private ClassiClientiDAO classiDAO = new ClassiClientiDAO();
 	private ComuniDAO comuniDAO = new ComuniDAO();
 	public final static String ID = "winkhouse.anagrafichetreeview";
-	private Image anagraficaImg = Activator.getDefault().getImageDescriptor("icons/anagrafica.png").createImage();
-	private Image classeImg = Activator.getDefault().getImageDescriptor("icons/classianagrafiche.png").createImage();
-	private Image anagraficaImmobileImg = Activator.getDefault().getImageDescriptor("icons/anagraficaImmobile.png").createImage();
+	private Image anagraficaImg = Activator.getImageDescriptor("icons/anagrafica.png").createImage();
+	private Image classeImg = Activator.getImageDescriptor("icons/classianagrafiche.png").createImage();
+	private Image anagraficaImmobileImg = Activator.getImageDescriptor("icons/anagraficaImmobile.png").createImage();
 	private Image geoImg = Activator.getImageDescriptor("icons/cercacomune.png").createImage();
 	private boolean geogrouping = false; 
 	
@@ -170,14 +175,12 @@ public class AnagraficaTreeView extends ViewPart
 		@Override
 		public void run(IProgressMonitor monitor) throws InvocationTargetException, 
 														 InterruptedException {
-			if (parentElement instanceof ClassiClientiVO){
+			if (parentElement instanceof Classicliente){
 				alAnagrafiche = anagraficheDAO.getAnagraficheByClasse(AnagraficheModel.class.getName(),((ClassiClientiVO)parentElement).getCodClasseCliente()).toArray();
 			}else{
 				ArrayList alClassi = classiDAO.list(ClassiClientiVO.class.getName()); 
-				alClassi.addAll(anagraficheDAO.getAnagraficheByClasse(AnagraficheModel.class.getName(),0));
 				alAnagrafiche = alClassi.toArray();
 			}
-
 			
 		}
 		
@@ -235,14 +238,11 @@ public class AnagraficaTreeView extends ViewPart
 				return comuniDAO.getProvincieAnagrafiche().toArray();
 			}else{
 		
-				if (parentElement instanceof ClassiClientiVO){
-					ArrayList anagrafiche = anagraficheDAO.getAnagraficheByClasse(AnagraficheModel.class.getName(),((ClassiClientiVO)parentElement).getCodClasseCliente());
-					anagrafiche = ProfilerHelper.getInstance().filterAnagrafiche(anagrafiche, false);
-					return anagrafiche.toArray();
+				if (parentElement instanceof Classicliente){
+					return ((Classicliente)parentElement).getAnagrafiches().toArray();
 				}else{
 						ArrayList alClassi = classiDAO.list(ClassiClientiVO.class.getName());
-						ArrayList anagrafiche = anagraficheDAO.getAnagraficheByClasse(AnagraficheModel.class.getName(),null);
-						anagrafiche = ProfilerHelper.getInstance().filterAnagrafiche(anagrafiche, false);
+						ArrayList anagrafiche = anagraficheDAO.getAnagraficheByNullClasse(); 
 						alClassi.addAll(anagrafiche);
 						return alClassi.toArray();
 					}
@@ -259,7 +259,7 @@ public class AnagraficaTreeView extends ViewPart
 		@Override
 		public boolean hasChildren(Object element) {	
 			
-			return (element instanceof ClassiClientiVO) || (element instanceof ComuniVO);
+			return (element instanceof Classicliente) && (((Classicliente)element).getAnagrafiches().size() > 0);
 		}
 
 	}
@@ -273,19 +273,19 @@ public class AnagraficaTreeView extends ViewPart
 						?((ComuniVO)obj).getProvincia()
 						:((ComuniVO)obj).getComune();
 			}
-			if (obj instanceof ClassiClientiVO){
-				returnValue = ((ClassiClientiVO)obj).getDescrizione();
+			if (obj instanceof Classicliente){
+				returnValue = ((Classicliente)obj).getDescrizione();
 			}
-			if (obj instanceof AnagraficheVO){
-				returnValue = ((AnagraficheVO)obj).getCodAnagrafica() + " - " +
-							  ((!((AnagraficheVO)obj).getRagioneSociale().equalsIgnoreCase(""))
-							   ? ((AnagraficheVO)obj).getRagioneSociale()
+			if (obj instanceof Anagrafiche){
+				returnValue = ""+((Anagrafiche)obj).getId() + " - " +
+							  ((!((Anagrafiche)obj).getRagsoc().equalsIgnoreCase(""))
+							   ? ((Anagrafiche)obj).getRagsoc()+" - "
+							   : "") +
+							  ((!((Anagrafiche)obj).getCognome().equalsIgnoreCase(""))
+							   ? ((Anagrafiche)obj).getCognome()
 							   : "") + " - " +
-							  ((!((AnagraficheVO)obj).getCognome().equalsIgnoreCase(""))
-							   ? ((AnagraficheVO)obj).getCognome()
-							   : "") + " - " +
-							  ((!((AnagraficheVO)obj).getNome().equalsIgnoreCase(""))
-							   ? ((AnagraficheVO)obj).getNome()
+							  ((!((Anagrafiche)obj).getNome().equalsIgnoreCase(""))
+							   ? ((Anagrafiche)obj).getNome()
 							   : "");
 							   
 			}			
@@ -296,10 +296,10 @@ public class AnagraficaTreeView extends ViewPart
 			if (obj instanceof ComuniVO){
 				return geoImg;
 			}
-			if (obj instanceof AnagraficheVO){
+			if (obj instanceof Anagrafiche){
 				if (
-					(((AnagraficheModel)obj).getImmobili() != null) &&
-					(((AnagraficheModel)obj).getImmobili().size() > 0)
+					(((Anagrafiche)obj).getImmobilis() != null) &&
+					(((Anagrafiche)obj).getImmobilis().size() > 0)
 				   ){
 					return anagraficaImmobileImg;
 				}else{

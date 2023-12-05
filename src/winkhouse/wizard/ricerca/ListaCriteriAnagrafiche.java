@@ -30,6 +30,7 @@ import winkhouse.engine.search.SearchEngineAnagrafiche;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Classicliente;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
@@ -439,12 +440,12 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 	public void fillClassiClienti(){						
 		desClassiClienti = new String[MobiliaDatiBaseCache.getInstance().getClassiClienti().size()];
 		codClassiClienti = new Integer[MobiliaDatiBaseCache.getInstance().getClassiClienti().size()];
-		Iterator<ClassiClientiVO> it = MobiliaDatiBaseCache.getInstance().getClassiClienti().iterator();
+		Iterator<Classicliente> it = MobiliaDatiBaseCache.getInstance().getClassiClienti().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			ClassiClientiVO ccVO = it.next();
+			Classicliente ccVO = it.next();
 			desClassiClienti[count] = ccVO.getDescrizione();
-			codClassiClienti[count] = ccVO.getCodClasseCliente();
+			codClassiClienti[count] = ccVO.getId();
 			count++;
 		}		
 	}

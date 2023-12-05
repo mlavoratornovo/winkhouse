@@ -70,6 +70,7 @@ import winkhouse.helper.TipologiaStanzeHelper;
 import winkhouse.helper.TipologieImmobiliHelper;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Classicliente;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AgentiVO;
@@ -99,7 +100,7 @@ public class DatiBaseView extends ViewPart {
 //	private ArrayList<CauseColloquiVO> causecolloqui = null;
 	//--- causecolloqui
 	private TableViewer tvClassiClienti = null;
-	private ArrayList<ClassiClientiVO> classiclienti = null;
+	private ArrayList<Classicliente> classiclienti = null;
 	//--- statoconservativo
 	private TableViewer tvStatoConservativo = null;
 	private ArrayList<StatoConservativoVO> statoconservativo = null;
@@ -1513,7 +1514,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				ClassiClientiVO cVO = new ClassiClientiVO();
+				Classicliente cVO = new Classicliente();
 				cVO.setOrdine(1);
 				cVO.setDescrizione("Nuova categoria cliente");
 				classiclienti.add(cVO);
@@ -1579,7 +1580,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				classiclienti = new ArrayList<ClassiClientiVO>(new ClassiClientiDAO().list(ClassiClientiVO.class.getName()));
+				classiclienti = new ArrayList<Classicliente>(new ClassiClientiDAO().list(null));
 				tvClassiClienti.refresh();
 			}
 
@@ -1747,7 +1748,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (classiclienti == null){
-				classiclienti = new ArrayList<ClassiClientiVO>(new ClassiClientiDAO().list(ClassiClientiVO.class.getName()));				
+				classiclienti = new ArrayList<Classicliente>(new ClassiClientiDAO().list(null));				
 			}
 			returnValue = classiclienti.toArray();
 			return returnValue;

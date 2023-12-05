@@ -111,7 +111,8 @@ public class WinkCloudHelper {
 
 		classiClienti.clear();
 		ClassiClientiDAO ccDAO = new ClassiClientiDAO();
-		ArrayList<ClassiClientiXMLModel> al_cc = ccDAO.list(ClassiClientiXMLModel.class.getName());
+		// ArrayList<ClassiClientiXMLModel> al_cc = ccDAO.list(ClassiClientiXMLModel.class.getName());
+		ArrayList<ClassiClientiXMLModel> al_cc = new ArrayList<ClassiClientiXMLModel>();
 		for (ClassiClientiXMLModel classiClientiXMLModel : al_cc) {
 			classiClienti.put(classiClientiXMLModel.getCodClasseCliente(), classiClientiXMLModel);
 		}
