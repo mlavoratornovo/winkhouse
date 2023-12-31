@@ -49,6 +49,7 @@ import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.ImmobiliAffittiMethodName;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.RicercheVO;
@@ -1072,10 +1073,10 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 	public void fillDescrizioniAgenti(){						
 		desAgenti = new String[UtilsHelper.getInstance().getAgenti().size()];
 		codAgenti = new Integer[UtilsHelper.getInstance().getAgenti().size()];
-		Iterator<AgentiVO> it = UtilsHelper.getInstance().getAgenti().iterator();
+		Iterator<Agenti> it = UtilsHelper.getInstance().getAgenti().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			AgentiVO aVO = it.next();
+			Agenti aVO = it.next();
 			desAgenti[count] = aVO.getCognome() + " " + aVO.getNome();
 			codAgenti[count] = aVO.getCodAgente();
 			count++;

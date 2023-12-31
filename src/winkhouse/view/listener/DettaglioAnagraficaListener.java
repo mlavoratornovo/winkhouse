@@ -8,6 +8,7 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 import winkhouse.view.anagrafica.ImmobiliPropietaView;
@@ -71,7 +72,7 @@ public class DettaglioAnagraficaListener implements IPartListener {
 				  										  .findView(ImmobiliPropietaView.ID);
 				if (ivpImmobiliPropieta != null){
 					ImmobiliPropietaView av = (ImmobiliPropietaView)ivpImmobiliPropieta;
-					av.setAnagrafica(new AnagraficheModel());
+					av.setAnagrafica(new Anagrafiche());
 				}
 				
 				IViewPart ivpEAV = PlatformUI.getWorkbench()

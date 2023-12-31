@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AgentiVO;
 import winkhouse.wizard.ColloquiWizard;
@@ -63,17 +64,11 @@ public class DatiComuniColloquio extends WizardPage {
 
 	}
 	
-	private Comparator<AgentiVO> comparatorAgenti = new Comparator<AgentiVO>(){
+	private Comparator<Agenti> comparatorAgenti = new Comparator<Agenti>(){
 
 		@Override
-		public int compare(AgentiVO arg0,AgentiVO arg1) {
-			if (arg0.getCodAgente().intValue() == arg1.getCodAgente().intValue()){
-				return 0;
-			}else if (arg0.getCodAgente().intValue() > arg1.getCodAgente().intValue()){
-				return 1;
-			}else{
-				return -1;
-			}				
+		public int compare(Agenti arg0,Agenti arg1) {
+			return Integer.valueOf(arg0.getCodAgente()).compareTo(arg1.getCodAgente());
 		}
 		
 	};
@@ -288,7 +283,7 @@ public class DatiComuniColloquio extends WizardPage {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				((ColloquiWizard)getWizard()).getColloquio().setAgenteInseritore((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement());
+				((ColloquiWizard)getWizard()).getColloquio().setAgenteInseritore((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());
 				((ColloquiWizard)getWizard()).getContainer().updateButtons();
 			}
 			

@@ -31,6 +31,7 @@ import winkhouse.engine.search.SearchEngineColloqui;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
@@ -428,10 +429,10 @@ public class ListaCriteriColloqui extends WizardPage{
 	public void fillDescrizioniAgenti(){						
 		desAgenti = new String[MobiliaDatiBaseCache.getInstance().getAgenti().size()];
 		codAgenti = new Integer[MobiliaDatiBaseCache.getInstance().getAgenti().size()];
-		Iterator<AgentiVO> it = MobiliaDatiBaseCache.getInstance().getAgenti().iterator();
+		Iterator<Agenti> it = MobiliaDatiBaseCache.getInstance().getAgenti().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			AgentiVO aVO = it.next();
+			Agenti aVO = it.next();
 			desAgenti[count] = aVO.getCognome() + " " + aVO.getNome();
 			codAgenti[count] = aVO.getCodAgente();
 			count++;

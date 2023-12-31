@@ -22,6 +22,7 @@ import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.engine.search.AnagraficheSearchEngine;
 import winkhouse.engine.search.ImmobiliSearchEngine;
 import winkhouse.helper.ProfilerHelper;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Immobili;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.vo.AgentiVO;
@@ -43,7 +44,7 @@ import winkhouse.vo.TipologieImmobiliVO;
  */
 public class ImmobiliModel extends ImmobiliVO implements IEntityAttribute{
 
-	private AgentiVO agenteInseritore = null;
+	private Agenti agenteInseritore = null;
 	private AnagraficheModel anagrafica = null;
 	private RiscaldamentiVO riscaldamento = null;
 	private StatoConservativoVO statoConservativo = null;
@@ -113,20 +114,20 @@ public class ImmobiliModel extends ImmobiliVO implements IEntityAttribute{
 		this.getStanze();
 	}
 
-	public AgentiVO getAgenteInseritore() {
+	public Agenti getAgenteInseritore() {
 		if (agenteInseritore == null){			
 			if ((this.getCodAgenteInseritore() != null) && 
 				(this.getCodAgenteInseritore() != 0)){
 				AgentiDAO agentiDAO = new AgentiDAO();
 				Object o = agentiDAO.getAgenteById(AgentiVO.class.getName(), this.getCodAgenteInseritore());
-				agenteInseritore = (o != null)?(AgentiVO)o:null;
+				agenteInseritore = (o != null)?(Agenti)o:null;
 			}
 			
 		}
 		return agenteInseritore;
 	}
 
-	public void setAgenteInseritore(AgentiVO agenteInseritore) {
+	public void setAgenteInseritore(Agenti agenteInseritore) {
 		this.agenteInseritore = agenteInseritore;
 		if (agenteInseritore != null){
 			this.setCodAgenteInseritore(agenteInseritore.getCodAgente());

@@ -59,6 +59,7 @@ import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.PromemoriaModel;
 import winkhouse.model.PromemoriaOggettiModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AgentiVO;
@@ -82,21 +83,11 @@ public class PopUpDettaglioPromemoria {
 	private String regurl = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
 	private String regurlnohttp = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
 	
-	private Comparator<AgentiVO> comparatorAgenti = new Comparator<AgentiVO>(){
+	private Comparator<Agenti> comparatorAgenti = new Comparator<Agenti>(){
 
 		@Override
-		public int compare(AgentiVO arg0,AgentiVO arg1) {
-			if (arg0 != null && arg1 != null && arg0.getCodAgente() != null && arg1.getCodAgente()!= null){
-				if (arg0.getCodAgente().intValue() == arg1.getCodAgente().intValue()){
-					return 0;
-				}else if (arg0.getCodAgente().intValue() > arg1.getCodAgente().intValue()){
-					return 1;
-				}else{
-					return -1;
-				}
-			}else{
-				return 0;
-			}
+		public int compare(Agenti arg0,Agenti arg1) {
+			return Integer.valueOf(arg0.getCodAgente()).compareTo(arg1.getCodAgente());
 		}
 		
 	};
@@ -207,7 +198,7 @@ public class PopUpDettaglioPromemoria {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				promemoria.setAgente(((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement()));				
+				promemoria.setAgente(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 			}
 			
 		});

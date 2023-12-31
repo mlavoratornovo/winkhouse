@@ -26,13 +26,15 @@ import winkhouse.Activator;
 import winkhouse.action.immobili.ApriDettaglioImmobileAction;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 
 
 public class ImmobiliPropietaView extends ViewPart {
 
 	public final static String ID = "winkhouse.immobilipropietaview";
-	private TableViewer tvImmobiliPropieta = null;
-	private AnagraficheModel anagrafica = null;
+	private TableViewer tvImmobiliProprieta = null;
+	private Anagrafiche anagrafica = null;
 	
 	public ImmobiliPropietaView() {
 
@@ -54,11 +56,11 @@ public class ImmobiliPropietaView extends ViewPart {
 		gdFillHV.horizontalAlignment = SWT.FILL;
 				
 		Table t = new Table(f.getBody(),SWT.HORIZONTAL|SWT.VERTICAL|SWT.FULL_SELECTION);
-		tvImmobiliPropieta = new CheckboxTableViewer(t);
-		tvImmobiliPropieta.getTable().setLayoutData(gdFillHV);
-		tvImmobiliPropieta.getTable().setHeaderVisible(true);
-		tvImmobiliPropieta.getTable().setLinesVisible(true);
-		tvImmobiliPropieta.getTable().addMouseListener(new MouseListener() {
+		tvImmobiliProprieta = new CheckboxTableViewer(t);
+		tvImmobiliProprieta.getTable().setLayoutData(gdFillHV);
+		tvImmobiliProprieta.getTable().setHeaderVisible(true);
+		tvImmobiliProprieta.getTable().setLinesVisible(true);
+		tvImmobiliProprieta.getTable().addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -72,16 +74,16 @@ public class ImmobiliPropietaView extends ViewPart {
 			
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				ImmobiliModel im = (ImmobiliModel)((StructuredSelection)tvImmobiliPropieta.getSelection()).getFirstElement();
+				ImmobiliModel im = (ImmobiliModel)((StructuredSelection)tvImmobiliProprieta.getSelection()).getFirstElement();
 				ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(im, null);
 				adia.run();
 			}
 		});	
-		tvImmobiliPropieta.setContentProvider(new IStructuredContentProvider(){
+		tvImmobiliProprieta.setContentProvider(new IStructuredContentProvider(){
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return ((ArrayList)inputElement).toArray();
+				return ((ArrayList<Immobili>)inputElement).toArray();
 			}
 
 			@Override
@@ -94,7 +96,7 @@ public class ImmobiliPropietaView extends ViewPart {
 			}
 			
 		});
-		tvImmobiliPropieta.setLabelProvider(new ITableLabelProvider(){
+		tvImmobiliProprieta.setLabelProvider(new ITableLabelProvider(){
 
 			@Override
 			public Image getColumnImage(Object element, int columnIndex) {
@@ -106,12 +108,12 @@ public class ImmobiliPropietaView extends ViewPart {
 			public String getColumnText(Object element, int columnIndex) {
 				
 				switch(columnIndex){
-				case 0 : return ((ImmobiliModel)element).getCitta();
-				case 1 : return ((ImmobiliModel)element).getProvincia();
-				case 2 : return ((ImmobiliModel)element).getIndirizzo();
-				case 3 : return ((ImmobiliModel)element).getDescrizione();
-				case 4 : return String.valueOf(((ImmobiliModel)element).getPrezzo());
-				case 5 : return String.valueOf(((ImmobiliModel)element).getMq());
+				case 0 : return ((Immobili)element).getCitta();
+				case 1 : return ((Immobili)element).getProvincia();
+				case 2 : return ((Immobili)element).getIndirizzo();
+				case 3 : return ((Immobili)element).getDescrizione();
+				case 4 : return String.valueOf(((Immobili)element).getPrezzo());
+				case 5 : return String.valueOf(((Immobili)element).getMq());
 				default : return "";
 				}
 				
@@ -137,27 +139,27 @@ public class ImmobiliPropietaView extends ViewPart {
 		});
 		
 
-		TableColumn tcCitta = new TableColumn(tvImmobiliPropieta.getTable(),SWT.LEFT,0);
+		TableColumn tcCitta = new TableColumn(tvImmobiliProprieta.getTable(),SWT.LEFT,0);
 		tcCitta.setWidth(100);
 		tcCitta.setText("Citta");
 
-		TableColumn tcProvincia = new TableColumn(tvImmobiliPropieta.getTable(),SWT.CENTER,1);
+		TableColumn tcProvincia = new TableColumn(tvImmobiliProprieta.getTable(),SWT.CENTER,1);
 		tcProvincia.setWidth(100);
 		tcProvincia.setText("Provincia");
 		
-		TableColumn tcIndirizzo = new TableColumn(tvImmobiliPropieta.getTable(),SWT.CENTER,2);
+		TableColumn tcIndirizzo = new TableColumn(tvImmobiliProprieta.getTable(),SWT.CENTER,2);
 		tcIndirizzo.setWidth(150);
 		tcIndirizzo.setText("Indirizzo");
 
-		TableColumn tcDescrizione = new TableColumn(tvImmobiliPropieta.getTable(),SWT.CENTER,3);
+		TableColumn tcDescrizione = new TableColumn(tvImmobiliProprieta.getTable(),SWT.CENTER,3);
 		tcDescrizione.setWidth(150);
 		tcDescrizione.setText("Descrizione");
 
-		TableColumn tcPrezzo = new TableColumn(tvImmobiliPropieta.getTable(),SWT.CENTER,4);
+		TableColumn tcPrezzo = new TableColumn(tvImmobiliProprieta.getTable(),SWT.CENTER,4);
 		tcPrezzo.setWidth(50);
 		tcPrezzo.setText("Prezzo");
 
-		TableColumn tcMq = new TableColumn(tvImmobiliPropieta.getTable(),SWT.CENTER,5);
+		TableColumn tcMq = new TableColumn(tvImmobiliProprieta.getTable(),SWT.CENTER,5);
 		tcMq.setWidth(50);
 		tcMq.setText("MQ");
 		
@@ -171,20 +173,20 @@ public class ImmobiliPropietaView extends ViewPart {
 	}
 
 	public TableViewer getTvImmobiliPropieta() {
-		return tvImmobiliPropieta;
+		return tvImmobiliProprieta;
 	}
 
-	public AnagraficheModel getAnagrafica() {
+	public Anagrafiche getAnagrafica() {
 		return anagrafica;
 	}
 
-	public void setAnagrafica(AnagraficheModel anangrafica) {
+	public void setAnagrafica(Anagrafiche anangrafica) {
 		this.anagrafica = anangrafica;
 		if ((this.anagrafica != null) && 
-			(this.anagrafica.getImmobili() != null)){
-			tvImmobiliPropieta.setInput(this.anagrafica.getImmobili());
+			(this.anagrafica.getImmobilis() != null)){
+			tvImmobiliProprieta.setInput(new ArrayList<Immobili>(this.anagrafica.getImmobilis()));
 		}else{
-			tvImmobiliPropieta.setInput(new ArrayList());
+			tvImmobiliProprieta.setInput(new ArrayList<Immobili>());
 		}
 	}
 

@@ -106,10 +106,7 @@ public class ApriDettaglioAnagraficaAction extends Action {
 			
 			dav.setCompareView(isComparerView());
 
-			Activator.getDefault().getWorkbench()
-								  .getActiveWorkbenchWindow()
-								  .getActivePage()
-								  .bringToTop(dav);
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(dav);
 
 			dav.setAnagrafica(this.anagrafica);
 			ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();

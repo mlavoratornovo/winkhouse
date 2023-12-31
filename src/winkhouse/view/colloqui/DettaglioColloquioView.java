@@ -87,6 +87,7 @@ import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
@@ -198,18 +199,11 @@ public class DettaglioColloquioView extends ViewPart {
 		
 	};
 	
-	
-	private Comparator<AgentiVO> comparatorAgenti = new Comparator<AgentiVO>(){
+	private Comparator<Agenti> comparatorAgenti = new Comparator<Agenti>(){
 
 		@Override
-		public int compare(AgentiVO arg0,AgentiVO arg1) {
-			if (arg0.getCodAgente().intValue() == arg1.getCodAgente().intValue()){
-				return 0;
-			}else if (arg0.getCodAgente().intValue() > arg1.getCodAgente().intValue()){
-				return 1;
-			}else{
-				return -1;
-			}				
+		public int compare(Agenti arg0,Agenti arg1) {
+			return Integer.valueOf(arg0.getCodAgente()).compareTo(arg1.getCodAgente());
 		}
 		
 	};
@@ -1133,10 +1127,10 @@ public class DettaglioColloquioView extends ViewPart {
 	public void fillDescrizioniAgenti(){						
 		desAgenti = new String[MobiliaDatiBaseCache.getInstance().getAgenti().size()];
 		codAgenti = new Integer[MobiliaDatiBaseCache.getInstance().getAgenti().size()];
-		Iterator<AgentiVO> it = MobiliaDatiBaseCache.getInstance().getAgenti().iterator();
+		Iterator<Agenti> it = MobiliaDatiBaseCache.getInstance().getAgenti().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			AgentiVO aVO = it.next();
+			Agenti aVO = it.next();
 			desAgenti[count] = aVO.getCognome() + " " + aVO.getNome();
 			codAgenti[count] = aVO.getCodAgente();
 			count++;
@@ -1863,7 +1857,7 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				colloquio.setAgenteInseritore((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+				colloquio.setAgenteInseritore((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());				
 			}
 			
 		});

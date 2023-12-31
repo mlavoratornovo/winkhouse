@@ -23,6 +23,7 @@ import winkhouse.dao.TipologiaStanzeDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.export.models.ObjectSearchGetters;
 import winkhouse.model.CriteriRicercaModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AgentiVO;
@@ -83,7 +84,7 @@ public class UtilsHelper {
 		return MobiliaDatiBaseCache.getInstance().getTipologieContatti();
 	}
 	
-	public ArrayList<AgentiVO> getAgenti() {
+	public ArrayList<Agenti> getAgenti() {
 		return MobiliaDatiBaseCache.getInstance().getAgenti();
 	}
 	

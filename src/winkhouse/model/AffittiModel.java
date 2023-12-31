@@ -13,6 +13,7 @@ import winkhouse.dao.AffittiSpeseDAO;
 import winkhouse.dao.AgentiDAO;
 import winkhouse.dao.EntityDAO;
 import winkhouse.dao.ImmobiliDAO;
+import winkhouse.orm.Agenti;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AffittiVO;
@@ -22,7 +23,7 @@ public class AffittiModel extends AffittiVO implements IEntityAttribute{
 
 	private ImmobiliModel immobile = null;
 	private ArrayList<AffittiAnagraficheModel> anagrafiche = null;
-	private AgentiModel agenteInseritore = null;
+	private Agenti agenteInseritore = null;
 	private ArrayList<AffittiAllegatiVO> allegati = null;
 	private ArrayList<AffittiRateModel> rate = null;
 	private ArrayList<AffittiSpeseModel> spese = null;
@@ -75,13 +76,13 @@ public class AffittiModel extends AffittiVO implements IEntityAttribute{
 		return anagrafiche;
 	}
 
-	public AgentiModel getAgenteInseritore() {
+	public Agenti getAgenteInseritore() {
 		if (agenteInseritore == null){
 			if (super.getCodAgenteIns() != null){
 				AgentiDAO aDAO = new AgentiDAO();
 				Object o = aDAO.getAgenteById(AgentiModel.class.getName(), super.getCodAgenteIns());
 				if (o != null){
-					agenteInseritore = (AgentiModel)o;
+					agenteInseritore = (Agenti)o;
 				}
 			}
 		}
@@ -141,7 +142,7 @@ public class AffittiModel extends AffittiVO implements IEntityAttribute{
 		return savedAnagrafiche;
 	}
 
-	public void setAgenteInseritore(AgentiModel agenteInseritore) {
+	public void setAgenteInseritore(Agenti agenteInseritore) {
 		this.agenteInseritore = agenteInseritore;
 		if (agenteInseritore != null){
 			setCodAgenteIns(agenteInseritore.getCodAgente());

@@ -42,6 +42,7 @@ import winkhouse.action.stampa.StampaAnagraficheAction;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Classicliente;
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.affitti.ListaAffittiView;
@@ -81,11 +82,11 @@ public class DettaglioAnagraficaView extends ViewPart {
 	Text tncivico = null;
 	boolean isInCompareMode = false;
 	
-	private Comparator<AgentiVO> comparatorAgenti = new Comparator<AgentiVO>(){
+	private Comparator<Agenti> comparatorAgenti = new Comparator<Agenti>(){
 
 		@Override
-		public int compare(AgentiVO arg0,AgentiVO arg1) {
-			return arg0.getCodAgente().compareTo(arg1.getCodAgente());
+		public int compare(Agenti arg0,Agenti arg1) {
+			return Integer.valueOf(arg0.getCodAgente()).compareTo(arg1.getCodAgente());
 		}
 		
 	};
@@ -347,7 +348,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 						   .findView(ImmobiliPropietaView.ID);
 
 			if (ivp != null){
-				//((ImmobiliPropietaView)ivp).setAnagrafica(anagrafica);
+				((ImmobiliPropietaView)ivp).setAnagrafica(anagrafica);
 			}
 			
 			IViewPart eavv = PlatformUI.getWorkbench()
@@ -475,10 +476,10 @@ public class DettaglioAnagraficaView extends ViewPart {
 			if ((anagrafica != null) && 
 				(anagrafica.getAgenti() != null)){
 				
-//				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), 
-//													 anagrafica.getAgenti(), 
-//													 comparatorAgenti);
-				int index = -1;
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), 
+													 anagrafica.getAgenti(), 
+													 comparatorAgenti);
+				
 				if (index > -1){
 					Object[] sel = new Object[1];
 					sel[0] = MobiliaDatiBaseCache.getInstance().getAgenti().get(index);

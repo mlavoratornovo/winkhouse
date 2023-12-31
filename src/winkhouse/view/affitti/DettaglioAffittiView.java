@@ -80,6 +80,7 @@ import winkhouse.model.AffittiSpeseModel;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.PopUpRicercaAnagrafica;
@@ -154,17 +155,11 @@ public class DettaglioAffittiView extends ViewPart {
 	public DettaglioAffittiView() {
 	}
 	
-	private Comparator<AgentiVO> comparatorAgenti = new Comparator<AgentiVO>(){
+	private Comparator<Agenti> comparatorAgenti = new Comparator<Agenti>(){
 
 		@Override
-		public int compare(AgentiVO arg0,AgentiVO arg1) {
-			if (arg0.getCodAgente().intValue() == arg1.getCodAgente().intValue()){
-				return 0;
-			}else if (arg0.getCodAgente().intValue() > arg1.getCodAgente().intValue()){
-				return 1;
-			}else{
-				return -1;
-			}				
+		public int compare(Agenti arg0,Agenti arg1) {
+			return Integer.valueOf(arg0.getCodAgente()).compareTo(arg1.getCodAgente());
 		}
 		
 	};
@@ -1176,9 +1171,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				affitto.setAgenteInseritore(new AgentiModel(
-													((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement())
-													));				
+				affitto.setAgenteInseritore(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 			}
 			
 		});

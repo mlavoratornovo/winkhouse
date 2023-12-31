@@ -86,6 +86,7 @@ import winkhouse.dialogs.custom.SWTCalendarDialog;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.StanzeImmobiliModel;
+import winkhouse.orm.Agenti;
 import winkhouse.perspective.ImmobiliPerspective;
 import winkhouse.util.IPrefersPerspective;
 import winkhouse.util.MobiliaDatiBaseCache;
@@ -245,11 +246,11 @@ public class DettaglioImmobileView extends ViewPart
 		
 	};
 
-	private Comparator<AgentiVO> comparatorAgenti = new Comparator<AgentiVO>(){
+	private Comparator<Agenti> comparatorAgenti = new Comparator<Agenti>(){
 
 		@Override
-		public int compare(AgentiVO arg0,AgentiVO arg1) {
-			return arg0.getCodAgente().compareTo(arg1.getCodAgente());
+		public int compare(Agenti arg0,Agenti arg1) {
+			return Integer.valueOf(arg0.getCodAgente()).compareTo(arg1.getCodAgente());
 		}
 		
 	};
@@ -2647,7 +2648,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setAgenteInseritore((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setAgenteInseritore((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());				
 				}
 				
 			});

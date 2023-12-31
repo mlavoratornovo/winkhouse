@@ -35,6 +35,7 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import winkhouse.Activator;
 import winkhouse.model.ColloquiAgentiModel_Age;
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ColloquiAgentiVO;
@@ -403,10 +404,10 @@ public class InserimentoAgenti extends WizardPage {
 	public void fillDescrizioniAgenti(){						
 		desAgenti = new String[MobiliaDatiBaseCache.getInstance().getAgenti().size()];
 		codAgenti = new Integer[MobiliaDatiBaseCache.getInstance().getAgenti().size()];
-		Iterator<AgentiVO> it = MobiliaDatiBaseCache.getInstance().getAgenti().iterator();
+		Iterator<Agenti> it = MobiliaDatiBaseCache.getInstance().getAgenti().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			AgentiVO aVO = it.next();
+			Agenti aVO = it.next();
 			desAgenti[count] = aVO.getCognome() + " " + aVO.getNome();
 			codAgenti[count] = aVO.getCodAgente();
 			count++;

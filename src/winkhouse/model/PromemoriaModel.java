@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import winkhouse.dao.AgentiDAO;
 import winkhouse.dao.PromemoriaLinksDAO;
 import winkhouse.dao.PromemoriaOggettiDAO;
+import winkhouse.orm.Agenti;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.PromemoriaLinksVO;
 import winkhouse.vo.PromemoriaVO;
 
 public class PromemoriaModel extends PromemoriaVO {
 
-	private AgentiVO agente = null;
+	private Agenti agente = null;
 	private ArrayList<PromemoriaOggettiModel> linkedObjects = null;
 	private ArrayList<PromemoriaLinksVO> linkurl = null;
 	
@@ -25,15 +26,15 @@ public class PromemoriaModel extends PromemoriaVO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public AgentiVO getAgente() {
+	public Agenti getAgente() {
 		if (agente == null){
 			AgentiDAO adao = new AgentiDAO();
-			agente = (AgentiVO)adao.getAgenteById(AgentiVO.class.getName(), getCodAgente());
+			agente = (Agenti)adao.getAgenteById(AgentiVO.class.getName(), getCodAgente());
 		}
 		return agente;
 	}
 	
-	public void setAgente(AgentiVO agente) {
+	public void setAgente(Agenti agente) {
 		this.agente = agente;
 		setCodAgente(agente.getCodAgente());
 	}

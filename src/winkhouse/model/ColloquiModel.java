@@ -14,6 +14,7 @@ import winkhouse.dao.ColloquiCriteriRicercaDAO;
 import winkhouse.dao.EntityDAO;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.WinkGCalendarDAO;
+import winkhouse.orm.Agenti;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AgentiVO;
@@ -24,7 +25,7 @@ import winkhouse.vo.TipologieColloquiVO;
 
 public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 
-	private AgentiVO agenteInseritore = null;
+	private Agenti agenteInseritore = null;
 	private ImmobiliModel immobileAbbinato = null;
 	private TipologieColloquiVO tipologia = null;
 	private ArrayList allegati = null;
@@ -60,14 +61,14 @@ public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 		super(rs);
 	}
 
-	public AgentiVO getAgenteInseritore() {
+	public Agenti getAgenteInseritore() {
 		if (agenteInseritore == null){
 			if ((super.getCodAgenteInseritore() != null) &&
 				(super.getCodAgenteInseritore() != 0)){
 				AgentiDAO agentiDAO = new AgentiDAO();
 				Object o = agentiDAO.getAgenteById(AgentiVO.class.getName(), super.getCodAgenteInseritore());
 				if (o != null){
-					agenteInseritore = (AgentiVO)o;
+					agenteInseritore = (Agenti)o;
 				}	
 			}	
 		}
@@ -82,7 +83,7 @@ public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 		}
 	}
 
-	public void setAgenteInseritore(AgentiVO agenteInseritore) {
+	public void setAgenteInseritore(Agenti agenteInseritore) {
 		this.agenteInseritore = agenteInseritore;
 		if (agenteInseritore != null){
 			super.setCodAgenteInseritore(agenteInseritore.getCodAgente());
