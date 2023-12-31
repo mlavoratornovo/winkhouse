@@ -115,9 +115,9 @@ public class NuovoColloquioAction extends Action {
 				if (o != null){
 							
 					AnagraficheVO avo = (AnagraficheVO)o; 
-					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
-												 					        .getDettaglioAnagrafica(avo);
-					AnagraficheModel am = dav.getAnagrafica();
+//					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
+//												 					        .getDettaglioAnagrafica(avo);
+//					AnagraficheModel am = dav.getAnagrafica();
 					
 					ColloquiModel cm = new ColloquiModel();
 					
@@ -127,7 +127,7 @@ public class NuovoColloquioAction extends Action {
 							    													   .getActivePage()															 
 							    													   .showView(DettaglioColloquioView.ID,String.valueOf(cm.getCodColloquio()),IWorkbenchPage.VIEW_CREATE);
 						dcv.setColloquio(cm);
-						dcv.addAnagrafica(am);
+//						dcv.addAnagrafica(am);
 						
 						Activator.getDefault().getWorkbench()
 		   		 		 					  .getActiveWorkbenchWindow()

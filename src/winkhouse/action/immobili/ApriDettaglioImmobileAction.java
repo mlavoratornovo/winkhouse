@@ -71,8 +71,8 @@ public class ApriDettaglioImmobileAction extends Action {
 						}
 			
 						div.setImmobile(iModel);
-						ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(iModel.getAnagrafichePropietarie(),false);
-						adra.run();
+//						ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(iModel.getAnagrafichePropietarie(),false);
+//						adra.run();
 			
 						ImmaginiImmobiliView iiv = (ImmaginiImmobiliView)PlatformUI.getWorkbench()
 										   										   .getActiveWorkbenchWindow()
@@ -148,8 +148,8 @@ public class ApriDettaglioImmobileAction extends Action {
 				
 				div.setCompareView(isComparerView());
 				
-				ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(iModel.getAnagrafichePropietarie(),false);
-				adra.run();
+//				ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(iModel.getAnagrafichePropietarie(),false);
+//				adra.run();
 	
 				ImmaginiImmobiliView iiv = (ImmaginiImmobiliView)PlatformUI.getWorkbench()
 								   										   .getActiveWorkbenchWindow()

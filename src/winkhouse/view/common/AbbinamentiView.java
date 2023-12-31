@@ -646,16 +646,16 @@ public class AbbinamentiView extends ViewPart {
 					adia.run();
 				}
 				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof AnagraficheModel){
-					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction((AnagraficheModel)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(), null);
-					adaa.run();
+//					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction((AnagraficheModel)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(), null);
+//					adaa.run();
 					
 				}				
 				 
 				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof AbbinamentiModel){
 					AbbinamentiModel am = (AbbinamentiModel)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement();
 					if (immobile != null){
-						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am.getAnagrafica(), null);
-						adaa.run();
+//						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am.getAnagrafica(), null);
+//						adaa.run();
 					}else if (anagrafica != null){
 						ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(am.getImmobile(),null);
 						adia.run();

@@ -42,6 +42,8 @@ import winkhouse.model.AbbinamentiModel;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ContattiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Contatti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.ContattiVO;
 import winkhouse.vo.TipologiaContattiVO;
@@ -57,7 +59,7 @@ public class RecapitiView extends ViewPart {
 	private Form f = null;	
 //	private AnagraficheModel anagrafica = null;
 //	private ArrayList<ContattiVO> recapiti = null;
-	private ArrayList<AnagraficheModel> anagrafiche = null;
+	private ArrayList<Anagrafiche> anagrafiche = null;
 	private String[] desTipologieRecapiti = null;
 	private TextCellEditor tceContatto = null;
 	private TextCellEditor tceDescrizione = null;
@@ -70,7 +72,7 @@ public class RecapitiView extends ViewPart {
 	private ImageHyperlink ihConferma = null;
 	private ImageHyperlink ihCancella = null;
 	private ImageHyperlink ihNew = null;
-	private ArrayList<ContattiModel> contatti = null;
+	private ArrayList<Contatti> contatti = null;
 	private ColumnSorter comparator = null;
 	
 	public RecapitiView() {
@@ -557,10 +559,10 @@ public class RecapitiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				if (((ContattiModel)element).getAnagrafica() != null){
+				if (((Contatti)element).getAnagrafiche() != null){
 					int count = 0;
-					for (AnagraficheModel anagrafica : anagrafiche) {
-						if (((ContattiModel)element).getCodAnagrafica() == anagrafica.getCodAnagrafica()){
+					for (Anagrafiche anagrafica : anagrafiche) {
+						if (((Contatti)element).getAnagrafiche().getId() == anagrafica.getId()){
 							return count;							
 						}else{
 							count ++;
@@ -575,10 +577,10 @@ public class RecapitiView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				if (value != null){
-					((ContattiModel)element).setCodAnagrafica(((AnagraficheModel)value).getCodAnagrafica());
-					for (AnagraficheModel anagrafica : anagrafiche) {
-						if (anagrafica.getCodAnagrafica().intValue() == ((AnagraficheModel)value).getCodAnagrafica().intValue()){
-							anagrafica.getContatti().add((ContattiModel)element);
+					((Contatti)element).setAnagrafiche((Anagrafiche)value);
+					for (Anagrafiche anagrafica : anagrafiche) {
+						if (anagrafica.getId() == ((Anagrafiche)value).getId()){
+							anagrafica.addToContattis((Contatti)element);
 							break;
 						}
 					}
@@ -611,7 +613,7 @@ public class RecapitiView extends ViewPart {
 		}		
 	}
 
-	public void setAnagrafiche(ArrayList<AnagraficheModel> anagrafica) {
+	public void setAnagrafiche(ArrayList<Anagrafiche> anagrafica) {
 		this.anagrafiche = anagrafica;
 		contatti = null;
 		tvRecapiti.setInput(new Object());
@@ -628,17 +630,17 @@ public class RecapitiView extends ViewPart {
 	}
 
 
-	public ArrayList<AnagraficheModel> getAnagrafiche() {
+	public ArrayList<Anagrafiche> getAnagrafiche() {
 		return anagrafiche;
 	}
 
-	public ArrayList<ContattiModel> getContatti(){
+	public ArrayList<Contatti> getContatti(){
 		
 		if (contatti == null){
-			contatti = new ArrayList<ContattiModel>();		
+			contatti = new ArrayList<Contatti>();		
 			if (getAnagrafiche() != null){
-				for (AnagraficheModel anagrafica : getAnagrafiche()) {
-					contatti.addAll(anagrafica.getContatti());
+				for (Anagrafiche anagrafica : getAnagrafiche()) {
+					contatti.addAll(anagrafica.getContattis());
 				}
 			}
 		}

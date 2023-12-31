@@ -9,6 +9,7 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.ProfilerHelper.PermessoDetail;
 import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
@@ -30,7 +31,7 @@ public class DettaglioAnagraficaHandler {
 		return instance;
 	}
 	
-	public DettaglioAnagraficaView getDettaglioAnagrafica(AnagraficheVO viewInstance){
+	public DettaglioAnagraficaView getDettaglioAnagrafica(Anagrafiche viewInstance){
 		
 		
 	
@@ -45,14 +46,14 @@ public class DettaglioAnagraficaHandler {
 			
 				if (ProfilerHelper.getInstance().getPermessoUI(DettaglioAnagraficaView.ID)){
 					
-					PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(viewInstance.getCodAnagrafica(), false);
+					PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(viewInstance.getId(), false);
 					if (pd != null){			
 				
 						vr = PlatformUI.getWorkbench()
 							           .getActiveWorkbenchWindow()
 									   .getActivePage()
 									   .findViewReference(DettaglioAnagraficaView.ID,
-											   			  String.valueOf(viewInstance.getCodAnagrafica()));
+											   			  String.valueOf(viewInstance.getId()));
 					
 						if (vr != null){
 							dav = (DettaglioAnagraficaView)PlatformUI.getWorkbench()
@@ -64,7 +65,7 @@ public class DettaglioAnagraficaHandler {
 																	 .getActiveWorkbenchWindow()
 																	 .getActivePage()															 
 																	 .showView(DettaglioAnagraficaView.ID,
-																			   String.valueOf(viewInstance.getCodAnagrafica()),
+																			   String.valueOf(viewInstance.getId()),
 																			   IWorkbenchPage.VIEW_CREATE);
 						}
 						if (!pd.getCanwrite()){
@@ -72,7 +73,7 @@ public class DettaglioAnagraficaHandler {
 						}else{
 							dav.setCompareView(false);
 						}
-						dav.setAnagrafica(new AnagraficheModel(viewInstance));
+						dav.setAnagrafica(viewInstance);
 						PlatformUI.getWorkbench()
 				 		  		  .getActiveWorkbenchWindow()
 				 		  		  .getActivePage()
@@ -104,7 +105,7 @@ public class DettaglioAnagraficaHandler {
 				           .getActiveWorkbenchWindow()
 						   .getActivePage()
 						   .findViewReference(DettaglioAnagraficaView.ID,
-								   			  String.valueOf(viewInstance.getCodAnagrafica()));
+								   			  String.valueOf(viewInstance.getId()));
 		
 				if (vr != null){
 					dav = (DettaglioAnagraficaView) PlatformUI.getWorkbench()
@@ -116,10 +117,10 @@ public class DettaglioAnagraficaHandler {
 															 .getActiveWorkbenchWindow()
 															 .getActivePage()															 
 															 .showView(DettaglioAnagraficaView.ID,
-																	   String.valueOf(viewInstance.getCodAnagrafica()),
+																	   String.valueOf(viewInstance.getId()),
 																	   IWorkbenchPage.VIEW_CREATE);
 				}
-				dav.setAnagrafica(new AnagraficheModel(viewInstance));
+				dav.setAnagrafica(viewInstance);
 				PlatformUI.getWorkbench()
 		 		  		  .getActiveWorkbenchWindow()
 		 		  		  .getActivePage()

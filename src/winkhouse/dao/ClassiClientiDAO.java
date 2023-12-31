@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.ObjectSelect;
 
@@ -209,6 +210,10 @@ public class ClassiClientiDAO extends BaseDAO{
 		return super.deleteObjectById(DELETE_CLASSICLIENTI, codClasseClienti, con, doCommit);
 	}
 	
+	public Classicliente getClasseClienteById(Integer idClasseClienti){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		return Cayenne.objectForPK(context,Classicliente.class,idClasseClienti);
+	}
 	public Object getClasseClienteById(String classType, Integer idClasseClienti){
 		return super.getObjectById(classType, CLASSICLIENTI_BY_ID, idClasseClienti);
 	}	

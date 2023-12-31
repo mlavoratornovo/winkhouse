@@ -8,7 +8,7 @@ public class Anagrafiche extends _Anagrafiche {
 
     private static final long serialVersionUID = 1L;
     
-    public long getId() {
-        return Cayenne.longPKForObject(this);
+    public int getId() {
+        return Cayenne.intPKForObject(this);
      }
 }

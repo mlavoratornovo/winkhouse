@@ -178,8 +178,8 @@ public class PreviousItemAction extends Action {
 			}			
 			
 			if (ProfilerHelper.getInstance().getPermessoUI(DettaglioImmobileView.ID)){
-				ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am,null);
-				adaa.run();
+//				ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am,null);
+//				adaa.run();
 			}else{
 				MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						  					  "Controllo permessi accesso vista",

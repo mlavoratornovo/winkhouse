@@ -42,19 +42,19 @@ public class ConfermaRecapitiAction extends Action {
 				  					 .getActivePart();
 		
 		if (rv.getAnagrafiche() != null & rv.getAnagrafiche().size() > 0){
-			for (AnagraficheModel anagrafica : rv.getAnagrafiche()) {
-				
-				if ((anagrafica.getCodAnagrafica() != null) && 
-					(anagrafica.getCodAnagrafica() != 0)){
-					ContattiHelper ch = new ContattiHelper();
-					ch.updateListaContatti(anagrafica,null,true);					
-				}else{
-					MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Salvataggio recapiti",
-											  "Eseguire il salvataggio dell'anagrafica");
-				}
-				
-			}
+//			for (AnagraficheModel anagrafica : rv.getAnagrafiche()) {
+//				
+//				if ((anagrafica.getCodAnagrafica() != null) && 
+//					(anagrafica.getCodAnagrafica() != 0)){
+//					ContattiHelper ch = new ContattiHelper();
+//					ch.updateListaContatti(anagrafica,null,true);					
+//				}else{
+//					MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Salvataggio recapiti",
+//											  "Eseguire il salvataggio dell'anagrafica");
+//				}
+//				
+//			}
 		}else{
 			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 					  				  "Salvataggio recapiti",

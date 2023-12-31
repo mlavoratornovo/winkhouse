@@ -104,17 +104,8 @@ public class SalvaImmobile extends Action {
 						}
 						div.setImmobile(immobile);
 						
-						ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(immobile.getAnagrafichePropietarie(),false);
-						adra.run();
-//						
-//						RecapitiView riv = (RecapitiView)PlatformUI.getWorkbench()
-//																   .getActiveWorkbenchWindow()
-//																   .getActivePage()
-//																   .findView(RecapitiView.ID);
-//						
-//						if (riv != null){
-//							riv.setAnagrafica(immobile.getAnagrafica());
-//						}
+//						ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(immobile.getAnagrafichePropietarie(),false);
+//						adra.run();
 		
 						ImmaginiImmobiliView iiv = (ImmaginiImmobiliView)PlatformUI.getWorkbench()
 																				   .getActiveWorkbenchWindow()

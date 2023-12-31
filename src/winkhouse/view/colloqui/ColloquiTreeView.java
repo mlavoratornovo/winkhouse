@@ -335,8 +335,8 @@ public class ColloquiTreeView extends ViewPart {
 				}
 				if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof AnagraficheVO){
 					AnagraficheVO aVO = (AnagraficheVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
-					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
-																		    .getDettaglioAnagrafica(aVO);
+//					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
+//																		    .getDettaglioAnagrafica(aVO);
 				}
 			  
 				

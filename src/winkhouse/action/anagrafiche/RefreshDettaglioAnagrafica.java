@@ -9,6 +9,7 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.Activator;
 import winkhouse.dao.AnagraficheDAO;
 import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 
 public class RefreshDettaglioAnagrafica extends Action {
@@ -39,14 +40,13 @@ public class RefreshDettaglioAnagrafica extends Action {
 		
 		if (iwp instanceof DettaglioAnagraficaView){
 			
-			AnagraficheModel am = ((DettaglioAnagraficaView)iwp).getAnagrafica();
+			Anagrafiche am = ((DettaglioAnagraficaView)iwp).getAnagrafica();
 			
-			if (am.getCodAnagrafica() != 0){
+			if (am.getId() != 0){
 				AnagraficheDAO adao = new AnagraficheDAO();
-				Object o = adao.getAnagraficheById(AnagraficheModel.class.getName(), am.getCodAnagrafica());
-				if (o != null){
-					am = (AnagraficheModel)o;
-					((DettaglioAnagraficaView)iwp).setAnagrafica(am);
+				Anagrafiche o = adao.getAnagraficheById(am.getId());
+				if (o != null){					
+					((DettaglioAnagraficaView)iwp).setAnagrafica(o);
 				}else{
 					if (MessageDialog.openQuestion(iwp.getSite().getShell(), 
 											   "Attenzione l'anagrafica � stata cancellata", 
@@ -57,7 +57,7 @@ public class RefreshDettaglioAnagrafica extends Action {
 											   "In caso AFFERMATIVO potrai eseguire il SALVATAGGIO. \n\n" +
 											   "in caso CONTRARIO alla chiusura del dettaglio i dati andranno persi")){
 						
-						am.setCodAnagrafica(0);
+//						am.setCodAnagrafica(0);
 						((DettaglioAnagraficaView)iwp).setAnagrafica(am);
 						
 					} 

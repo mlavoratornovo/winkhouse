@@ -460,9 +460,9 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 					adipa.run();
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.ANAGRAFICHE)){
-					ApriDettaglioAnagraficaPerspectiveAction adapa = new ApriDettaglioAnagraficaPerspectiveAction((AnagraficheModel)myn.getObjModel());
-					adapa.setComparerView(true);
-					adapa.run();					
+//					ApriDettaglioAnagraficaPerspectiveAction adapa = new ApriDettaglioAnagraficaPerspectiveAction((AnagraficheModel)myn.getObjModel());
+//					adapa.setComparerView(true);
+//					adapa.run();					
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.AFFITTI)){
 					ApriAffittiAction aaa = new ApriAffittiAction((AffittiModel)myn.getObjModel());					

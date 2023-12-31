@@ -12,6 +12,8 @@ import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.ProfilerHelper.PermessoDetail;
 import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classicliente;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
@@ -20,12 +22,12 @@ import winkhouse.vo.ClassiClientiVO;
 
 public class ApriDettaglioAnagraficaAction extends Action {
 
-	private AnagraficheModel anagrafica = null;
-	private ClassiClientiVO classiClienteVO = null;
+	private Anagrafiche anagrafica = null;
+	private Classicliente classicliente = null;
 	private boolean comparerView = false;
 	
-	public ApriDettaglioAnagraficaAction(AnagraficheModel anagrafica,ClassiClientiVO classiClienteVO) {
-		this.classiClienteVO = classiClienteVO;
+	public ApriDettaglioAnagraficaAction(Anagrafiche anagrafica,Classicliente classiCliente) {
+		this.classicliente = classiCliente;
 		this.anagrafica = anagrafica;
 	}
 
@@ -54,7 +56,7 @@ public class ApriDettaglioAnagraficaAction extends Action {
 			
 			if (ProfilerHelper.getInstance().getPermessoUI(DettaglioAnagraficaView.ID)){
 				
-				PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(this.anagrafica.getCodAnagrafica(), false);
+				PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(this.anagrafica.getId(), false);
 				if (pd != null){
 					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
 																		    .getDettaglioAnagrafica(this.anagrafica);
@@ -63,17 +65,17 @@ public class ApriDettaglioAnagraficaAction extends Action {
 					}else{
 						dav.setCompareView(isComparerView());
 					}
-					if (this.classiClienteVO != null){
-						this.anagrafica.setCodClasseCliente(this.classiClienteVO.getCodClasseCliente());
+					if (this.classicliente != null){
+						this.anagrafica.setClassicliente(this.classicliente);
 					}
 					
-					Activator.getDefault().getWorkbench()
+					PlatformUI.getWorkbench()
 							 .getActiveWorkbenchWindow()
 							 .getActivePage()
 							 .bringToTop(dav);
 													
 					dav.setAnagrafica(this.anagrafica);
-					ArrayList<AnagraficheModel> anagrafiche = new ArrayList<AnagraficheModel>();
+					ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
 					anagrafiche.add(anagrafica);
 					ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(anagrafiche,false);
 					adra.run();
@@ -98,8 +100,8 @@ public class ApriDettaglioAnagraficaAction extends Action {
 			
 			DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
 				    												.getDettaglioAnagrafica(this.anagrafica);
-			if (this.classiClienteVO != null){
-				this.anagrafica.setCodClasseCliente(this.classiClienteVO.getCodClasseCliente());
+			if (this.classicliente != null){
+				this.anagrafica.setClassicliente(classicliente);
 			}
 			
 			dav.setCompareView(isComparerView());
@@ -110,7 +112,7 @@ public class ApriDettaglioAnagraficaAction extends Action {
 								  .bringToTop(dav);
 
 			dav.setAnagrafica(this.anagrafica);
-			ArrayList<AnagraficheModel> anagrafiche = new ArrayList<AnagraficheModel>();
+			ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
 			anagrafiche.add(anagrafica);			
 			ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(anagrafiche,false);
 			adra.run();

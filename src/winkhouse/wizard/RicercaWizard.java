@@ -465,8 +465,8 @@ public class RicercaWizard extends Wizard {
 						d.readAndDispatch();
 						while(it.hasNext()){
 							AnagraficheModel am = (AnagraficheModel)it.next();
-							ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am, null);
-							adaa.run();
+//							ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am, null);
+//							adaa.run();
 							monitor.setTaskName("dettaglio : " + am.toString());
 							d.readAndDispatch();
 							monitor.worked(1);

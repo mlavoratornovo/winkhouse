@@ -180,8 +180,8 @@ public class FirstItemAction extends Action {
 			if (wp instanceof DettaglioAnagraficaView){
 				
 				if (ProfilerHelper.getInstance().getPermessoUI(DettaglioAnagraficaView.ID)){
-					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am,null);
-					adaa.run();
+//					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am,null);
+//					adaa.run();
 				}else{
 					MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 							  					  "Controllo permessi accesso vista",
@@ -192,8 +192,8 @@ public class FirstItemAction extends Action {
 				
 			}else{
 				if (ProfilerHelper.getInstance().getPermessoUI(DettaglioAnagraficaView.ID)){
-					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am,null);
-					adaa.run();
+//					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am,null);
+//					adaa.run();
 				}else{
 					MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 							  					  "Controllo permessi accesso vista",

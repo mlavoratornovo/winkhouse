@@ -11,16 +11,18 @@ import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.ProfilerHelper.PermessoDetail;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Contatti;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.common.RecapitiView;
 
 public class ApriDettaglioRecapitiAction extends Action {
 
-	private ArrayList<AnagraficheModel> anagrafiche = null;
+	private ArrayList<Anagrafiche> anagrafiche = null;
 	private boolean resetContatti = false;
 	
-	public ApriDettaglioRecapitiAction(ArrayList<AnagraficheModel> anagrafiche,boolean resetContatti) {
+	public ApriDettaglioRecapitiAction(ArrayList<Anagrafiche> anagrafiche,boolean resetContatti) {
 		this.anagrafiche = anagrafiche;
 		this.resetContatti = resetContatti; 
 	}
@@ -43,18 +45,20 @@ public class ApriDettaglioRecapitiAction extends Action {
 
 				if (ProfilerHelper.getInstance().getPermessoUI(RecapitiView.ID)){
 					
-					ArrayList<AnagraficheModel> anagraficheinput = new ArrayList<AnagraficheModel>();
+					ArrayList<Anagrafiche> anagraficheinput = new ArrayList<Anagrafiche>();
 					
-					for (AnagraficheModel anagrafica : anagrafiche) {
-						PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(anagrafica.getCodAnagrafica(), false);
+					for (Anagrafiche anagrafica : anagrafiche) {
+						PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(anagrafica.getId(), false);
 						if (pd == null){
 							if (resetContatti){
-								anagrafica.setContatti(null);
+								for (Contatti contatto: anagrafica.getContattis()) {
+									anagrafica.removeFromContattis(contatto);
+								}								
 							}							
 							anagraficheinput.add(anagrafica);
 						}else{
 							if (pd.getCanwrite()){
-								for (Object contatto : anagrafica.getContatti()){
+								for (Object contatto : anagrafica.getContattis()){
 									((ContattiModel)contatto).setCanedit(true);
 								}
 							}
@@ -67,11 +71,11 @@ public class ApriDettaglioRecapitiAction extends Action {
 			}else{
 				if (this.anagrafiche != null){
 					AnagraficheDAO anagraficheDAO = new AnagraficheDAO();
-					for (Iterator<AnagraficheModel> iterator = this.anagrafiche.iterator(); iterator.hasNext();) {
-						AnagraficheModel anagrafica = iterator.next();
-						if (anagrafica.getCodAnagrafica() != null){
-							this.anagrafiche = new ArrayList<AnagraficheModel>();
-							this.anagrafiche.add((AnagraficheModel)anagraficheDAO.getAnagraficheById(AnagraficheModel.class.getName(), anagrafica.getCodAnagrafica()));						
+					for (Iterator<Anagrafiche> iterator = this.anagrafiche.iterator(); iterator.hasNext();) {
+						Anagrafiche anagrafica = iterator.next();
+						if (anagrafica.getId() != 0){
+							this.anagrafiche = new ArrayList<Anagrafiche>();
+							this.anagrafiche.add((Anagrafiche)anagraficheDAO.getAnagraficheById(anagrafica.getId()));						
 						}
 					}
 				}

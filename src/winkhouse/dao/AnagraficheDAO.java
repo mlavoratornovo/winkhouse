@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
@@ -23,6 +24,7 @@ import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AnagraficheVO;
 
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classicliente;
 
 
 public class AnagraficheDAO extends BaseDAO{
@@ -302,6 +304,13 @@ public class AnagraficheDAO extends BaseDAO{
 	public Object getAnagraficheById(String classType, Integer codAnagrafica){
 		return super.getObjectById(classType, ANAGRAFICHE_BY_ID, codAnagrafica);
 	}	
+
+	public Anagrafiche getAnagraficheById(Integer codAnagrafica){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		return Cayenne.objectForPK(context,Anagrafiche.class,codAnagrafica);
+	}	
+
+	
 	
 	public ArrayList<Anagrafiche> getAnagraficheByNullClasse(){
 		ObjectContext context = CayenneContextManager.getInstance().getContext();		
@@ -319,19 +328,47 @@ public class AnagraficheDAO extends BaseDAO{
 		
 	}
 	
-	public <T> ArrayList<T> getAnagraficheByClasse(String classType,Integer codClasse){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+	public ArrayList<Anagrafiche> getAnagraficheByNullProvincia(){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();		
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
-			if (codClasse != null){
-				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSE_STORICO, codClasse);
+			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+														  .where(Anagrafiche.PROVINCIA.isNull().orExp(Anagrafiche.PROVINCIA.eq("")))														  
+														  .and(Anagrafiche.STORICO.eq(true))
+														  .select(context));						
+		}else{
+			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+														  .where(Anagrafiche.PROVINCIA.isNull().orExp(Anagrafiche.PROVINCIA.eq("")))
+														  .and(Anagrafiche.STORICO.eq(false))
+														  .select(context));			
+		}
+		
+	}
+	
+	public ArrayList<Anagrafiche> getAnagraficheByClasse(Classicliente cc){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){
+			if (cc != null){				
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.eq(cc))														  
+						  .and(Anagrafiche.STORICO.eq(true))
+						  .select(context));										
 			}else{
-				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSENULL_STORICO, codClasse);
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.isNull())														  
+						  .and(Anagrafiche.STORICO.eq(true))
+						  .select(context));
 			}
 		}else{
-			if (codClasse != null){
-				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSE, codClasse);
+			if (cc != null){				
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.eq(cc))														  
+						  .and(Anagrafiche.STORICO.eq(false))
+						  .select(context));										
 			}else{
-				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSENULL, codClasse);
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.isNull())														  
+						  .and(Anagrafiche.STORICO.eq(false))
+						  .select(context));
 			}
 		}
 	}
@@ -354,6 +391,58 @@ public class AnagraficheDAO extends BaseDAO{
 	
 	public <T> ArrayList<T> getAnagraficheByCodImmobile(String classType,Integer codImmobile){
 		return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CODIMMOBILE, codImmobile);
+	}
+
+	public ArrayList<Anagrafiche> getAnagraficheByComuneClasse(String comune, Classicliente classeCliente){
+		
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		if (classeCliente == null) {
+			if (WinkhouseUtils.getInstance().getTipoArchivio()){
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.isNull())
+						  .and(Anagrafiche.STORICO.eq(true))
+						  .and(Anagrafiche.CITTA.startsWithIgnoreCase(comune))
+						  .select(context));					
+			}else {
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.isNull())
+						  .and(Anagrafiche.STORICO.eq(false))
+						  .and(Anagrafiche.CITTA.startsWithIgnoreCase(comune))
+						  .select(context));
+			}
+		}else {
+			if (WinkhouseUtils.getInstance().getTipoArchivio()){
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						  .where(Anagrafiche.CLASSICLIENTE.eq(classeCliente))
+						  .and(Anagrafiche.STORICO.eq(true))
+						  .and(Anagrafiche.CITTA.startsWithIgnoreCase(comune))
+						  .select(context));					
+			}else {
+				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+						   .where(Anagrafiche.CLASSICLIENTE.eq(classeCliente))
+						  .and(Anagrafiche.STORICO.eq(false))
+						  .and(Anagrafiche.CITTA.startsWithIgnoreCase(comune))
+						  .select(context));
+			}			
+		}
+	}
+	
+	public <T> ArrayList<T> getAnagraficheByClasse(String classType, Integer codClasse){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){
+			if (codClasse != null){
+				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSE_STORICO, codClasse);
+			}else{
+				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSENULL_STORICO, codClasse);
+			}
+		}else{
+			if (codClasse != null){
+				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSE, codClasse);
+			}else{
+				return super.getObjectsByIntFieldValue(classType, ANAGRAFICHE_BY_CLASSENULL, codClasse);
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")

@@ -47,12 +47,12 @@ public class NuovoRecapitoAction extends Action {
 		if (rv.getAnagrafiche() != null && rv.getAnagrafiche().size() > 0){
 			
 			ContattiModel cm = new ContattiModel();
-			cm.setCodAnagrafica(rv.getAnagrafiche().get(0).getCodAnagrafica());
-			cm.setAnagrafica(rv.getAnagrafiche().get(0));
+//			cm.setCodAnagrafica(rv.getAnagrafiche().get(0).getCodAnagrafica());
+//			cm.setAnagrafica(rv.getAnagrafiche().get(0));
 			
-			rv.getAnagrafiche().get(0).getContatti().add(cm);
+//			rv.getAnagrafiche().get(0).getContatti().add(cm);
 			
-			rv.getContatti().add(cm);
+//			rv.getContatti().add(cm);
 			rv.getTvRecapiti().setInput(rv.getContatti());
 			rv.getTvRecapiti().refresh();				
 			

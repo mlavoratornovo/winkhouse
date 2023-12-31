@@ -2703,9 +2703,9 @@ public class DettaglioImmobileView extends ViewPart
 			   			   .findView(RecapitiView.ID);
 			
 			if (ivp != null){
-				((RecapitiView)ivp).setAnagrafiche((immobile.getAnagrafichePropietarie() == null || immobile.getAnagrafichePropietarie().size() == 0)
-												  ? new ArrayList<AnagraficheModel>()
-												  : immobile.getAnagrafichePropietarie());
+//				((RecapitiView)ivp).setAnagrafiche((immobile.getAnagrafichePropietarie() == null || immobile.getAnagrafichePropietarie().size() == 0)
+//												  ? new ArrayList<AnagraficheModel>()
+//												  : immobile.getAnagrafichePropietarie());
 				((RecapitiView)ivp).setCompareView(isInCompareMode);
 			}
 

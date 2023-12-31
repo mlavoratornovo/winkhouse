@@ -50,11 +50,11 @@ public class CancellaRecapitoAction extends Action {
 			while (it.hasNext()) {
 				
 				ContattiModel cModel = (ContattiModel)it.next();
-				for (AnagraficheModel anagrafica : rv.getAnagrafiche()) {
-					if (anagrafica.getCodAnagrafica() == cModel.getCodAnagrafica()){
-						anagrafica.getContatti().remove(cModel);
-					}
-				}
+//				for (AnagraficheModel anagrafica : rv.getAnagrafiche()) {
+//					if (anagrafica.getCodAnagrafica() == cModel.getCodAnagrafica()){
+//						anagrafica.getContatti().remove(cModel);
+//					}
+//				}
 				
 			}
 			rv.getTvRecapiti().refresh();

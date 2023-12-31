@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
@@ -39,6 +40,7 @@ import winkhouse.action.anagrafiche.SalvaAnagrafica;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.action.stampa.StampaAnagraficheAction;
 import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Classicliente;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
@@ -59,7 +61,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 
 	public final static String ID = "winkhouse.dettaglioanagraficaview";
 	
-	private AnagraficheModel anagrafica = null;
+	private Anagrafiche anagrafica = null;
 	//Anagrafica Immobile
 	Text tcognome = null;
 	Text tnome = null;
@@ -89,11 +91,11 @@ public class DettaglioAnagraficaView extends ViewPart {
 	};
 
 	
-	private Comparator<ClassiClientiVO> comparatorClassiCliente = new Comparator<ClassiClientiVO>(){
+	private Comparator<Classicliente> comparatorClassiCliente = new Comparator<Classicliente>(){
 
 		@Override
-		public int compare(ClassiClientiVO arg0,ClassiClientiVO arg1) {
-			return arg0.getCodClasseCliente().compareTo(arg1.getCodClasseCliente()); 
+		public int compare(Classicliente arg0,Classicliente arg1) {
+			return Integer.valueOf(arg0.getId()).compareTo(Integer.valueOf(arg1.getId())); 
 		}
 		
 	};
@@ -252,8 +254,8 @@ public class DettaglioAnagraficaView extends ViewPart {
 		bindAnagrafica(bindingContext);
 		updateViews();
 		if ((anagrafica != null) && 
-			(anagrafica.getImmobili() != null) && 
-			(anagrafica.getImmobili().size() > 0)){
+			(anagrafica.getImmobilis() != null) && 
+			(anagrafica.getImmobilis().size() > 0)){
 			f.setImage(anagraficaPropietaImg);
 			setTitleImage(anagraficaPropietaImg);
 		}else{
@@ -262,11 +264,11 @@ public class DettaglioAnagraficaView extends ViewPart {
 		}
 	}
 
-	public AnagraficheModel getAnagrafica() {
+	public Anagrafiche getAnagrafica() {
 		return anagrafica;
 	}
 
-	public void setAnagrafica(AnagraficheModel anagrafica) {
+	public void setAnagrafica(Anagrafiche anagrafica) {
 		isInCompareMode = false;
 		DataBindingContext bindingContext = new DataBindingContext();
 		this.anagrafica = anagrafica;		
@@ -277,8 +279,8 @@ public class DettaglioAnagraficaView extends ViewPart {
 			setPartName(anagrafica.getCognome() + " - " + anagrafica.getNome());
 		}
 		if (
-			(anagrafica.getImmobili() == null) ||
-			(anagrafica.getImmobili().size() == 0)
+			(anagrafica.getImmobilis() == null) ||
+			(anagrafica.getImmobilis().size() == 0)
 			){				
 			f.setImage(anagraficaImg);
 			setTitleImage(anagraficaImg);
@@ -295,35 +297,30 @@ public class DettaglioAnagraficaView extends ViewPart {
 		if (anagrafica != null){
 			
 			
-			IViewPart ivp = Activator.getDefault()
-					 				 .getWorkbench()
+			IViewPart ivp = PlatformUI.getWorkbench()
 					 				 .getActiveWorkbenchWindow()
 					 				 .getActivePage()
 					 				 .findView(ColloquiView.ID);
 			
 			if (ivp != null){
-				((ColloquiView)ivp).setAnagrafica(anagrafica);
+				// ((ColloquiView)ivp).setAnagrafica(anagrafica);
 				((ColloquiView)ivp).setCompareView(isInCompareMode);
 			}
 
-			ivp = Activator.getDefault()
-			   			   .getWorkbench()
-			   			   .getActiveWorkbenchWindow()
+			ivp = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 			   			   .getActivePage()
 			   			   .findView(RecapitiView.ID);
 			
 			if (ivp != null){
-				ArrayList<AnagraficheModel> anagrafiche = new ArrayList<AnagraficheModel>();
+				ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
 				anagrafiche.add(anagrafica);			
 
-				ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(anagrafiche,false);
-				adra.run();
-//				((RecapitiView)ivp).setAnagrafica(anagrafica);
+//				ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(anagrafiche,false);
+//				adra.run();
 				((RecapitiView)ivp).setCompareView(isInCompareMode);
 			}
 
-			ivp = Activator.getDefault()
-			   			   .getWorkbench()
+			ivp = PlatformUI.getWorkbench()
 			   			   .getActiveWorkbenchWindow()
 			   			   .getActivePage()
 			   			   .findView(ImmaginiImmobiliView.ID);
@@ -344,30 +341,28 @@ public class DettaglioAnagraficaView extends ViewPart {
 //				((ListaAffittiView)ivp).setImmobile(null);				
 //			}
 
-			ivp = Activator.getDefault()
-						   .getWorkbench()
+			ivp = PlatformUI.getWorkbench()
 						   .getActiveWorkbenchWindow()
 						   .getActivePage()
 						   .findView(ImmobiliPropietaView.ID);
 
 			if (ivp != null){
-				((ImmobiliPropietaView)ivp).setAnagrafica(anagrafica);
+				//((ImmobiliPropietaView)ivp).setAnagrafica(anagrafica);
 			}
 			
-			IViewPart eavv = Activator.getDefault()
-	   				  .getWorkbench()
+			IViewPart eavv = PlatformUI.getWorkbench()
 	   				  .getActiveWorkbenchWindow()
 	   				  .getActivePage()
 	   				  .findView(EAVView.ID);
 
 			if (eavv != null){
-				if ((anagrafica.getEntity() != null) && (anagrafica.getEntity().getAttributes()!= null)){
-					((EAVView)eavv).setAttributes(anagrafica.getEntity().getAttributes(), anagrafica.getCodAnagrafica());
-					((EAVView)eavv).setCompareView(isInCompareMode);
-				}
+//				if ((anagrafica.getEntity() != null) && (anagrafica.getEntity().getAttributes()!= null)){
+//					((EAVView)eavv).setAttributes(anagrafica.getEntity().getAttributes(), anagrafica.getCodAnagrafica());
+//					((EAVView)eavv).setCompareView(isInCompareMode);
+//				}
 			}
 			
-			IViewPart mapv = Activator.getDefault()
+			IViewPart mapv = PlatformUI
 		  				  .getWorkbench()
 		  				  .getActiveWorkbenchWindow()
 		  				  .getActivePage()
@@ -381,18 +376,17 @@ public class DettaglioAnagraficaView extends ViewPart {
 			
 			
 			WinkhouseUtils.getInstance()
-							.setLastCodAnagraficaSelected(anagrafica.getCodAnagrafica());
+							.setLastCodAnagraficaSelected(anagrafica.getId());
 			WinkhouseUtils.getInstance()
 							.setLastEntityTypeFocused(AnagraficheModel.class.getName());
 			
-			ivp = Activator.getDefault()
-		   			   .getWorkbench()
+			ivp = PlatformUI.getWorkbench()
 		   			   .getActiveWorkbenchWindow()
 		   			   .getActivePage()
 		   			   .findView(AbbinamentiView.ID);
 		
 			if (ivp != null){
-				((AbbinamentiView)ivp).setAnagrafica(anagrafica);
+				//((AbbinamentiView)ivp).setAnagrafica(anagrafica);
 				((AbbinamentiView)ivp).setCompareView(isInCompareMode);
 			}
 		
@@ -402,8 +396,8 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 	private void bindAnagrafica(DataBindingContext bindingContext){
 		if (anagrafica != null){
-			this.setPartName(((!anagrafica.getRagioneSociale().equalsIgnoreCase(""))
-							  ? anagrafica.getRagioneSociale() + " - "
+			this.setPartName(((!anagrafica.getRagsoc().equalsIgnoreCase(""))
+							  ? anagrafica.getRagsoc() + " - "
 							  :"") + 
 							  ((!anagrafica.getCognome().equalsIgnoreCase(""))
 							  ? anagrafica.getCognome() + " - "
@@ -479,11 +473,12 @@ public class DettaglioAnagraficaView extends ViewPart {
 			cvagenteinseritoreanagrafica.setInput(new Object());
 			
 			if ((anagrafica != null) && 
-				(anagrafica.getAgenteInseritore() != null)){
+				(anagrafica.getAgenti() != null)){
 				
-				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), 
-													 anagrafica.getAgenteInseritore(), 
-													 comparatorAgenti);
+//				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), 
+//													 anagrafica.getAgenti(), 
+//													 comparatorAgenti);
+				int index = -1;
 				if (index > -1){
 					Object[] sel = new Object[1];
 					sel[0] = MobiliaDatiBaseCache.getInstance().getAgenti().get(index);
@@ -496,7 +491,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					anagrafica.setAgenteInseritore((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					//anagrafica.setAgenteInseritore((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
 				}
 				
 			});
@@ -532,13 +527,13 @@ public class DettaglioAnagraficaView extends ViewPart {
 			cvclassiclienti.setInput(new Object());
 			
 			if ((anagrafica != null) && 
-				(anagrafica.getClasseCliente() != null)){
+				(anagrafica.getClassicliente() != null)){
 				ArrayList<Classicliente> classi = MobiliaDatiBaseCache.getInstance().getClassiClienti();
 
-//				int index = Collections.binarySearch(classi, 
-//													 anagrafica.getClasseCliente(), 
-//													 comparatorClassiCliente);
-				int index = -1;
+				int index = Collections.binarySearch(classi, 
+													 anagrafica.getClassicliente(), 
+													 comparatorClassiCliente);
+//				int index = -1;
 				if (index > -1){
 					Object[] sel = new Object[1];
 					sel[0] = MobiliaDatiBaseCache.getInstance().getClassiClienti().get(index);
@@ -551,7 +546,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					anagrafica.setClasseCliente((ClassiClientiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					//anagrafica.setClasseCliente((ClassiClientiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
 				}
 				
 			});

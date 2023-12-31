@@ -60,10 +60,10 @@ public class StampaAnagraficheAction extends Action
 					  				.getActivePart();
 			
 			if (vp instanceof DettaglioAnagraficaView){
-				AnagraficheModel am = ((DettaglioAnagraficaView)vp).getAnagrafica();
+//				AnagraficheModel am = ((DettaglioAnagraficaView)vp).getAnagrafica();
 				ReportHelper rh = new ReportHelper();
 				ArrayList al = new ArrayList();
-				al.add(am);
+//				al.add(am);
 				rh.doReport(al, report);
 			}
 			

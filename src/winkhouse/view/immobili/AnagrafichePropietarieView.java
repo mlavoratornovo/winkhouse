@@ -98,8 +98,8 @@ public class AnagrafichePropietarieView extends ViewPart {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				AnagraficheModel am = (AnagraficheModel)((StructuredSelection)tvAnagrafichePropietarie.getSelection()).getFirstElement();
-				ApriDettaglioAnagraficaAction adia = new ApriDettaglioAnagraficaAction(am, null);
-				adia.run();
+//				ApriDettaglioAnagraficaAction adia = new ApriDettaglioAnagraficaAction(am, null);
+//				adia.run();
 			}
 		});	
 		tvAnagrafichePropietarie.setContentProvider(new IStructuredContentProvider(){
@@ -224,7 +224,7 @@ public class AnagrafichePropietarieView extends ViewPart {
 			   										   .getActivePage()
 			   										   .findView(RecapitiView.ID);
 			
-			riv.setAnagrafiche(this.immobile.getAnagrafichePropietarie());
+//			riv.setAnagrafiche(this.immobile.getAnagrafichePropietarie());
 
 		}
 				

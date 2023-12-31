@@ -85,9 +85,9 @@ public class AnagraficaTreeView extends ViewPart
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				try {
-					if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof AnagraficheVO){
-						AnagraficheVO aVO = (AnagraficheVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
-						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(new AnagraficheModel(aVO), null);
+					if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof Anagrafiche){
+						Anagrafiche aVO = (Anagrafiche)((StructuredSelection)viewer.getSelection()).getFirstElement();
+						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(aVO, null);
 						adaa.run();
 					}
 				} catch (Exception e1) {
@@ -123,14 +123,14 @@ public class AnagraficaTreeView extends ViewPart
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								
-								AnagraficheModel aModel = new AnagraficheModel();
+								Anagrafiche aModel = new Anagrafiche();
 								if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof ClassiClientiVO){
 									
 									try {											
 										Object o = ((StructuredSelection)viewer.getSelection()).getFirstElement();
 										if ((o != null) && (o instanceof ClassiClientiVO)){
 											ClassiClientiVO ccVO = (ClassiClientiVO)o;
-											aModel.setCodClasseCliente(ccVO.getCodClasseCliente());
+											aModel.setClassicliente(null);
 										}
 										
 									} catch (Exception e1) {										
@@ -176,9 +176,11 @@ public class AnagraficaTreeView extends ViewPart
 		public void run(IProgressMonitor monitor) throws InvocationTargetException, 
 														 InterruptedException {
 			if (parentElement instanceof Classicliente){
-				alAnagrafiche = anagraficheDAO.getAnagraficheByClasse(AnagraficheModel.class.getName(),((ClassiClientiVO)parentElement).getCodClasseCliente()).toArray();
+				Classicliente cc = classiDAO.getClasseClienteById(((ClassiClientiVO)parentElement).getCodClasseCliente());
+				alAnagrafiche = anagraficheDAO.getAnagraficheByClasse(cc).toArray();
 			}else{
-				ArrayList alClassi = classiDAO.list(ClassiClientiVO.class.getName()); 
+				
+				ArrayList alClassi = classiDAO.list(null); 
 				alAnagrafiche = alClassi.toArray();
 			}
 			
@@ -211,31 +213,32 @@ public class AnagraficaTreeView extends ViewPart
 					}
 					if (((ComuniVO)parentElement).getComune().equalsIgnoreCase("") == false){
 						ArrayList alClassi = classiDAO.listByComune(((ComuniVO)parentElement).getComune());
-						ArrayList anagrafiche = anagraficheDAO.getAnagraficheByComuneClasse(AnagraficheModel.class.getName(),
-																						    ((ComuniVO)parentElement).getComune(),
+						ArrayList anagrafiche = anagraficheDAO.getAnagraficheByComuneClasse(((ComuniVO)parentElement).getComune(),
 																						    null);
 						anagrafiche = ProfilerHelper.getInstance().filterAnagrafiche(anagrafiche, false);
 						alClassi.addAll(anagrafiche);
 						return alClassi.toArray();
 					}else{
 						if (parentElement instanceof ClassiClientiVO){		
-							ArrayList anagrafiche = anagraficheDAO.getAnagraficheByComuneClasse(AnagraficheModel.class.getName(),
-																								((ClassiClientiModel)parentElement).getComune(),
-																							    ((ClassiClientiModel)parentElement).getCodClasseCliente());
+							Classicliente cc = classiDAO.getClasseClienteById(((ClassiClientiModel)parentElement).getCodClasseCliente());
+							ArrayList anagrafiche = anagraficheDAO.getAnagraficheByComuneClasse(((ClassiClientiModel)parentElement).getComune(),cc);
 							anagrafiche = ProfilerHelper.getInstance().filterAnagrafiche(anagrafiche, false);
+							cc = null;
 							return anagrafiche.toArray();
 						}
 					}						
 				}
-				if (parentElement instanceof ClassiClientiVO){		
-					ArrayList anagrafiche = anagraficheDAO.getAnagraficheByComuneClasse(AnagraficheModel.class.getName(),
-																						((ClassiClientiModel)parentElement).getComune(),
-																					    ((ClassiClientiModel)parentElement).getCodClasseCliente());
+				if (parentElement instanceof ClassiClientiVO){
+					Classicliente cc = classiDAO.getClasseClienteById(((ClassiClientiModel)parentElement).getCodClasseCliente());
+					ArrayList anagrafiche = anagraficheDAO.getAnagraficheByComuneClasse(((ClassiClientiModel)parentElement).getComune(),cc);
 					anagrafiche = ProfilerHelper.getInstance().filterAnagrafiche(anagrafiche, false);
+					cc = null;
 					return anagrafiche.toArray();
 				}
-				
-				return comuniDAO.getProvincieAnagrafiche().toArray();
+				ArrayList anagrafiche = anagraficheDAO.getAnagraficheByNullProvincia();
+				ArrayList provincie = comuniDAO.getProvincieAnagrafiche();
+				provincie.addAll(anagrafiche);
+				return provincie.toArray();
 			}else{
 		
 				if (parentElement instanceof Classicliente){
@@ -259,7 +262,7 @@ public class AnagraficaTreeView extends ViewPart
 		@Override
 		public boolean hasChildren(Object element) {	
 			
-			return (element instanceof Classicliente) && (((Classicliente)element).getAnagrafiches().size() > 0);
+			return (element instanceof ComuniVO) || (element instanceof ClassiClientiModel) || ((element instanceof Classicliente) && (((Classicliente)element).getAnagrafiches().size() > 0));
 		}
 
 	}
@@ -276,6 +279,10 @@ public class AnagraficaTreeView extends ViewPart
 			if (obj instanceof Classicliente){
 				returnValue = ((Classicliente)obj).getDescrizione();
 			}
+			if (obj instanceof ClassiClientiModel){
+				returnValue = ((ClassiClientiModel)obj).getDescrizione();
+			}
+			
 			if (obj instanceof Anagrafiche){
 				returnValue = ""+((Anagrafiche)obj).getId() + " - " +
 							  ((!((Anagrafiche)obj).getRagsoc().equalsIgnoreCase(""))
@@ -305,9 +312,8 @@ public class AnagraficaTreeView extends ViewPart
 				}else{
 					return anagraficaImg;
 				}
-			}else{			
-				return classeImg;
-			}			
+			}
+			return classeImg;
 		}
 	}
 	

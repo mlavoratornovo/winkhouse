@@ -198,7 +198,7 @@
             id="winkhouse.anagraficheabbinateview">
       </view>      
       <view
-            name="Immobili propieta"
+            name="Immobili proprieta"
             allowMultiple="false"
             icon="icons/immobile.png"
             class="winkhouse.view.anagrafica.ImmobiliPropietaView"            
@@ -254,7 +254,7 @@
             id="winkhouse.desktopview">            
       </view>            
       <view
-            name="Anagrafiche propietarie"
+            name="Anagrafiche proprietarie"
             allowMultiple="false"
             icon="icons/anagrafica.png"
             class="winkhouse.view.immobili.AnagrafichePropietarieView"            

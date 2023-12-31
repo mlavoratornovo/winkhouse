@@ -4,13 +4,14 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Anagrafiche;
 
 public class ApriDettaglioAnagraficaPerspectiveAction extends Action {
 	
-	private AnagraficheModel anagrafica = null;
+	private Anagrafiche anagrafica = null;
 	private boolean comparerView = false;
 	
-	public ApriDettaglioAnagraficaPerspectiveAction(AnagraficheModel anagrafica) {
+	public ApriDettaglioAnagraficaPerspectiveAction(Anagrafiche anagrafica) {
 		this.anagrafica = anagrafica;
 	}
 
