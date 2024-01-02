@@ -59,6 +59,8 @@ import winkhouse.helper.ContattiHelper;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiAnagraficheModel_Ang;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Contatti;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.view.anagrafica.PopUpRicercaAnagrafica;
 import winkhouse.vo.AnagraficheVO;
@@ -121,19 +123,19 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 	}
-
-	private Comparator<TipologiaContattiVO> comparatorTipologieContatti = new Comparator<TipologiaContattiVO>(){
+	
+	private Comparator<Tipologiecontatti> comparatorTipologieContatti = new Comparator<Tipologiecontatti>(){
 		@Override
-		public int compare(TipologiaContattiVO arg0, TipologiaContattiVO arg1) {
+		public int compare(Tipologiecontatti arg0, Tipologiecontatti arg1) {
 			if ((arg0 != null) && (arg1 != null)){
-				if ((arg0.getDescrizione() != null) && (arg1.getDescrizione() != null)){
-					return arg0.getDescrizione().compareTo(arg1.getDescrizione());
-				}else if ((arg0.getDescrizione() == null) && (arg1.getDescrizione() != null)){
-					return 1;
+				if ((arg0.getDescrizione() == null) && (arg1.getDescrizione() == null)){
+					return 0;
 				}else if ((arg0.getDescrizione() != null) && (arg1.getDescrizione() == null)){
+					return 1;
+				}else if ((arg0.getDescrizione() == null) && (arg1.getDescrizione() != null)){ 
 					return -1;
 				}else{
-					return 0;
+					return arg0.getDescrizione().compareTo(arg1.getDescrizione());
 				}
 			}else if ((arg0 == null) && (arg1 != null)){
 				return -1;
@@ -141,15 +143,15 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 				return 1;
 			}else{
 				return 0;
-			}
+			}				
 		}		
 	};
-	
+		
 	public void fillTipologieRecapiti(){		
 		MobiliaDatiBaseCache.getInstance().getTipologieContatti();
 		Collections.sort(MobiliaDatiBaseCache.getInstance().getTipologieContatti(), comparatorTipologieContatti);
 		desTipologieRecapiti = new String[MobiliaDatiBaseCache.getInstance().getTipologieContatti().size()];
-		Iterator<TipologiaContattiVO> it = MobiliaDatiBaseCache.getInstance().getTipologieContatti().iterator();
+		Iterator<Tipologiecontatti> it = MobiliaDatiBaseCache.getInstance().getTipologieContatti().iterator();
 		int count = 0;
 		while(it.hasNext()){
 			desTipologieRecapiti[count] = it.next().getDescrizione();
@@ -676,13 +678,13 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {
-				ContattiModel cModel = ((ContattiModel)element);
+				Contatti cModel = ((Contatti)element);
 				int index = -1; 
 			
-				if (cModel.getTipologia() != null){
+				if (cModel.getTipologiecontatti() != null){
 					
 					index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieContatti(), 
-													 cModel.getTipologia(),
+													 cModel.getTipologiecontatti(),
 										             comparatorTipologieContatti);
 				}
 				return index;
@@ -690,11 +692,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				ContattiModel cModel = ((ContattiModel)element);
+				Contatti cModel = ((Contatti)element);
 				if (((Integer)value).intValue() > -1){
-					cModel.setTipologia(MobiliaDatiBaseCache.getInstance()
-															.getTipologieContatti()
-															.get((Integer)value));
+					cModel.setTipologiecontatti(MobiliaDatiBaseCache.getInstance().getTipologieContatti().get((Integer)value));
 					tvcontatti.refresh();
 				}
 			}

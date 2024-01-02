@@ -10,5 +10,11 @@ public class Anagrafiche extends _Anagrafiche {
     
     public int getId() {
         return Cayenne.intPKForObject(this);
-     }
+    }
+    
+	@Override
+	public String toString() {		
+		return getNome() + " " + getCognome() + " " +getRagsoc() + " - " + getCitta() + " " + getIndirizzo();
+	}
+
 }

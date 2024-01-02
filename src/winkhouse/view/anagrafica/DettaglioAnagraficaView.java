@@ -316,8 +316,8 @@ public class DettaglioAnagraficaView extends ViewPart {
 				ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
 				anagrafiche.add(anagrafica);			
 
-//				ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(anagrafiche,false);
-//				adra.run();
+				ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(anagrafiche,false);
+				adra.run();
 				((RecapitiView)ivp).setCompareView(isInCompareMode);
 			}
 
@@ -408,7 +408,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 							  :""));
 			
 			  bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tragionesociale),
-					  				   PojoProperties.value("ragioneSociale").observe(anagrafica), null, null);
+					  				   PojoProperties.value("ragsoc").observe(anagrafica), null, null);
 			  
 			  bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tcognome),
 					  				   PojoProperties.value("cognome").observe(anagrafica), null, null);
@@ -417,10 +417,10 @@ public class DettaglioAnagraficaView extends ViewPart {
 	  				   				   PojoProperties.value("nome").observe(anagrafica), null, null);
 
 			  bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tcodicefiscale),
-					  				   PojoProperties.value("codiceFiscale").observe(anagrafica), null, null);
+					  				   PojoProperties.value("codicefiscale").observe(anagrafica), null, null);
 			  
 			  bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tpiva),
-	  				   				   PojoProperties.value("partitaIva").observe(anagrafica), null, null);
+	  				   				   PojoProperties.value("partitaiva").observe(anagrafica), null, null);
 			  
 			  bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tcapanagrafica),
 					  				   PojoProperties.value("cap").observe(anagrafica), null, null);
@@ -466,7 +466,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public String getText(Object element) {
-					return ((AgentiVO)element).getCognome() + " " + ((AgentiVO)element).getNome();
+					return ((Agenti)element).getCognome() + " " + ((Agenti)element).getNome();
 				}
 				
 			});

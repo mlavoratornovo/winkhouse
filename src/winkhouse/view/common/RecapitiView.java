@@ -40,13 +40,11 @@ import winkhouse.action.recapiti.NuovoRecapitoAction;
 import winkhouse.action.recapiti.RefreshRecapitiAction;
 import winkhouse.model.AbbinamentiModel;
 import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ContattiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Contatti;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.util.MobiliaDatiBaseCache;
-import winkhouse.vo.ContattiVO;
-import winkhouse.vo.TipologiaContattiVO;
 
 
 
@@ -78,9 +76,9 @@ public class RecapitiView extends ViewPart {
 	public RecapitiView() {
 	}
 	
-	private Comparator<TipologiaContattiVO> comparatorTipologieContatti = new Comparator<TipologiaContattiVO>(){
+	private Comparator<Tipologiecontatti> comparatorTipologieContatti = new Comparator<Tipologiecontatti>(){
 		@Override
-		public int compare(TipologiaContattiVO arg0, TipologiaContattiVO arg1) {
+		public int compare(Tipologiecontatti arg0, Tipologiecontatti arg1) {
 			if ((arg0.getDescrizione() == null) && (arg1.getDescrizione() == null)){
 				return 0;
 			}else if ((arg0.getDescrizione() != null) && (arg1.getDescrizione() == null)){
@@ -124,42 +122,42 @@ public class RecapitiView extends ViewPart {
 			
 			int returnValue = 0;
 			
-			String tipologia1 = (((ContattiModel)e1).getTipologia() == null)
+			String tipologia1 = (((Contatti)e1).getTipologiecontatti() == null)
 								 ? ""
-								 : (((ContattiModel)e1).getTipologia().getDescrizione() == null)
+								 : (((Contatti)e1).getTipologiecontatti().getDescrizione() == null)
 								 	? ""
-								 	: ((ContattiModel)e1).getTipologia().getDescrizione();
-			String tipologia2 = (((ContattiModel)e2).getTipologia() == null)
+								 	: ((Contatti)e1).getTipologiecontatti().getDescrizione();
+			String tipologia2 = (((Contatti)e2).getTipologiecontatti() == null)
 								 ? ""
-								 : (((ContattiModel)e2).getTipologia().getDescrizione() == null)
+								 : (((Contatti)e2).getTipologiecontatti().getDescrizione() == null)
 								 	? ""
-								 	: ((ContattiModel)e2).getTipologia().getDescrizione();
+								 	: ((Contatti)e2).getTipologiecontatti().getDescrizione();
 						
-			String contatto1 = (((ContattiModel)e1).getContatto()==null)
+			String contatto1 = (((Contatti)e1).getContatto()==null)
 								? "nuovo recapito"
-								: String.valueOf(((ContattiVO)e1).getContatto());
-			String contatto2 = (((ContattiModel)e2).getContatto()==null)
+								: String.valueOf(((Contatti)e1).getContatto());
+			String contatto2 = (((Contatti)e2).getContatto()==null)
 								? "nuovo recapito"
-								: String.valueOf(((ContattiVO)e2).getContatto());
+								: String.valueOf(((Contatti)e2).getContatto());
 
 			
-			String descrizione1 = (((ContattiModel)e1).getDescrizione()==null)
+			String descrizione1 = (((Contatti)e1).getDescrizione()==null)
 									? ""
-									: String.valueOf(((ContattiVO)e1).getDescrizione());
-			String descrizione2 = (((ContattiModel)e2).getDescrizione()==null)
+									: String.valueOf(((Contatti)e1).getDescrizione());
+			String descrizione2 = (((Contatti)e2).getDescrizione()==null)
 									? ""
-									: String.valueOf(((ContattiVO)e2).getDescrizione());
+									: String.valueOf(((Contatti)e2).getDescrizione());
 			
-			String anagrafica1 = (((ContattiModel)e1).getAnagrafica() == null)
+			String anagrafica1 = (((Contatti)e1).getAnagrafiche() == null)
 					 			  ? ""
-					 			  : (((ContattiModel)e1).getAnagrafica().toString() == null)
+					 			  : (((Contatti)e1).getAnagrafiche().toString() == null)
 					 			     ? ""
-					 			     : ((ContattiModel)e1).getAnagrafica().toString();
-			String anagrafica2 = (((ContattiModel)e2).getAnagrafica() == null)
+					 			     : ((Contatti)e1).getAnagrafiche().toString();
+			String anagrafica2 = (((Contatti)e2).getAnagrafiche() == null)
 					 			  ? ""
-					 			  : (((ContattiModel)e2).getAnagrafica().toString() == null)
+					 			  : (((Contatti)e2).getAnagrafiche().toString() == null)
 					 			     ? ""
-					 			     : ((ContattiModel)e2).getAnagrafica().toString();
+					 			     : ((Contatti)e2).getAnagrafiche().toString();
 			
 			switch (propertyIndex) {
 			case 0: {
@@ -304,13 +302,13 @@ public class RecapitiView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				ContattiModel cModel = ((ContattiModel)element);
+				Contatti cModel = ((Contatti)element);
 				switch (columnIndex){
-				case 0: return ((cModel.getTipologia() == null)
+				case 0: return ((cModel.getTipologiecontatti() == null)
 							   ? ""
-							   : (cModel.getTipologia().getDescrizione() == null)
+							   : (cModel.getTipologiecontatti().getDescrizione() == null)
 							     ? ""
-							     : cModel.getTipologia().getDescrizione());					        
+							     : cModel.getTipologiecontatti().getDescrizione());					        
 				
 				case 1: return ((cModel.getContatto() == null) || 
 								(cModel.getContatto().equalsIgnoreCase(""))
@@ -353,12 +351,12 @@ public class RecapitiView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				ContattiModel cModel = ((ContattiModel)cell.getElement());
-				cell.setText((cModel.getTipologia() == null)
+				Contatti cModel = ((Contatti)cell.getElement());
+				cell.setText((cModel.getTipologiecontatti() == null)
 							 ? ""
-							 : (cModel.getTipologia().getDescrizione() == null)
+							 : (cModel.getTipologiecontatti().getDescrizione() == null)
 							 	? ""
-							 	: cModel.getTipologia().getDescrizione());
+							 	: cModel.getTipologiecontatti().getDescrizione());
 				
 			}
 			
@@ -382,11 +380,11 @@ public class RecapitiView extends ViewPart {
 			@Override
 			protected Object getValue(Object element) {
 				int index = -1; 
-				ContattiModel cModel = ((ContattiModel)element);
-				if (cModel.getTipologia() != null){
+				Contatti cModel = ((Contatti)element);
+				if (cModel.getTipologiecontatti() != null){
 					
 					index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieContatti(), 
-										             cModel.getTipologia(),
+										             cModel.getTipologiecontatti(),
 										             comparatorTipologieContatti);
 				}
 				return index;
@@ -395,8 +393,8 @@ public class RecapitiView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {		
 				if (((Integer)value).intValue() > -1){
-					ContattiModel cModel = ((ContattiModel)element);
-					cModel.setTipologia(MobiliaDatiBaseCache.getInstance().getTipologieContatti().get((Integer)value));
+					Contatti cModel = ((Contatti)element);
+					cModel.setTipologiecontatti((MobiliaDatiBaseCache.getInstance().getTipologieContatti().get((Integer)value)));
 					tvRecapiti.refresh();
 				}
 			}
@@ -418,9 +416,9 @@ public class RecapitiView extends ViewPart {
 			public void update(ViewerCell cell) {
 				
 				cell.setText(
-						(((ContattiModel)cell.getElement()).getContatto()==null)
+						(((Contatti)cell.getElement()).getContatto()==null)
 						? "nuovo recapito"
-						: String.valueOf(((ContattiVO)cell.getElement()).getContatto())
+						: String.valueOf(((Contatti)cell.getElement()).getContatto())
 							);
 				
 			}
@@ -441,14 +439,14 @@ public class RecapitiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((ContattiModel)element).getContatto() == null)
+				return (((Contatti)element).getContatto() == null)
 	   			   	   ? "nuovo recapito"
-			   		   : String.valueOf(((ContattiVO)element).getContatto());
+			   		   : String.valueOf(((Contatti)element).getContatto());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((ContattiModel)element).setContatto(String.valueOf(value));
+				((Contatti)element).setContatto(String.valueOf(value));
 				tvRecapiti.refresh();
 			}
 			
@@ -469,9 +467,9 @@ public class RecapitiView extends ViewPart {
 			public void update(ViewerCell cell) {
 				
 				cell.setText(
-						(((ContattiModel)cell.getElement()).getDescrizione()==null)
+						(((Contatti)cell.getElement()).getDescrizione()==null)
 						? ""
-						: String.valueOf(((ContattiVO)cell.getElement()).getDescrizione())
+						: String.valueOf(((Contatti)cell.getElement()).getDescrizione())
 							);
 				
 			}
@@ -492,14 +490,14 @@ public class RecapitiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((ContattiModel)element).getDescrizione() == null)
+				return (((Contatti)element).getDescrizione() == null)
 	   			   	   ? ""
-			   		   : String.valueOf(((ContattiVO)element).getDescrizione());
+			   		   : String.valueOf(((Contatti)element).getDescrizione());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((ContattiModel)element).setDescrizione(String.valueOf(value));
+				((Contatti)element).setDescrizione(String.valueOf(value));
 				tvRecapiti.refresh();
 			}
 			
@@ -516,12 +514,12 @@ public class RecapitiView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				ContattiModel cModel = ((ContattiModel)cell.getElement());
-				cell.setText((cModel.getAnagrafica() == null)
+				Contatti cModel = ((Contatti)cell.getElement());
+				cell.setText((cModel.getAnagrafiche() == null)
 							 ? ""
-							 : (cModel.getAnagrafica().toString() == null)
+							 : (cModel.getAnagrafiche().toString() == null)
 							 	? ""
-							 	: cModel.getAnagrafica().toString());
+							 	: cModel.getAnagrafiche().toString());
 				
 			}
 			
@@ -602,10 +600,10 @@ public class RecapitiView extends ViewPart {
 	}
 
 	public void fillTipologieRecapiti(){		
-		MobiliaDatiBaseCache.getInstance().getTipologieContatti();
+		
 		Collections.sort(MobiliaDatiBaseCache.getInstance().getTipologieContatti(), comparatorTipologieContatti);
 		desTipologieRecapiti = new String[MobiliaDatiBaseCache.getInstance().getTipologieContatti().size()];
-		Iterator<TipologiaContattiVO> it = MobiliaDatiBaseCache.getInstance().getTipologieContatti().iterator();
+		Iterator<Tipologiecontatti> it = MobiliaDatiBaseCache.getInstance().getTipologieContatti().iterator();
 		int count = 0;
 		while(it.hasNext()){
 			desTipologieRecapiti[count] = it.next().getDescrizione();

@@ -7,7 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.db.orm.CayenneContextManager;
+import winkhouse.orm.Classicliente;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.vo.TipologiaContattiVO;
 
 
@@ -23,6 +29,10 @@ public class TipologiaContattiDAO extends BaseDAO{
 	
 	public TipologiaContattiDAO() {
 
+	}
+	public ArrayList<Tipologiecontatti> list(){
+		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		return new ArrayList<Tipologiecontatti>(ObjectSelect.query(Tipologiecontatti.class).select(context));
 	}
 
 	public <T> ArrayList<T> list(String classType){
