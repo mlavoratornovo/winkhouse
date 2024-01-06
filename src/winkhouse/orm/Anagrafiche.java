@@ -8,13 +8,13 @@ public class Anagrafiche extends _Anagrafiche {
 
     private static final long serialVersionUID = 1L;
     
-    public int getId() {
+    public int getCodAnagrafica() {
         return Cayenne.intPKForObject(this);
     }
     
 	@Override
 	public String toString() {		
-		return getNome() + " " + getCognome() + " " +getRagsoc() + " - " + getCitta() + " " + getIndirizzo();
+		return getNome() + " " + getCognome() + " " + getRagsoc() + " - " + getCitta() + " " + getIndirizzo();
 	}
 
 }

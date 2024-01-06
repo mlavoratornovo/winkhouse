@@ -16,6 +16,7 @@ import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.model.ClassiClientiModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Classicliente;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ClassiClientiVO;
 
 
@@ -34,7 +35,7 @@ public class ClassiClientiDAO extends BaseDAO{
 	public final static String UPDATE_CLASSICLIENTI_AGENTEUPDATE = "UPDATE_CLASSICLIENTI_AGENTE_UPDATE";
 	
 	public ArrayList<Classicliente> list(String classType){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return new ArrayList<Classicliente>(ObjectSelect.query(Classicliente.class).select(context));
 	}
 
@@ -211,7 +212,7 @@ public class ClassiClientiDAO extends BaseDAO{
 	}
 	
 	public Classicliente getClasseClienteById(Integer idClasseClienti){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return Cayenne.objectForPK(context,Classicliente.class,idClasseClienti);
 	}
 	public Object getClasseClienteById(String classType, Integer idClasseClienti){

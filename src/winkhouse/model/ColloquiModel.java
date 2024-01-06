@@ -282,8 +282,8 @@ public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 		
 		if (entity == null){
 			
-			EntityDAO eDAO = new EntityDAO();
-			entity = eDAO.getEntityByClassName(ColloquiVO.class.getName());
+//			EntityDAO eDAO = new EntityDAO();
+//			entity = eDAO.getEntityByClassName(ColloquiVO.class.getName());
 			
 		}
 		return entity;

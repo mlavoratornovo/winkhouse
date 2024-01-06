@@ -317,9 +317,8 @@ public class RicercaWizard extends Wizard {
 						  										.findView(AbbinamentiView.ID);
 				
 				if (av != null){
-					if ((av.getImmobile() != null) &&
-						(av.getImmobile().getCodImmobile() != null)
-					    ){
+					if (av.getImmobile() != null)
+					    {
 						ProgressMonitorDialog pmd = new ProgressMonitorDialog(this.getShell());
 						IRunnableWithProgress irwpAddAbbinamentiAnagrafiche = new IRunnableWithProgress() {
 							

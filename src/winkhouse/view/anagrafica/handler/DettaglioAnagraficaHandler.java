@@ -46,14 +46,14 @@ public class DettaglioAnagraficaHandler {
 			
 				if (ProfilerHelper.getInstance().getPermessoUI(DettaglioAnagraficaView.ID)){
 					
-					PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(viewInstance.getId(), false);
+					PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(viewInstance.getCodAnagrafica(), false);
 					if (pd != null){			
 				
 						vr = PlatformUI.getWorkbench()
 							           .getActiveWorkbenchWindow()
 									   .getActivePage()
 									   .findViewReference(DettaglioAnagraficaView.ID,
-											   			  String.valueOf(viewInstance.getId()));
+											   			  String.valueOf(viewInstance.getCodAnagrafica()));
 					
 						if (vr != null){
 							dav = (DettaglioAnagraficaView)PlatformUI.getWorkbench()
@@ -65,7 +65,7 @@ public class DettaglioAnagraficaHandler {
 																	 .getActiveWorkbenchWindow()
 																	 .getActivePage()															 
 																	 .showView(DettaglioAnagraficaView.ID,
-																			   String.valueOf(viewInstance.getId()),
+																			   String.valueOf(viewInstance.getCodAnagrafica()),
 																			   IWorkbenchPage.VIEW_CREATE);
 						}
 						if (!pd.getCanwrite()){
@@ -105,7 +105,7 @@ public class DettaglioAnagraficaHandler {
 				           .getActiveWorkbenchWindow()
 						   .getActivePage()
 						   .findViewReference(DettaglioAnagraficaView.ID,
-								   			  String.valueOf(viewInstance.getId()));
+								   			  String.valueOf(viewInstance.getCodAnagrafica()));
 		
 				if (vr != null){
 					dav = (DettaglioAnagraficaView) PlatformUI.getWorkbench()
@@ -117,7 +117,7 @@ public class DettaglioAnagraficaHandler {
 															 .getActiveWorkbenchWindow()
 															 .getActivePage()															 
 															 .showView(DettaglioAnagraficaView.ID,
-																	   String.valueOf(viewInstance.getId()),
+																	   String.valueOf(viewInstance.getCodAnagrafica()),
 																	   IWorkbenchPage.VIEW_CREATE);
 				}
 				dav.setAnagrafica(viewInstance);

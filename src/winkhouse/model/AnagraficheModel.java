@@ -239,8 +239,8 @@ public class AnagraficheModel extends AnagraficheVO implements IEntityAttribute{
 		
 		if (entity == null){
 			
-			EntityDAO eDAO = new EntityDAO();
-			entity = eDAO.getEntityByClassName(AnagraficheVO.class.getName());
+			//EntityDAO eDAO = new EntityDAO();
+			//entity = eDAO.getEntityByClassName(AnagraficheVO.class.getName());
 			
 		}
 		return entity;

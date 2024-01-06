@@ -284,7 +284,7 @@ public class AnagraficaTreeView extends ViewPart
 			}
 			
 			if (obj instanceof Anagrafiche){
-				returnValue = ""+((Anagrafiche)obj).getId() + " - " +
+				returnValue = ""+((Anagrafiche)obj).getCodAnagrafica() + " - " +
 							  ((!((Anagrafiche)obj).getRagsoc().equalsIgnoreCase(""))
 							   ? ((Anagrafiche)obj).getRagsoc()+" - "
 							   : "") +

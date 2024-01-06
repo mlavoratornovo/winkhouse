@@ -56,7 +56,7 @@ public class ApriDettaglioAnagraficaAction extends Action {
 			
 			if (ProfilerHelper.getInstance().getPermessoUI(DettaglioAnagraficaView.ID)){
 				
-				PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(this.anagrafica.getId(), false);
+				PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(this.anagrafica.getCodAnagrafica(), false);
 				if (pd != null){
 					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
 																		    .getDettaglioAnagrafica(this.anagrafica);

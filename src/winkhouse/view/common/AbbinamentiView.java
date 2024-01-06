@@ -39,6 +39,8 @@ import winkhouse.model.AnagraficheModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipologieColloquiVO;
 
@@ -48,9 +50,9 @@ public class AbbinamentiView extends ViewPart {
 
 	public final static String ID = "winkhouse.anagraficheabbinateview";
 	private TreeViewer tvAbinamenti = null;
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 	private ColloquiModel colloquio = null;
-	private AnagraficheModel anagrafica = null;
+	private Anagrafiche anagrafica = null;
 	private ArrayList<?> ricerca = null;
 	private ArrayList<?> manuale = null;
 	
@@ -756,7 +758,7 @@ public class AbbinamentiView extends ViewPart {
 		return manuale;
 	}
 
-	public void setManuale(ArrayList<?> resultManuale) {
+	public void setManuale(ArrayList<Abbinamenti> resultManuale) {
 		this.manuale = resultManuale;
 		abbinamentiManuali = new AbbinamentiManuali();
 		abbinamentiManuali.setAbbinamenti(this.manuale);
@@ -764,44 +766,31 @@ public class AbbinamentiView extends ViewPart {
 		tvAbinamenti.setInput(abbinnameti);
 	}
 
-	public ImmobiliModel getImmobile() {
+	public Immobili getImmobile() {
 		return immobile;
 	}
 
-	public void setImmobile(ImmobiliModel immobileModel) {
+	public void setImmobile(Immobili immobileModel) {
 		
 		if (immobileModel != null){
 			if (this.immobile == null){
 				if (immobileModel != null){
 					this.immobile = immobileModel;		
-					this.anagrafica = null;
-					this.colloquio = null;
-					if (this.immobile.getCodImmobile() != null){
-						AbbinamentiDAO aDAO = new AbbinamentiDAO();
-						ArrayList<AbbinamentiModel> abbinamentiImmobili = aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), 
-								                                                  		  this.immobile.getCodImmobile());
-						setManuale(abbinamentiImmobili);
-					}
-					setRicerca(new ArrayList<AbbinamentiModel>());	
 
 				}
 			}else if ((immobileModel != null) && 
 					  (this.immobile.getCodImmobile() != immobileModel.getCodImmobile())){
 				
 					this.immobile = immobileModel;		
-					this.anagrafica = null;
-					this.colloquio = null;
-					if (this.immobile.getCodImmobile() != null){
-						AbbinamentiDAO aDAO = new AbbinamentiDAO();
-						ArrayList<AbbinamentiModel> abbinamentiImmobili = aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), 
-								                                                  		  this.immobile.getCodImmobile());
-						setManuale(abbinamentiImmobili);
-					}
-					setRicerca(new ArrayList<AbbinamentiModel>());	
 				
 			}else{
 				tvAbinamenti.refresh();
 			}
+			this.anagrafica = null;
+			this.colloquio = null;
+			setManuale(new ArrayList(this.immobile.getAbbinamentis()));
+			setRicerca(new ArrayList<AbbinamentiModel>());	
+			
 		}else{
 			this.immobile = null;
 			this.colloquio = null;
@@ -810,11 +799,11 @@ public class AbbinamentiView extends ViewPart {
 		}
 	}
 
-	public AnagraficheModel getAnagrafica() {
+	public Anagrafiche getAnagrafica() {
 		return anagrafica;
 	}
 
-	public void setAnagrafica(AnagraficheModel anagraficaModel) {
+	public void setAnagrafica(Anagrafiche anagraficaModel) {
 		
 		if (anagraficaModel != null){
 			if (this.anagrafica == null){
@@ -822,12 +811,7 @@ public class AbbinamentiView extends ViewPart {
 					this.anagrafica = anagraficaModel;		
 					this.immobile = null;
 					this.colloquio = null;
-					AbbinamentiDAO aDAO = new AbbinamentiDAO();
-					if (this.anagrafica.getCodAnagrafica() != null){
-						ArrayList<AbbinamentiModel> abbinamentiAnagrafica = aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), 
-								                                                    		  this.anagrafica.getCodAnagrafica());
-						setManuale(abbinamentiAnagrafica);
-					}
+					setManuale(new ArrayList(this.anagrafica.getAbbinamentis()));
 					setRicerca(new ArrayList<AbbinamentiModel>());	
 					
 				}
@@ -837,11 +821,7 @@ public class AbbinamentiView extends ViewPart {
 					this.anagrafica = anagraficaModel;		
 					this.immobile = null;
 					this.colloquio = null;
-					AbbinamentiDAO aDAO = new AbbinamentiDAO();
-					ArrayList<AbbinamentiModel> abbinamentiAnagrafica = aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), 
-							                                                    		  this.anagrafica.getCodAnagrafica());
-					setManuale(abbinamentiAnagrafica);
-					
+					setManuale(new ArrayList(this.anagrafica.getAbbinamentis()));					
 					setRicerca(new ArrayList<AbbinamentiModel>());	
 
 			}else{

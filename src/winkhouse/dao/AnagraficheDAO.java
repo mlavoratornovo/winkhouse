@@ -57,7 +57,7 @@ public class AnagraficheDAO extends BaseDAO{
 	}
 
 	public <T> ArrayList<T> list(String classType){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 			Expression exp = ExpressionFactory.matchExp("storico", true);
 			SelectQuery<Anagrafiche> query = new SelectQuery<Anagrafiche>(Anagrafiche.class, exp);
@@ -70,7 +70,7 @@ public class AnagraficheDAO extends BaseDAO{
 	}
 
 	public boolean saveUpate(AnagraficheModel aM) {
-		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();		
 		
 		return true;
 	}
@@ -306,14 +306,14 @@ public class AnagraficheDAO extends BaseDAO{
 	}	
 
 	public Anagrafiche getAnagraficheById(Integer codAnagrafica){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return Cayenne.objectForPK(context,Anagrafiche.class,codAnagrafica);
 	}	
 
 	
 	
 	public ArrayList<Anagrafiche> getAnagraficheByNullClasse(){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
 														  .where(Anagrafiche.CLASSICLIENTE.isNull())
@@ -329,7 +329,7 @@ public class AnagraficheDAO extends BaseDAO{
 	}
 	
 	public ArrayList<Anagrafiche> getAnagraficheByNullProvincia(){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();		
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
 														  .where(Anagrafiche.PROVINCIA.isNull().orExp(Anagrafiche.PROVINCIA.eq("")))														  
@@ -345,7 +345,7 @@ public class AnagraficheDAO extends BaseDAO{
 	}
 	
 	public ArrayList<Anagrafiche> getAnagraficheByClasse(Classicliente cc){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();		
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 			if (cc != null){				
 				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
@@ -395,7 +395,7 @@ public class AnagraficheDAO extends BaseDAO{
 
 	public ArrayList<Anagrafiche> getAnagraficheByComuneClasse(String comune, Classicliente classeCliente){
 		
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		if (classeCliente == null) {
 			if (WinkhouseUtils.getInstance().getTipoArchivio()){
 				return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
@@ -428,7 +428,7 @@ public class AnagraficheDAO extends BaseDAO{
 	}
 	
 	public <T> ArrayList<T> getAnagraficheByClasse(String classType, Integer codClasse){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
 			if (codClasse != null){

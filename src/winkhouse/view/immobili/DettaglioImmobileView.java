@@ -2686,7 +2686,7 @@ public class DettaglioImmobileView extends ViewPart
 
 		if (immobile != null){
 			
-			IViewPart ivp = Activator.getDefault()
+			IViewPart ivp = PlatformUI
 					 				 .getWorkbench()
 					 				 .getActiveWorkbenchWindow()
 					 				 .getActivePage()
@@ -2697,7 +2697,7 @@ public class DettaglioImmobileView extends ViewPart
 				((ColloquiView)ivp).setCompareView(isInCompareMode);
 			}
 
-			ivp = Activator.getDefault()
+			ivp = PlatformUI
 			   			   .getWorkbench()
 			   			   .getActiveWorkbenchWindow()
 			   			   .getActivePage()
@@ -2710,7 +2710,7 @@ public class DettaglioImmobileView extends ViewPart
 				((RecapitiView)ivp).setCompareView(isInCompareMode);
 			}
 
-			ivp = Activator.getDefault()
+			ivp = PlatformUI
 		   			   	   .getWorkbench()
 		   			   	   .getActiveWorkbenchWindow()
 		   			   	   .getActivePage()
@@ -2721,7 +2721,7 @@ public class DettaglioImmobileView extends ViewPart
 				((AnagrafichePropietarieView)ivp).setCompareView(isInCompareMode);
 			}			
 			
-			ivp = Activator.getDefault()
+			ivp = PlatformUI
 			   			   .getWorkbench()
 			   			   .getActiveWorkbenchWindow()
 			   			   .getActivePage()
@@ -2733,7 +2733,7 @@ public class DettaglioImmobileView extends ViewPart
 				
 			}
 						
-			ivp = Activator.getDefault()
+			ivp = PlatformUI
 			   			   .getWorkbench()
 			   			   .getActiveWorkbenchWindow()
 			   			   .getActivePage()
@@ -2743,7 +2743,7 @@ public class DettaglioImmobileView extends ViewPart
 				((ListaAffittiView)ivp).setImmobile(immobile);
 			}
 
-			ivp = Activator.getDefault()
+			ivp = PlatformUI
 						   .getWorkbench()
 						   .getActiveWorkbenchWindow()
 						   .getActivePage()
@@ -2753,7 +2753,7 @@ public class DettaglioImmobileView extends ViewPart
 				((ImmobiliPropietaView)ivp).setAnagrafica(null);
 			}
 			
-			IViewPart eavv = Activator.getDefault()
+			IViewPart eavv = PlatformUI
 	   				  .getWorkbench()
 	   				  .getActiveWorkbenchWindow()
 	   				  .getActivePage()
@@ -2766,7 +2766,7 @@ public class DettaglioImmobileView extends ViewPart
 				}
 			}
 
-			IViewPart mapv = Activator.getDefault()
+			IViewPart mapv = PlatformUI
 									  .getWorkbench()
 									  .getActiveWorkbenchWindow()
 									  .getActivePage()
@@ -2782,14 +2782,14 @@ public class DettaglioImmobileView extends ViewPart
 			WinkhouseUtils.getInstance().setLastCodImmobileSelected(immobile.getCodImmobile());
 			WinkhouseUtils.getInstance().setLastEntityTypeFocused(ImmobiliModel.class.getName());
 						
-			ivp = Activator.getDefault()
+			ivp = PlatformUI
 		   			   .getWorkbench()
 		   			   .getActiveWorkbenchWindow()
 		   			   .getActivePage()
 		   			   .findView(AbbinamentiView.ID);
 		
 			if (ivp != null){				
-				((AbbinamentiView)ivp).setImmobile(immobile);
+				//((AbbinamentiView)ivp).setImmobile(immobile);
 				((AbbinamentiView)ivp).setCompareView(isInCompareMode);
 
 			}

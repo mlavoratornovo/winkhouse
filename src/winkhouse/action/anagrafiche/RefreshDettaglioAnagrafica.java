@@ -42,9 +42,9 @@ public class RefreshDettaglioAnagrafica extends Action {
 			
 			Anagrafiche am = ((DettaglioAnagraficaView)iwp).getAnagrafica();
 			
-			if (am.getId() != 0){
+			if (am.getCodAnagrafica() != 0){
 				AnagraficheDAO adao = new AnagraficheDAO();
-				Anagrafiche o = adao.getAnagraficheById(am.getId());
+				Anagrafiche o = adao.getAnagraficheById(am.getCodAnagrafica());
 				if (o != null){					
 					((DettaglioAnagraficaView)iwp).setAnagrafica(o);
 				}else{

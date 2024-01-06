@@ -39,7 +39,10 @@ import winkhouse.action.anagrafiche.RefreshDettaglioAnagrafica;
 import winkhouse.action.anagrafiche.SalvaAnagrafica;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.action.stampa.StampaAnagraficheAction;
+import winkhouse.dao.AttributeDAO;
+import winkhouse.dao.EntityDAO;
 import winkhouse.model.AnagraficheModel;
+import winkhouse.model.EntityModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Classicliente;
 import winkhouse.orm.Agenti;
@@ -53,6 +56,7 @@ import winkhouse.view.common.MapView;
 import winkhouse.view.common.RecapitiView;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
 import winkhouse.vo.AgentiVO;
+import winkhouse.vo.AnagraficheVO;
 import winkhouse.vo.ClassiClientiVO;
 import winkhouse.vo.ComuniVO;
 
@@ -332,8 +336,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 			}
 			
 			
-//			ivp = Activator.getDefault()
-//			   			   .getWorkbench()
+//			ivp = PlatformUI.getWorkbench()
 //			   			   .getActiveWorkbenchWindow()
 //			   			   .getActivePage()
 //			   			   .findView(ListaAffittiView.ID);
@@ -357,10 +360,13 @@ public class DettaglioAnagraficaView extends ViewPart {
 	   				  .findView(EAVView.ID);
 
 			if (eavv != null){
-//				if ((anagrafica.getEntity() != null) && (anagrafica.getEntity().getAttributes()!= null)){
-//					((EAVView)eavv).setAttributes(anagrafica.getEntity().getAttributes(), anagrafica.getCodAnagrafica());
-//					((EAVView)eavv).setCompareView(isInCompareMode);
-//				}
+				EntityDAO eDAO = new EntityDAO();
+				EntityModel e = eDAO.getEntityByClassName(AnagraficheVO.class.getName());
+				
+				if ((e != null) && (e.getAttributes()!= null)){
+					((EAVView)eavv).setAttributes(e.getAttributes(), anagrafica.getCodAnagrafica());
+					((EAVView)eavv).setCompareView(isInCompareMode);
+				}
 			}
 			
 			IViewPart mapv = PlatformUI
@@ -377,7 +383,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 			
 			
 			WinkhouseUtils.getInstance()
-							.setLastCodAnagraficaSelected(anagrafica.getId());
+							.setLastCodAnagraficaSelected(anagrafica.getCodAnagrafica());
 			WinkhouseUtils.getInstance()
 							.setLastEntityTypeFocused(AnagraficheModel.class.getName());
 			
@@ -387,7 +393,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 		   			   .findView(AbbinamentiView.ID);
 		
 			if (ivp != null){
-				//((AbbinamentiView)ivp).setAnagrafica(anagrafica);
+				((AbbinamentiView)ivp).setAnagrafica(anagrafica);
 				((AbbinamentiView)ivp).setCompareView(isInCompareMode);
 			}
 		
@@ -534,7 +540,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 				int index = Collections.binarySearch(classi, 
 													 anagrafica.getClassicliente(), 
 													 comparatorClassiCliente);
-//				int index = -1;
+
 				if (index > -1){
 					Object[] sel = new Object[1];
 					sel[0] = MobiliaDatiBaseCache.getInstance().getClassiClienti().get(index);
@@ -547,7 +553,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					//anagrafica.setClasseCliente((ClassiClientiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					anagrafica.setClassicliente(((Classicliente)((StructuredSelection)event.getSelection()).getFirstElement())); 
 				}
 				
 			});

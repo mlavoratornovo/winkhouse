@@ -560,7 +560,7 @@ public class RecapitiView extends ViewPart {
 				if (((Contatti)element).getAnagrafiche() != null){
 					int count = 0;
 					for (Anagrafiche anagrafica : anagrafiche) {
-						if (((Contatti)element).getAnagrafiche().getId() == anagrafica.getId()){
+						if (((Contatti)element).getAnagrafiche().getCodAnagrafica() == anagrafica.getCodAnagrafica()){
 							return count;							
 						}else{
 							count ++;
@@ -577,7 +577,7 @@ public class RecapitiView extends ViewPart {
 				if (value != null){
 					((Contatti)element).setAnagrafiche((Anagrafiche)value);
 					for (Anagrafiche anagrafica : anagrafiche) {
-						if (anagrafica.getId() == ((Anagrafiche)value).getId()){
+						if (anagrafica.getCodAnagrafica() == ((Anagrafiche)value).getCodAnagrafica()){
 							anagrafica.addToContattis((Contatti)element);
 							break;
 						}

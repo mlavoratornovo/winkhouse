@@ -34,6 +34,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -264,7 +265,7 @@ public class MapView extends ViewPart {
 		ft.paintBordersFor(f.getBody());
 		ft.paintBordersFor(c);
 	}
-	
+		
 	public void updateBrowser(String latitudine,String longitudine){
 				
 		if (latitudine != null && longitudine != null){
@@ -505,6 +506,7 @@ public class MapView extends ViewPart {
 	
 	@Override
 	public void setFocus() {
+		MapView.this.getSite().getShell().setCursor(new Cursor(null, SWT.CURSOR_ARROW));
 	}
 
 	public String getCurrenturl() {

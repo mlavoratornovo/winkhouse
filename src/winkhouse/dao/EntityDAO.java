@@ -7,8 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.model.EntityModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Entity;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.EntityVO;
 
 public class EntityDAO extends BaseDAO {
@@ -32,11 +39,10 @@ public class EntityDAO extends BaseDAO {
 		
 	}
 
-	public <T> EntityModel getEntityByClassName(String className){
-		
-		ArrayList<T> al = super.getObjectsByStringFieldValue(EntityModel.class.getName(),
-													  FIND_ENTITY_BY_CLASSNAME,
-													  className);
+	public EntityModel getEntityByClassName(String className){
+		ArrayList al = super.getObjectsByStringFieldValue(EntityModel.class.getName(),
+				  FIND_ENTITY_BY_CLASSNAME,
+				  className);
 		if (al.size() > 0){
 			return (EntityModel)al.get(0);
 		}

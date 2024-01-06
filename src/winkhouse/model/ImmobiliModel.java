@@ -497,8 +497,8 @@ public class ImmobiliModel extends ImmobiliVO implements IEntityAttribute{
 		
 		if (entity == null){
 			
-			EntityDAO eDAO = new EntityDAO();
-			entity = eDAO.getEntityByClassName(ImmobiliVO.class.getName());
+//			EntityDAO eDAO = new EntityDAO();
+//			entity = eDAO.getEntityByClassName(ImmobiliVO.class.getName());
 			
 		}
 		return entity;

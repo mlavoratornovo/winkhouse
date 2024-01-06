@@ -48,7 +48,7 @@ public class ApriDettaglioRecapitiAction extends Action {
 					ArrayList<Anagrafiche> anagraficheinput = new ArrayList<Anagrafiche>();
 					
 					for (Anagrafiche anagrafica : anagrafiche) {
-						PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(anagrafica.getId(), false);
+						PermessoDetail pd = ProfilerHelper.getInstance().getPermessoAnagrafica(anagrafica.getCodAnagrafica(), false);
 						if (pd == null){
 							if (resetContatti){
 								for (Contatti contatto: anagrafica.getContattis()) {
@@ -73,9 +73,9 @@ public class ApriDettaglioRecapitiAction extends Action {
 					AnagraficheDAO anagraficheDAO = new AnagraficheDAO();
 					for (Iterator<Anagrafiche> iterator = this.anagrafiche.iterator(); iterator.hasNext();) {
 						Anagrafiche anagrafica = iterator.next();
-						if (anagrafica.getId() != 0){
+						if (anagrafica.getCodAnagrafica() != 0){
 							this.anagrafiche = new ArrayList<Anagrafiche>();
-							this.anagrafiche.add((Anagrafiche)anagraficheDAO.getAnagraficheById(anagrafica.getId()));						
+							this.anagrafiche.add((Anagrafiche)anagraficheDAO.getAnagraficheById(anagrafica.getCodAnagrafica()));						
 						}
 					}
 				}

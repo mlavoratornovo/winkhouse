@@ -194,8 +194,8 @@ public class AffittiModel extends AffittiVO implements IEntityAttribute{
 	public EntityModel getEntity() {
 		if (entity == null){
 			
-			EntityDAO eDAO = new EntityDAO();
-			entity = eDAO.getEntityByClassName(AffittiVO.class.getName());
+//			EntityDAO eDAO = new EntityDAO();
+//			entity = eDAO.getEntityByClassName(AffittiVO.class.getName());
 			
 		}
 		return entity;

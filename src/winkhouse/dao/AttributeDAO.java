@@ -7,8 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.model.AttributeModel;
+import winkhouse.orm.Attribute;
 import winkhouse.vo.AttributeVO;
 
 public class AttributeDAO extends BaseDAO {
@@ -27,7 +31,6 @@ public class AttributeDAO extends BaseDAO {
 	}
 	
 	public AttributeModel getAttributeByID(Integer idAttribute){
-		
 		Object o = super.getObjectById(AttributeModel.class.getName(), FIND_ATTRIBUTE_BY_ID, idAttribute);
 		
 		if (o != null){

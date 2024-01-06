@@ -85,10 +85,10 @@ public class DynamicFieldsSettingsPage extends PreferencePage {
 			
 			EntityDAO eDAO = new EntityDAO();
 			entita = new ArrayList<EntityModel>();
-			entita.add(eDAO.getEntityByClassName(ImmobiliVO.class.getName()));
-			entita.add(eDAO.getEntityByClassName(AnagraficheVO.class.getName()));
-			entita.add(eDAO.getEntityByClassName(ColloquiVO.class.getName()));
-			entita.add(eDAO.getEntityByClassName(AffittiVO.class.getName()));
+//			entita.add(eDAO.getEntityByClassName(ImmobiliVO.class.getName()));
+//			entita.add(eDAO.getEntityByClassName(AnagraficheVO.class.getName()));
+//			entita.add(eDAO.getEntityByClassName(ColloquiVO.class.getName()));
+//			entita.add(eDAO.getEntityByClassName(AffittiVO.class.getName()));
 		}
 		
 	}

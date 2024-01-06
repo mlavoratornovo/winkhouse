@@ -36,6 +36,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
+import org.apache.cayenne.ObjectContext;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -51,6 +52,7 @@ import winkhouse.dao.AttributeDAO;
 import winkhouse.dao.EntityDAO;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.WinkSysDAO;
+import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.dialogs.custom.GoogleConfDialog;
 import winkhouse.dialogs.custom.ImageViewer;
 import winkhouse.engine.report.ReportEngine;
@@ -265,6 +267,7 @@ public class WinkhouseUtils {
 	private HashMap<String,String> hm_winkSys = null; 
 	
 	private boolean isBundleDBRunning = false; 
+	private ObjectContext cayenneContext = null;
 	
 	public static WinkhouseUtils getInstance(){
 		if (instance == null){
@@ -277,6 +280,17 @@ public class WinkhouseUtils {
 		createPreferenceStore();
 	}
 	
+	public ObjectContext getCayenneObjectContext() {
+		if (this.cayenneContext == null) {
+			this.cayenneContext = CayenneContextManager.getInstance().getContext();
+		}
+		return this.cayenneContext;
+	}
+
+	public void setCayenneObjectContext(ObjectContext oc) {
+		this.cayenneContext = oc;
+	}
+
 	public class Mese{
 		
 		private Integer key = null;
@@ -788,8 +802,9 @@ public class WinkhouseUtils {
 		
 		AttributeDAO aDAO = new AttributeDAO();
 		EntityDAO eDAO = new EntityDAO();
-		EntityModel em = eDAO.getEntityByClassName(entityName);
-		ArrayList<AttributeModel> al_attribute = aDAO.getAttributeByIdEntity(em.getIdClassEntity());
+//		EntityModel em = eDAO.getEntityByClassName(entityName);
+//		ArrayList<AttributeModel> al_attribute = aDAO.getAttributeByIdEntity(em.getIdClassEntity());
+		ArrayList<AttributeModel> al_attribute = new ArrayList<AttributeModel>(); 
 		int count = firstIdValue;
 		for (AttributeModel attribute : al_attribute){
 			arrayToFill.add(new ObjectSearchGetters(count,

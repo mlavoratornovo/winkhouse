@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Abbinamenti;
 import winkhouse.vo.AbbinamentiVO;
 
 

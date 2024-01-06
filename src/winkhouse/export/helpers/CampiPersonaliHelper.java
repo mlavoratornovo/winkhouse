@@ -25,9 +25,9 @@ public class CampiPersonaliHelper {
 	
 	public EntityModel getEntityByClassName(String className){
 		
-		EntityDAO eDAO = new EntityDAO();
-		return eDAO.getEntityByClassName(className);
-		
+//		EntityDAO eDAO = new EntityDAO();
+//		return eDAO.getEntityByClassName(className);
+		return null;
 	}
 	
 	public boolean saveUpdateEntity(EntityVO entity){
