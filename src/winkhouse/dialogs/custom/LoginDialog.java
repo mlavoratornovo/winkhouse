@@ -26,6 +26,8 @@ import winkhouse.Activator;
 import winkhouse.dao.AgentiDAO;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.util.WinkhouseUtils;
 
 public class LoginDialog {
@@ -134,11 +136,11 @@ public class LoginDialog {
 			public void mouseUp(MouseEvent e) {
 				String dec_pws = WinkhouseUtils.getInstance().EncryptStringStandard(txt_password.getText());
 				String username = txt_username.getText();
-				AgentiModel aVO = new AgentiModel();
+				Agenti aVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Agenti.class);
 				aVO.setUsername(username);
 				aVO.setPassword(dec_pws);
 				AgentiDAO aDAO = new AgentiDAO();
-				aVO = (AgentiModel)aDAO.loginAgente(AgentiModel.class.getName(), aVO, null); 
+				aVO = (Agenti)aDAO.loginAgente(aVO); 
 				if (aVO != null){
 					WinkhouseUtils.getInstance().setLoggedAgent(aVO);
 					s.close();

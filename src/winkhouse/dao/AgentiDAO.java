@@ -45,7 +45,7 @@ public class AgentiDAO extends BaseDAO{
 	}
 	
 	public ArrayList<Agenti> list(){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return new ArrayList(ObjectSelect.query(Agenti.class).select(context));
 	}
 
@@ -271,7 +271,15 @@ public class AgentiDAO extends BaseDAO{
 	public <T> ArrayList<T> checkSetPassword(String classType){
 		return super.list(classType, CHK_SET_PASSWORDS);
 	}
-
+	
+	public Agenti loginAgente(Agenti aVO){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return ObjectSelect.query(Agenti.class)
+						   .where(Agenti.USERNAME.eq(aVO.getUsername()))
+						   .and(Agenti.PASSWORD.eq(aVO.getPassword()))
+						   .selectOne(context);			
+	}
+	
 	public Object loginAgente(String classType,AgentiVO aVO,Connection connection){
 
 		Object returnValue = null;

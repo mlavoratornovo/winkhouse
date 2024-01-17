@@ -5,6 +5,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 
 import winkhouse.model.AnagraficheModel;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.util.WinkhouseUtils;
 
 
 public class NuovaAnagraficaAction extends Action {
@@ -21,8 +22,8 @@ public class NuovaAnagraficaAction extends Action {
 
 	@Override
 	public void run() {
-		AnagraficheModel am = new AnagraficheModel();
-		ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(new Anagrafiche(), null);
+		Anagrafiche am = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Anagrafiche.class);		
+		ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am, null);
 		adaa.run();
 	}
 	

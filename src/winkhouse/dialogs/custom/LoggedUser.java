@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
+import winkhouse.orm.Agenti;
 import winkhouse.vo.AgentiVO;
 
 public class LoggedUser extends ControlContribution {
@@ -33,7 +34,7 @@ public class LoggedUser extends ControlContribution {
 		return l_logged_user;
 	}
 	
-	public void setAgenteVO(AgentiVO agente){
+	public void setAgenteVO(Agenti agente){
 		l_logged_user.setText("Benvenuto agente : " + agente.getCognome() + " " + agente.getNome());
 	}
 

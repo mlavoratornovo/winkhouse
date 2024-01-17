@@ -447,9 +447,10 @@ public class MapView extends ViewPart {
 	
 	private CloseableHttpClient noSslHttpClient() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
 		
-	      SSLContext sslContext = new SSLContextBuilder()  
-	                .loadTrustMaterial(null, new TrustSelfSignedStrategy())  
-	                .build();  
+//	      SSLContext sslContext = new SSLContextBuilder()  
+//	                .loadTrustMaterial(null, new TrustSelfSignedStrategy())  
+//	                .build();  
+	      SSLContext sslContext = SSLContext.getInstance("SSL");
 	      return HttpClientBuilder.create()
 	    		  				  .setSSLContext(sslContext)
 	                              .setConnectionManager(new PoolingHttpClientConnectionManager(

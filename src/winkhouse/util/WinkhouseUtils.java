@@ -80,6 +80,7 @@ import winkhouse.model.Immobili_AffittiModel;
 import winkhouse.model.PromemoriaModel;
 import winkhouse.model.ReportModel;
 import winkhouse.model.StanzeImmobiliModel;
+import winkhouse.orm.Agenti;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.perspective.AgendaPerspective;
 import winkhouse.perspective.AnagrafichePerspective;
@@ -262,7 +263,7 @@ public class WinkhouseUtils {
 	private ArrayList<PerspectiveInfo> perspectiveInfo =null;
 	private ArrayList<ViewInfo> viewInfo = null;
 	private ArrayList<DialogInfo> dialogInfo = null;
-	private AgentiModel loggedAgent = null;
+	private Agenti loggedAgent = null;
 	
 	private HashMap<String,String> hm_winkSys = null; 
 	
@@ -2804,11 +2805,11 @@ public class WinkhouseUtils {
 		
 	}
 
-	public AgentiModel getLoggedAgent() {
+	public Agenti getLoggedAgent() {
 		return loggedAgent;
 	}
 
-	public void setLoggedAgent(AgentiModel loggedAgent) {
+	public void setLoggedAgent(Agenti loggedAgent) {
 		this.loggedAgent = loggedAgent;
 	}
 

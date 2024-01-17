@@ -46,7 +46,7 @@ public class WizardGCalendarSyncAction extends Action {
 		
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		GCalendarSyncWizard wizard = new GCalendarSyncWizard();
-		
+		// TODO convertire orm
 		if (this.appuntamento != null){
 			
 			wizard.getGcalsyncVO().setUpl_from_detail(true);
@@ -60,7 +60,7 @@ public class WizardGCalendarSyncAction extends Action {
 				
 				ArrayList<AgentiAppuntamentiModel> al = new ArrayList<AgentiAppuntamentiModel>();
 				AgentiAppuntamentiModel aam = new AgentiAppuntamentiModel();
-				aam.setAgente(WinkhouseUtils.getInstance().getLoggedAgent());
+				//aam.setAgente(WinkhouseUtils.getInstance().getLoggedAgent());
 				al.add(aam);
 				
 				it = al.iterator();				
@@ -93,7 +93,7 @@ public class WizardGCalendarSyncAction extends Action {
 				
 				ArrayList<ColloquiAgentiModel_Age> al = new ArrayList<ColloquiAgentiModel_Age>();
 				ColloquiAgentiModel_Age cam = new ColloquiAgentiModel_Age();
-				cam.setAgente(WinkhouseUtils.getInstance().getLoggedAgent());
+				//cam.setAgente(WinkhouseUtils.getInstance().getLoggedAgent());
 				al.add(cam);
 				
 				it = al.iterator();

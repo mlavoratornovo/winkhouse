@@ -16,6 +16,7 @@ import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.vo.AgentiVO;
 
 
@@ -69,29 +70,30 @@ public class OptimisticLockHelper {
 		
 	}
 
-	public String checkOLAnagrafica(AnagraficheModel anagrafica){
+	public String checkOLAnagrafica(Anagrafiche anagrafica){
 		
-		if ((anagrafica.getCodAnagrafica() == null) || (anagrafica.getCodAnagrafica() == 0)){
+		if (anagrafica.getCodAnagrafica() == 0){
 			return SOVRASCRIVI;
 		}else{
 			
 			AnagraficheDAO aDAO = new AnagraficheDAO();
-			AnagraficheModel am_DB = (AnagraficheModel)aDAO.getAnagraficheById(AnagraficheModel.class.getName(), anagrafica.getCodAnagrafica());
+			Anagrafiche am_DB = aDAO.getAnagraficheById(anagrafica.getCodAnagrafica());
+			//AnagraficheModel am_DB = (AnagraficheModel)aDAO.getAnagraficheById(AnagraficheModel.class.getName(), anagrafica.getCodAnagrafica());
 			
-			if (am_DB.getDateUpdate() != null){
+			if (am_DB.getDateupdate() != null){
 				
-				if (am_DB.getDateUpdate().after(anagrafica.getDateUpdate())){
+				if (am_DB.getDateupdate().isAfter(anagrafica.getDateupdate())){
 					
-					String message = "ATTENZIONE : l'anagrafica " + anagrafica.toString() + "\n � stata modificata da un altro agente mentre lo stavi editando.\n";
-					if (am_DB.getCodUserUpdate() != null){
-						AgentiDAO agDAO = new AgentiDAO();
-						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
-						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche � " + aVO.toString();
-						}
+					String message = "ATTENZIONE : l'anagrafica " + anagrafica.toString() + "\n è stata modificata da un altro agente mentre lo stavi editando.\n";
+					if (am_DB.getAgenti1() != null){
+//						AgentiDAO agDAO = new AgentiDAO();
+//						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
+//						if (aVO != null){
+							message += "L'agente che ha effettuato le modifiche è " + am_DB.getAgenti1().toString();
+//						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'anagrafica � stata modificata", null,
+															 "Winkhouse : l'anagrafica è stata modificata", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){

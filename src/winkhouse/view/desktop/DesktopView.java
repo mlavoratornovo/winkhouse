@@ -73,6 +73,7 @@ import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.PromemoriaModel;
+import winkhouse.orm.Agenti;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.desktop.model.MyNode;
 import winkhouse.view.desktop.provider.GraphLabelProvider;
@@ -94,7 +95,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 	private Pager pager = null;
 	private SelettoreDisposizione selettoreDisposizione = null;
 	private StructureLevel selettoreStructureLevel = null;
-	private AgentiModel agente = null;
+	private Agenti agente = null;
 	private Integer itemxpage = 10;
 	private Integer currentpage = 1;
 	private Integer pagenumber = 1;
@@ -574,10 +575,10 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
 					if (desktop_type == PROMEMORIA_TYPE){ 
-						AgentiModel amodel = null;
+						Agenti amodel = null;
 						StructuredSelection	ss = (StructuredSelection)event.getSelection();
 						if (ss != null && ss.getFirstElement() != null){
-							amodel = (AgentiModel)ss.getFirstElement();						
+							amodel = (Agenti)ss.getFirstElement();						
 						}
 						if (amodel != null){
 							setAgente(amodel);
@@ -697,7 +698,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 		return desktop;
 	}
 
-	public void setAgente(AgentiModel agente){
+	public void setAgente(Agenti agente){
 		
 		this.agente = agente;
 		
@@ -787,7 +788,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 		return false;
 	}
 	
-	public AgentiModel getAgente() {
+	public Agenti getAgente() {
 		return agente;
 	}
 

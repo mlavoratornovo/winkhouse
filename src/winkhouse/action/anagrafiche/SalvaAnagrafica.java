@@ -2,6 +2,8 @@ package winkhouse.action.anagrafiche;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.action.Action;
@@ -71,28 +73,32 @@ public class SalvaAnagrafica extends Action {
 	public void run() {
 	try {
 			
-//			boolean insnew = ((getAnagrafica().getCodAnagrafica() == null) || (getAnagrafica().getCodAnagrafica()==0));
+			boolean insnew = getAnagrafica().getCodAnagrafica()==0;
 //			
-//			getAnagrafica().setDateUpdate(new Date());
+			anagrafica.setDateupdate(new Date().toInstant()
+				      .atZone(ZoneId.systemDefault())
+				      .toLocalDateTime());
 //			
-//			if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
-//				getAnagrafica().setCodUserUpdate(WinkhouseUtils.getInstance().getLoggedAgent().getCodAgente());
-//			}
+			if (WinkhouseUtils.getInstance().getLoggedAgent() != null){				
+				anagrafica.setAgenti1(WinkhouseUtils.getInstance().getLoggedAgent());				
+			}
 //
-//			String decision = new OptimisticLockHelper().checkOLAnagrafica(getAnagrafica());
+			String decision = new OptimisticLockHelper().checkOLAnagrafica(getAnagrafica());
 //			
-//			if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
+			if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
 //				
 //				if (getAnagrafica() != null){
 //					
-//					if (
-//							(((getAnagrafica().getCognome() != null) && (!getAnagrafica().getCognome().equalsIgnoreCase(""))) && 
-//							 ((getAnagrafica().getNome() != null) && (!getAnagrafica().getNome().equalsIgnoreCase("")))) ||
-//							 ((getAnagrafica().getRagioneSociale() != null) && (!getAnagrafica().getRagioneSociale().equalsIgnoreCase("")))
-//						){
+					if (
+							(((getAnagrafica().getCognome() != null) && (!getAnagrafica().getCognome().equalsIgnoreCase(""))) && 
+							 ((getAnagrafica().getNome() != null) && (!getAnagrafica().getNome().equalsIgnoreCase("")))) ||
+							 ((getAnagrafica().getRagsoc() != null) && (!getAnagrafica().getRagsoc().equalsIgnoreCase("")))
+						){
+						
+						WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
 //						
 //						AnagraficheHelper ah = new AnagraficheHelper();
-//						EntityHelper eh = new EntityHelper();
+						EntityHelper eh = new EntityHelper();
 //						
 //						Connection con = ConnectionManager.getInstance().getConnection();
 //						
@@ -120,16 +126,16 @@ public class SalvaAnagrafica extends Action {
 //								
 //							}
 //
-//							if (insnew){
-//								if (dav != null){
-//									PlatformUI.getWorkbench()
-//									 		  .getActiveWorkbenchWindow()
-//									 		  .getActivePage().hideView(dav);
-//									dav = DettaglioAnagraficaHandler.getInstance().getDettaglioAnagrafica(getAnagrafica());
-//									
-//								}
-//								WinkhouseUtils.getInstance().setCodiciAnagrafiche(null);
-//							}
+							if (insnew){
+								if (dav != null){
+									PlatformUI.getWorkbench()
+									 		  .getActiveWorkbenchWindow()
+									 		  .getActivePage().hideView(dav);
+									dav = DettaglioAnagraficaHandler.getInstance().getDettaglioAnagrafica(getAnagrafica());
+									
+								}
+								WinkhouseUtils.getInstance().setCodiciAnagrafiche(null);
+							}
 //							
 //						}else{
 //							try {
@@ -140,37 +146,37 @@ public class SalvaAnagrafica extends Action {
 //							}							
 //						}
 //						
-//					}else{
-//						MessageBox mb = new MessageBox(dav.getSite().getShell(),SWT.ERROR);
-//						mb.setText("Errore salvataggio");
-//						mb.setMessage("Inserire cognome e nome o ragione sociale dell'anagrafica");			
-//						mb.open();
-//					}
+					}else{
+						MessageBox mb = new MessageBox(dav.getSite().getShell(),SWT.ERROR);
+						mb.setText("Errore salvataggio");
+						mb.setMessage("Inserire cognome e nome o ragione sociale dell'anagrafica");			
+						mb.open();
+					}
 //					
 //				}
 //				
 //				RefreshAnagraficheAction raa = new RefreshAnagraficheAction();
 //				raa.run();
 //				
-//			}else if (decision.equalsIgnoreCase(OptimisticLockHelper.VISUALIZZA)){
+			}else if (decision.equalsIgnoreCase(OptimisticLockHelper.VISUALIZZA)){
 //				
-//				try {
-//					DettaglioAnagraficaView div_comp = (DettaglioAnagraficaView)PlatformUI.getWorkbench()
-//																				 	  	  .getActiveWorkbenchWindow()
-//																				 	  	  .getActivePage()
-//																				 	  	  .showView(DettaglioAnagraficaView.ID,
-//																				 	  			  	String.valueOf(getAnagrafica().getCodAnagrafica()) + "Comp",
-//																				 	  			  	IWorkbenchPage.VIEW_CREATE);
-//					AnagraficheDAO a_compDAO = new AnagraficheDAO();
-//					AnagraficheModel anagrafica_comp = (AnagraficheModel)a_compDAO.getAnagraficheById(AnagraficheModel.class.getName(), getAnagrafica().getCodAnagrafica());
-//					
-//					div_comp.setAnagrafica(anagrafica_comp);
-//					div_comp.setCompareView(false);
-//					
-//				} catch (PartInitException e) {
-//					e.printStackTrace();
-//				}
-//			}
+				try {
+					DettaglioAnagraficaView div_comp = (DettaglioAnagraficaView)PlatformUI.getWorkbench()
+																				 	  	  .getActiveWorkbenchWindow()
+																				 	  	  .getActivePage()
+																				 	  	  .showView(DettaglioAnagraficaView.ID,
+																				 	  			  	String.valueOf(anagrafica.getCodAnagrafica()) + "Comp",
+																				 	  			  	IWorkbenchPage.VIEW_CREATE);
+					AnagraficheDAO a_compDAO = new AnagraficheDAO();
+					Anagrafiche anagrafica_comp = a_compDAO.getAnagraficheById(getAnagrafica().getCodAnagrafica());
+					
+					div_comp.setAnagrafica(anagrafica_comp);
+					div_comp.setCompareView(false);
+					
+				} catch (PartInitException e) {
+					e.printStackTrace();
+				}
+			}
 			
 			
 		} catch (Exception e) {

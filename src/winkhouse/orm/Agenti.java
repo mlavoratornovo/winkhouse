@@ -11,4 +11,9 @@ public class Agenti extends _Agenti {
     public int getCodAgente() {
         return Cayenne.intPKForObject(this);
     }
+    
+    @Override
+	public String toString() {
+		return getNome() + " " + getCognome() + " - " + getCitta();
+	}
 }
