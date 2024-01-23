@@ -55,16 +55,13 @@ public class RecapitiView extends ViewPart {
 	private TableViewer tvRecapiti = null;
 	private FormToolkit ft = null;
 	private Form f = null;	
-//	private AnagraficheModel anagrafica = null;
-//	private ArrayList<ContattiVO> recapiti = null;
 	private ArrayList<Anagrafiche> anagrafiche = null;
 	private String[] desTipologieRecapiti = null;
 	private TextCellEditor tceContatto = null;
 	private TextCellEditor tceDescrizione = null;
 	
-	private RefreshRecapitiAction refreshRecapitiAction = null;
+//	private RefreshRecapitiAction refreshRecapitiAction = null;
 	private NuovoRecapitoAction nuovoRecapitoAction = null;
-	private ConfermaRecapitiAction confermaRecapitiAction = null;
 	private CancellaRecapitoAction cancellaRecapitoAction = null;
 	
 	private ImageHyperlink ihConferma = null;
@@ -245,22 +242,22 @@ public class RecapitiView extends ViewPart {
 		f.setText("Recapiti");
 		f.getBody().setLayout(new GridLayout());
 		
-		refreshRecapitiAction = new RefreshRecapitiAction("Ricarica recapiti", 
-				  										  Activator.getImageDescriptor("icons/adept_reinstall.png"));
+//		refreshRecapitiAction = new RefreshRecapitiAction("Ricarica recapiti", 
+//				  										  Activator.getImageDescriptor("icons/adept_reinstall.png"));
 		
 		nuovoRecapitoAction = new NuovoRecapitoAction("Nuovo recapito", 
 													  Activator.getImageDescriptor("icons/filenew.png"));
 		
-		confermaRecapitiAction = new ConfermaRecapitiAction("Conferma recapiti", 
-				  									  	    Activator.getImageDescriptor("icons/document-save.png"));
+//		confermaRecapitiAction = new ConfermaRecapitiAction("Conferma recapiti", 
+//				  									  	    Activator.getImageDescriptor("icons/document-save.png"));
 
 		cancellaRecapitoAction = new CancellaRecapitoAction("Cancella recapito", 
 			  	    										Activator.getImageDescriptor("icons/edittrash.png"));
 
-		getViewSite().getActionBars().getToolBarManager().add(confermaRecapitiAction);
+//		getViewSite().getActionBars().getToolBarManager().add(confermaRecapitiAction);
 		getViewSite().getActionBars().getToolBarManager().add(nuovoRecapitoAction);
 		getViewSite().getActionBars().getToolBarManager().add(cancellaRecapitoAction);
-		getViewSite().getActionBars().getToolBarManager().add(refreshRecapitiAction);
+//		getViewSite().getActionBars().getToolBarManager().add(refreshRecapitiAction);
 		
 		f.updateToolBar();
 		
@@ -620,8 +617,8 @@ public class RecapitiView extends ViewPart {
 	public void setCompareView(boolean enabled){
 		
 		tvRecapiti.getTable().setEnabled(!enabled);
-		refreshRecapitiAction.setEnabled(!enabled);
-		confermaRecapitiAction.setEnabled(!enabled);
+//		refreshRecapitiAction.setEnabled(!enabled);
+//		confermaRecapitiAction.setEnabled(!enabled);
 		cancellaRecapitoAction.setEnabled(!enabled);
 		nuovoRecapitoAction.setEnabled(!enabled);		
 

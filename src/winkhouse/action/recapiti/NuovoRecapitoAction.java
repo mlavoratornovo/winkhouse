@@ -10,6 +10,9 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Contatti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.common.RecapitiView;
 
 public class NuovoRecapitoAction extends Action {
@@ -46,13 +49,16 @@ public class NuovoRecapitoAction extends Action {
 		
 		if (rv.getAnagrafiche() != null && rv.getAnagrafiche().size() > 0){
 			
-			ContattiModel cm = new ContattiModel();
+			
+			Contatti cm = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Contatti.class);
+			rv.getAnagrafiche().get(0).addToContattis(cm);
 //			cm.setCodAnagrafica(rv.getAnagrafiche().get(0).getCodAnagrafica());
 //			cm.setAnagrafica(rv.getAnagrafiche().get(0));
 			
 //			rv.getAnagrafiche().get(0).getContatti().add(cm);
 			
-//			rv.getContatti().add(cm);
+			rv.getContatti().add(cm);
+			
 			rv.getTvRecapiti().setInput(rv.getContatti());
 			rv.getTvRecapiti().refresh();				
 			

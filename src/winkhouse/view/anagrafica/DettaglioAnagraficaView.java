@@ -403,13 +403,13 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 	private void bindAnagrafica(DataBindingContext bindingContext){
 		if (anagrafica != null){
-			this.setPartName(((!anagrafica.getRagsoc().equalsIgnoreCase(""))
+			this.setPartName(((anagrafica.getRagsoc() != null)
 							  ? anagrafica.getRagsoc() + " - "
 							  :"") + 
-							  ((!anagrafica.getCognome().equalsIgnoreCase(""))
+							  ((anagrafica.getCognome() != null)
 							  ? anagrafica.getCognome() + " - "
 							  :"") + 
-							  ((!anagrafica.getNome().equalsIgnoreCase(""))
+							  ((anagrafica.getNome() != null)
 							  ? anagrafica.getNome() + " - "
 							  :""));
 			
@@ -498,7 +498,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					//anagrafica.setAgenteInseritore((AgentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					anagrafica.setAgenti(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 				}
 				
 			});

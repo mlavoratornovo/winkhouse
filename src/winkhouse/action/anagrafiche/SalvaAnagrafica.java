@@ -155,8 +155,8 @@ public class SalvaAnagrafica extends Action {
 //					
 //				}
 //				
-//				RefreshAnagraficheAction raa = new RefreshAnagraficheAction();
-//				raa.run();
+				RefreshAnagraficheAction raa = new RefreshAnagraficheAction();
+				raa.run();
 //				
 			}else if (decision.equalsIgnoreCase(OptimisticLockHelper.VISUALIZZA)){
 //				

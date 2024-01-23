@@ -9,7 +9,11 @@ public class Anagrafiche extends _Anagrafiche {
     private static final long serialVersionUID = 1L;
     
     public int getCodAnagrafica() {
-        return Cayenne.intPKForObject(this);
+    	try {
+        	return Cayenne.intPKForObject(this);
+    	}catch(Exception ex) {
+    		return 0;
+    	}
     }
     
 	@Override

@@ -285,13 +285,13 @@ public class AnagraficaTreeView extends ViewPart
 			
 			if (obj instanceof Anagrafiche){
 				returnValue = ""+((Anagrafiche)obj).getCodAnagrafica() + " - " +
-							  ((!((Anagrafiche)obj).getRagsoc().equalsIgnoreCase(""))
+							  ((((Anagrafiche)obj).getRagsoc() != null)
 							   ? ((Anagrafiche)obj).getRagsoc()+" - "
 							   : "") +
-							  ((!((Anagrafiche)obj).getCognome().equalsIgnoreCase(""))
+							  ((((Anagrafiche)obj).getCognome() != null)
 							   ? ((Anagrafiche)obj).getCognome()
 							   : "") + " - " +
-							  ((!((Anagrafiche)obj).getNome().equalsIgnoreCase(""))
+							  ((((Anagrafiche)obj).getNome() != null)
 							   ? ((Anagrafiche)obj).getNome()
 							   : "");
 							   

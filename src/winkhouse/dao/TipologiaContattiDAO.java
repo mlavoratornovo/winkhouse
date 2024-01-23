@@ -14,6 +14,7 @@ import winkhouse.db.ConnectionManager;
 import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.orm.Classicliente;
 import winkhouse.orm.Tipologiecontatti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipologiaContattiVO;
 
 
@@ -31,7 +32,7 @@ public class TipologiaContattiDAO extends BaseDAO{
 
 	}
 	public ArrayList<Tipologiecontatti> list(){
-		ObjectContext context = CayenneContextManager.getInstance().getContext();
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return new ArrayList<Tipologiecontatti>(ObjectSelect.query(Tipologiecontatti.class).select(context));
 	}
 
