@@ -31,13 +31,17 @@ import winkhouse.action.anagrafiche.RefreshAnagrafichePropietarieAction;
 import winkhouse.action.anagrafiche.SalvaAnagrafichePropietarieAction;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
+import winkhouse.orm.Immobilipropietari;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.common.RecapitiView;
 
 public class AnagrafichePropietarieView extends ViewPart {
 
 	public final static String ID = "winkhouse.anagrafichepropietarieview";
 	private TableViewer tvAnagrafichePropietarie = null;
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 	private OpenPopUpAnagrafiche openPopUpAnagrafiche = null;
 	private CancellaAnagraficaPropietariaAction cancellaAnagraficaPropietariaAction = null; 
 	private RefreshAnagrafichePropietarieAction refreshAnagrafichePropietarieAction = null;
@@ -195,36 +199,45 @@ public class AnagrafichePropietarieView extends ViewPart {
 		return tvAnagrafichePropietarie;
 	}
 
-	public ImmobiliModel getImmobile() {
+	public Immobili getImmobile() {
 		return immobile;
 	}
 
-	public void setAnagrafica(ImmobiliModel immobile) {
+	public void setAnagrafica(Immobili immobile) {
 		this.immobile = immobile;
 		if ((this.immobile != null) && 
-			(this.immobile.getAnagrafichePropietarie() != null)){
-			tvAnagrafichePropietarie.setInput(this.immobile.getAnagrafichePropietarie());
+			(this.immobile.getImmobilipropietaris() != null)){
+			tvAnagrafichePropietarie.setInput(this.immobile.getImmobilipropietaris());
 		}else{
 			tvAnagrafichePropietarie.setInput(new ArrayList());
 		}
 	}
 	
-	public void addAnagrafica(AnagraficheModel anagrafica) {
+	public void addAnagrafica(Anagrafiche anagrafica) {
 		
 		if (this.immobile != null){
 			
-			if (this.immobile.getAnagrafichePropietarie() == null){
-				this.immobile.setAnagrafichePropietarie(new ArrayList<AnagraficheModel>());
-			}
-			
-			this.immobile.getAnagrafichePropietarie().add(anagrafica);
+//			if (this.immobile.getImmobilipropietaris() == null){
+//				this.immobile.setAnagrafichePropietarie(new ArrayList<AnagraficheModel>());
+//			}
+			Immobilipropietari ip = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobilipropietari.class);
+			ip.setAnagrafiche(anagrafica);
+			ip.setImmobili(immobile);
+			this.immobile.addToImmobilipropietaris(ip);
 			setAnagrafica(this.immobile);
 			RecapitiView riv = (RecapitiView)PlatformUI.getWorkbench()
 			   										   .getActiveWorkbenchWindow()
 			   										   .getActivePage()
 			   										   .findView(RecapitiView.ID);
 			
-//			riv.setAnagrafiche(this.immobile.getAnagrafichePropietarie());
+			ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
+			if (immobile.getImmobilipropietaris() == null || immobile.getImmobilipropietaris().size() > 0) {
+				for (Immobilipropietari ipr : immobile.getImmobilipropietaris()) {
+					anagrafiche.add(ipr.getAnagrafiche());
+				}
+			}				  				  
+
+			riv.setAnagrafiche(anagrafiche);
 
 		}
 				

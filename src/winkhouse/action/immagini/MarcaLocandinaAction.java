@@ -41,7 +41,7 @@ public class MarcaLocandinaAction extends Action{
 		ImmagineModel im = (ImmagineModel)iiv.getGallery().getSelection()[0].getData();
 	    ImmaginiDAO iDAO = new ImmaginiDAO();
 	    
-	    if (!im.getPropieta().containsKey(ImageProperties.LOCANDINA)){
+	    if (!im.getProprieta().containsKey(ImageProperties.LOCANDINA)){
 	    	im.setImgPropsStr((((im.getImgPropsStr() != null)&&(!im.getImgPropsStr().equalsIgnoreCase("")))
 	    					  ?""
 	    					  :im.getImgPropsStr() + ImageProperties.PROPERTY_SEPARATOR) + 

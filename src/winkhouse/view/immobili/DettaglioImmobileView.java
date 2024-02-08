@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -81,12 +82,25 @@ import winkhouse.action.immobili.OpenPopupComuniAction;
 import winkhouse.action.immobili.RefreshDettaglioImmobile;
 import winkhouse.action.immobili.SalvaImmobile;
 import winkhouse.action.stampa.StampaImmobiliAction;
+import winkhouse.dao.EntityDAO;
 import winkhouse.dialogs.custom.FileDialogCellEditor;
 import winkhouse.dialogs.custom.SWTCalendarDialog;
-import winkhouse.model.AnagraficheModel;
+import winkhouse.model.EntityModel;
 import winkhouse.model.ImmobiliModel;
-import winkhouse.model.StanzeImmobiliModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Allegatiimmobili;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classicliente;
+import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Comuni;
+import winkhouse.orm.Daticatastali;
+import winkhouse.orm.Immobili;
+import winkhouse.orm.Immobilipropietari;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Stanzeimmobili;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiastanze;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.perspective.ImmobiliPerspective;
 import winkhouse.util.IPrefersPerspective;
 import winkhouse.util.MobiliaDatiBaseCache;
@@ -98,18 +112,8 @@ import winkhouse.view.common.ColloquiView;
 import winkhouse.view.common.EAVView;
 import winkhouse.view.common.MapView;
 import winkhouse.view.common.RecapitiView;
-import winkhouse.vo.AgentiVO;
-import winkhouse.vo.AllegatiImmobiliVO;
-import winkhouse.vo.ClasseEnergeticaVO;
-import winkhouse.vo.ClassiClientiVO;
-import winkhouse.vo.ComuniVO;
-import winkhouse.vo.DatiCatastaliVO;
-import winkhouse.vo.RiscaldamentiVO;
-import winkhouse.vo.StanzeImmobiliVO;
-import winkhouse.vo.StatoConservativoVO;
-import winkhouse.vo.TipologiaStanzeVO;
-import winkhouse.vo.TipologieImmobiliVO;
-
+import winkhouse.vo.AnagraficheVO;
+import winkhouse.vo.ImmobiliVO;
 
 
 public class DettaglioImmobileView extends ViewPart
@@ -120,7 +124,7 @@ public class DettaglioImmobileView extends ViewPart
 	private FormToolkit ft = null;
 	private ScrolledForm f = null;
 	
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 	
 	Label codImmobile = null;
 	
@@ -212,36 +216,36 @@ public class DettaglioImmobileView extends ViewPart
 	
 	boolean isInCompareMode = false;
 	
-	private Comparator<TipologiaStanzeVO> comparatorTipologieStanze = new Comparator<TipologiaStanzeVO>(){
+	private Comparator<Tipologiastanze> comparatorTipologieStanze = new Comparator<Tipologiastanze>(){
 		@Override
-		public int compare(TipologiaStanzeVO arg0, TipologiaStanzeVO arg1) {
-			return arg0.getCodTipologiaStanza().compareTo(arg1.getCodTipologiaStanza());
+		public int compare(Tipologiastanze arg0, Tipologiastanze arg1) {
+			return Integer.valueOf(arg0.getCodTipologiaStanza()).compareTo(Integer.valueOf(arg1.getCodTipologiaStanza()));
 		}		
 	};	
 	
-	private Comparator<TipologieImmobiliVO> comparatorTipologia = new Comparator<TipologieImmobiliVO>(){
+	private Comparator<Tipologieimmobili> comparatorTipologia = new Comparator<Tipologieimmobili>(){
 
 		@Override
-		public int compare(TipologieImmobiliVO arg0,TipologieImmobiliVO arg1) {
-			return arg0.getCodTipologiaImmobile().compareTo(arg0.getCodTipologiaImmobile());
+		public int compare(Tipologieimmobili arg0,Tipologieimmobili arg1) {
+			return Integer.valueOf(arg0.getCodTipologiaImmobile()).compareTo(Integer.valueOf(arg0.getCodTipologiaImmobile()));
 		}
 		
 	};
 
-	private Comparator<StatoConservativoVO> comparatorStatoConservativo = new Comparator<StatoConservativoVO>(){
+	private Comparator<Statoconservativo> comparatorStatoConservativo = new Comparator<Statoconservativo>(){
 
 		@Override
-		public int compare(StatoConservativoVO arg0,StatoConservativoVO arg1) {
-			return arg0.getCodStatoConservativo().compareTo(arg1.getCodStatoConservativo());
+		public int compare(Statoconservativo arg0,Statoconservativo arg1) {
+			return Integer.valueOf(arg0.getCodStatoConservativo()).compareTo(Integer.valueOf(arg1.getCodStatoConservativo()));
 		}
 		
 	};
 
-	private Comparator<RiscaldamentiVO> comparatorRiscaldamenti = new Comparator<RiscaldamentiVO>(){
+	private Comparator<Riscaldamenti> comparatorRiscaldamenti = new Comparator<Riscaldamenti>(){
 
 		@Override
-		public int compare(RiscaldamentiVO arg0,RiscaldamentiVO arg1) {
-			return arg0.getCodRiscaldamento().compareTo(arg1.getCodRiscaldamento());
+		public int compare(Riscaldamenti arg0,Riscaldamenti arg1) {
+			return Integer.valueOf(arg0.getCodRiscaldamento()).compareTo(Integer.valueOf(arg1.getCodRiscaldamento()));
 		}
 		
 	};
@@ -255,20 +259,20 @@ public class DettaglioImmobileView extends ViewPart
 		
 	};
 
-	private Comparator<ClassiClientiVO> comparatorClassiCliente = new Comparator<ClassiClientiVO>(){
+	private Comparator<Classicliente> comparatorClassiCliente = new Comparator<Classicliente>(){
 
 		@Override
-		public int compare(ClassiClientiVO arg0,ClassiClientiVO arg1) {
-			return arg0.getCodClasseCliente().compareTo(arg1.getCodClasseCliente());
+		public int compare(Classicliente arg0,Classicliente arg1) {
+			return Integer.valueOf(arg0.getCodClasseCliente()).compareTo(Integer.valueOf(arg1.getCodClasseCliente()));
 		}
 		
 	};
 
-	private Comparator<ClasseEnergeticaVO> comparatorClassiEnergetiche = new Comparator<ClasseEnergeticaVO>(){
+	private Comparator<Classienergetiche> comparatorClassiEnergetiche = new Comparator<Classienergetiche>(){
 
 		@Override
-		public int compare(ClasseEnergeticaVO arg0,ClasseEnergeticaVO arg1) {
-			return arg0.getCodClasseEnergetica().compareTo(arg1.getCodClasseEnergetica()); 
+		public int compare(Classienergetiche arg0,Classienergetiche arg1) {
+			return Integer.valueOf(arg0.getCodClasseEnergetica()).compareTo(Integer.valueOf(arg1.getCodClasseEnergetica())); 
 		}
 		
 	};
@@ -814,7 +818,8 @@ public class DettaglioImmobileView extends ViewPart
                     public void dateChanged(SWTCalendarEvent calendarEvent) {
 
                     	tliberoda.setText(formatter.format(calendarEvent.getCalendar().getTime()));
-                    	immobile.setDataLibero(calendarEvent.getCalendar().getTime());
+                    	immobile.setDatalibero(calendarEvent.getCalendar().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());                    	
+                    	
                     }
 
                 });
@@ -880,14 +885,12 @@ public class DettaglioImmobileView extends ViewPart
 	
 	private void bindDatiImmobile(DataBindingContext bindingContext){
 		if (immobile != null){
-			codImmobile.setText((immobile.getCodImmobile() == null)? "nessuno":String.valueOf(immobile.getCodImmobile()));
+			codImmobile.setText((immobile.getCodImmobile() == 0)? "nessuno":String.valueOf(immobile.getCodImmobile()));
 			
-//			bindingContext.bindValue(SWTObservables.observeText(
-//														tannoCostruzione,SWT.Modify
-//																), 
-//									 PojoObservables.observeValue(immobile, "annoCostruzione"),
-//					                 null, 
-//					                 null);
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tannoCostruzione),																
+									 PojoProperties.value("annoCostruzione").observe(immobile),
+					                 null, 
+					                 null);
 			
 			cvtipologia.setContentProvider(new IStructuredContentProvider(){
 	
@@ -910,7 +913,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getText(Object element) {
-					return ((TipologieImmobiliVO)element).getDescrizione();
+					return ((Tipologieimmobili)element).getDescrizione();
 				}
 				
 			});
@@ -919,24 +922,24 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setTipologiaImmobile((TipologieImmobiliVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setTipologieimmobili((Tipologieimmobili)((StructuredSelection)event.getSelection()).getFirstElement());
 				}
 				
 			});
 							
 			cvtipologia.setInput(new Object());
-			if (immobile.getTipologiaImmobile() != null){
-//				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieImmobili(), immobile.getTipologiaImmobile(), comparatorTipologia);
-//				Object[] sel = new Object[1];
-//				sel[0] = MobiliaDatiBaseCache.getInstance().getTipologieImmobili().get(index);
-//				StructuredSelection ss = new StructuredSelection(sel);
-//				cvtipologia.setSelection(ss);		
+			if (immobile.getTipologieimmobili() != null){
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieImmobili(), immobile.getTipologieimmobili(), comparatorTipologia);
+				Object[] sel = new Object[1];
+				sel[0] = MobiliaDatiBaseCache.getInstance().getTipologieImmobili().get(index);
+				StructuredSelection ss = new StructuredSelection(sel);
+				cvtipologia.setSelection(ss);		
 
-				ArrayList<TipologieImmobiliVO> tipologie = MobiliaDatiBaseCache.getInstance().getTipologieImmobili();
+				ArrayList<Tipologieimmobili> tipologie = MobiliaDatiBaseCache.getInstance().getTipologieImmobili();
 				int count = 0;
 				boolean findit = false;
 				for (Iterator iterator = tipologie.iterator(); iterator.hasNext();) {
-					if (immobile.getTipologiaImmobile().getCodTipologiaImmobile() == ((TipologieImmobiliVO)iterator.next()).getCodTipologiaImmobile()){
+					if (immobile.getTipologieimmobili().getCodTipologiaImmobile() == ((Tipologieimmobili)iterator.next()).getCodTipologiaImmobile()){
 						findit = true;
 						break;
 					}else{
@@ -948,22 +951,21 @@ public class DettaglioImmobileView extends ViewPart
 					count = -1;
 				}
 				if (count > -1){
-					Object[] sel = new Object[1];
+					sel = new Object[1];
 					sel[0] = MobiliaDatiBaseCache.getInstance().getTipologieImmobili().get(count);
-					StructuredSelection ss = new StructuredSelection(sel);
+					ss = new StructuredSelection(sel);
 					cvtipologia.setSelection(ss);
 				}
 				
 			}
 			
-//			bindingContext.bindValue(SWTObservables.observeText(
-//					tprezzo,SWT.Modify), 
-//					PojoObservables.observeValue(immobile, "prezzo"),
-//					null, 
-//					null);
-			
-			if (immobile.getDataLibero() != null){
-				tliberoda.setText(formatter.format(immobile.getDataLibero()));
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tprezzo),																
+					 PojoProperties.value("prezzo").observe(immobile),
+	                 null, 
+	                 null);
+						
+			if (immobile.getDatalibero() != null){
+				tliberoda.setText(formatter.format(immobile.getDatalibero()));
 			}
 			
 			cvstato.setContentProvider(new IStructuredContentProvider(){
@@ -987,7 +989,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getText(Object element) {
-					return ((StatoConservativoVO)element).getDescrizione();
+					return ((Statoconservativo)element).getDescrizione();
 				}
 				
 			});
@@ -996,49 +998,46 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setStatoConservativo((StatoConservativoVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setStatoconservativo((Statoconservativo)((StructuredSelection)event.getSelection()).getFirstElement());				
 				}
 				
 			});
 			
 			cvstato.setInput(new Object());		
 			
-			if (immobile.getStatoConservativo() != null){
-//				ArrayList<StatoConservativoVO> stati = MobiliaDatiBaseCache.getInstance().getStatiConservativi();
-//				int count = 0;
-//				boolean findit = false;
-//				for (Iterator iterator = stati.iterator(); iterator.hasNext();) {
-//					if (immobile.getStatoConservativo().getCodStatoConservativo() == ((StatoConservativoVO)iterator.next()).getCodStatoConservativo()){
-//						findit = true;
-//						break;
-//					}else{
-//						count++;
-//					}
-//					
-//				}
-//				if (findit == false){
-//					count = -1;
-//				}
+			if (immobile.getStatoconservativo() != null){
+				ArrayList<Statoconservativo> stati = MobiliaDatiBaseCache.getInstance().getStatiConservativi();
+				int count = 0;
+				boolean findit = false;
+				for (Iterator iterator = stati.iterator(); iterator.hasNext();) {
+					if (immobile.getStatoconservativo().getCodStatoConservativo() == ((Statoconservativo)iterator.next()).getCodStatoConservativo()){
+						findit = true;
+						break;
+					}else{
+						count++;
+					}
+					
+				}
+				if (findit == false){
+					count = -1;
+				}
 				
-				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getStatiConservativi(), immobile.getStatoConservativo(), comparatorStatoConservativo);
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getStatiConservativi(), immobile.getStatoconservativo(), comparatorStatoConservativo);
 				Object[] sel = new Object[1];
 				sel[0] = MobiliaDatiBaseCache.getInstance().getStatiConservativi().get(index);
 				StructuredSelection ss = new StructuredSelection(sel);
 				cvstato.setSelection(ss);		
 			}
-			
-//			bindingContext.bindValue(SWTObservables.observeText(
-//					tmutuo,SWT.Modify), 
-//					PojoObservables.observeValue(immobile, "mutuo"),
-//					null, 
-//					null);
-//	
-//			bindingContext.bindValue(SWTObservables.observeText(
-//					tmq,SWT.Modify), 
-//					PojoObservables.observeValue(immobile, "mq"),
-//					null, 
-//					null);
-	
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tmutuo),																
+					 PojoProperties.value("mutuo").observe(immobile),
+	                 null, 
+	                 null);
+
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tmq),																
+					 PojoProperties.value("mq").observe(immobile),
+	                 null, 
+	                 null);
+		
 			cvriscaldamenti.setContentProvider(new IStructuredContentProvider(){
 	
 				@Override
@@ -1060,7 +1059,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getText(Object element) {
-					return ((RiscaldamentiVO)element).getDescrizione();
+					return ((Riscaldamenti)element).getDescrizione();
 				}
 				
 			});
@@ -1069,7 +1068,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setRiscaldamento((RiscaldamentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setRiscaldamenti((Riscaldamenti)((StructuredSelection)event.getSelection()).getFirstElement());				
 				}
 				
 			});
@@ -1077,8 +1076,8 @@ public class DettaglioImmobileView extends ViewPart
 			cvriscaldamenti.setInput(new Object());
 			
 			
-			if (immobile.getRiscaldamento() != null){			
-				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getRiscaldamenti(), immobile.getRiscaldamento(), comparatorRiscaldamenti);
+			if (immobile.getRiscaldamenti() != null){			
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getRiscaldamenti(), immobile.getRiscaldamenti(), comparatorRiscaldamenti);
 				Object[] sel = new Object[1];
 				sel[0] = MobiliaDatiBaseCache.getInstance().getRiscaldamenti().get(index);
 				StructuredSelection ss = new StructuredSelection(sel);
@@ -1106,7 +1105,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getText(Object element) {
-					return ((ClasseEnergeticaVO)element).getNome();
+					return ((Classienergetiche)element).getNome();
 				}
 				
 			});
@@ -1115,14 +1114,14 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setClasseEnergetica((ClasseEnergeticaVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setClassienergetiche(((Classienergetiche)((StructuredSelection)event.getSelection()).getFirstElement()));
 				}
 				
 			});
 							
 			cvclasseenergetica.setInput(new Object());
-			if (immobile.getClasseEnergetica() != null){
-				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getClassiEnergetiche(), immobile.getClasseEnergetica(), comparatorClassiEnergetiche);
+			if (immobile.getClassienergetiche() != null){
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getClassiEnergetiche(), immobile.getClassienergetiche(), comparatorClassiEnergetiche);
 				Object[] sel = new Object[1];				
 				try {
 					sel[0] = MobiliaDatiBaseCache.getInstance().getClassiEnergetiche().get(index);
@@ -1133,25 +1132,26 @@ public class DettaglioImmobileView extends ViewPart
 				}
 			}
 			
-			
-			
-//			bindingContext.bindValue(SWTObservables.observeText(
-//					tspese,SWT.Modify), 
-//					PojoObservables.observeValue(immobile, "spese"),
-//					null, 
-//					null);
-//	
-//			bindingContext.bindValue(SWTObservables.observeText(
-//					tdescrizione,SWT.Modify), 
-//					PojoObservables.observeValue(immobile, "descrizione"),
-//					null, 
-//					null);
-//			
-//			bindingContext.bindValue(SWTObservables.observeText(
-//					tdescrizioneMutuo,SWT.Modify), 
-//					PojoObservables.observeValue(immobile, "mutuoDescrizione"),
-//					null, 
-//					null);
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tspese),																
+					 PojoProperties.value("spese").observe(immobile),
+	                 null, 
+	                 null);
+
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tdescrizione),																
+					 PojoProperties.value("descrizione").observe(immobile),
+	                 null, 
+	                 null);
+
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tdescrizioneMutuo),																
+					 PojoProperties.value("mutuodescrizione").observe(immobile),
+	                 null, 
+	                 null);
+
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tspese),																
+					 PojoProperties.value("spese").observe(immobile),
+	                 null, 
+	                 null);
+	
 		}
 	}
 
@@ -1203,11 +1203,11 @@ public class DettaglioImmobileView extends ViewPart
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (immobile.getCodImmobile()!= null && immobile.getCodImmobile() != 0) {
-					StanzeImmobiliModel siModel = new StanzeImmobiliModel();
-					siModel.setCodImmobile(immobile.getCodImmobile());
-					immobile.getStanze().add(siModel);
-					tvStanze.setInput(immobile.getStanze());
+//				if (immobile.getCodImmobile() != 0) {
+					Stanzeimmobili siModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Stanzeimmobili.class);					
+					
+					immobile.addToStanzeimmobilis(siModel);
+					tvStanze.setInput(immobile.getStanzeimmobilis());
 					tvStanze.refresh();
 					
 					TableItem ti = tvStanze.getTable().getItem(tvStanze.getTable().getItemCount()-1);
@@ -1224,11 +1224,11 @@ public class DettaglioImmobileView extends ViewPart
 					ev.widget = tvStanze.getTable();
 					tvStanze.getTable().notifyListeners(SWT.Selection, ev);
 					
-				}else {
-					MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-							"Inserimento stanza", 
-							"Eseguire il salvataggio dell'immobile");
-				}
+//				}else {
+//					MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+//							"Inserimento stanza", 
+//							"Eseguire il salvataggio dell'immobile");
+//				}
 
 			}
 
@@ -1252,8 +1252,8 @@ public class DettaglioImmobileView extends ViewPart
 				if (tvStanze.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvStanze.getSelection()).iterator();
 					while (it.hasNext()) {
-						StanzeImmobiliVO siVO = (StanzeImmobiliVO)it.next();
-						immobile.getStanze().remove(siVO);
+						Stanzeimmobili siVO = (Stanzeimmobili)it.next();
+						immobile.removeFromStanzeimmobilis(siVO);
 					}
 					tvStanze.refresh();
 				}
@@ -1333,10 +1333,10 @@ public class DettaglioImmobileView extends ViewPart
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				DatiCatastaliVO dcVO = new DatiCatastaliVO();
-				dcVO.setCodImmobile(immobile.getCodImmobile());				
-				immobile.getDatiCatastali().add(dcVO);
-				tvDatiCatastali.setInput(immobile.getDatiCatastali());
+				
+				Daticatastali dcVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Daticatastali.class);								
+				immobile.addToDaticatastalis(dcVO);
+				tvDatiCatastali.setInput(immobile.getDaticatastalis());
 				tvDatiCatastali.refresh();
 				
 				TableItem ti = tvDatiCatastali.getTable().getItem(tvDatiCatastali.getTable().getItemCount()-1);
@@ -1375,8 +1375,8 @@ public class DettaglioImmobileView extends ViewPart
 				if (tvDatiCatastali.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvDatiCatastali.getSelection()).iterator();
 					while (it.hasNext()) {
-						DatiCatastaliVO dcVO = (DatiCatastaliVO)it.next();
-						immobile.getDatiCatastali().remove(dcVO);
+						Daticatastali dcVO = (Daticatastali)it.next();
+						immobile.removeFromDaticatastalis(dcVO);
 					}
 					tvDatiCatastali.refresh();
 				}
@@ -1440,9 +1440,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public Object[] getElements(Object inputElement) {
-					return (immobile.getStanze()==null)
+					return (immobile.getStanzeimmobilis() == null)
 					       ? new ArrayList().toArray()
-					       : immobile.getStanze().toArray();
+					       : immobile.getStanzeimmobilis().toArray();
 				}
 	
 				@Override
@@ -1465,15 +1465,15 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getColumnText(Object element, int columnIndex) {
-					StanzeImmobiliModel siModel = (StanzeImmobiliModel)element;
+					Stanzeimmobili siModel = (Stanzeimmobili)element;
 					switch (columnIndex){
-						case 0: return (siModel.getTipologia() == null)
+						case 0: return (siModel.getTipologiastanze() == null)
 									   ? ""
-									   : (siModel.getTipologia().getDescrizione() == null)
+									   : (siModel.getTipologiastanze().getDescrizione() == null)
 									     ? ""
-									     : siModel.getTipologia().getDescrizione();					        
+									     : siModel.getTipologiastanze().getDescrizione();					        
 						
-						case 1: return (siModel.getMq() == null)
+						case 1: return (siModel.getMq() == 0)
 						   			   ? "0"
 						   			   : String.valueOf(siModel.getMq());
 						
@@ -1507,12 +1507,12 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void update(ViewerCell cell) {
-					StanzeImmobiliModel siModel = (StanzeImmobiliModel)cell.getElement();
-					cell.setText((siModel.getTipologia() == null)
+					Stanzeimmobili siModel = (Stanzeimmobili)cell.getElement();
+					cell.setText((siModel.getTipologiastanze() == null)
 								 ? ""
-								 : (siModel.getTipologia().getDescrizione() == null)
+								 : (siModel.getTipologiastanze().getDescrizione() == null)
 								 	? ""
-								 	: siModel.getTipologia().getDescrizione());
+								 	: siModel.getTipologiastanze().getDescrizione());
 					
 				}
 				
@@ -1536,11 +1536,11 @@ public class DettaglioImmobileView extends ViewPart
 				@Override
 				protected Object getValue(Object element) {
 					int index = -1; 
-					StanzeImmobiliModel siModel = (StanzeImmobiliModel)element;
-					if (siModel.getTipologia() != null){
+					Stanzeimmobili siModel = (Stanzeimmobili)element;
+					if (siModel.getTipologiastanze() != null){
 						
 						index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieStanze(), 
-														 siModel.getTipologia(),
+														 siModel.getTipologiastanze(),
 											             comparatorTipologieStanze);
 					}
 					return index;
@@ -1549,8 +1549,8 @@ public class DettaglioImmobileView extends ViewPart
 				@Override
 				protected void setValue(Object element, Object value) {
 					if (((Integer)value).intValue() > -1){
-						StanzeImmobiliModel siModel = (StanzeImmobiliModel)element;
-						siModel.setTipologia(MobiliaDatiBaseCache.getInstance().getTipologieStanze().get((Integer)value));
+						Stanzeimmobili siModel = (Stanzeimmobili)element;
+						siModel.setTipologiastanze(MobiliaDatiBaseCache.getInstance().getTipologieStanze().get((Integer)value));
 						tvStanze.refresh();
 					}
 				}
@@ -1567,9 +1567,9 @@ public class DettaglioImmobileView extends ViewPart
 				public void update(ViewerCell cell) {
 					
 					cell.setText(
-							(((StanzeImmobiliVO)cell.getElement()).getMq()==null)
+							(((Stanzeimmobili)cell.getElement()).getMq()==0)
 							? "0"
-							: String.valueOf(((StanzeImmobiliVO)cell.getElement()).getMq())
+							: String.valueOf(((Stanzeimmobili)cell.getElement()).getMq())
 								);
 					
 				}
@@ -1590,9 +1590,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {
-					return (((StanzeImmobiliVO)element).getMq() == null)
+					return (((Stanzeimmobili)element).getMq() == 0)
 		   			   	   ? "0"
-				   		   : String.valueOf(((StanzeImmobiliVO)element).getMq());
+				   		   : String.valueOf(((Stanzeimmobili)element).getMq());
 				}
 	
 				@Override
@@ -1601,9 +1601,9 @@ public class DettaglioImmobileView extends ViewPart
 					try {
 						mq = Integer.valueOf((String)value);
 					} catch (NumberFormatException e) {					
-						mq = new Integer(0);
+						mq = 0;
 					}
-					((StanzeImmobiliVO)element).setMq(mq);
+					((Stanzeimmobili)element).setMq(mq);
 					tvStanze.refresh();
 				}
 				
@@ -1622,9 +1622,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public Object[] getElements(Object inputElement) {
-					return (immobile.getDatiCatastali()==null)
+					return (immobile.getDaticatastalis()==null)
 					       ? new ArrayList().toArray()
-					       : immobile.getDatiCatastali().toArray();
+					       : immobile.getDaticatastalis().toArray();
 				}
 	
 				@Override
@@ -1647,14 +1647,14 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getColumnText(Object element, int columnIndex) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					switch (columnIndex){
 						case 0: return dcVO.getFoglio();					        
 						case 1: return dcVO.getParticella();
 						case 2: return dcVO.getSubalterno();
 						case 3: return String.valueOf(dcVO.getRendita());
-						case 4: return String.valueOf(dcVO.getRedditoDomenicale());
-						case 5: return String.valueOf(dcVO.getRedditoAgricolo());
+						case 4: return String.valueOf(dcVO.getRedditodomenicale());
+						case 5: return String.valueOf(dcVO.getRedditoagrario());
 						case 6: return String.valueOf(dcVO.getDimensione());
 						
 						default : return "";
@@ -1687,7 +1687,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void update(ViewerCell cell) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)cell.getElement();
+					Daticatastali dcVO = (Daticatastali)cell.getElement();
 					cell.setText(dcVO.getFoglio());					
 				}
 				
@@ -1706,13 +1706,13 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {					
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					return dcVO.getFoglio();
 				}
 	
 				@Override
 				protected void setValue(Object element, Object value) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					dcVO.setFoglio((String)value);
 					tvDatiCatastali.refresh();
 					
@@ -1725,7 +1725,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void update(ViewerCell cell) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)cell.getElement();
+					Daticatastali dcVO = (Daticatastali)cell.getElement();
 					cell.setText(dcVO.getParticella());					
 				}
 				
@@ -1744,13 +1744,13 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {					
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					return dcVO.getParticella();
 				}
 	
 				@Override
 				protected void setValue(Object element, Object value) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					dcVO.setParticella((String)value);
 					tvDatiCatastali.refresh();
 					
@@ -1763,7 +1763,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void update(ViewerCell cell) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)cell.getElement();
+					Daticatastali dcVO = (Daticatastali)cell.getElement();
 					cell.setText(dcVO.getSubalterno());					
 				}
 				
@@ -1782,13 +1782,13 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {					
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					return dcVO.getSubalterno();
 				}
 	
 				@Override
 				protected void setValue(Object element, Object value) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					dcVO.setSubalterno((String)value);
 					tvDatiCatastali.refresh();
 					
@@ -1801,7 +1801,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void update(ViewerCell cell) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)cell.getElement();
+					Daticatastali dcVO = (Daticatastali)cell.getElement();
 					cell.setText(dcVO.getCategoria());					
 				}
 				
@@ -1820,13 +1820,13 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {					
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					return dcVO.getCategoria();
 				}
 	
 				@Override
 				protected void setValue(Object element, Object value) {
-					DatiCatastaliVO dcVO = (DatiCatastaliVO)element;
+					Daticatastali dcVO = (Daticatastali)element;
 					dcVO.setCategoria((String)value);
 					tvDatiCatastali.refresh();
 					
@@ -1843,9 +1843,9 @@ public class DettaglioImmobileView extends ViewPart
 				public void update(ViewerCell cell) {
 					
 					cell.setText(
-							(((DatiCatastaliVO)cell.getElement()).getRendita()==null)
+							(((Daticatastali)cell.getElement()).getRendita() == 0.0)
 							? "0.0"
-							: String.valueOf(((DatiCatastaliVO)cell.getElement()).getRendita())
+							: String.valueOf(((Daticatastali)cell.getElement()).getRendita())
 								);
 					
 				}
@@ -1866,9 +1866,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {
-					return (((DatiCatastaliVO)element).getRendita()==null)
+					return (((Daticatastali)element).getRendita() == 0.0)
 							? "0.0"
-							: String.valueOf(((DatiCatastaliVO)element).getRendita());
+							: String.valueOf(((Daticatastali)element).getRendita());
 				}
 	
 				@Override
@@ -1877,9 +1877,9 @@ public class DettaglioImmobileView extends ViewPart
 					try {
 						rendita = Double.valueOf((String)value);
 					} catch (NumberFormatException e) {					
-						rendita = new Double(0);
+						rendita = 0.0;
 					}
-					((DatiCatastaliVO)element).setRendita(rendita);
+					((Daticatastali)element).setRendita(rendita);
 					tvDatiCatastali.refresh();
 				}
 				
@@ -1893,9 +1893,9 @@ public class DettaglioImmobileView extends ViewPart
 				public void update(ViewerCell cell) {
 					
 					cell.setText(
-							(((DatiCatastaliVO)cell.getElement()).getRedditoDomenicale()==null)
+							(((Daticatastali)cell.getElement()).getRedditodomenicale() == 0.0)
 							? "0.0"
-							: String.valueOf(((DatiCatastaliVO)cell.getElement()).getRedditoDomenicale())
+							: String.valueOf(((Daticatastali)cell.getElement()).getRedditodomenicale())
 								);
 					
 				}
@@ -1916,9 +1916,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {
-					return (((DatiCatastaliVO)element).getRedditoDomenicale()==null)
+					return (((Daticatastali)element).getRedditodomenicale() == 0.0)
 							? "0.0"
-							: String.valueOf(((DatiCatastaliVO)element).getRedditoDomenicale());
+							: String.valueOf(((Daticatastali)element).getRedditodomenicale());
 				}
 	
 				@Override
@@ -1927,9 +1927,9 @@ public class DettaglioImmobileView extends ViewPart
 					try {
 						reddito = Double.valueOf((String)value);
 					} catch (NumberFormatException e) {					
-						reddito = new Double(0);
+						reddito = 0.0;
 					}
-					((DatiCatastaliVO)element).setRedditoDomenicale(reddito);
+					((Daticatastali)element).setRedditodomenicale(reddito);
 					tvDatiCatastali.refresh();
 				}
 				
@@ -1943,9 +1943,9 @@ public class DettaglioImmobileView extends ViewPart
 				public void update(ViewerCell cell) {
 					
 					cell.setText(
-							(((DatiCatastaliVO)cell.getElement()).getRedditoAgricolo()==null)
+							(((Daticatastali)cell.getElement()).getRedditoagrario()==0.0)
 							? "0"
-							: String.valueOf(((DatiCatastaliVO)cell.getElement()).getRedditoAgricolo())
+							: String.valueOf(((Daticatastali)cell.getElement()).getRedditoagrario())
 								);
 					
 				}
@@ -1966,9 +1966,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {
-					return (((DatiCatastaliVO)element).getRedditoAgricolo()==null)
+					return (((Daticatastali)element).getRedditoagrario()==0.0)
 							? "0"
-							: String.valueOf(((DatiCatastaliVO)element).getRedditoAgricolo());
+							: String.valueOf(((Daticatastali)element).getRedditoagrario());
 				}
 	
 				@Override
@@ -1977,9 +1977,9 @@ public class DettaglioImmobileView extends ViewPart
 					try {
 						rendita = Double.valueOf((String)value);
 					} catch (NumberFormatException e) {					
-						rendita = new Double(0);
+						rendita = 0.0;
 					}
-					((DatiCatastaliVO)element).setRedditoAgricolo(rendita);
+					((Daticatastali)element).setRedditoagrario(rendita);
 					tvDatiCatastali.refresh();
 				}
 				
@@ -1993,9 +1993,9 @@ public class DettaglioImmobileView extends ViewPart
 				public void update(ViewerCell cell) {
 					
 					cell.setText(
-							(((DatiCatastaliVO)cell.getElement()).getDimensione()==null)
+							(((Daticatastali)cell.getElement()).getDimensione()==0.0)
 							? "0"
-							: String.valueOf(((DatiCatastaliVO)cell.getElement()).getDimensione())
+							: String.valueOf(((Daticatastali)cell.getElement()).getDimensione())
 								);
 					
 				}
@@ -2016,9 +2016,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {
-					return (((DatiCatastaliVO)element).getDimensione()==null)
+					return (((Daticatastali)element).getDimensione()==0.0)
 							? "0"
-							: String.valueOf(((DatiCatastaliVO)element).getDimensione());
+							: String.valueOf(((Daticatastali)element).getDimensione());
 				}
 	
 				@Override
@@ -2027,9 +2027,9 @@ public class DettaglioImmobileView extends ViewPart
 					try {
 						rendita = Double.valueOf((String)value);
 					} catch (NumberFormatException e) {					
-						rendita = new Double(0);
+						rendita = 0.0;
 					}
-					((DatiCatastaliVO)element).setDimensione(rendita);
+					((Daticatastali)element).setDimensione(rendita);
 					tvDatiCatastali.refresh();
 				}
 				
@@ -2090,10 +2090,10 @@ public class DettaglioImmobileView extends ViewPart
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				AllegatiImmobiliVO aiVO = new AllegatiImmobiliVO();
-				aiVO.setCodImmobile(immobile.getCodImmobile());
-				immobile.getAllegati().add(aiVO);
-				tvAllegati.setInput(immobile.getAllegati());
+				Allegatiimmobili aiVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Allegatiimmobili.class);
+				
+				immobile.addToAllegatiimmobilis(aiVO);
+				tvAllegati.setInput(immobile.getAllegatiimmobilis());
 				tvAllegati.refresh();	
 				
 				TableItem ti = tvAllegati.getTable().getItem(tvAllegati.getTable().getItemCount()-1);
@@ -2132,8 +2132,8 @@ public class DettaglioImmobileView extends ViewPart
 				if (tvAllegati.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvAllegati.getSelection()).iterator();
 					while (it.hasNext()) {
-						AllegatiImmobiliVO aiVO = (AllegatiImmobiliVO)it.next();
-						immobile.getAllegati().remove(aiVO);
+						Allegatiimmobili aiVO = (Allegatiimmobili)it.next();
+						immobile.removeFromAllegatiimmobilis(aiVO);
 					}
 					tvAllegati.refresh();
 					
@@ -2159,7 +2159,7 @@ public class DettaglioImmobileView extends ViewPart
 			@Override
 			public void mouseUp(MouseEvent e) {
 				
-				if ((getImmobile().getCodImmobile() != null) && (getImmobile().getCodImmobile() != 0)){
+				if (getImmobile().getCodImmobile() != 0){
 					
 					String pathRepositoryAllegati = (WinkhouseUtils.getInstance()
 																   .getPreferenceStore()
@@ -2172,7 +2172,7 @@ public class DettaglioImmobileView extends ViewPart
 												       				 .getPreferenceStore()
 												       				 .getString(WinkhouseUtils.ALLEGATIPATH);
 												       				
-	                File f = new File(pathRepositoryAllegati + File.separator + getImmobile().getCodImmobile().toString());
+	                File f = new File(pathRepositoryAllegati + File.separator + getImmobile().getCodImmobile());
 					if (!f.exists()){
 						f.mkdirs();
 					}
@@ -2232,7 +2232,7 @@ public class DettaglioImmobileView extends ViewPart
 				
 				pathRepositoryAllegati += File.separator + "immobili";
 				
-				AllegatiImmobiliVO aiVO = (AllegatiImmobiliVO)((StructuredSelection)tvAllegati.getSelection()).getFirstElement();
+				Allegatiimmobili aiVO = (Allegatiimmobili)((StructuredSelection)tvAllegati.getSelection()).getFirstElement();
 				
 				if ((aiVO.getFromPath() == null) ||
 					(aiVO.getFromPath().equalsIgnoreCase(""))){	
@@ -2270,9 +2270,9 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public Object[] getElements(Object inputElement) {
-					return (immobile.getAllegati()==null)
-					       ? new ArrayList().toArray()
-					       : immobile.getAllegati().toArray();
+					return (immobile.getAllegatiimmobilis()==null)
+					       ? new ArrayList<Allegatiimmobili>().toArray()
+					       : immobile.getAllegatiimmobilis().toArray();
 				}
 	
 				@Override
@@ -2295,7 +2295,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getColumnText(Object element, int columnIndex) {
-					AllegatiImmobiliVO aiVO = (AllegatiImmobiliVO)element;
+					Allegatiimmobili aiVO = (Allegatiimmobili)element;
 					switch (columnIndex){
 						case 0: return (aiVO.getCommento() == null)
 									   ? ""
@@ -2335,8 +2335,8 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void update(ViewerCell cell) {
-					if (((AllegatiImmobiliVO)cell.getElement()).getCommento() != null){
-						cell.setText(((AllegatiImmobiliVO)cell.getElement()).getCommento());
+					if (((Allegatiimmobili)cell.getElement()).getCommento() != null){
+						cell.setText(((Allegatiimmobili)cell.getElement()).getCommento());
 					}else{
 						cell.setText("");
 					}
@@ -2357,8 +2357,8 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {
-					if (((AllegatiImmobiliVO)element).getCommento() != null){
-						return ((AllegatiImmobiliVO)element).getCommento();
+					if (((Allegatiimmobili)element).getCommento() != null){
+						return ((Allegatiimmobili)element).getCommento();
 					}else{
 						return "";
 					}
@@ -2366,7 +2366,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected void setValue(Object element, Object value) {
-					((AllegatiImmobiliVO)element).setCommento(String.valueOf(value));
+					((Allegatiimmobili)element).setCommento(String.valueOf(value));
 					tvAllegati.refresh();
 				}
 				
@@ -2378,10 +2378,10 @@ public class DettaglioImmobileView extends ViewPart
 				@Override
 				public void update(ViewerCell cell) {
 					
-					if (((AllegatiImmobiliVO)cell.getElement()).getFromPath() == null){
-						cell.setText(((AllegatiImmobiliVO)cell.getElement()).getNome());
+					if (((Allegatiimmobili)cell.getElement()).getFromPath() == null){
+						cell.setText(((Allegatiimmobili)cell.getElement()).getNome());
 					}else{
-						cell.setText(((AllegatiImmobiliVO)cell.getElement()).getFromPath());
+						cell.setText(((Allegatiimmobili)cell.getElement()).getFromPath());
 					}
 				}
 				
@@ -2390,7 +2390,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected boolean canEdit(Object element) {
-					if (((AllegatiImmobiliVO)element).getNome().equalsIgnoreCase("")){
+					if (((Allegatiimmobili)element).getNome().equalsIgnoreCase("")){
 						return true;
 					}else{
 						return false;
@@ -2407,26 +2407,24 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				protected Object getValue(Object element) {				
-					if (((AllegatiImmobiliVO)element).getFromPath() != null){
-						return ((AllegatiImmobiliVO)element).getFromPath();
+					if (((Allegatiimmobili)element).getFromPath() != null){
+						return ((Allegatiimmobili)element).getFromPath();
 					}else{
-						return ((AllegatiImmobiliVO)element).getNome();
+						return ((Allegatiimmobili)element).getNome();
 					}
 				}
 	
 				@Override
 				protected void setValue(Object element, Object value) {
-					((AllegatiImmobiliVO)element).setFromPath(String.valueOf(value));
-					((AllegatiImmobiliVO)element).setNome(((AllegatiImmobiliVO)element).getFromPath()
-																					   .substring(((AllegatiImmobiliVO)element).getFromPath()
+					((Allegatiimmobili)element).setFromPath(String.valueOf(value));
+					((Allegatiimmobili)element).setNome(((Allegatiimmobili)element).getFromPath()
+																					   .substring(((Allegatiimmobili)element).getFromPath()
 																							   								   .lastIndexOf(File.separator)+1)
 													      );
 					tvAllegati.refresh();
 				}
 				
 			});
-			
-	
 			
 			tvAllegati.setInput(new Object());
 			tvAllegati.refresh();
@@ -2507,7 +2505,8 @@ public class DettaglioImmobileView extends ViewPart
                     public void dateChanged(SWTCalendarEvent calendarEvent) {
 
                     	dcdatainserimento.setText(formatter.format(calendarEvent.getCalendar().getTime()));
-                    	immobile.setDataInserimento(calendarEvent.getCalendar().getTime());
+                    	immobile.setDatainserimento(calendarEvent.getCalendar().getTime().toInstant()
+          				      									 .atZone(ZoneId.systemDefault()).toLocalDate());
                     }
 
                 });
@@ -2560,8 +2559,8 @@ public class DettaglioImmobileView extends ViewPart
 	
 	private void bindAgenzia(DataBindingContext bindingContext){
 		if (immobile != null){
-			if (immobile.getDataInserimento() != null){
-				dcdatainserimento.setText(formatter.format(immobile.getDataInserimento()));
+			if (immobile.getDatainserimento() != null){
+				dcdatainserimento.setText(formatter.format(immobile.getDatainserimento()));
 			}
 			
 //			bindingContext.bindValue(SWTObservables.observeText(
@@ -2586,12 +2585,12 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void mouseUp(MouseEvent e) {
-					immobile.setAffittabile(affitto.getSelection());
+					immobile.setAffitto(affitto.getSelection());
 				}
 				
 			});
 			
-			affitto.setSelection((immobile.getAffittabile()==null)?false:immobile.getAffittabile());
+			affitto.setSelection(immobile.isAffitto());
 			
 			visibile.addMouseListener(new MouseListener(){
 	
@@ -2614,7 +2613,7 @@ public class DettaglioImmobileView extends ViewPart
 				
 			});
 			
-			visibile.setSelection((immobile.getVisione()==null)?false:immobile.getVisione());
+			visibile.setSelection(immobile.isVisione());
 	
 			
 			cvagenteinseritore.setContentProvider(new IStructuredContentProvider(){
@@ -2639,7 +2638,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public String getText(Object element) {
-					return ((AgentiVO)element).getCognome() + " " + ((AgentiVO)element).getNome();
+					return ((Agenti)element).getCognome() + " " + ((Agenti)element).getNome();
 				}
 				
 			});
@@ -2648,15 +2647,15 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setAgenteInseritore((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setAgenti((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());				
 				}
 				
 			});
 							
 			cvagenteinseritore.setInput(new Object());
 			
-			if (immobile.getAgenteInseritore() != null){
-				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), immobile.getAgenteInseritore(), comparatorAgenti);
+			if (immobile.getAgenti() != null){
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), immobile.getAgenti(), comparatorAgenti);
 				Object[] sel = new Object[1];
 				sel[0] = MobiliaDatiBaseCache.getInstance().getAgenti().get(index);
 				StructuredSelection ss = new StructuredSelection(sel);
@@ -2673,9 +2672,6 @@ public class DettaglioImmobileView extends ViewPart
 		DataBindingContext bindingContext = new DataBindingContext();
 //		bindAnagrafica(bindingContext);
 		bindDatiImmobile(bindingContext);
-		if (immobile != null){
-			immobile.setStanze(null);
-		}
 		bindStanzeImmobile(bindingContext);
 		bindAgenzia(bindingContext);
 		bindDatiCatastali(bindingContext);
@@ -2704,9 +2700,13 @@ public class DettaglioImmobileView extends ViewPart
 			   			   .findView(RecapitiView.ID);
 			
 			if (ivp != null){
-//				((RecapitiView)ivp).setAnagrafiche((immobile.getAnagrafichePropietarie() == null || immobile.getAnagrafichePropietarie().size() == 0)
-//												  ? new ArrayList<AnagraficheModel>()
-//												  : immobile.getAnagrafichePropietarie());
+				ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
+				if (immobile.getImmobilipropietaris() == null || immobile.getImmobilipropietaris().size() > 0) {
+					for (Immobilipropietari ip : immobile.getImmobilipropietaris()) {
+						anagrafiche.add(ip.getAnagrafiche());
+					}
+				}				  				  
+				((RecapitiView)ivp).setAnagrafiche(anagrafiche);
 				((RecapitiView)ivp).setCompareView(isInCompareMode);
 			}
 
@@ -2760,10 +2760,14 @@ public class DettaglioImmobileView extends ViewPart
 	   				  .findView(EAVView.ID);
 
 			if (eavv != null){
-				if ((immobile.getEntity() != null) && (immobile.getEntity().getAttributes()!= null)){										
-					((EAVView)eavv).setAttributes(immobile.getEntity().getAttributes(), immobile.getCodImmobile());
+				EntityDAO eDAO = new EntityDAO();
+				EntityModel e = eDAO.getEntityByClassName(ImmobiliVO.class.getName());
+				
+				if ((e != null) && (e.getAttributes()!= null)){
+					((EAVView)eavv).setAttributes(e.getAttributes(), immobile.getCodImmobile());
 					((EAVView)eavv).setCompareView(isInCompareMode);
 				}
+				
 			}
 
 			IViewPart mapv = PlatformUI
@@ -2789,7 +2793,7 @@ public class DettaglioImmobileView extends ViewPart
 		   			   .findView(AbbinamentiView.ID);
 		
 			if (ivp != null){				
-				//((AbbinamentiView)ivp).setImmobile(immobile);
+				((AbbinamentiView)ivp).setImmobile(immobile);
 				((AbbinamentiView)ivp).setCompareView(isInCompareMode);
 
 			}
@@ -2798,11 +2802,11 @@ public class DettaglioImmobileView extends ViewPart
 		
 	}
 
-	public ImmobiliModel getImmobile() {
+	public Immobili getImmobile() {
 		return this.immobile;
 	}
 
-	public void setImmobile(ImmobiliModel immobile) {
+	public void setImmobile(Immobili immobile) {
 		isInCompareMode = false;
 		DataBindingContext bindingContext = new DataBindingContext();
 		this.immobile = immobile;
@@ -2827,7 +2831,7 @@ public class DettaglioImmobileView extends ViewPart
 		MobiliaDatiBaseCache.getInstance().getTipologieStanze();
 		Collections.sort(MobiliaDatiBaseCache.getInstance().getTipologieStanze(), comparatorTipologieStanze);
 		desTipologieStanze = new String[MobiliaDatiBaseCache.getInstance().getTipologieStanze().size()];
-		Iterator<TipologiaStanzeVO> it = MobiliaDatiBaseCache.getInstance().getTipologieStanze().iterator();
+		Iterator<Tipologiastanze> it = MobiliaDatiBaseCache.getInstance().getTipologieStanze().iterator();
 		int count = 0;
 		while(it.hasNext()){
 			desTipologieStanze[count] = it.next().getDescrizione();
@@ -3012,7 +3016,7 @@ public class DettaglioImmobileView extends ViewPart
 		return immobile.getCitta();
 	}
 	
-	public void setComune(ComuniVO cVO){
+	public void setComune(Comuni cVO){
 		tcitta.setText(cVO.getComune());
 		tcap.setText(cVO.getCap());
 		tprovincia.setText(cVO.getProvincia());

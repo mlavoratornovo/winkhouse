@@ -32,6 +32,8 @@ import winkhouse.action.immagini.PushUpImmagineAction;
 import winkhouse.action.immagini.RefreshImmaginiAction;
 import winkhouse.model.ImmagineModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immagini;
+import winkhouse.orm.Immobili;
 import winkhouse.util.ImageProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ImmagineVO;
@@ -43,7 +45,7 @@ public class ImmaginiImmobiliView extends ViewPart {
 	public final static String ID = "winkhouse.immaginiimmobiliview";
 		
 	private Gallery gallery = null;
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 	private String pathImmagini = Activator.getDefault().getStateLocation().toFile() + 
 								  File.separator + "tmpimmagini";
 	private String pathImmaginiServer = WinkhouseUtils.getInstance()
@@ -64,14 +66,14 @@ public class ImmaginiImmobiliView extends ViewPart {
 
 	}
 	
-	Comparator<ImmagineVO> comparatorImmagine = new Comparator<ImmagineVO>(){
+	Comparator<Immagini> comparatorImmagine = new Comparator<Immagini>(){
 
 		@Override
-		public int compare(ImmagineVO o1, ImmagineVO o2) {
+		public int compare(Immagini o1, Immagini o2) {
 		
-			if (o1.getOrdine().intValue() == o2.getOrdine().intValue()){
+			if (o1.getOrdine() == o2.getOrdine()){
 				return 0;
-			}else if (o1.getOrdine().intValue() < o2.getOrdine().intValue()){
+			}else if (o1.getOrdine() < o2.getOrdine()){
 				return -1;
 			}else{
 				return 1;
@@ -283,12 +285,12 @@ public class ImmaginiImmobiliView extends ViewPart {
 		
 		GalleryItem group = new GalleryItem(gallery, SWT.NONE);
 		if (this.immobile != null){
-			if (this.immobile.getImmagini() != null){
+			if (this.immobile.getImmaginis() != null){
 				
-				Iterator<ImmagineModel> it = this.immobile.getImmagini().iterator();
+				Iterator<Immagini> it = this.immobile.getImmaginis().iterator();
 				while (it.hasNext()){
 					
-					ImmagineModel iModel = it.next();
+					Immagini iModel = it.next();
 					GalleryItem item = new GalleryItem(group, SWT.NONE);
 					item.setExpanded(true);
 					Image i = null;
@@ -296,7 +298,7 @@ public class ImmaginiImmobiliView extends ViewPart {
 					try{
 						
 						File f = new File(((iModel.getCodImmagine() == 0)?pathImmagini:pathImmaginiServer) + File.separator + File.separator + 
-										  iModel.getCodImmobile() + File.separator + File.separator + iModel.getPathImmagine());
+										  iModel.getImmobili().getCodImmobile() + File.separator + File.separator + iModel.getPathimmagine());
 
 						if (!f.exists()){
 							i = Activator.getImageDescriptor("icons/no-photo.jpg").createImage();
@@ -311,7 +313,7 @@ public class ImmaginiImmobiliView extends ViewPart {
 						
 						if (itemImage != null) {
 							item.setImage(itemImage);
-							if (iModel.getPropieta().containsKey(ImageProperties.LOCANDINA)){
+							if (iModel.getProprieta().containsKey(ImageProperties.LOCANDINA)){
 								item.setText("Locandina");						
 							}
 						}
@@ -329,14 +331,14 @@ public class ImmaginiImmobiliView extends ViewPart {
 
 	}
 	
-	public ImmobiliModel getImmobile() {
+	public Immobili getImmobile() {
 		return immobile;
 	}
 
-	public void setImmobile(ImmobiliModel immobile) {
+	public void setImmobile(Immobili immobile) {
 		this.immobile = immobile;
-		if ((immobile != null) && (this.immobile.getImmagini() != null)){
-			Collections.sort(this.immobile.getImmagini(), comparatorImmagine);
+		if ((immobile != null) && (this.immobile.getImmaginis() != null)){
+			Collections.sort(this.immobile.getImmaginis(), comparatorImmagine);
 		}
 		showImages();
 	}

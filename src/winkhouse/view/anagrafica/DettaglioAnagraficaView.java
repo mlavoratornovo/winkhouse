@@ -100,7 +100,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 
 		@Override
 		public int compare(Classicliente arg0,Classicliente arg1) {
-			return Integer.valueOf(arg0.getId()).compareTo(Integer.valueOf(arg1.getId())); 
+			return Integer.valueOf(arg0.getCodClasseCliente()).compareTo(Integer.valueOf(arg1.getCodClasseCliente())); 
 		}
 		
 	};

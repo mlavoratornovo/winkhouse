@@ -36,6 +36,7 @@ import winkhouse.dao.AffittiDAO;
 import winkhouse.model.AffittiModel;
 import winkhouse.model.ContattiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.vo.ContattiVO;
 
 
@@ -47,7 +48,7 @@ public class ListaAffittiView extends ViewPart {
 	private Form f = null;
 	private TableViewer tvAffitti = null;
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 
 	private NuovoAffittoAction naa = null;
 	private CancellaAffittiAction caa = null;		
@@ -375,17 +376,17 @@ public class ListaAffittiView extends ViewPart {
 
 	}
 	
-	public void setImmobile(ImmobiliModel immobile){
+	public void setImmobile(Immobili immobile){
 		this.immobile = immobile;
 		AffittiDAO afDAO = new AffittiDAO();
-		if (this.immobile.getCodImmobile() != null){
+		if (this.immobile.getCodImmobile() != 0){
 			ArrayList al = afDAO.getAffittiByCodImmobile(AffittiModel.class.getName(), 
 														 this.immobile.getCodImmobile());
 			tvAffitti.setInput(al);
 		}
 	}
 
-	public ImmobiliModel getImmobile() {
+	public Immobili getImmobile() {
 		return immobile;
 	}
 
@@ -393,7 +394,7 @@ public class ListaAffittiView extends ViewPart {
 		return tvAffitti;
 	}
 
-	public void setCompareView(ImmobiliModel immobile){
+	public void setCompareView(Immobili immobile){
 		
 		naa.setEnabled(false);
 		caa.setEnabled(false);

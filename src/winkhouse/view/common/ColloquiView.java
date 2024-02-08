@@ -40,6 +40,8 @@ import winkhouse.model.ColloquiModelVisiteCollection;
 import winkhouse.model.ContattiModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.view.colloqui.handler.DettaglioColloquioHandler;
 import winkhouse.vo.ColloquiVO;
 import winkhouse.vo.ContattiVO;
@@ -53,8 +55,8 @@ public class ColloquiView extends ViewPart {
 	private TreeViewer tvColloqui = null;
 	private FormToolkit ft = null;
 	private Form f = null;	
-	private ImmobiliModel immobile = null;
-	private AnagraficheModel anagrafica = null;
+	private Immobili immobile = null;
+	private Anagrafiche anagrafica = null;
 	private Image colloquiVisiteImg = Activator.getImageDescriptor("icons/colloquivisite.png").createImage();
 	private Image colloquiImg = Activator.getImageDescriptor("icons/colloqui16.png").createImage();
 	private Image colloquiRicerca = Activator.getImageDescriptor("icons/colloquiricerca.png").createImage();
@@ -345,18 +347,15 @@ public class ColloquiView extends ViewPart {
 
 	}
 
-	public ImmobiliModel getImmobile() {
+	public Immobili getImmobile() {
 		return immobile;
 	}
 
-	public void setImmobile(ImmobiliModel immobile) {
+	public void setImmobile(Immobili immobile) {
 		this.anagrafica = null;
 		this.immobile = immobile;
 		if (immobile != null){
-			if (immobile.getColloqui() == null){
-				immobile.setColloqui(new ArrayList());			
-			}
-			tvColloqui.setInput(immobile.getColloqui());
+			tvColloqui.setInput(immobile.getColloquis());
 		}else{
 			tvColloqui.setInput(new ArrayList());
 		}
@@ -517,18 +516,15 @@ public class ColloquiView extends ViewPart {
 		
 	}
 
-	public AnagraficheModel getAnagrafica() {
+	public Anagrafiche getAnagrafica() {
 		return anagrafica;
 	}
 
-	public void setAnagrafica(AnagraficheModel anagrafica) {
+	public void setAnagrafica(Anagrafiche anagrafica) {
 		if (anagrafica != null){
 			this.anagrafica = anagrafica;		
 			this.immobile = null;
-			if (anagrafica.getColloqui() == null){
-				anagrafica.setColloqui(new ArrayList());			
-			}
-			tvColloqui.setInput(anagrafica.getColloqui());
+			tvColloqui.setInput(anagrafica.getColloquianagrafiches());
 		}
 	}
 

@@ -19,7 +19,7 @@ public class ImmagineModel extends ImmagineVO {
 		super(rs);
 	}
 
-	public HashMap getPropieta() {
+	public HashMap getProprieta() {
 		if (propieta == null){
 			propieta = new HashMap<String, String>();
 			Pattern p = Pattern.compile("\\|");

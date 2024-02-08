@@ -292,6 +292,12 @@ public class WinkhouseUtils {
 		this.cayenneContext = oc;
 	}
 
+	public ObjectContext getNewCayenneObjectContext() {
+		
+		return CayenneContextManager.getInstance().getContext();
+				
+	}
+
 	public class Mese{
 		
 		private Integer key = null;

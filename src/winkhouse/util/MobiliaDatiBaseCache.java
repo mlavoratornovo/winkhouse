@@ -16,7 +16,13 @@ import winkhouse.dao.TipologiaStanzeDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Classicliente;
+import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipiappuntamenti;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.orm.Tipologiecontatti;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.vo.ClassiClientiVO;
@@ -32,17 +38,17 @@ import winkhouse.vo.TipologieImmobiliVO;
 public class MobiliaDatiBaseCache {
 
 	private static MobiliaDatiBaseCache instance = null;
-	private ArrayList<TipologieImmobiliVO> tipologieImmobili = null;
-	private ArrayList<StatoConservativoVO> statiConservativi = null;
-	private ArrayList<RiscaldamentiVO> riscaldamenti = null;
+	private ArrayList<Tipologieimmobili> tipologieImmobili = null;
+	private ArrayList<Statoconservativo> statiConservativi = null;
+	private ArrayList<Riscaldamenti> riscaldamenti = null;
 	private ArrayList<Agenti> agenti = null;
 	
 	private ArrayList<Classicliente> classiClienti = null;
 	private ArrayList<Tipologiecontatti> tipologieContatti = null;
 	private ArrayList<TipologieColloquiVO> tipologieColloqui = null;
-	private ArrayList<TipologiaStanzeVO> tipologieStanze = null;
-	private ArrayList<TipiAppuntamentiVO> tipiAppuntamenti = null;
-	private ArrayList<ClasseEnergeticaVO> classiEnergetiche = null;
+	private ArrayList<Tipologiastanze> tipologieStanze = null;
+	private ArrayList<Tipiappuntamenti> tipiAppuntamenti = null;
+	private ArrayList<Classienergetiche> classiEnergetiche = null;
 	
 	private MobiliaDatiBaseCache(){}
 	
@@ -212,21 +218,21 @@ public class MobiliaDatiBaseCache {
 		
 	};	
 	
-	public ArrayList<ClasseEnergeticaVO> getClassiEnergetiche() {
+	public ArrayList<Classienergetiche> getClassiEnergetiche() {
 		if (classiEnergetiche == null){
 			ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-			classiEnergetiche = ceDAO.listClassiEnergetiche(ClasseEnergeticaVO.class.getName());
+			classiEnergetiche = ceDAO.listClassiEnergetiche(Classienergetiche.class.getName());
 		}
 		return classiEnergetiche;
 	}
 
 	public void setClassiEnergetiche(
-			ArrayList<ClasseEnergeticaVO> classiEnergetiche) {
+			ArrayList<Classienergetiche> classiEnergetiche) {
 		this.classiEnergetiche = classiEnergetiche;
 	}
 
 	
-	public ArrayList<TipologieImmobiliVO> getTipologieImmobili() {
+	public ArrayList<Tipologieimmobili> getTipologieImmobili() {
 		if (tipologieImmobili == null){
 			TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
 			tipologieImmobili = tiDAO.list(TipologieImmobiliVO.class.getName());
@@ -235,32 +241,32 @@ public class MobiliaDatiBaseCache {
 	}
 
 	public void setTipologieImmobili(
-			ArrayList<TipologieImmobiliVO> tipologieImmobili) {
+			ArrayList<Tipologieimmobili> tipologieImmobili) {
 		this.tipologieImmobili = tipologieImmobili;
 	}
 
-	public ArrayList<StatoConservativoVO> getStatiConservativi() {
+	public ArrayList<Statoconservativo> getStatiConservativi() {
 		if (statiConservativi == null){
 			StatoConservativoDAO scDAO = new StatoConservativoDAO();
-			statiConservativi = scDAO.list(StatoConservativoVO.class.getName());
+			statiConservativi = scDAO.list(Statoconservativo.class.getName());
 		}
 		return statiConservativi;
 	}
 
 	public void setStatiConservativi(
-			ArrayList<StatoConservativoVO> statiConservativi) {
+			ArrayList<Statoconservativo> statiConservativi) {
 		this.statiConservativi = statiConservativi;
 	}
 
-	public ArrayList<RiscaldamentiVO> getRiscaldamenti() {
+	public ArrayList<Riscaldamenti> getRiscaldamenti() {
 		if (riscaldamenti == null){
 			RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-			riscaldamenti = rDAO.list(RiscaldamentiVO.class.getName());
+			riscaldamenti = rDAO.list(Riscaldamenti.class.getName());
 		}
 		return riscaldamenti;
 	}
 
-	public void setRiscaldamenti(ArrayList<RiscaldamentiVO> riscaldamenti) {
+	public void setRiscaldamenti(ArrayList<Riscaldamenti> riscaldamenti) {
 		this.riscaldamenti = riscaldamenti;
 	}
 
@@ -323,15 +329,15 @@ public class MobiliaDatiBaseCache {
 		this.tipologieColloqui = tipologieColloqui;
 	}
 
-	public ArrayList<TipologiaStanzeVO> getTipologieStanze() {
+	public ArrayList<Tipologiastanze> getTipologieStanze() {
 		if (tipologieStanze == null){
 			TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-			tipologieStanze = tsDAO.list(TipologiaStanzeVO.class.getName());
+			tipologieStanze = tsDAO.list(Tipologiastanze.class.getName());
 		}
 		return tipologieStanze;
 	}
 
-	public void setTipologieStanze(ArrayList<TipologiaStanzeVO> tipologieStanze) {
+	public void setTipologieStanze(ArrayList<Tipologiastanze> tipologieStanze) {
 		this.tipologieStanze = tipologieStanze;
 	}
 	
@@ -466,16 +472,16 @@ public class MobiliaDatiBaseCache {
 	}
 
 	
-	public ArrayList<TipiAppuntamentiVO> getTipiAppuntamenti() {
+	public ArrayList<Tipiappuntamenti> getTipiAppuntamenti() {
 		if (tipiAppuntamenti == null){
 			TipiAppuntamentiDAO taDAO = new TipiAppuntamentiDAO();
-			tipiAppuntamenti = taDAO.listTipiAppuntamenti(TipiAppuntamentiVO.class.getName());
+			tipiAppuntamenti = taDAO.listTipiAppuntamenti(Tipiappuntamenti.class.getName());
 		}
 		
 		return tipiAppuntamenti;
 	}
 
-	public void setTipiAppuntamenti(ArrayList<TipiAppuntamentiVO> tipiAppuntamenti) {
+	public void setTipiAppuntamenti(ArrayList<Tipiappuntamenti> tipiAppuntamenti) {
 		this.tipiAppuntamenti = tipiAppuntamenti;
 	}
 		
