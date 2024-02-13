@@ -20,6 +20,7 @@ import winkhouse.action.immobili.RefreshImmobiliAction;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.perspective.AnagrafichePerspective;
 import winkhouse.perspective.ImmobiliPerspective;
@@ -161,10 +162,10 @@ public class ApplicationPerspectiveAdapter extends PerspectiveAdapter {
 //					((RecapitiView)ivp).setAnagrafica(new AnagraficheModel());
 				}
 				if (ivp instanceof ImmaginiImmobiliView){
-					((ImmaginiImmobiliView)ivp).setImmobile(new ImmobiliModel());
+					((ImmaginiImmobiliView)ivp).setImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class));
 				} 
 				if (ivp instanceof ColloquiView){
-					((ColloquiView)ivp).setImmobile(new ImmobiliModel());
+					((ColloquiView)ivp).setImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class));
 				} 
 				if (ivp instanceof AbbinamentiView){
 					((AbbinamentiView)ivp).setImmobile(null);

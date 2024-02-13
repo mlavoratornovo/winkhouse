@@ -9,7 +9,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ImmobiliVO;
 
@@ -412,6 +417,12 @@ public class ImmobiliDAO extends BaseDAO{
 	public Object getImmobileById(String classType, Integer codImmobile){
 		return super.getObjectById(classType, IMMOBILI_BY_ID, codImmobile);
 	}
+	
+	public Immobili getImmobileById(Integer codImmobile){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Immobili.class,codImmobile);
+	}
+
 	
 	public Object getImmobileByRif(String classType, String rif){
 		return super.getObjectsByStringFieldValue(classType, IMMOBILI_BY_RIF, rif);

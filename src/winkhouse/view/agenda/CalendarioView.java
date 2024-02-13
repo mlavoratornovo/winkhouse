@@ -58,6 +58,7 @@ import winkhouse.dao.AgentiDAO;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Appuntamenti;
 import winkhouse.view.agenda.handler.DettaglioAppuntamentoHandler;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 
@@ -230,8 +231,8 @@ public class CalendarioView extends ViewPart {
 				@Override
 				public void mouseDoubleClick(MouseEvent e) {
 					Object o = ((StructuredSelection)tv.getSelection()).getFirstElement();
-					if (o instanceof AppuntamentiModel){
-						AppuntamentiModel apm = (AppuntamentiModel)o;
+					if (o instanceof Appuntamenti){
+						Appuntamenti apm = (Appuntamenti)o;
 						DettaglioAppuntamentoView dav = DettaglioAppuntamentoHandler.getInstance()
 																					.getDettaglioAppuntamento(apm);
 					}

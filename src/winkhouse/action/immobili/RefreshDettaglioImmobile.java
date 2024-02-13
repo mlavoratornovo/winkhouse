@@ -9,6 +9,7 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.Activator;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.view.immobili.DettaglioImmobileView;
 
 public class RefreshDettaglioImmobile extends Action {
@@ -39,25 +40,23 @@ public class RefreshDettaglioImmobile extends Action {
 
 		if (iwp instanceof DettaglioImmobileView){
 
-			ImmobiliModel im = ((DettaglioImmobileView)iwp).getImmobile();
+			Immobili im = ((DettaglioImmobileView)iwp).getImmobile();
 
-			if (im.getCodImmobile() != null){
+			if (im.getCodImmobile() != 0){
 				ImmobiliDAO idao = new ImmobiliDAO();
-				Object o = idao.getImmobileById(ImmobiliModel.class.getName(), im.getCodImmobile());
+				Immobili o = idao.getImmobileById(im.getCodImmobile());
 				if (o != null){
-					im = (ImmobiliModel)o;
 					((DettaglioImmobileView)iwp).setImmobile(im);
 				}else{
 					if (MessageDialog.openQuestion(iwp.getSite().getShell(), 
-							"Attenzione l'anagrafica � stata cancellata", 
+							"Attenzione l'anagrafica è stata cancellata", 
 							"########################################## \n" +
 							"                       L'IMMOBILE E' STATO CANCELLATO ! \n" +
 							"########################################## \n\n" +
 							"Vuoi provare ad eseguire il salvataggio come una nuova anagrafica ? \n\n" +
 							"In caso AFFERMATIVO potrai eseguire il SALVATAGGIO. \n\n" +
 							"in caso CONTRARIO alla chiusura del dettaglio i dati andranno persi")){
-
-						im.setCodImmobile(0);
+						
 						((DettaglioImmobileView)iwp).setImmobile(im);
 
 					} 

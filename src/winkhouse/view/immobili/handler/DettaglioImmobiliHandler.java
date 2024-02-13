@@ -12,6 +12,7 @@ import winkhouse.Activator;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.ProfilerHelper.PermessoDetail;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.DettaglioImmobileView;
@@ -36,7 +37,7 @@ public class DettaglioImmobiliHandler {
 		return instance;
 	}
 	
-	public DettaglioImmobileView getDettaglioImmobile(ImmobiliVO viewInstance){
+	public DettaglioImmobileView getDettaglioImmobile(Immobili viewInstance){
 		DettaglioImmobileView div = null;
 		IViewReference vr = null;
 		
@@ -52,7 +53,7 @@ public class DettaglioImmobiliHandler {
 				           			   .getActiveWorkbenchWindow()
 				           			   .getActivePage()
 				           			   .findViewReference(DettaglioImmobileView.ID,
-				           					   			  String.valueOf(viewInstance.getCodImmobile().intValue()));
+				           					   			  String.valueOf(viewInstance.getCodImmobile()));
 						
 						if (vr != null){				
 							div = (DettaglioImmobileView)PlatformUI.getWorkbench()
@@ -72,7 +73,7 @@ public class DettaglioImmobiliHandler {
 							div.setCompareView(true);
 						}
 						
-						div.setImmobile(new ImmobiliModel(viewInstance));
+						div.setImmobile(viewInstance);
 						
 						Activator.getDefault().getWorkbench()
 				   		 		 .getActiveWorkbenchWindow()
@@ -107,7 +108,7 @@ public class DettaglioImmobiliHandler {
 		           			   .getActiveWorkbenchWindow()
 		           			   .getActivePage()
 		           			   .findViewReference(DettaglioImmobileView.ID,
-		           					   			  String.valueOf(viewInstance.getCodImmobile().intValue()));
+		           					   			  String.valueOf(viewInstance.getCodImmobile()));
 				}catch(Exception e){
 					vr = null;
 				}
@@ -126,9 +127,9 @@ public class DettaglioImmobiliHandler {
 				}
 				
 				
-				div.setImmobile(new ImmobiliModel(viewInstance));
+				div.setImmobile(viewInstance);
 				
-				Activator.getDefault().getWorkbench()
+				PlatformUI.getWorkbench()
 		   		 		 .getActiveWorkbenchWindow()
 		   		 		 .getActivePage()
 		   		 		 .bringToTop(div);

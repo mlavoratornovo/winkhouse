@@ -51,7 +51,10 @@ import winkhouse.model.ImmobiliModel;
 import winkhouse.model.RiscaldamentiModel;
 import winkhouse.model.StatoConservativoModel;
 import winkhouse.model.TipologieImmobiliModel;
+import winkhouse.orm.Immobili;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.perspective.AffittiPerspective;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.handler.DettaglioImmobiliHandler;
 import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.vo.ComuniVO;
@@ -74,8 +77,8 @@ public class ImmobiliTreeView extends ViewPart {
 	private ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
 	private ImmobiliDAO iDAO =  new ImmobiliDAO();
 	private ComuniDAO comuniDAO = new ComuniDAO();
-	private Image homeImg = Activator.getDefault().getImageDescriptor("icons/gohome.png").createImage();
-	private Image homeFolderImg = Activator.getDefault().getImageDescriptor("icons/folder_home.png").createImage();
+	private Image homeImg = Activator.getImageDescriptor("icons/gohome.png").createImage();
+	private Image homeFolderImg = Activator.getImageDescriptor("icons/folder_home.png").createImage();
 	private Image geoImg = Activator.getImageDescriptor("icons/cercacomune.png").createImage();
 	
 	private String grouping = TIPI_IMMOBILI; 
@@ -668,8 +671,8 @@ public class ImmobiliTreeView extends ViewPart {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				
-				if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof ImmobiliVO){
-					ImmobiliVO iVO = (ImmobiliVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
+				if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof Immobili){
+					Immobili iVO = (Immobili)((StructuredSelection)viewer.getSelection()).getFirstElement();
 					DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance()
 																		.getDettaglioImmobile(iVO);
 				}
@@ -704,14 +707,12 @@ public class ImmobiliTreeView extends ViewPart {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								
-								ImmobiliModel iModel;
-								
-								iModel = new ImmobiliModel();
+								Immobili iModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class);
 								
 								DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance()
 																					.getDettaglioImmobile(iModel);
 									
-								TipologieImmobiliVO tiVO = (TipologieImmobiliVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
+								Tipologieimmobili tiVO = (Tipologieimmobili)((StructuredSelection)viewer.getSelection()).getFirstElement();
 								
 								ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(iModel,tiVO);
 								adia.run();
@@ -762,7 +763,7 @@ public class ImmobiliTreeView extends ViewPart {
 				Object o = ((StructuredSelection)event.getSelection()).getFirstElement();
 				
 				if (o instanceof ImmobiliVO){
-					ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(new ImmobiliModel((ImmobiliVO)o),null);
+					ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction((Immobili)o,null);
 					adia.run();
 				}
 				

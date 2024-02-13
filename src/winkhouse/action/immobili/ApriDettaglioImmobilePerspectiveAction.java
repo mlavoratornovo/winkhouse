@@ -4,13 +4,14 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 
 public class ApriDettaglioImmobilePerspectiveAction extends Action {
 
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 	private boolean comparerView = false;
 	
-	public ApriDettaglioImmobilePerspectiveAction(ImmobiliModel immobile) {
+	public ApriDettaglioImmobilePerspectiveAction(Immobili immobile) {
 		this.immobile = immobile;
 	}
 

@@ -71,6 +71,7 @@ import winkhouse.helper.TipologieImmobiliHelper;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.ContattiModel;
 import winkhouse.orm.Classicliente;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Contatti;
 import winkhouse.orm.Tipologiecontatti;
 import winkhouse.util.MobiliaDatiBaseCache;
@@ -128,7 +129,7 @@ public class DatiBaseView extends ViewPart {
 	private ArrayList<TipiAppuntamentiVO> tipiappuntamenti = null;
 
 	private TableViewer tvClassiEnergetiche = null;
-	private ArrayList<ClasseEnergeticaVO> classienergetiche = null;
+	private ArrayList<Classienergetiche> classienergetiche = null;
 	
 	private String[] desTipologieRecapiti = null;
 	private TextCellEditor tceContatto = null;
@@ -1891,7 +1892,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (classienergetiche == null){
-				classienergetiche = new ArrayList<ClasseEnergeticaVO>(new ClassiEnergeticheDAO().listClassiEnergetiche(ClasseEnergeticaVO.class.getName()));				
+				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche(ClasseEnergeticaVO.class.getName()));				
 			}
 			returnValue = classienergetiche.toArray();
 			return returnValue;
@@ -3756,7 +3757,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				ClasseEnergeticaVO ceVO = new ClasseEnergeticaVO();
+				Classienergetiche ceVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Classienergetiche.class);				
 				ceVO.setOrdine(1);
 				ceVO.setDescrizione("Nuova classe energetica");
 				classienergetiche.add(ceVO);
@@ -3822,7 +3823,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				classienergetiche = new ArrayList<ClasseEnergeticaVO>(new ClassiEnergeticheDAO().listClassiEnergetiche(ClasseEnergeticaVO.class.getName()));
+				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche(ClasseEnergeticaVO.class.getName()));
 				tvClassiEnergetiche.refresh();
 			}
 

@@ -2,6 +2,7 @@ package winkhouse.view.agenda;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -73,6 +74,12 @@ import winkhouse.model.AnagraficheAppuntamentiModel;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Agentiappuntamenti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Anagraficheappuntamenti;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Tipiappuntamenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.agenti.PopUpRicercaAgenti;
@@ -109,7 +116,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 	private SimpleDateFormat formatterTime = new SimpleDateFormat("HH:mm");
 	private SimpleDateFormat formatterDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	private GridData tabella = null;
-	private AppuntamentiModel appuntamento = null;
+	private Appuntamenti appuntamento = null;
 	
 	private ImageHyperlink ihNewAgenti = null;
 	private ImageHyperlink ihCancellaAgenti = null;		
@@ -125,13 +132,13 @@ public class DettaglioAppuntamentoView extends ViewPart {
 	
 	public DettaglioAppuntamentoView() {}
 
-	private Comparator<TipiAppuntamentiVO> comparatorTipologia = new Comparator<TipiAppuntamentiVO>(){
+	private Comparator<Tipiappuntamenti> comparatorTipologia = new Comparator<Tipiappuntamenti>(){
 
 		@Override
-		public int compare(TipiAppuntamentiVO arg0,TipiAppuntamentiVO arg1) {
-			if (arg0.getCodTipoAppuntamento().intValue() == arg1.getCodTipoAppuntamento().intValue()){
+		public int compare(Tipiappuntamenti arg0,Tipiappuntamenti arg1) {
+			if (arg0.getCodTipoAppuntamento() == arg1.getCodTipoAppuntamento()){
 				return 0;
-			}else if (arg0.getCodTipoAppuntamento().intValue() > arg1.getCodTipoAppuntamento().intValue()){
+			}else if (arg0.getCodTipoAppuntamento() > arg1.getCodTipoAppuntamento()){
 				return 1;
 			}else{
 				return -1;
@@ -241,17 +248,18 @@ public class DettaglioAppuntamentoView extends ViewPart {
 				}
 				if (tmpfine != null && tmp != null){ 
 					if (tmp.compareTo(tmpfine) <= 0){
-						appuntamento.setDataAppuntamento(tmp);
+						appuntamento.setDataappuntamento(tmp.toInstant()
+							      .atZone(ZoneId.systemDefault())
+							      .toLocalDateTime());
 					}else{
-						MessageDialog.openWarning(Activator.getDefault()
-								   						   .getWorkbench()
-								   						   .getActiveWorkbenchWindow()
-								   						   .getShell(),
+						MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 								   				  "Attenzione !", 
 												  "La data/ora appuntamento � maggiore della data/ora di fine. \n al salvataggio verr� valorizzata con il valore della data/ora fine");
 					}
 				}else{
-					appuntamento.setDataAppuntamento(tmp);
+					appuntamento.setDataappuntamento(tmp.toInstant()
+						      .atZone(ZoneId.systemDefault())
+						      .toLocalDateTime());
 				}
 					
 				
@@ -272,7 +280,9 @@ public class DettaglioAppuntamentoView extends ViewPart {
 					Date tmp = formatterDateTime.parse(dataAppuntamento.getDateAsString() + " " + oraincontro.getText());
 					Date tmpfine = formatterDateTime.parse(dataAppuntamentofine.getDateAsString() + " " + oraincontrofine.getText());
 					if (tmp.compareTo(tmpfine) <= 0){
-						appuntamento.setDataAppuntamento(tmp);
+						appuntamento.setDataappuntamento(tmp.toInstant()
+							      .atZone(ZoneId.systemDefault())
+							      .toLocalDateTime());
 					}else{
 						MessageDialog.openWarning(Activator.getDefault()
 								   						   .getWorkbench()
@@ -283,7 +293,9 @@ public class DettaglioAppuntamentoView extends ViewPart {
 					}
 										
 				} catch (ParseException e1) {					
-					appuntamento.setDataAppuntamento(new Date());
+					appuntamento.setDataappuntamento(new Date().toInstant()
+						      .atZone(ZoneId.systemDefault())
+						      .toLocalDateTime());
 				}
 				
 			}
@@ -377,9 +389,9 @@ public class DettaglioAppuntamentoView extends ViewPart {
 				if (oramin.length == 2){
 					orario = (((Integer.valueOf(oramin[0])*60)*60)*1000) + ((Integer.valueOf(oramin[1])*60)*1000);
 				}
-/*            	getColloquio().setDataColloquio(
-            					  new Date(getColloquio().getDataColloquio().getTime() + orario)
-            								   );*/
+//            	getColloquio().setDataColloquio(
+//            					  new Date(getColloquio().getDataColloquio().getTime() + orario)
+//            								   );
 				
 			}
 			
@@ -408,18 +420,21 @@ public class DettaglioAppuntamentoView extends ViewPart {
 					Date tmpfine = formatterDateTime.parse(formatter.format(arg0.getTime()) + " " + oraincontrofine.getText());
 					Date tmpinizio = formatterDateTime.parse(dataAppuntamento.getDateAsString() + " " + oraincontro.getText());
 					if (tmpfine.compareTo(tmpinizio) >= 0){
-						appuntamento.setDataFineAppuntamento(tmpfine);
+						appuntamento.setDatafineappuntamento(tmpfine.toInstant()
+							      .atZone(ZoneId.systemDefault())
+							      .toLocalDateTime());
 					}else{
-						MessageDialog.openWarning(Activator.getDefault()
-								   						   .getWorkbench()
+						MessageDialog.openWarning(PlatformUI.getWorkbench()
 								   						   .getActiveWorkbenchWindow()
 								   						   .getShell(),
 								   				  "Attenzione !", 
-												  "La data/ora fine appuntamento � minore della data di inizio. \n al salvataggio verr� valorizzata con il valore della data/ora inizio");
+												  "La data/ora fine appuntamento minore della data di inizio. \n al salvataggio verr� valorizzata con il valore della data/ora inizio");
 
 					}
 				} catch (ParseException e) {
-					appuntamento.setDataFineAppuntamento(new Date());
+					appuntamento.setDatafineappuntamento(new Date().toInstant()
+						      .atZone(ZoneId.systemDefault())
+						      .toLocalDateTime());
 				}
 				
 			}
@@ -439,18 +454,21 @@ public class DettaglioAppuntamentoView extends ViewPart {
 					Date tmpfine = formatterDateTime.parse(dataAppuntamentofine.getDateAsString() + " " + oraincontrofine.getText());
 					Date tmpinizio = formatterDateTime.parse(dataAppuntamento.getDateAsString() + " " + oraincontro.getText());
 					if (tmpfine.compareTo(tmpinizio) >= 0){
-						appuntamento.setDataFineAppuntamento(tmpfine);
+						appuntamento.setDatafineappuntamento(tmpfine.toInstant()
+							      .atZone(ZoneId.systemDefault())
+							      .toLocalDateTime());
 					}else{
-   						MessageDialog.openWarning(Activator.getDefault()
-		   						     					   .getWorkbench()
+   						MessageDialog.openWarning(PlatformUI.getWorkbench()
 		   						     					   .getActiveWorkbenchWindow()
 		   						     					   .getShell(),
 		   						     			  "Attenzione !", 
-   												  "La data/ora fine appuntamento � minore della data di inizio. \n al salvataggio verr� valorizzata con il valore della data/ora inizio");
+   												  "La data/ora fine appuntamento minore della data di inizio. \n al salvataggio verr� valorizzata con il valore della data/ora inizio");
 						
 					}
 				} catch (ParseException e1) {					
-					appuntamento.setDataFineAppuntamento(new Date());
+					appuntamento.setDatafineappuntamento(new Date().toInstant()
+						      .atZone(ZoneId.systemDefault())
+						      .toLocalDateTime());
 				}
 				
 			}
@@ -660,7 +678,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 					boolean result = true;
 					Iterator it = ((StructuredSelection)tvAgenti.getSelection()).iterator();
 					while (it.hasNext()) {
-						appuntamento.getAgenti().remove((AgentiAppuntamentiModel)it.next());
+						appuntamento.removeFromAgentiappuntamentis((Agentiappuntamenti)it.next());
 					}
 					tvAgenti.setInput(new Object());
 					tvAgenti.refresh();
@@ -725,13 +743,13 @@ public class DettaglioAppuntamentoView extends ViewPart {
 			
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AgentiAppuntamentiModel)element).setNote(String.valueOf(value));
+				((Agentiappuntamenti)element).setNote(String.valueOf(value));
 				tvAgenti.refresh();
 			}
 			
 			@Override
 			protected Object getValue(Object element) {
-				return ((AgentiAppuntamentiModel)element).getNote();
+				return ((Agentiappuntamenti)element).getNote();
 			}
 			
 			@Override
@@ -758,7 +776,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 			@Override
 			public Object[] getElements(Object inputElement) {
 				return (appuntamento != null && appuntamento.getAgenti() != null)
-					   ? appuntamento.getAgenti().toArray()
+					   ? appuntamento.getAgentiappuntamentis().toArray()
 					   : new ArrayList().toArray();
 			}
 
@@ -785,25 +803,25 @@ public class DettaglioAppuntamentoView extends ViewPart {
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
 				switch(columnIndex){
-				case 0:return (((AgentiAppuntamentiModel)element).getAgente() != null)
-							   ?((AgentiAppuntamentiModel)element).getAgente().getNome()
+				case 0:return (((Agentiappuntamenti)element).getAgenti() != null)
+							   ?((Agentiappuntamenti)element).getAgenti().getNome()
 							   : "";
-				case 1:return (((AgentiAppuntamentiModel)element).getAgente() != null)
-				 			   ?((AgentiAppuntamentiModel)element).getAgente().getCognome()
+				case 1:return (((Agentiappuntamenti)element).getAgenti() != null)
+				 			   ?((Agentiappuntamenti)element).getAgenti().getCognome()
 				 			   : "";
-				case 2:return (((AgentiAppuntamentiModel)element).getAgente() != null)
-							   ?((AgentiAppuntamentiModel)element).getAgente().getCap()
+				case 2:return (((Agentiappuntamenti)element).getAgenti() != null)
+							   ?((Agentiappuntamenti)element).getAgenti().getCap()
 							   : "";
-				case 3:return (((AgentiAppuntamentiModel)element).getAgente() != null)
-							   ?((AgentiAppuntamentiModel)element).getAgente().getProvincia()
+				case 3:return (((Agentiappuntamenti)element).getAgenti() != null)
+							   ?((Agentiappuntamenti)element).getAgenti().getProvincia()
 							   : "";
-				case 4:return (((AgentiAppuntamentiModel)element).getAgente() != null)
-							   ?((AgentiAppuntamentiModel)element).getAgente().getCitta()
+				case 4:return (((Agentiappuntamenti)element).getAgenti() != null)
+							   ?((Agentiappuntamenti)element).getAgenti().getCitta()
 							   : "";
-				case 5:return (((AgentiAppuntamentiModel)element).getAgente() != null)
-							   ?((AgentiAppuntamentiModel)element).getAgente().getIndirizzo()
+				case 5:return (((Agentiappuntamenti)element).getAgenti() != null)
+							   ?((Agentiappuntamenti)element).getAgenti().getIndirizzo()
 							   : "";
-				case 6:return ((AgentiAppuntamentiModel)element).getNote();
+				case 6:return ((Agentiappuntamenti)element).getNote();
 				default: return "";
 				}				
 			}
@@ -979,7 +997,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (ProfilerHelper.getInstance().getPermessoUI(PopUpRicercaAnagrafica.ID)){
-					PopUpRicercaAnagrafica pra = new PopUpRicercaAnagrafica(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell());
+					PopUpRicercaAnagrafica pra = new PopUpRicercaAnagrafica(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
 					pra.setCallerObj(PlatformUI.getWorkbench()
 											   .getActiveWorkbenchWindow()
 											   .getActivePage()
@@ -1016,8 +1034,8 @@ public class DettaglioAppuntamentoView extends ViewPart {
 				if (tvAnagrafiche.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvAnagrafiche.getSelection()).iterator();
 					while (it.hasNext()) {
-						appuntamento.getAnagrafiche()
-									.remove(it.next());						
+						appuntamento.removeFromAnagraficheappuntamentis((Anagraficheappuntamenti)it.next());
+															
 					}
 					tvAnagrafiche.setInput(new Object());
 					tvAnagrafiche.refresh();
@@ -1118,8 +1136,8 @@ public class DettaglioAppuntamentoView extends ViewPart {
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return (appuntamento != null && appuntamento.getAnagrafiche() != null)
-				   		? appuntamento.getAnagrafiche().toArray()
+				return (appuntamento != null && appuntamento.getAnagraficheappuntamentis() != null)
+				   		? appuntamento.getAnagraficheappuntamentis().toArray()
 				   		: new ArrayList().toArray();
 			}
 
@@ -1304,13 +1322,13 @@ public class DettaglioAppuntamentoView extends ViewPart {
 								 null, 
 								 null);
 		
-		dataAppuntamento.setText(formatter.format(appuntamento.getDataAppuntamento().getTime()));
+		dataAppuntamento.setText(formatter.format(Date.from(appuntamento.getDataappuntamento().atZone(ZoneId.systemDefault()).toInstant())));
 		
-		oraincontro.setText(formatterTime.format(appuntamento.getDataAppuntamento().getTime()));
+		oraincontro.setText(formatterTime.format(Date.from(appuntamento.getDataappuntamento().atZone(ZoneId.systemDefault()).toInstant())));
 		
-		if (appuntamento.getDataFineAppuntamento() != null){
-			dataAppuntamentofine.setText(formatter.format(appuntamento.getDataFineAppuntamento().getTime()));
-			oraincontrofine.setText(formatterTime.format(appuntamento.getDataFineAppuntamento().getTime()));
+		if (appuntamento.getDatafineappuntamento() != null){
+			dataAppuntamentofine.setText(formatter.format(Date.from(appuntamento.getDatafineappuntamento().atZone(ZoneId.systemDefault()).toInstant())));
+			oraincontrofine.setText(formatterTime.format(Date.from(appuntamento.getDatafineappuntamento().atZone(ZoneId.systemDefault()).toInstant())));
 		}
 		
 		
@@ -1349,14 +1367,14 @@ public class DettaglioAppuntamentoView extends ViewPart {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				appuntamento.setTipoAppuntamento((TipiAppuntamentiVO)((StructuredSelection)event.getSelection()).getFirstElement());				
+				appuntamento.setTipiappuntamenti(((Tipiappuntamenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 			}
 			
 		});
 						
 		cvtipologia.setInput(new Object());
-		if (appuntamento.getTipoAppuntamento() != null){
-			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipiAppuntamenti(), appuntamento.getTipoAppuntamento(), comparatorTipologia);
+		if (appuntamento.getTipiappuntamenti() != null){
+			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipiAppuntamenti(), appuntamento.getTipiappuntamenti(), comparatorTipologia);
 			if (index > -1){
 				Object[] sel = new Object[1];
 				sel[0] = MobiliaDatiBaseCache.getInstance().getTipiAppuntamenti().get(index);
@@ -1365,7 +1383,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 			}
 		}
 		
-		if (appuntamento.getWinkGCalendarModels() != null && appuntamento.getWinkGCalendarModels().size() > 0){
+		if (appuntamento.getWinkgcalendars() != null && appuntamento.getWinkgcalendars().size() > 0){
 			f.setImage(appuntamentoGCalImg);
 			this.setTitleImage(appuntamentoGCalImg);
 		}else{
@@ -1379,7 +1397,7 @@ public class DettaglioAppuntamentoView extends ViewPart {
 		tvAnagrafiche.setInput(new Object());
 		tvRecapitiAnagrafiche.setInput(new Object());
 		
-		if ((this.appuntamento.getWinkGCalendarModels() != null) && (this.appuntamento.getWinkGCalendarModels().size() > 0)){
+		if ((this.appuntamento.getWinkgcalendars() != null) && (this.appuntamento.getWinkgcalendars().size() > 0)){
 			removeICALUIDAction.setChecked(true);
 			removeICALUIDAction.setImageDescriptor(noGCalImg);
 			removeICALUIDAction.setToolTipText("Dissocia da Google Calendar");
@@ -1394,18 +1412,18 @@ public class DettaglioAppuntamentoView extends ViewPart {
 	
 	private boolean checkAgente(Integer codAgente){
 		boolean returnValue = true;
-		Iterator<AgentiAppuntamentiModel> it = (appuntamento.getAgenti() == null)
-											   ? new ArrayList<AgentiAppuntamentiModel>().iterator()
-											   : appuntamento.getAgenti().iterator();
+		Iterator<Agentiappuntamenti> it = (appuntamento.getAgenti() == null)
+											   ? new ArrayList<Agentiappuntamenti>().iterator()
+											   : appuntamento.getAgentiappuntamentis().iterator();
 		AgentiAppuntamentiDAO aaDAO = new AgentiAppuntamentiDAO();		
 		while(it.hasNext()){
-			AgentiAppuntamentiModel aapm = it.next();
-			if (aapm.getCodAgente() == null && aapm.getCodAgentiAppuntamenti() != null){
+			Agentiappuntamenti aapm = it.next();
+			if (aapm.getAgenti() == null && aapm.getCodAgentiAppuntamenti() != 0){
 				aaDAO.deleteAgentiAppuntamenti(aapm.getCodAgentiAppuntamenti(), null, true);
 				returnValue = true;
 				break;				
 			}
-			if (aapm.getCodAgente().intValue() == codAgente.intValue()){
+			if (aapm.getAgenti().getCodAgente() == codAgente.intValue()){
 				returnValue = false;
 				break;
 			}
@@ -1415,11 +1433,12 @@ public class DettaglioAppuntamentoView extends ViewPart {
 	
 	private boolean checkAnagrafica(Integer codAnagrafica){
 		boolean returnValue = true;
-		Iterator<AnagraficheAppuntamentiModel> it = (appuntamento.getAnagrafiche() == null)
-													? new ArrayList<AnagraficheAppuntamentiModel>().iterator()
-													: appuntamento.getAnagrafiche().iterator();
+		
+		Iterator<Anagraficheappuntamenti> it = (appuntamento.getAnagraficheappuntamentis() == null)
+												? new ArrayList<Anagraficheappuntamenti>().iterator()
+												: appuntamento.getAnagraficheappuntamentis().iterator();
 		while(it.hasNext()){
-			if (it.next().getCodAnagrafica().intValue() == codAnagrafica.intValue()){
+			if (it.next().getAnagrafiche().getCodAnagrafica() == codAnagrafica.intValue()){
 				returnValue = false;
 				break;
 			}
@@ -1427,16 +1446,16 @@ public class DettaglioAppuntamentoView extends ViewPart {
 		return returnValue;
 	}
 	
-	public void addAgente(AgentiVO agente){
+	public void addAgente(Agenti agente){
 		if (checkAgente(agente.getCodAgente())){
-			AgentiAppuntamentiModel aam = new AgentiAppuntamentiModel();
-			aam.setCodAppuntamento(appuntamento.getCodAppuntamento());
-			aam.setCodAgente(agente.getCodAgente());
-			if (appuntamento.getAgenti() == null){
-				ArrayList<AgentiAppuntamentiModel> agenti = new ArrayList<AgentiAppuntamentiModel>();				
-				appuntamento.setAgenti(agenti);
-			}
-			appuntamento.getAgenti().add(aam);			
+			Agentiappuntamenti aam = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Agentiappuntamenti.class);
+			aam.setAppuntamenti(appuntamento);
+			aam.setAgenti(agente);
+//			if (appuntamento.getAgenti() == null){
+//				ArrayList<Agentiappuntamenti> agenti = new ArrayList<Agentiappuntamenti>();				
+//				appuntamento.s;
+//			}
+			appuntamento.getAgentiappuntamentis().add(aam);			
 			tvAgenti.setInput(new Object());			
 		}else{
 			MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
@@ -1445,16 +1464,16 @@ public class DettaglioAppuntamentoView extends ViewPart {
 		}
 	}
 
-	public void addAnagrafica(AnagraficheModel anagrafica){
+	public void addAnagrafica(Anagrafiche anagrafica){
 		if (checkAnagrafica(anagrafica.getCodAnagrafica())){
-			AnagraficheAppuntamentiModel aaModel = new AnagraficheAppuntamentiModel();
-			aaModel.setCodAnagrafica(anagrafica.getCodAnagrafica());
-			aaModel.setCodAppuntamento(appuntamento.getCodAppuntamento());
-			if (appuntamento.getAnagrafiche() == null){
-				ArrayList<AnagraficheAppuntamentiModel> anagrafiche = new ArrayList<AnagraficheAppuntamentiModel>();				
-				appuntamento.setAnagrafiche(anagrafiche);
-			}			
-			appuntamento.getAnagrafiche().add(aaModel);
+			Anagraficheappuntamenti aaModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Anagraficheappuntamenti.class);
+			aaModel.setAnagrafiche(anagrafica);
+			aaModel.setAppuntamenti(appuntamento);
+//			if (appuntamento.getAnagraficheappuntamentis() == null){
+//				ArrayList<Anagraficheappuntamenti> anagrafiche = new ArrayList<Anagraficheappuntamenti>();				
+//				appuntamento.setAnagrafiche(anagrafiche);
+//			}			
+			appuntamento.addToAnagraficheappuntamentis(aaModel);
 			tvAnagrafiche.setInput(new Object());
 			tvAnagrafiche.refresh();
 		}else{
@@ -1464,19 +1483,19 @@ public class DettaglioAppuntamentoView extends ViewPart {
 		}
 	}
 
-	public AppuntamentiModel getAppuntamento() {
+	public Appuntamenti getAppuntamento() {
 		return appuntamento;
 	}
 
-	public void setAppuntamento(AppuntamentiModel appuntamento) {
+	public void setAppuntamento(Appuntamenti appuntamento) {
 		if (appuntamento != null){
 			isInCompareMode = false;
 			DataBindingContext bindingContext = new DataBindingContext();
 			this.appuntamento = appuntamento;
-			if (appuntamento.getDataAppuntamento() != null){
-				this.setPartName(formatter.format(appuntamento.getDataAppuntamento())+ 
+			if (appuntamento.getDataappuntamento() != null){
+				this.setPartName(formatter.format(appuntamento.getDataappuntamento())+ 
 								 " " +
-								 formatterTime.format(appuntamento.getDataAppuntamento()));
+								 formatterTime.format(appuntamento.getDataappuntamento()));
 			}
 			bindAppuntamento(bindingContext);
 		}

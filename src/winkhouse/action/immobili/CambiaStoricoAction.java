@@ -5,6 +5,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.dao.ImmobiliDAO;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.DettaglioImmobileView;
 
 
@@ -32,10 +33,11 @@ public class CambiaStoricoAction extends Action {
 		 															 .getActivePage()
 		 															 .getActivePart();
 				
-		div.getImmobile().setStorico(!div.getImmobile().getStorico());
+		div.getImmobile().setStorico(!div.getImmobile().isStorico());
 		
-		ImmobiliDAO iDAO = new ImmobiliDAO();
-		iDAO.saveUpdate(div.getImmobile(), null, true);
+//		ImmobiliDAO iDAO = new ImmobiliDAO();
+//		iDAO.saveUpdate(div.getImmobile(), null, true);
+		WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
 		div.getViewSite().getPage().hideView(div);
 		RefreshImmobiliAction ria = new RefreshImmobiliAction();
 		ria.run();

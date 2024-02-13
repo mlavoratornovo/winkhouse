@@ -8,6 +8,7 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.Activator;
 import winkhouse.helper.ImmobiliHelper;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.DettaglioImmobileView;
 
@@ -15,11 +16,11 @@ import winkhouse.view.immobili.DettaglioImmobileView;
 
 public class CancellaImmobile extends Action {
 
-	private ImmobiliModel immobile = null;
+	private Immobili immobile = null;
 	
 	public CancellaImmobile() {}
 
-	public CancellaImmobile(ImmobiliModel immobile) {
+	public CancellaImmobile(Immobili immobile) {
 		this.immobile = immobile;
 	}
 	@Override
@@ -50,7 +51,7 @@ public ImageDescriptor getImageDescriptor() {
 											  "Per evitare la cancellazione permanente � possibile spostare l'immobile nell'archivo storico. \n" +
 			  	  							  "Per procedere con la cancellazione permanente premere OK altrimenti premere Cancel ")){
 	
-					ImmobiliModel immobile = div.getImmobile();
+					Immobili immobile = div.getImmobile();
 		
 					ImmobiliHelper ih = new ImmobiliHelper();
 					if ((Boolean)ih.deleteImmobile(immobile,null).get(ImmobiliHelper.RESULT_DELETE_IMMOBILE_DATA_DB)){

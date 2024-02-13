@@ -6,6 +6,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.AppuntamentiModel;
+import winkhouse.orm.Appuntamenti;
 import winkhouse.view.agenda.DettaglioAppuntamentoView;
 import winkhouse.vo.AppuntamentiVO;
 
@@ -25,7 +26,7 @@ public class DettaglioAppuntamentoHandler {
 		return instance;
 	}
 	
-	public DettaglioAppuntamentoView getDettaglioAppuntamento(AppuntamentiVO viewInstance){
+	public DettaglioAppuntamentoView getDettaglioAppuntamento(Appuntamenti viewInstance){
 		DettaglioAppuntamentoView dav = null;
 		IViewReference vr = null;
 		try {
@@ -48,7 +49,7 @@ public class DettaglioAppuntamentoHandler {
 																	   String.valueOf(viewInstance.getCodAppuntamento()),
 																	   IWorkbenchPage.VIEW_CREATE);
 				}
-				dav.setAppuntamento(new AppuntamentiModel(viewInstance));
+				dav.setAppuntamento(viewInstance);
 				PlatformUI.getWorkbench()
 		 		  		  .getActiveWorkbenchWindow()
 		 		  		  .getActivePage()

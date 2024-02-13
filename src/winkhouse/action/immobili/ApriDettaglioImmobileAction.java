@@ -12,6 +12,8 @@ import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.ProfilerHelper.PermessoDetail;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.AnagrafichePropietarieView;
@@ -22,11 +24,11 @@ import winkhouse.vo.TipologieImmobiliVO;
 
 public class ApriDettaglioImmobileAction extends Action {
 
-	private ImmobiliModel iModel = null;
-	private TipologieImmobiliVO tiVO = null;
+	private Immobili iModel = null;
+	private Tipologieimmobili tiVO = null;
 	private boolean comparerView = false;
 	
-	public ApriDettaglioImmobileAction(ImmobiliModel iModel,TipologieImmobiliVO tiVO) {
+	public ApriDettaglioImmobileAction(Immobili iModel,Tipologieimmobili tiVO) {
 		this.iModel = iModel;
 		this.tiVO = tiVO;
 	}
@@ -67,7 +69,7 @@ public class ApriDettaglioImmobileAction extends Action {
 						}
 						
 						if (tiVO != null){
-							iModel.setTipologiaImmobile(tiVO);
+							iModel.setTipologieimmobili(tiVO);
 						}
 			
 						div.setImmobile(iModel);
@@ -97,7 +99,7 @@ public class ApriDettaglioImmobileAction extends Action {
 						
 						if (apv != null){
 							apv.setAnagrafica(iModel);
-							if (iModel.getCodImmobile() == null){
+							if (iModel.getCodImmobile() == 0){
 								apv.setFocus();
 							}
 						}
@@ -111,8 +113,7 @@ public class ApriDettaglioImmobileAction extends Action {
 		
 					} catch (Exception e) {
 						e.printStackTrace();
-						MessageBox mb = new MessageBox(Activator.getDefault()
-																.getWorkbench().getActiveWorkbenchWindow().getShell(),
+						MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 													   SWT.ERROR);
 													   mb.setMessage("Errore nel trasferire i dati al dettaglio");
 													   mb.open();										
@@ -141,7 +142,7 @@ public class ApriDettaglioImmobileAction extends Action {
 																	.getDettaglioImmobile(iModel);		
 				
 				if (tiVO != null){
-					iModel.setTipologiaImmobile(tiVO);
+					iModel.setTipologieimmobili(tiVO);
 				}
 	
 				div.setImmobile(iModel);
@@ -163,7 +164,7 @@ public class ApriDettaglioImmobileAction extends Action {
 				
 				
 				AnagrafichePropietarieView apv = null; 
-				if (iModel.getCodImmobile() != null){
+				if (iModel.getCodImmobile() != 0){
 					apv = (AnagrafichePropietarieView)PlatformUI.getWorkbench()
 							   									.getActiveWorkbenchWindow()
 							   									.getActivePage()

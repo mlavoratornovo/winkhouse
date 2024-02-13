@@ -29,6 +29,7 @@ import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.StanzeImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AllegatiImmobiliVO;
@@ -387,7 +388,7 @@ public class ImmobiliHelper {
 	}
 	
 
-	public HashMap deleteImmobile(ImmobiliModel immobile,Connection connection){
+	public HashMap deleteImmobile(Immobili immobile,Connection connection){
 		
 		HashMap returnValue = new HashMap();
 		returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, true);
