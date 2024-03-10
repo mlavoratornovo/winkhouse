@@ -6,6 +6,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.affitti.ListaAffittiView;
 import winkhouse.view.colloqui.DettaglioColloquioView;
@@ -58,7 +59,7 @@ public class DettaglioImmobiliListener implements IPartListener {
 					   								  .findView(ImmaginiImmobiliView.ID);
 					if (ivpImmagini != null){
 						ImmaginiImmobiliView iiv = (ImmaginiImmobiliView)ivpImmagini;
-						iiv.setImmobile(new ImmobiliModel());
+						iiv.setImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class));
 					}
 					
 					IViewPart ivpColloqui = PlatformUI.getWorkbench()
@@ -67,7 +68,7 @@ public class DettaglioImmobiliListener implements IPartListener {
 					  					 			  .findView(ColloquiView.ID);
 					if (ivpColloqui != null){
 						ColloquiView cv = (ColloquiView)ivpColloqui;
-						cv.setImmobile(new ImmobiliModel());			
+						cv.setImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class));			
 					}
 					
 					IViewPart ivpAbbinamenti = PlatformUI.getWorkbench()
@@ -86,7 +87,7 @@ public class DettaglioImmobiliListener implements IPartListener {
 					 									  .findView(ListaAffittiView.ID);
 					if (ivpAffitti != null){
 						ListaAffittiView lav = (ListaAffittiView)ivpAffitti;
-						lav.setImmobile(new ImmobiliModel());
+						lav.setImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class));
 					}
 
 					IViewPart ivpEAV = PlatformUI.getWorkbench()

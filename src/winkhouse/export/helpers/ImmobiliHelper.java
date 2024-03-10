@@ -14,6 +14,7 @@ import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.export.WrongCriteriaSequenceException;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.vo.AbbinamentiVO;
 import winkhouse.vo.AllegatiImmobiliVO;
 import winkhouse.vo.DatiCatastaliVO;
@@ -37,12 +38,12 @@ public class ImmobiliHelper {
 	 * @return ArrayList<ImmobiliModel>
 	 */
 	
-	public ArrayList<ImmobiliModel> getImmobili(){
+	public ArrayList<Immobili> getImmobili(){
 		
-		ArrayList<ImmobiliModel> returnValue  = new ArrayList<ImmobiliModel>();
+		ArrayList<Immobili> returnValue  = new ArrayList<Immobili>();
 		
 		ImmobiliDAO iDAO = new ImmobiliDAO();
-		returnValue = iDAO.list(ImmobiliModel.class.getName());
+		returnValue = iDAO.list(null);
 		
 		return returnValue;
 		

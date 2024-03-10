@@ -471,20 +471,20 @@ public class ImmobiliHelper {
 								
 							}
 							if (okDeleteColloqui){
-								immaginiToDelete = immobile.getImmagini();
-								if (!imDAO.deleteByImmobile(immobile.getCodImmobile(), con, false)){
-									returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
-								}
-								allegatiImmobiliToDelete = immobile.getAllegati();
-								aiDAO = new AllegatiImmobiliDAO();
-								if (aiDAO.deleteByImmobile(immobile.getCodImmobile(), con, false)){
-									
-									if (!iDAO.delete(immobile.getCodImmobile(), con, false)){
-										returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
-									}
-								}else{
-									returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
-								}
+//								immaginiToDelete = immobile.getImmagini();
+//								if (!imDAO.deleteByImmobile(immobile.getCodImmobile(), con, false)){
+//									returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
+//								}
+//								allegatiImmobiliToDelete = immobile.getAllegati();
+//								aiDAO = new AllegatiImmobiliDAO();
+//								if (aiDAO.deleteByImmobile(immobile.getCodImmobile(), con, false)){
+//									
+//									if (!iDAO.delete(immobile.getCodImmobile(), con, false)){
+//										returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
+//									}
+//								}else{
+//									returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
+//								}
 							}else{
 								returnValue.put(RESULT_DELETE_IMMOBILE_DATA_DB, false);
 							}

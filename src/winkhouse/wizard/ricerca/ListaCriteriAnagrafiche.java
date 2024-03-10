@@ -446,7 +446,7 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 		while(it.hasNext()){
 			Classicliente ccVO = it.next();
 			desClassiClienti[count] = ccVO.getDescrizione();
-			codClassiClienti[count] = ccVO.getId();
+			codClassiClienti[count] = ccVO.getCodClasseCliente();
 			count++;
 		}		
 	}

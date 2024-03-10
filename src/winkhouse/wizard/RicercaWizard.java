@@ -30,17 +30,23 @@ import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.engine.search.SearchEngineImmobiliAffitti;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.RicercheHelper;
-import winkhouse.model.AbbinamentiModel;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ColloquiModel;
-import winkhouse.model.ImmobiliModel;
+//import winkhouse.model.AbbinamentiModel;
+//import winkhouse.model.AnagraficheModel;
+//import winkhouse.model.ColloquiModel;
+//import winkhouse.model.ImmobiliModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Abbinamenti;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.common.AbbinamentiView;
 import winkhouse.view.permessi.DettaglioPermessiAgenteView;
-import winkhouse.vo.AbbinamentiVO;
-import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
+//import winkhouse.vo.AbbinamentiVO;
+//import winkhouse.vo.AgentiVO;
+//import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.vo.RicercaVO;
 import winkhouse.wizard.ricerca.ListaCriteriAnagrafiche;
 import winkhouse.wizard.ricerca.ListaCriteriColloqui;
@@ -82,7 +88,7 @@ public class RicercaWizard extends Wizard {
 	private ListaRisultatiColloqui listaRisultatiColloqui = null;
 	private ListaRisultatiAnagrafiche listaRisultatiAnagrafiche = null;
 	private SelezioneTipologiaRicerca selezioneTipologiaRicerca = null;
-	private AgentiVO agente = null;
+	private Agenti agente = null;
 	
 	private Object returnObject = null;
 	private Class returnType = null;
@@ -100,7 +106,7 @@ public class RicercaWizard extends Wizard {
 			IViewReference iv = (IViewReference)PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getActivePage()
-														  .findViewReference(DettaglioPermessiAgenteView.ID,getAgente().getCodAgente().toString());
+														  .findViewReference(DettaglioPermessiAgenteView.ID, Integer.valueOf(getAgente().getCodAgente()).toString());
 			
 			
 			DettaglioPermessiAgenteView dpav = (DettaglioPermessiAgenteView)iv.getView(true);
@@ -256,17 +262,17 @@ public class RicercaWizard extends Wizard {
 								AbbinamentiDAO aDAO = new AbbinamentiDAO();
 								
 								while(it.hasNext()){
-									ImmobiliModel im = (ImmobiliModel)it.next();
-									if (aDAO.findAbbinamentiByCodImmobileCodAnagrafica(AbbinamentiModel.class.getName(),
-																					   codAnagrafica, 
-																					   im.getCodImmobile()) == null){
-										AbbinamentiVO aVO  = new AbbinamentiVO();
-										aVO.setCodImmobile(im.getCodImmobile());
-										aVO.setCodAnagrafica(codAnagrafica);
-						
-										if (aDAO.saveUpdate(aVO, null, true)){
-											monitor.setTaskName("abbinamento con : " + im.toString());
-										}
+									Immobili im = (Immobili)it.next();
+									if (aDAO.findAbbinamentiByImmobileAnagrafica(WinkhouseUtils.getInstance().getCayenneObjectContext(),
+																					   av.getAnagrafica(), 
+																					   im) == null){
+										Abbinamenti aVO  = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Abbinamenti.class);
+										aVO.setImmobili(im);
+										aVO.setAnagrafiche(av.getAnagrafica());
+										
+										WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
+										monitor.setTaskName("abbinamento con : " + im.toString());
+										
 										d.readAndDispatch();
 										monitor.worked(1);
 										d.readAndDispatch();						
@@ -274,7 +280,8 @@ public class RicercaWizard extends Wizard {
 						
 								}
 								monitor.setTaskName("aggiornamento abbinamenti");
-								ArrayList al = (ArrayList)aDAO.findAbbinamentiByCodAnagrafica(AbbinamentiModel.class.getName(), codAnagrafica);
+								ArrayList al = (ArrayList)aDAO.findAbbinamentiByAnagrafica(WinkhouseUtils.getInstance().getCayenneObjectContext(),
+																						   av.getAnagrafica());
 								av.setManuale(al);
 							}
 						};
@@ -341,16 +348,17 @@ public class RicercaWizard extends Wizard {
 								AbbinamentiDAO aDAO = new AbbinamentiDAO();
 								
 								while(it.hasNext()){
-									AnagraficheModel am = (AnagraficheModel)it.next();
-									if (aDAO.findAbbinamentiByCodImmobileCodAnagrafica(AbbinamentiModel.class.getName(),
-																					   am.getCodAnagrafica(), codImmobile) == null){
-										AbbinamentiVO aVO  = new AbbinamentiVO();
-										aVO.setCodImmobile(codImmobile);
-										aVO.setCodAnagrafica(am.getCodAnagrafica());
+									Anagrafiche am = (Anagrafiche)it.next();
+									if (aDAO.findAbbinamentiByImmobileAnagrafica(WinkhouseUtils.getInstance().getCayenneObjectContext(),
+																			     am, 
+																			     av.getImmobile()) == null){
+										Abbinamenti aVO  = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Abbinamenti.class);
+										aVO.setImmobili(av.getImmobile());
+										aVO.setAnagrafiche(am);
 										
-										if (aDAO.saveUpdate(aVO, null, true)){
-											monitor.setTaskName("abbinamento con : " + am.toString());
-										}
+										WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
+										monitor.setTaskName("abbinamento con : " + am.toString());
+										
 										d.readAndDispatch();
 										monitor.worked(1);
 										d.readAndDispatch();						
@@ -358,7 +366,8 @@ public class RicercaWizard extends Wizard {
 									
 								}
 								monitor.setTaskName("aggiornamento abbinamenti");
-								ArrayList al = (ArrayList)aDAO.findAbbinamentiByCodImmobile(AbbinamentiModel.class.getName(), codImmobile);
+								ArrayList al = (ArrayList)aDAO.findAbbinamentiByImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext(),
+																						 av.getImmobile());
 								av.setManuale(al);
 							}
 						};
@@ -414,7 +423,7 @@ public class RicercaWizard extends Wizard {
 							monitor.beginTask("apertura dettagli", alImmobili.size());
 							d.readAndDispatch();
 							while(it.hasNext()){
-								ImmobiliModel im = (ImmobiliModel)it.next();
+								Immobili im = (Immobili)it.next();
 								ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(im,null);
 								adia.run();							
 								monitor.setTaskName("dettaglio : " + im.toString());
@@ -463,7 +472,7 @@ public class RicercaWizard extends Wizard {
 						monitor.beginTask("apertura dettagli", alAnagrafiche.size());
 						d.readAndDispatch();
 						while(it.hasNext()){
-							AnagraficheModel am = (AnagraficheModel)it.next();
+							Anagrafiche am = (Anagrafiche)it.next();
 //							ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am, null);
 //							adaa.run();
 							monitor.setTaskName("dettaglio : " + am.toString());
@@ -507,7 +516,7 @@ public class RicercaWizard extends Wizard {
 						monitor.beginTask("apertura dettagli", alColloqui.size());
 						d.readAndDispatch();
 						while(it.hasNext()){
-							ColloquiModel cm = (ColloquiModel)it.next();
+							Colloqui cm = (Colloqui)it.next();
 							ApriDettaglioColloquioAction adaa = new ApriDettaglioColloquioAction(cm);
 							adaa.run();
 							monitor.setTaskName("dettaglio : " + cm.toString());
@@ -1071,11 +1080,11 @@ public class RicercaWizard extends Wizard {
 		this.wiztype = wiztype;
 	}
 
-	public AgentiVO getAgente() {
+	public Agenti getAgente() {
 		return agente;
 	}
 
-	public void setAgente(AgentiVO agente) {
+	public void setAgente(Agenti agente) {
 		this.agente = agente;
 	}
 

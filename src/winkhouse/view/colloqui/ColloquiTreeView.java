@@ -40,6 +40,11 @@ import winkhouse.model.ColloquiAgentiModel_Age;
 import winkhouse.model.ColloquiAnagraficheModel_Ang;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
+import winkhouse.orm.Colloquianagrafiche;
+import winkhouse.orm.Immobili;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 import winkhouse.view.anagrafica.handler.DettaglioAnagraficaHandler;
 import winkhouse.view.colloqui.handler.DettaglioColloquioHandler;
@@ -324,12 +329,12 @@ public class ColloquiTreeView extends ViewPart {
 			public void mouseDoubleClick(MouseEvent e) {
 				
 				if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof ImmobiliVO){
-					ImmobiliVO iVO = (ImmobiliVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
+					Immobili iVO = (Immobili)((StructuredSelection)viewer.getSelection()).getFirstElement();
 					DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance()
 																		.getDettaglioImmobile(iVO);
 				}
 				if (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof ColloquiModel){
-					ColloquiModel cModel = (ColloquiModel)((StructuredSelection)viewer.getSelection()).getFirstElement();
+					Colloqui cModel = (Colloqui)((StructuredSelection)viewer.getSelection()).getFirstElement();
 					DettaglioColloquioView dcv = DettaglioColloquioHandler.getInstance()
 																		  .getDettaglioColloquio(cModel);
 				}
@@ -369,11 +374,11 @@ public class ColloquiTreeView extends ViewPart {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								
-								ColloquiModel cModel;
+								Colloqui cModel;
 								
-								cModel = new ColloquiModel();
-								cModel.setCodImmobileAbbinato(((ImmobiliVO)((StructuredSelection)viewer.getSelection()).getFirstElement()).getCodImmobile());
-								cModel.setCodTipologiaColloquio(2);
+								cModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
+								cModel.setImmobili((((Immobili)((StructuredSelection)viewer.getSelection()).getFirstElement())));
+								cModel.setCodtipologiacolloquio(2);
 								
 								DettaglioColloquioView dcv = DettaglioColloquioHandler.getInstance()
 																					  .getDettaglioColloquio(cModel);
@@ -401,13 +406,13 @@ public class ColloquiTreeView extends ViewPart {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								
-								ColloquiModel cModel;
-								ColloquiAnagraficheModel_Ang cam_a = new ColloquiAnagraficheModel_Ang();
-								cam_a.setCodAnagrafica(((AnagraficheModel)((StructuredSelection)viewer.getSelection()).getFirstElement()).getCodAnagrafica());
-								cModel = new ColloquiModel();
+								Colloqui cModel;
+								Colloquianagrafiche cam_a = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquianagrafiche.class);
+								cam_a.setAnagrafiche((((Anagrafiche)((StructuredSelection)viewer.getSelection()).getFirstElement())));
+								cModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
 								
-								cModel.getAnagrafiche().add(cam_a);
-								cModel.setCodTipologiaColloquio(1);
+								cModel.addToColloquianagrafiches(cam_a);
+								cModel.setCodtipologiacolloquio(1);
 								
 								DettaglioColloquioView dcv = DettaglioColloquioHandler.getInstance()
 																					  .getDettaglioColloquio(cModel);
@@ -435,22 +440,22 @@ public class ColloquiTreeView extends ViewPart {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								
-								ColloquiModel cModel;
+								Colloqui cModel;
 								
-								cModel = new ColloquiModel();
+								cModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
 								
 								AgentiColloqui ac = ((AgentiColloqui)((StructuredSelection)viewer.getSelection()).getFirstElement());
 								
 								if (ac.getAgenti_colloquio_type() == AgentiColloqui.AGENTI_COLLOQUIO_INSERITORI){
-									cModel.setCodAgenteInseritore(ac.getCodAgente());
-									cModel.setCodTipologiaColloquio(3);
+									//cModel.setCodAgenteInseritore(ac.getCodAgente());
+									cModel.setCodtipologiacolloquio(3);
 								}
 								if (ac.getAgenti_colloquio_type() == AgentiColloqui.AGENTI_COLLOQUIO_PARTECIPANTI){
 									ColloquiAgentiVO caVO = new ColloquiAgentiVO();
 									caVO.setCodAgente(ac.getCodAgente());
 									ColloquiAgentiModel_Age cam_a = new ColloquiAgentiModel_Age(caVO);
-									cModel.getAgenti().add(cam_a);
-									cModel.setCodTipologiaColloquio(3);
+									//cModel.getAgenti().add(cam_a);
+									cModel.setCodtipologiacolloquio(3);
 								}
 								
 								DettaglioColloquioView dcv = DettaglioColloquioHandler.getInstance()

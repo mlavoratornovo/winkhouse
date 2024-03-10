@@ -81,6 +81,7 @@ import winkhouse.model.PromemoriaModel;
 import winkhouse.model.ReportModel;
 import winkhouse.model.StanzeImmobiliModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Immobili;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.perspective.AgendaPerspective;
 import winkhouse.perspective.AnagrafichePerspective;
@@ -1785,7 +1786,9 @@ public class WinkhouseUtils {
 		if (codiciImmobili == null){
 			codiciImmobili = new ArrayList<Integer>();
 			ImmobiliDAO iDAO = new ImmobiliDAO();
-			ArrayList al = iDAO.list(ImmobiliVO.class.getName());
+			ArrayList<Immobili> al = iDAO.list(ImmobiliVO.class.getName());
+//			al.stream().max((v1, v2) -> Double.compare(v1.getCodImmobile(), v2.getCodImmobile()))
+//		    .orElse(null);
 			Iterator it = al.iterator();
 			while (it.hasNext()) {
 				ImmobiliVO type = (ImmobiliVO) it.next();

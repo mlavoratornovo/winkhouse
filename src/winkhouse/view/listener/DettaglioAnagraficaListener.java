@@ -9,6 +9,7 @@ import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 import winkhouse.view.anagrafica.ImmobiliPropietaView;
@@ -54,7 +55,7 @@ public class DettaglioAnagraficaListener implements IPartListener {
 				  								  .findView(ColloquiView.ID);
 				if (ivpColloqui != null){
 					ColloquiView cv = (ColloquiView)ivpColloqui;
-					cv.setImmobile(new ImmobiliModel());			
+					cv.setImmobile(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobili.class));			
 				}
 				
 				IViewPart ivpAbbinamenti = PlatformUI.getWorkbench()

@@ -74,7 +74,7 @@ public class ImmobiliPropietaView extends ViewPart {
 			
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				ImmobiliModel im = (ImmobiliModel)((StructuredSelection)tvImmobiliProprieta.getSelection()).getFirstElement();
+				Immobili im = (Immobili)((StructuredSelection)tvImmobiliProprieta.getSelection()).getFirstElement();
 				ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(im, null);
 				adia.run();
 			}

@@ -25,7 +25,12 @@ import winkhouse.export.models.ObjectSearchGetters;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Classicliente;
+import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.orm.Tipologiecontatti;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AgentiVO;
@@ -66,19 +71,19 @@ public class UtilsHelper {
 		
 	}
 	
-	public ArrayList<TipologieImmobiliVO> getTipologieImmobili() {
+	public ArrayList<Tipologieimmobili> getTipologieImmobili() {
 		return MobiliaDatiBaseCache.getInstance().getTipologieImmobili();
 	}
 	
-	public ArrayList<StatoConservativoVO> getStatiConservativi() {
+	public ArrayList<Statoconservativo> getStatiConservativi() {
 		return MobiliaDatiBaseCache.getInstance().getStatiConservativi();
 	}
 	
-	public ArrayList<RiscaldamentiVO> getRiscaldamenti() {
+	public ArrayList<Riscaldamenti> getRiscaldamenti() {
 		return MobiliaDatiBaseCache.getInstance().getRiscaldamenti();
 	}
 	
-	public ArrayList<TipologiaStanzeVO> getTipologieStanze() {
+	public ArrayList<Tipologiastanze> getTipologieStanze() {
 		return MobiliaDatiBaseCache.getInstance().getTipologieStanze();
 	}
 
@@ -414,12 +419,12 @@ public class UtilsHelper {
 	 * @return ArrayList<ClasseEnergeticaVO>
 	 */
 	
-	public ArrayList<ClasseEnergeticaVO> getAllClasseEnergetica(){
+	public ArrayList<Classienergetiche> getAllClasseEnergetica(){
 		
-		ArrayList<ClasseEnergeticaVO> returnValue = new ArrayList<ClasseEnergeticaVO>();
+		ArrayList<Classienergetiche> returnValue = new ArrayList<Classienergetiche>();
 		
 		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-		returnValue = ceDAO.listClassiEnergetiche(ClasseEnergeticaVO.class.getName());
+		returnValue = ceDAO.listClassiEnergetiche(null);
 		
 		return returnValue;
 	}	
@@ -454,9 +459,9 @@ public class UtilsHelper {
 	 * @return ArrayList<RiscaldamentiVO>
 	 */
 
-	public ArrayList<RiscaldamentiVO> getAllRiscaldamenti(){
+	public ArrayList<Riscaldamenti> getAllRiscaldamenti(){
 		
-		ArrayList<RiscaldamentiVO> returnValue = new ArrayList<RiscaldamentiVO>();
+		ArrayList<Riscaldamenti> returnValue = new ArrayList<Riscaldamenti>();
 		
 		RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
 		returnValue = rDAO.list(RiscaldamentiVO.class.getName());

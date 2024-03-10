@@ -8,23 +8,21 @@ import javolution.xml.XMLSerializable;
 import javolution.xml.XMLFormat.InputElement;
 import javolution.xml.XMLFormat.OutputElement;
 import javolution.xml.stream.XMLStreamException;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.vo.ClasseEnergeticaVO;
 
-public class ClasseEnergeticaXMLModel extends ClasseEnergeticaVO 
+public class ClasseEnergeticaXMLModel extends Classienergetiche 
 									  implements XMLSerializable {
-
-	public ClasseEnergeticaXMLModel(ClasseEnergeticaVO ceVO) {
-		setCodClasseEnergetica(ceVO.getCodClasseEnergetica());
-		setDescrizione(ceVO.getDescrizione());
-		setNome(ceVO.getNome());
-		setOrdine(ceVO.getOrdine());
-	}
-
-	public ClasseEnergeticaXMLModel(ResultSet rs) throws SQLException {
-		super(rs);
+	
+	public ClasseEnergeticaXMLModel(Classienergetiche ceVO) {
+		this.setCodClasseEnergetica(ceVO.getCodClasseEnergetica());
+		this.setDescrizione(ceVO.getDescrizione());
+		this.setOrdine(ceVO.getOrdine());
+		this.setNome(ceVO.getNome());
 	}
 
 	protected static final XMLFormat<ClasseEnergeticaXMLModel> CLASSEENERGETICA_XML = new XMLFormat<ClasseEnergeticaXMLModel>(ClasseEnergeticaXMLModel.class){
+
 		
         public void write(ClasseEnergeticaXMLModel ce_xml, OutputElement xml)throws XMLStreamException {
         	xml.setAttribute("codClasseEnergetica", ce_xml.getCodClasseEnergetica());

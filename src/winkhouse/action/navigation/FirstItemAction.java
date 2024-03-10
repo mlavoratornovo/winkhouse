@@ -14,6 +14,7 @@ import winkhouse.dao.ImmobiliDAO;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.perspective.AnagrafichePerspective;
 import winkhouse.perspective.ImmobiliPerspective;
@@ -44,9 +45,9 @@ public class FirstItemAction extends Action {
 				
 				Integer codImm = WinkhouseUtils.getInstance().getCodiciImmobili().get(0);
 				ImmobiliDAO iDAO = new ImmobiliDAO();
-				ImmobiliModel im = null;
+				Immobili im = null;
 
-				im = (ImmobiliModel)iDAO.getImmobileById(ImmobiliModel.class.getName(), codImm);
+				im = (Immobili)iDAO.getImmobileById(codImm);
 				
 				ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(im,null);
 				adia.run();
@@ -65,9 +66,9 @@ public class FirstItemAction extends Action {
 						 					   .getCodiciImmobili().get(0);
 
 				ImmobiliDAO iDAO = new ImmobiliDAO();
-				ImmobiliModel im = null;
+				Immobili im = null;
 
-				im = (ImmobiliModel)iDAO.getImmobileById(ImmobiliModel.class.getName(), codImm);
+				im = (Immobili)iDAO.getImmobileById(codImm);
 				
 				IWorkbenchPart wp = PlatformUI.getWorkbench()
 		   		   							  .getActiveWorkbenchWindow()
@@ -75,11 +76,11 @@ public class FirstItemAction extends Action {
 		   		   							  .getActivePart();
 				
 				int count = 0;
-				while (!im.getAffittabile()){
+				while (!im.isAffitto()){
 					count++;
 					codImm = WinkhouseUtils.getInstance()
 					 						 .getCodiciImmobili().get(count);
-					im = (ImmobiliModel)iDAO.getImmobileById(ImmobiliModel.class.getName(), codImm);
+					im = iDAO.getImmobileById(codImm);
 				}
 				
 				if (wp instanceof DettaglioImmobileView){

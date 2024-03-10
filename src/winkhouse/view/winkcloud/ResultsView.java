@@ -29,13 +29,12 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 
 import winkhouse.Activator;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ImmobiliModel;
 import winkhouse.model.winkcloud.CloudQueryOrigin;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.perspective.ImmobiliPerspective;
 import winkhouse.view.immobili.DettaglioImmobileView;
 import winkhouse.view.immobili.handler.DettaglioImmobiliHandler;
-import winkhouse.vo.ImmobiliVO;
 
 public class ResultsView extends ViewPart {
 
@@ -101,10 +100,10 @@ public class ResultsView extends ViewPart {
 			@Override
 			public Image getColumnImage(Object element, int columnIndex) {
 				if (columnIndex == 0){
-					if (element instanceof ImmobiliModel){
+					if (element instanceof Immobili){
 						return immobile;
 					}
-					if (element instanceof AnagraficheModel){
+					if (element instanceof Anagrafiche){
 						return anagrafica;
 					}
 				}
@@ -117,8 +116,8 @@ public class ResultsView extends ViewPart {
 					return element.toString();
 				}
 				if (columnIndex == 2){
-					if (element instanceof ImmobiliModel){
-						return ((ImmobiliModel)element).getDescrizioneAnagrafichePropietarie();
+					if (element instanceof Immobili){
+						return ((Immobili)element).getDescrizioneAnagrafichePropietarie();
 					}
 					return "";
 				}
@@ -167,7 +166,7 @@ public class ResultsView extends ViewPart {
 				IPerspectiveDescriptor ipd = PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(ImmobiliPerspective.ID);
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(ipd);
 				DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance()
-						.getDettaglioImmobile((ImmobiliVO)((StructuredSelection)tvResults.getSelection()).getFirstElement());
+						.getDettaglioImmobile((Immobili)((StructuredSelection)tvResults.getSelection()).getFirstElement());
 				
 				//tvResults.getSelection().toString(); 
 			}

@@ -16,7 +16,9 @@ import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.vo.AgentiVO;
 
 
@@ -26,29 +28,30 @@ public class OptimisticLockHelper {
 	public final static String VISUALIZZA = "Visualizza";
 	public final static String ANNULLA = "Annulla";
 	
-	public String checkOLImmobile(ImmobiliModel immobile){
+	public String checkOLImmobile(Immobili immobile){
 		
-		if ((immobile.getCodImmobile() == null) || (immobile.getCodImmobile() == 0)){
+		if (immobile.getCodImmobile() == 0){
 			return SOVRASCRIVI;
 		}else{
 			
 			ImmobiliDAO iDAO = new ImmobiliDAO();
-			ImmobiliModel im_DB = (ImmobiliModel)iDAO.getImmobileById(ImmobiliModel.class.getName(), immobile.getCodImmobile());
+			Immobili im_DB = iDAO.getImmobileById(immobile.getCodImmobile());
 			
-			if (im_DB.getDateUpdate() != null){
+			if (im_DB.getDateupdate() != null){
 				
-				if (im_DB.getDateUpdate().after(immobile.getDateUpdate())){
+				if (im_DB.getDateupdate().isAfter(immobile.getDateupdate())){
 					
 					String message = "ATTENZIONE : l'immobile " + immobile.toString() + "\n � stato modificato da un altro agente mentre lo stavi editando.\n";
-					if (im_DB.getCodUserUpdate() != null){
+					if (im_DB.getAgenti1() != null){
 						AgentiDAO aDAO = new AgentiDAO();
-						AgentiVO aVO = (AgentiVO)aDAO.getAgenteById(AgentiVO.class.getName(), im_DB.getCodUserUpdate());
+						
+						Agenti aVO = aDAO.getAgenteById(im_DB.getAgenti1().getCodAgente());
 						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche � " + aVO.toString();
+							message += "L'agente che ha effettuato le modifiche è " + aVO.toString();
 						}
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'immobile � stato modificato", null,
+															 "Winkhouse : l'immobile è stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){

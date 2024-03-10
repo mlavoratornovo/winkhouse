@@ -74,6 +74,7 @@ import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.PromemoriaModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.desktop.model.MyNode;
 import winkhouse.view.desktop.provider.GraphLabelProvider;
@@ -456,7 +457,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 					adpa.run();
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.IMMOBILI)){					
-					ApriDettaglioImmobilePerspectiveAction adipa = new ApriDettaglioImmobilePerspectiveAction((ImmobiliModel)myn.getObjModel());
+					ApriDettaglioImmobilePerspectiveAction adipa = new ApriDettaglioImmobilePerspectiveAction((Immobili)myn.getObjModel());
 					adipa.setComparerView(true);
 					adipa.run();
 				}

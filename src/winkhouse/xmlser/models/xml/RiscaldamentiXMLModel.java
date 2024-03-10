@@ -8,19 +8,20 @@ import javolution.xml.XMLSerializable;
 import javolution.xml.XMLFormat.InputElement;
 import javolution.xml.XMLFormat.OutputElement;
 import javolution.xml.stream.XMLStreamException;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.vo.RiscaldamentiVO;
 
-public class RiscaldamentiXMLModel extends RiscaldamentiVO 
+public class RiscaldamentiXMLModel extends Riscaldamenti 
 								   implements XMLSerializable {
 
-	public RiscaldamentiXMLModel(RiscaldamentiVO rVO) {
+	public RiscaldamentiXMLModel(Riscaldamenti rVO) {
 		setCodRiscaldamento(rVO.getCodRiscaldamento());
 		setDescrizione(rVO.getDescrizione());
 	}
 
-	public RiscaldamentiXMLModel(ResultSet rs) throws SQLException {
-		super(rs);
-	}
+//	public RiscaldamentiXMLModel(ResultSet rs) throws SQLException {
+//		super(rs);
+//	}
 	
 	protected static final XMLFormat<RiscaldamentiXMLModel> RISCALDAMENTI_XML = new XMLFormat<RiscaldamentiXMLModel>(RiscaldamentiXMLModel.class){
 		

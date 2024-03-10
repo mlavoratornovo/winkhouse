@@ -6,6 +6,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Colloqui;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 
 
@@ -25,7 +26,7 @@ public class DettaglioColloquioHandler {
 		return instance;
 	}
 	
-	public DettaglioColloquioView getDettaglioColloquio(ColloquiModel viewInstance){
+	public DettaglioColloquioView getDettaglioColloquio(Colloqui viewInstance){
 		
 		DettaglioColloquioView dcv = null;
 		IViewReference vr = null;

@@ -13,7 +13,7 @@ public class ColloquiCriteriRicercaVO implements Serializable{
 	
 	/**
 	 * La classe rappresenta una condizione di ricerca da passare alle funzioni di ricerca per propriet�
-	 * La classe pu� essere serializzata nella tabella COLLOQUICRITERIRICERCA
+	 * La classe può essere serializzata nella tabella COLLOQUICRITERIRICERCA
 	 */
 	
 	private Integer codCriterioRicerca = null;

@@ -16,6 +16,7 @@ import org.apache.cayenne.exp.Expression;
 import org.apache.cayenne.exp.ExpressionFactory;
 import org.apache.cayenne.query.ObjectSelect;
 import org.apache.cayenne.query.SelectQuery;
+import org.apache.cayenne.query.SortOrder;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.db.orm.CayenneContextManager;
@@ -25,6 +26,7 @@ import winkhouse.vo.AnagraficheVO;
 
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Classicliente;
+import winkhouse.orm.Immobili;
 
 
 public class AnagraficheDAO extends BaseDAO{
@@ -56,16 +58,17 @@ public class AnagraficheDAO extends BaseDAO{
 	public AnagraficheDAO() {
 	}
 
-	public <T> ArrayList<T> list(String classType){
+	public ArrayList<Anagrafiche> list(String classType){
 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		if (WinkhouseUtils.getInstance().getTipoArchivio()){
-			Expression exp = ExpressionFactory.matchExp("storico", true);
-			SelectQuery<Anagrafiche> query = new SelectQuery<Anagrafiche>(Anagrafiche.class, exp);
-			return new ArrayList<T>(context.performQuery(query));
+			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+											 		   .where(Anagrafiche.STORICO.isTrue())
+											           .select(context));			
 		}else{
 			
-			return new ArrayList(ObjectSelect.query(Anagrafiche.class).select(context));			
-		}
+			return new ArrayList<Anagrafiche>(ObjectSelect.query(Anagrafiche.class)
+											 		   	  .select(context));			
+		}		
 		
 	}
 

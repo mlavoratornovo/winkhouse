@@ -59,6 +59,7 @@ import winkhouse.model.AgentiModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
 import winkhouse.view.agenda.handler.DettaglioAppuntamentoHandler;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 
@@ -236,8 +237,8 @@ public class CalendarioView extends ViewPart {
 						DettaglioAppuntamentoView dav = DettaglioAppuntamentoHandler.getInstance()
 																					.getDettaglioAppuntamento(apm);
 					}
-					if (o instanceof ColloquiModel){
-						ColloquiModel cm = (ColloquiModel)o;
+					if (o instanceof Colloqui){
+						Colloqui cm = (Colloqui)o;
 						IViewReference vr = PlatformUI.getWorkbench()
 													  .getActiveWorkbenchWindow()
 													  .getActivePage()

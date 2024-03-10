@@ -11,6 +11,11 @@ import java.util.Date;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.exp.Expression;
+import org.apache.cayenne.exp.ExpressionFactory;
+import org.apache.cayenne.query.ObjectSelect;
+import org.apache.cayenne.query.SelectQuery;
+import org.apache.cayenne.query.SortOrder;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.orm.Anagrafiche;
@@ -124,13 +129,19 @@ public class ImmobiliDAO extends BaseDAO{
 		super();
 	}
 	
-	public <T> ArrayList<T> list(String classType){
-		if (WinkhouseUtils.getInstance()
-							.getTipoArchivio()){
-			return super.list(classType, LISTA_IMMOBILI_STORICO);
+	public ArrayList<Immobili> list(String classType){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){
+			Expression exp = ExpressionFactory.matchExp("storico", true);
+			SelectQuery<Immobili> query = new SelectQuery<Immobili>(Immobili.class, exp);
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+											 		   .where(Immobili.STORICO.isTrue())
+											           .select(context));			
 		}else{
-			return super.list(classType, LISTA_IMMOBILI);
-		}
+			
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+											 		   .select(context));			
+		}		
 	}
 	
 	public <T> ArrayList<T> listImmobiliByCodClasseEnergetica(String ClassName,Integer codClasseEnergetica){

@@ -50,6 +50,9 @@ import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ImmobiliAffittiMethodName;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.RicercheVO;
@@ -1032,10 +1035,10 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 	
 		desTipologiaImmobile = new String[UtilsHelper.getInstance().getTipologieImmobili().size()];
 		codTipologiaImmobile = new Integer[UtilsHelper.getInstance().getTipologieImmobili().size()];
-		Iterator<TipologieImmobiliVO> it = UtilsHelper.getInstance().getTipologieImmobili().iterator();
+		Iterator<Tipologieimmobili> it = UtilsHelper.getInstance().getTipologieImmobili().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			TipologieImmobiliVO tiVO = it.next();
+			Tipologieimmobili tiVO = it.next();
 			desTipologiaImmobile[count] = tiVO.getDescrizione();
 			codTipologiaImmobile[count] = tiVO.getCodTipologiaImmobile();
 			count++;
@@ -1046,10 +1049,10 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 	
 		desStatoConservativo = new String[UtilsHelper.getInstance().getStatiConservativi().size()];
 		codStatoConservativo = new Integer[UtilsHelper.getInstance().getStatiConservativi().size()];
-		Iterator<StatoConservativoVO> it = UtilsHelper.getInstance().getStatiConservativi().iterator();
+		Iterator<Statoconservativo> it = UtilsHelper.getInstance().getStatiConservativi().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			StatoConservativoVO scVO = it.next();
+			Statoconservativo scVO = it.next();
 			desStatoConservativo[count] = scVO.getDescrizione();
 			codStatoConservativo[count] = scVO.getCodStatoConservativo();
 			count++;
@@ -1060,10 +1063,10 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 	
 		desRiscaldamenti = new String[UtilsHelper.getInstance().getRiscaldamenti().size()];
 		codRiscaldamenti = new Integer[UtilsHelper.getInstance().getRiscaldamenti().size()];
-		Iterator<RiscaldamentiVO> it = UtilsHelper.getInstance().getRiscaldamenti().iterator();
+		Iterator<Riscaldamenti> it = UtilsHelper.getInstance().getRiscaldamenti().iterator();
 		int count = 0;
 		while(it.hasNext()){
-			RiscaldamentiVO rVO = it.next();
+			Riscaldamenti rVO = it.next();
 			desRiscaldamenti[count] = rVO.getDescrizione();
 			codRiscaldamenti[count] = rVO.getCodRiscaldamento();
 			count++;

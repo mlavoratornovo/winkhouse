@@ -7,8 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.ColloquiAgentiModel_Age;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
+import winkhouse.orm.Colloquiagenti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiAgentiVO;
 
 
@@ -30,6 +37,12 @@ public class ColloquiAgentiDAO extends BaseDAO {
 
 	public <T> ArrayList<T> getColloquiAgentiByColloquio(String classType, Integer codColloquio){
 		return super.getObjectsByIntFieldValue(ColloquiAgentiModel_Age.class.getName(), LISTA_COLLOQUIOAGENTI_BY_COLLOQUIO, codColloquio);
+	}
+
+	public ArrayList<Colloquiagenti> getColloquiAgentiByColloquio(int codColloquio, ObjectContext oc){
+		return new ArrayList<Colloquiagenti>(ObjectSelect.query(Colloquiagenti.class)
+		   .where(Colloquiagenti.CODCOLLOQUIO.eq(codColloquio))
+		   .select(oc));		
 	}
 	
 	public <T> ArrayList<T> getColloquiAgentiByAgente(String classType, Integer codAgente){

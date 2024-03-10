@@ -18,10 +18,12 @@ import javolution.xml.XMLObjectWriter;
 import javolution.xml.stream.XMLStreamException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 
 import winkhouse.export.helpers.SystemPreferenceHelper;
 import winkhouse.export.helpers.UtilsHelper;
-
+import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AgentiVO;
@@ -105,8 +107,7 @@ public class XMLExportHelper {
 			File f = new File(pathToExport + File.separator + path);
 			f.mkdirs();			
 		} catch (Exception e) {
-				MessageDialog.openError(Activator.getDefault()
-												 .getWorkbench()
+				MessageDialog.openError(PlatformUI.getWorkbench()
 												 .getActiveWorkbenchWindow()
 												 .getShell(), 
 										"Errore salvataggio esportazione", 
@@ -174,8 +175,8 @@ public class XMLExportHelper {
 			
 			HashMap hm = new HashMap();
 			
-			ArrayList<ClasseEnergeticaVO> al_ce = UtilsHelper.getInstance().getAllClasseEnergetica();
-			for (ClasseEnergeticaVO classeEnergeticaVO : al_ce) {
+			ArrayList<Classienergetiche> al_ce = UtilsHelper.getInstance().getAllClasseEnergetica();
+			for (Classienergetiche classeEnergeticaVO : al_ce) {
 				hm.put(classeEnergeticaVO.getCodClasseEnergetica(),new ClasseEnergeticaXMLModel(classeEnergeticaVO));
 			}
 			exportSelection(hm,base_path + "classeenergetica.xml");
@@ -221,8 +222,8 @@ public class XMLExportHelper {
 			
 			HashMap hm = new HashMap();
 			
-			ArrayList<RiscaldamentiVO> al_r = UtilsHelper.getInstance().getAllRiscaldamenti();
-			for (RiscaldamentiVO riscaldamentiVO : al_r) {
+			ArrayList<Riscaldamenti> al_r = UtilsHelper.getInstance().getAllRiscaldamenti();
+			for (Riscaldamenti riscaldamentiVO : al_r) {
 				hm.put(riscaldamentiVO.getCodRiscaldamento(),new RiscaldamentiXMLModel(riscaldamentiVO));
 			}
 			exportSelection(hm,base_path + "riscaldamenti.xml");

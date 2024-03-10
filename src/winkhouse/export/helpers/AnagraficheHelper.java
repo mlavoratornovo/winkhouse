@@ -8,6 +8,7 @@ import winkhouse.engine.search.SearchEngineAnagrafiche;
 import winkhouse.export.WrongCriteriaSequenceException;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiCriteriRicercaModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.vo.AnagraficheVO;
 
 public class AnagraficheHelper {
@@ -21,12 +22,12 @@ public class AnagraficheHelper {
 	 * @return ArrayList<AnagraficheModel>
 	 */
 	
-	public ArrayList<AnagraficheModel> getAnagrafiche(){
+	public ArrayList<Anagrafiche> getAnagrafiche(){
 		
-		ArrayList<AnagraficheModel> returnValue  = new ArrayList<AnagraficheModel>();
+		ArrayList<Anagrafiche> returnValue  = new ArrayList<Anagrafiche>();
 		
 		AnagraficheDAO aDAO = new AnagraficheDAO();
-		returnValue = aDAO.list(AnagraficheModel.class.getName());
+		returnValue = aDAO.list(null);
 		
 		return returnValue;
 		

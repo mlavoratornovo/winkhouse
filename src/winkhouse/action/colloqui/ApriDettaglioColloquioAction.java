@@ -7,16 +7,17 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Colloqui;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 import winkhouse.view.colloqui.handler.DettaglioColloquioHandler;
 
 public class ApriDettaglioColloquioAction extends Action {
 
-	private ColloquiModel colloquio = null;	
+	private Colloqui colloquio = null;	
 	private boolean comparerView = false;
 	
-	public ApriDettaglioColloquioAction(ColloquiModel colloquio) {
+	public ApriDettaglioColloquioAction(Colloqui colloquio) {
 		this.colloquio = colloquio;
 	}
 

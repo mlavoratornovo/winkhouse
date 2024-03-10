@@ -7,8 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+import org.apache.cayenne.template.Context;
+
 import winkhouse.db.ConnectionManager;
 import winkhouse.orm.Abbinamenti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.vo.AbbinamentiVO;
 
 
@@ -44,7 +50,7 @@ public class AbbinamentiDAO extends BaseDAO {
 	public Object getAbbinamentoById(String classType, Integer idAbbinamento){
 		return super.getObjectById(classType, FIND_ABBINAMENTO_BY_ID, idAbbinamento);
 	}	
-	
+		
 	public boolean saveUpdate(AbbinamentiVO aVO, Connection connection, Boolean doCommit){
 		
 		boolean returnValue = false;
@@ -204,12 +210,31 @@ public class AbbinamentiDAO extends BaseDAO {
 											   codImmobile);
 	}
 
+	public  ArrayList<Abbinamenti> findAbbinamentiByImmobile(ObjectContext context, Immobili immobile){
+		return new ArrayList<Abbinamenti>(ObjectSelect.query(Abbinamenti.class)
+				   .where(Abbinamenti.IMMOBILI.eq(immobile))
+				   .select(context));
+	}
+
 	public <T> ArrayList<T> findAbbinamentiByCodAnagrafica(String classType, Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, 
 											   FIND_ABBINAMENTI_BY_CODANAGRAFICA, 
 											   codAnagrafica);
 	}
-
+	
+	public ArrayList<Abbinamenti> findAbbinamentiByAnagrafica(ObjectContext context, Anagrafiche anagrafica){
+		return new ArrayList<Abbinamenti>(ObjectSelect.query(Abbinamenti.class)
+						   .where(Abbinamenti.ANAGRAFICHE.eq(anagrafica))
+						   .select(context));
+	}
+	
+	public Abbinamenti findAbbinamentiByImmobileAnagrafica(ObjectContext context, Anagrafiche anagrafica, Immobili immobile){
+		return  ObjectSelect.query(Abbinamenti.class)
+							.where(Abbinamenti.IMMOBILI.eq(immobile))
+							.and(Abbinamenti.ANAGRAFICHE.eq(anagrafica))
+							.selectOne(context);
+	}
+	
 	public Object findAbbinamentiByCodImmobileCodAnagrafica(String classType, Integer codAnagrafica, Integer codImmobile){
 		
 			

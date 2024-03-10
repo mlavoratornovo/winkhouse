@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.ObjectSelect;
 
@@ -14,6 +15,7 @@ import winkhouse.db.ConnectionManager;
 import winkhouse.db.orm.CayenneContextManager;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AgentiVO;
 
@@ -39,7 +41,12 @@ public class AgentiDAO extends BaseDAO{
 	public Object getAgenteById(String classType, Integer idAgente){
 		return super.getObjectById(classType, FIND_AGENTE_BY_ID, idAgente);
 	}	
-	
+
+	public Agenti getAgenteById(Integer idAgente){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Agenti.class,idAgente);
+	}	
+
 	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_AGENTI);
 	}

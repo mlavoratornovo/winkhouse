@@ -21,6 +21,8 @@ import winkhouse.model.ColloquiAnagraficheModel_Ang;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.EntityModel;
+import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.vo.AbbinamentiVO;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AffittiRateVO;
@@ -382,14 +384,14 @@ public class ExporterWizard extends Wizard {
 		    	}
 		    		
 		    }
-		    if(objectSelected instanceof RiscaldamentiVO) {
+		    if(objectSelected instanceof Riscaldamenti) {
 		    	
 		    	if (checked){
 		    		
-		    		if (!getHmRiscaldamento().containsKey(((RiscaldamentiVO)objectSelected).getCodRiscaldamento())){
+		    		if (!getHmRiscaldamento().containsKey(((Riscaldamenti)objectSelected).getCodRiscaldamento())){
 		
 		    			getHmRiscaldamento().put(((RiscaldamentiVO)objectSelected).getCodRiscaldamento(),
-							  					 new RiscaldamentiXMLModel((RiscaldamentiVO)objectSelected));
+							  					 new RiscaldamentiXMLModel((Riscaldamenti)objectSelected));
 		    		}
 		    		
 		    		wizard.getContainer().updateButtons();
@@ -408,8 +410,8 @@ public class ExporterWizard extends Wizard {
 		    		
 		    		if (!getHmClassiEnergetiche().containsKey(((ClasseEnergeticaVO)objectSelected).getCodClasseEnergetica())){
 		
-		    			getHmClassiEnergetiche().put(((ClasseEnergeticaVO)objectSelected).getCodClasseEnergetica(),
-							  					     new ClasseEnergeticaXMLModel((ClasseEnergeticaVO)objectSelected));
+		    			getHmClassiEnergetiche().put(((Classienergetiche)objectSelected).getCodClasseEnergetica(),
+							  					     new ClasseEnergeticaXMLModel((Classienergetiche)objectSelected));
 		    		}
 		    		
 		    		wizard.getContainer().updateButtons();

@@ -737,8 +737,8 @@ public class ImmobiliTreeView extends ViewPart {
 							public void widgetSelected(SelectionEvent e) {
 								
 								Object o = ((StructuredSelection)viewer.getSelection()).getFirstElement();
-								if (o instanceof ImmobiliModel){
-									CancellaImmobile ci = new CancellaImmobile((ImmobiliModel)o);
+								if (o instanceof Immobili){
+									CancellaImmobile ci = new CancellaImmobile((Immobili)o);
 									ci.run();
 								}
 																		

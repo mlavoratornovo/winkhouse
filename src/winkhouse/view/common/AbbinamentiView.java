@@ -40,6 +40,7 @@ import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipologieColloquiVO;
@@ -51,7 +52,7 @@ public class AbbinamentiView extends ViewPart {
 	public final static String ID = "winkhouse.anagraficheabbinateview";
 	private TreeViewer tvAbinamenti = null;
 	private Immobili immobile = null;
-	private ColloquiModel colloquio = null;
+	private Colloqui colloquio = null;
 	private Anagrafiche anagrafica = null;
 	private ArrayList<?> ricerca = null;
 	private ArrayList<?> manuale = null;
@@ -644,7 +645,7 @@ public class AbbinamentiView extends ViewPart {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof ImmobiliModel){
-					ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction((ImmobiliModel)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(),null);
+					ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction((Immobili)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(),null);
 					adia.run();
 				}
 				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof AnagraficheModel){
@@ -654,12 +655,12 @@ public class AbbinamentiView extends ViewPart {
 				}				
 				 
 				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof AbbinamentiModel){
-					AbbinamentiModel am = (AbbinamentiModel)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement();
+					winkhouse.orm.Abbinamenti am = (winkhouse.orm.Abbinamenti)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement();
 					if (immobile != null){
 //						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am.getAnagrafica(), null);
 //						adaa.run();
 					}else if (anagrafica != null){
-						ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(am.getImmobile(),null);
+						ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(am.getImmobili(),null);
 						adia.run();
 					}
 				}
@@ -843,11 +844,11 @@ public class AbbinamentiView extends ViewPart {
 
 	}
 
-	public ColloquiModel getColloquio() {
+	public Colloqui getColloquio() {
 		return colloquio;
 	}
 
-	public void setColloquio(ColloquiModel colloquio) {
+	public void setColloquio(Colloqui colloquio) {
 		
 		if (colloquio != null){
 			this.immobile = null;

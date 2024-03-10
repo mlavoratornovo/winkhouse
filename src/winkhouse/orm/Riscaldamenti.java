@@ -7,7 +7,8 @@ import winkhouse.orm.auto._Riscaldamenti;
 public class Riscaldamenti extends _Riscaldamenti {
 
     private static final long serialVersionUID = 1L; 
-
+    private int codRiscaldamento;
+    
 	public int getCodRiscaldamento() {
     	try {
         	return Cayenne.intPKForObject(this);
@@ -15,5 +16,11 @@ public class Riscaldamenti extends _Riscaldamenti {
     		return 0;
     	}
     }
+
+	public void setCodRiscaldamento(int codRiscaldamento) {
+		this.codRiscaldamento = codRiscaldamento;
+	}
+	
+	
 
 }

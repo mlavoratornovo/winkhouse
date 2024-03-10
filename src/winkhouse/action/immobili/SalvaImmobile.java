@@ -1,5 +1,6 @@
 package winkhouse.action.immobili;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.action.Action;
@@ -18,7 +19,7 @@ import winkhouse.helper.EntityHelper;
 import winkhouse.helper.ImmobiliHelper;
 import winkhouse.helper.OptimisticLockHelper;
 import winkhouse.model.AttributeModel;
-import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.DettaglioImmobileView;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
@@ -49,15 +50,15 @@ public class SalvaImmobile extends Action {
 			 															 .getActivePage()
 			 															 .getActivePart();
 			if (
-				(div.getImmobile().getAnagrafica() != null) &&				
+				(div.getImmobile().getAnagrafiche()!= null) &&				
 				(
 				 (
-				  (div.getImmobile().getAnagrafica().getCognome() != null) && 
-				  (!div.getImmobile().getAnagrafica().getCognome().equalsIgnoreCase("")) 
+				  (div.getImmobile().getAnagrafiche().getCognome() != null) && 
+				  (!div.getImmobile().getAnagrafiche().getCognome().equalsIgnoreCase("")) 
 				  ) ||
 				 (
-				  (div.getImmobile().getAnagrafica().getNome() != null) &&
-				  (!div.getImmobile().getAnagrafica().getNome().equalsIgnoreCase(""))
+				  (div.getImmobile().getAnagrafiche().getNome() != null) &&
+				  (!div.getImmobile().getAnagrafiche().getNome().equalsIgnoreCase(""))
 				 )
 				) &&
 				((!div.getImmobile().getCitta().equalsIgnoreCase("")) &&
@@ -69,62 +70,66 @@ public class SalvaImmobile extends Action {
 				ImmobiliHelper ih = new ImmobiliHelper();
 				OptimisticLockHelper olh = new OptimisticLockHelper();
 				
-				ImmobiliModel immobile = div.getImmobile();
-				immobile.setDateUpdate(new Date());
+				Immobili immobile = div.getImmobile();
+				immobile.setDateupdate(new Date().toInstant()
+					      .atZone(ZoneId.systemDefault())
+					      .toLocalDateTime());
 				if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
-					immobile.setCodUserUpdate(WinkhouseUtils.getInstance().getLoggedAgent().getCodAgente());
+					immobile.setAgenti1(WinkhouseUtils.getInstance().getLoggedAgent());
 				}
 				
 				String decision = olh.checkOLImmobile(immobile);
 				
 				if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
-					boolean isnew = (immobile.getCodImmobile() == null)?true:false;
+					boolean isnew = (immobile.getCodImmobile() == 0)?true:false;
+					WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
+					WinkhouseUtils.getInstance().setCodiciImmobili(null);
+					MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+												  "Salvataggio immobile",
+												  "Salvataggio eseguito");
 					
-					if (ih.saveImmobile(immobile)){
-						for (AttributeModel attribute : immobile.getAttributes()){
-							if (attribute.getValue(immobile.getCodImmobile()) != null){
-								attribute.getValue(immobile.getCodImmobile()).setIdObject(immobile.getCodImmobile());
-								if (!eh.saveAttributeValue(attribute.getValue(immobile.getCodImmobile()))){
-									MessageDialog.openError(div.getSite().getShell(), 
-															"Errore salvataggio", 
-															"Errore durante il salvataggio del campo " + attribute.getAttributeName());
-								}
-							}
-						}
-						immobile.setAllegati(null);
-						immobile.setStanze(null);
-						if (isnew){
-							PlatformUI.getWorkbench()
-									  .getActiveWorkbenchWindow()
-									  .getActivePage()
-									  .hideView(div);
-							
-							div = DettaglioImmobiliHandler.getInstance()
-													      .getDettaglioImmobile(immobile);
-						}
-						div.setImmobile(immobile);
-						
-//						ApriDettaglioRecapitiAction adra = new ApriDettaglioRecapitiAction(immobile.getAnagrafichePropietarie(),false);
-//						adra.run();
-		
-						ImmaginiImmobiliView iiv = (ImmaginiImmobiliView)PlatformUI.getWorkbench()
-																				   .getActiveWorkbenchWindow()
-																				   .getActivePage()
-																				   .findView(ImmaginiImmobiliView.ID);
-						if (iiv != null){
-							iiv.setImmobile(immobile);
-						}
-						WinkhouseUtils.getInstance().setCodiciImmobili(null);
-						MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-													  "Salvataggio immobile",
-													  "Salvataggio eseguito");
-					}else{
-						MessageBox mb = new MessageBox(div.getSite().getShell(),SWT.ERROR);
-						mb.setText("Errore salvataggio");
-						mb.setMessage("Si è verificato un errore nel salvataggio dell'immobile ");			
-						mb.open();
-	
-					}
+//					if (ih.saveImmobile(immobile)){
+//						for (AttributeModel attribute : immobile.getAttributes()){
+//							if (attribute.getValue(immobile.getCodImmobile()) != null){
+//								attribute.getValue(immobile.getCodImmobile()).setIdObject(immobile.getCodImmobile());
+//								if (!eh.saveAttributeValue(attribute.getValue(immobile.getCodImmobile()))){
+//									MessageDialog.openError(div.getSite().getShell(), 
+//															"Errore salvataggio", 
+//															"Errore durante il salvataggio del campo " + attribute.getAttributeName());
+//								}
+//							}
+//						}
+//						immobile.setAllegati(null);
+//						immobile.setStanze(null);
+//						if (isnew){
+//							PlatformUI.getWorkbench()
+//									  .getActiveWorkbenchWindow()
+//									  .getActivePage()
+//									  .hideView(div);
+//							
+//							div = DettaglioImmobiliHandler.getInstance()
+//													      .getDettaglioImmobile(immobile);
+//						}
+//						div.setImmobile(immobile);
+//						
+//						ImmaginiImmobiliView iiv = (ImmaginiImmobiliView)PlatformUI.getWorkbench()
+//																				   .getActiveWorkbenchWindow()
+//																				   .getActivePage()
+//																				   .findView(ImmaginiImmobiliView.ID);
+//						if (iiv != null){
+//							iiv.setImmobile(immobile);
+//						}
+//						WinkhouseUtils.getInstance().setCodiciImmobili(null);
+//						MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+//													  "Salvataggio immobile",
+//													  "Salvataggio eseguito");
+//					}else{
+//						MessageBox mb = new MessageBox(div.getSite().getShell(),SWT.ERROR);
+//						mb.setText("Errore salvataggio");
+//						mb.setMessage("Si è verificato un errore nel salvataggio dell'immobile ");			
+//						mb.open();
+//	
+//					}
 				}else if (decision.equalsIgnoreCase(OptimisticLockHelper.VISUALIZZA)){
 					
 					try {
@@ -135,7 +140,7 @@ public class SalvaImmobile extends Action {
 																				        		   	 String.valueOf(immobile.getCodImmobile()) + "Comp",
 																				        		   	 IWorkbenchPage.VIEW_CREATE);
 						ImmobiliDAO i_compDAO = new ImmobiliDAO();
-						ImmobiliModel immobile_comp = (ImmobiliModel)i_compDAO.getImmobileById(ImmobiliModel.class.getName(), immobile.getCodImmobile());
+						Immobili immobile_comp = (Immobili)i_compDAO.getImmobileById(immobile.getCodImmobile());
 						
 						div_comp.setImmobile(immobile_comp);
 						div_comp.setCompareView(false);

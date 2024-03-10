@@ -25,6 +25,8 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 
 import winkhouse.export.helpers.UtilsHelper;
+import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.vo.ClassiClientiVO;
@@ -136,8 +138,8 @@ public class SelettoreDatiBase extends WizardPage {
 			if (codType == XMLExportHelper.CLASSE_ENERGETICA_COD){
 				
 				((ExporterWizard)getWizard()).getExporterVO().setHmClassiEnergetiche(new HashMap());
-				ArrayList<ClasseEnergeticaVO> al_classeenergetica = UtilsHelper.getInstance().getAllClasseEnergetica();
-				for (ClasseEnergeticaVO classeEnergeticaVO : al_classeenergetica) {
+				ArrayList<Classienergetiche> al_classeenergetica = UtilsHelper.getInstance().getAllClasseEnergetica();
+				for (Classienergetiche classeEnergeticaVO : al_classeenergetica) {
 					((ExporterWizard)getWizard()).getExporterVO().getHmClassiEnergetiche().put(classeEnergeticaVO.getCodClasseEnergetica(), new ClasseEnergeticaXMLModel(classeEnergeticaVO));
 				}
 				
@@ -145,8 +147,8 @@ public class SelettoreDatiBase extends WizardPage {
 			if (codType == XMLExportHelper.RISCALDAMENTO_COD){
 				
 				((ExporterWizard)getWizard()).getExporterVO().setHmRiscaldamento(new HashMap());
-				ArrayList<RiscaldamentiVO> al_riscaldamenti = UtilsHelper.getInstance().getAllRiscaldamenti();
-				for (RiscaldamentiVO riscaldamentiVO : al_riscaldamenti) {
+				ArrayList<Riscaldamenti> al_riscaldamenti = UtilsHelper.getInstance().getAllRiscaldamenti();
+				for (Riscaldamenti riscaldamentiVO : al_riscaldamenti) {
 					((ExporterWizard)getWizard()).getExporterVO().getHmRiscaldamento().put(riscaldamentiVO.getCodRiscaldamento(), new RiscaldamentiXMLModel(riscaldamentiVO));
 				}
 										
