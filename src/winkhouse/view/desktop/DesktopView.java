@@ -74,6 +74,8 @@ import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.PromemoriaModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.desktop.model.MyNode;
@@ -462,16 +464,16 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 					adipa.run();
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.ANAGRAFICHE)){
-//					ApriDettaglioAnagraficaPerspectiveAction adapa = new ApriDettaglioAnagraficaPerspectiveAction((AnagraficheModel)myn.getObjModel());
-//					adapa.setComparerView(true);
-//					adapa.run();					
+					ApriDettaglioAnagraficaPerspectiveAction adapa = new ApriDettaglioAnagraficaPerspectiveAction((Anagrafiche)myn.getObjModel());
+					adapa.setComparerView(true);
+					adapa.run();					
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.AFFITTI)){
 					ApriAffittiAction aaa = new ApriAffittiAction((AffittiModel)myn.getObjModel());					
 					aaa.run();					
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.COLLOQUI)){
-					ApriDettaglioColloquioAction adca = new ApriDettaglioColloquioAction((ColloquiModel)myn.getObjModel());
+					ApriDettaglioColloquioAction adca = new ApriDettaglioColloquioAction((Colloqui)myn.getObjModel());
 					adca.setComparerView(true);
 					adca.run();					
 				}

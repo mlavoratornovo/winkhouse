@@ -39,31 +39,24 @@ public class FindAbbinamenti extends Action {
 				try {
 					pmd.run(false, true, ase);
 				} catch (InvocationTargetException e) {
-					MessageBox mb = new MessageBox(winkhouse.Activator
-															  .getDefault()
-															  .getWorkbench()
-															  .getActiveWorkbenchWindow()
+					MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 															  .getShell(),
 															  SWT.ICON_ERROR);
 					mb.setText("Si � verificato un errore nella ricerca delle anagrafiche");
 					mb.setMessage("Si � verificato un errore nella ricerca delle anagrafiche");			
 					mb.open();
 				} catch (InterruptedException e) {
-					MessageBox mb = new MessageBox(winkhouse.Activator
-							  								  .getDefault()
-							  								  .getWorkbench()
-															  .getActiveWorkbenchWindow()
-															  .getShell(),
-															  SWT.ICON_ERROR);
+					MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
+															 .getActiveWorkbenchWindow()
+															 .getShell(),
+															 SWT.ICON_ERROR);
 					mb.setText("Si � verificato un errore nella ricerca de anagrafiche");
 					mb.setMessage("Si � verificato un errore nella ricerca delle anagrafiche");			
 					mb.open();
 				}
 				av.setRicerca(anagrafiche);
 			}else{
-				MessageBox mb = new MessageBox(winkhouse.Activator
-														  .getDefault()
-														  .getWorkbench()
+				MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getShell(),
 											   SWT.ICON_WARNING);
@@ -84,8 +77,7 @@ public class FindAbbinamenti extends Action {
 				try {
 					pmd.run(false, true, ase);
 				} catch (InvocationTargetException e) {
-					MessageBox mb = new MessageBox(winkhouse.Activator
-							  								  .getDefault()
+					MessageBox mb = new MessageBox(PlatformUI
 							  								  .getWorkbench()
 							  								  .getActiveWorkbenchWindow()
 							  								  .getShell(),
@@ -94,9 +86,7 @@ public class FindAbbinamenti extends Action {
 					mb.setMessage("Si � verificato un errore nella ricerca degli immobili");			
 					mb.open();
 				} catch (InterruptedException e) {
-					MessageBox mb = new MessageBox(winkhouse.Activator
-							  				 			      .getDefault()
-							  				 			      .getWorkbench()
+					MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
 							  				 			      .getActiveWorkbenchWindow()
 							  				 			      .getShell(),
 							  				 			      SWT.ICON_ERROR);
@@ -106,9 +96,7 @@ public class FindAbbinamenti extends Action {
 				}
 				av.setRicerca(immobili);
 			}else{
-				MessageBox mb = new MessageBox(winkhouse.Activator
-														  .getDefault()
-														  .getWorkbench()
+				MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getShell(),
 											   SWT.ICON_WARNING);
@@ -120,7 +108,7 @@ public class FindAbbinamenti extends Action {
 			
 		}
 		
-		if ((av.getColloquio() != null) && (av.getColloquio().getTipologia().getCodTipologiaColloquio() == 1)){
+		if ((av.getColloquio() != null) && (av.getColloquio().getCodtipologiacolloquio() == 1)){
 			
 			ArrayList immobili = new ArrayList();
 			ImmobiliColloquiSearchEngine ase = new ImmobiliColloquiSearchEngine(av.getColloquio().getCodColloquio(),immobili);
@@ -128,8 +116,7 @@ public class FindAbbinamenti extends Action {
 			try {
 				pmd.run(false, true, ase);
 			} catch (InvocationTargetException e) {
-				MessageBox mb = new MessageBox(winkhouse.Activator
-						  								  .getDefault()
+				MessageBox mb = new MessageBox(PlatformUI
 						  								  .getWorkbench()
 						  								  .getActiveWorkbenchWindow()
 						  								  .getShell(),
@@ -138,8 +125,7 @@ public class FindAbbinamenti extends Action {
 				mb.setMessage("Si � verificato un errore nella ricerca degli immobili");			
 				mb.open();
 			} catch (InterruptedException e) {
-				MessageBox mb = new MessageBox(winkhouse.Activator
-						  				 			      .getDefault()
+				MessageBox mb = new MessageBox(PlatformUI
 						  				 			      .getWorkbench()
 						  				 			      .getActiveWorkbenchWindow()
 						  				 			      .getShell(),

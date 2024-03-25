@@ -9,7 +9,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Permessiui;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.PermessiUIVO;
 
 public class PermessiUIDAO extends BaseDAO {
@@ -35,9 +42,28 @@ public class PermessiUIDAO extends BaseDAO {
 	public <T> ArrayList<T> getPermessiPerspectiveByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_PERSPECTIVE_BY_AGENTE, codAgente);
 	}
+	 
+	public ArrayList<Permessiui> getPermessiPerspectiveByAgente(Agenti agente, ObjectContext context){		
+		return new ArrayList<Permessiui>(ObjectSelect.query(Permessiui.class)
+		 		   .where(Permessiui.PERSPECTIVEID.isNotNull())
+		 		   .and(Permessiui.VIEWID.isNull())
+		 		   .and(Permessiui.DIALOGID.isNull())
+		 		   .and(Permessiui.AGENTI.eq(agente))
+		           .select(context));			
+
+	}
 
 	public <T> ArrayList<T> getPermessiViewByAgente(String classType, Integer codAgente){
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_VIEW_BY_AGENTE, codAgente);
+	}
+
+	public ArrayList<Permessiui> getPermessiViewByAgente(Agenti agente, ObjectContext context){
+		return new ArrayList<Permessiui>(ObjectSelect.query(Permessiui.class)
+		 		   .where(Permessiui.PERSPECTIVEID.isNull()) 
+		 		   .and(Permessiui.VIEWID.isNotNull())
+		 		   .and(Permessiui.DIALOGID.isNull())
+		 		   .and(Permessiui.AGENTI.eq(agente))
+		           .select(context));
 	}
 
 	public <T> ArrayList<T> getPermessiDialogByAgente(String classType, Integer codAgente){

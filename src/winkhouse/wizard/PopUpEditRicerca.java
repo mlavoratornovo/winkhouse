@@ -27,6 +27,7 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import winkhouse.Activator;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Ricerche;
 
 
 
@@ -180,7 +181,7 @@ public class PopUpEditRicerca {
 		
 	}
 	
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		this.ricerche = rm;
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindRicerca(bindingContext);

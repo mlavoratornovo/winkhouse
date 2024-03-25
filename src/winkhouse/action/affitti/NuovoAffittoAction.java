@@ -29,7 +29,7 @@ public class NuovoAffittoAction extends Action {
 					  										   .findView(ListaAffittiView.ID);
 			
 			if ((lav != null) && 
-				((lav.getImmobile() != null) && (lav.getImmobile().getCodImmobile() != null))
+				((lav.getImmobile() != null) && (lav.getImmobile().getCodImmobile() != 0))
 			   ){
 				DettaglioAffittiView dav = (DettaglioAffittiView)PlatformUI.getWorkbench()
  				   														   .getActiveWorkbenchWindow()

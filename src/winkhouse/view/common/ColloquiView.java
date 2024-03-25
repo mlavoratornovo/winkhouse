@@ -41,6 +41,7 @@ import winkhouse.model.ContattiModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.view.colloqui.handler.DettaglioColloquioHandler;
 import winkhouse.vo.ColloquiVO;
@@ -256,9 +257,9 @@ public class ColloquiView extends ViewPart {
 			public void doubleClick(DoubleClickEvent event) {
 				
 				TreeSelection ts = (TreeSelection)event.getSelection();
-				if (ts.getFirstElement() instanceof ColloquiModel){
+				if (ts.getFirstElement() instanceof Colloqui){
 					
-					ColloquiModel cm = (ColloquiModel)ts.getFirstElement();
+					Colloqui cm = (Colloqui)ts.getFirstElement();
 					
 					DettaglioColloquioHandler.getInstance()
 											 .getDettaglioColloquio(cm);

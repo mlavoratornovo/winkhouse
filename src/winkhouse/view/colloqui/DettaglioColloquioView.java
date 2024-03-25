@@ -91,11 +91,13 @@ import winkhouse.model.ImmobiliModel;
 import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Allegaticolloquio;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Colloquiagenti;
 import winkhouse.orm.Colloquianagrafiche;
 import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Ricerche;
 import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.MobiliaDatiBaseCache;
@@ -187,7 +189,7 @@ public class DettaglioColloquioView extends ViewPart {
 	
 	private Label lrisultatoCriteri = null;
 
-	private RicercheModel ricerca = null;
+	private Ricerche ricerca = null;
 	
 	private Label lRicercaSelectedName = null;
 
@@ -2108,17 +2110,15 @@ public class DettaglioColloquioView extends ViewPart {
 		}
 	}
 
-	public void setCriteriColloquio(RicercheModel ricerca){
+	public void setCriteriColloquio(Ricerche ricerca){
 		
-		ArrayList<ColloquiCriteriRicercaVO> criteri = (ArrayList)ricerca.getCriteri().clone();
-		Iterator<ColloquiCriteriRicercaVO> it = criteri.iterator();
+		ArrayList<Colloquicriteriricerca> criteri = (ArrayList)ricerca.getColloquicriteriricercas();
+		Iterator<Colloquicriteriricerca> it = criteri.iterator();
 		
 		while (it.hasNext()){
 		
-			ColloquiCriteriRicercaVO crm = it.next();
-			crm.setCodCriterioRicerca(null);
-			crm.setCodColloquio(colloquio.getCodColloquio());
-			crm.setCodRicerca(null);
+			Colloquicriteriricerca crm = it.next();			
+			crm.setColloqui(colloquio);			
 			
 		}
 		
@@ -2136,7 +2136,7 @@ public class DettaglioColloquioView extends ViewPart {
 		
 		if (colloquio.getCodtipologiacolloquio() != 0){
 			
-			switch (colloquio.getCodtipologiacolloquio().intValue()){
+			switch (colloquio.getCodtipologiacolloquio()){
 				case 1:	sectionAnagrafiche.setExpanded(false);
 						sectionAnagrafiche.setEnabled(true);
 						sectionAgenti.setExpanded(false);
@@ -2191,7 +2191,9 @@ public class DettaglioColloquioView extends ViewPart {
 	public Colloquiagenti findAgente(Colloquiagenti cam_a){
 		Colloquiagenti returnValue = null;
 		ColloquiAgentiDAO caDAO = new ColloquiAgentiDAO();
-		Iterator<Colloquiagenti> it = caDAO.getColloquiAgentiByColloquio(colloquio.getCodColloquio(), WinkhouseUtils.getInstance().getCayenneObjectContext()).iterator();
+		Iterator<Colloquiagenti> it = caDAO.getColloquiAgentiByColloquio(
+				colloquio.getCodColloquio(), 
+				WinkhouseUtils.getInstance().getCayenneObjectContext()).iterator();
 		while (it.hasNext()) {
 			Colloquiagenti object = (Colloquiagenti) it.next();
 			if (object.getAgenti().getCodAgente() == cam_a.getAgenti().getCodAgente());
@@ -2200,17 +2202,17 @@ public class DettaglioColloquioView extends ViewPart {
 		return returnValue;
 	}
 
-	public void addAnagrafica(AnagraficheModel anagrafica){
-		ColloquiAnagraficheModel_Ang cam = new ColloquiAnagraficheModel_Ang();
-		cam.setCodColloquio(colloquio.getCodColloquio());
-		cam.setCodAnagrafica(anagrafica.getCodAnagrafica());
-		colloquio.getAnagrafiche().add(cam);
+	public void addAnagrafica(Anagrafiche anagrafica){
+		Colloquianagrafiche cam = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquianagrafiche.class);
+		cam.setColloqui(colloquio);
+		cam.setAnagrafiche(anagrafica);
+		colloquio.addToColloquianagrafiches(cam);
 		tvAnagrafiche.setInput(new Object());
 	}
 	
 	public ColloquiAnagraficheModel_Ang findAnagrafica(ColloquiAnagraficheModel_Ang cam_a){
 		ColloquiAnagraficheModel_Ang returnValue = null;
-		Iterator it = colloquio.getAnagrafiche().iterator();
+		Iterator it = colloquio.getColloquianagrafiches().iterator();
 		while (it.hasNext()) {
 			ColloquiAnagraficheModel_Ang object = (ColloquiAnagraficheModel_Ang) it.next();
 			if (object.getCodAnagrafica().intValue() == cam_a.getCodAnagrafica().intValue());
@@ -2220,36 +2222,36 @@ public class DettaglioColloquioView extends ViewPart {
 	}
 	
 	private void reloadLineNumber(){
-		if (colloquio.getCriteriRicerca() != null){
+		if (colloquio.getColloquicriteriricercas() != null){
 			int count = 0;
-			for (Iterator<ColloquiCriteriRicercaVO> iterator = colloquio.getCriteriRicerca().iterator(); iterator.hasNext();) {
-				ColloquiCriteriRicercaVO ccrVO = iterator.next(); 
+			for (Iterator<Colloquicriteriricerca> iterator = colloquio.getColloquicriteriricercas().iterator(); iterator.hasNext();) {
+				Colloquicriteriricerca ccrVO = iterator.next(); 
 				ccrVO.setLineNumber(count);
 				count++;
 			}
 		}
 	}
 
-	public RicercheModel getRicerca() {
+	public Ricerche getRicerca() {
 		if (ricerca == null){
-			ricerca = new RicercheModel();
+			ricerca = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class);
 			ricerca.setTipo(EnvSettingsFactory.getInstance()
 	   				   						  .getTipologieColloqui()
 	   				   						  .get(0)
 	   				   						  .getCodTipologiaColloquio());
 		}
 		
-		ArrayList al = (ArrayList)colloquio.getCriteriRicerca().clone();
+		ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>(colloquio.getColloquicriteriricercas());
 
-		ArrayList <ColloquiCriteriRicercaModel> alm = new ArrayList<ColloquiCriteriRicercaModel>();
-		Iterator it = al.iterator();
+		//ArrayList <ColloquiCriteriRicercaModel> alm = new ArrayList<ColloquiCriteriRicercaModel>();
+		Iterator<Colloquicriteriricerca> it = al.iterator();
 		while (it.hasNext()) {
-			ColloquiCriteriRicercaModel object = (ColloquiCriteriRicercaModel) it.next();
-			object.setCodColloquio(0);
-			object.setCodCriterioRicerca(0);
-			alm.add(object);
-		}
-		ricerca.setCriteri(alm);			
+//			ColloquiCriteriRicercaModel object = (ColloquiCriteriRicercaModel) it.next();
+//			object.setCodColloquio(0);
+//			object.setCodCriterioRicerca(0);
+//			alm.add(object);
+			ricerca.addToColloquicriteriricercas(it.next());
+		}			
 		
 		return ricerca;
 	}

@@ -16,6 +16,7 @@ import winkhouse.dao.PermessiDAO;
 import winkhouse.dao.RicercheDAO;
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.vo.RicercaVO;
@@ -30,7 +31,7 @@ public class RicercheHelper {
 		
 	}
 	
-	public Boolean saveUpdateRicerca(RicercheModel ricerca){
+	public Boolean saveUpdateRicerca(Ricerche ricerca){
 		Boolean returnValue = true;
 		RicercheDAO rDAO = new RicercheDAO();
 		Connection con = ConnectionManager.getInstance()
@@ -61,7 +62,7 @@ public class RicercheHelper {
 		return returnValue;
 	}
 
-	public Boolean deleteRicerca(RicercheModel ricerca,int wiztype){
+	public Boolean deleteRicerca(Ricerche ricerca,int wiztype){
 		
 		Boolean returnValue = true;
 		

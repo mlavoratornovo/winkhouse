@@ -52,6 +52,8 @@ import winkhouse.model.AgentiModel;
 import winkhouse.model.PermessiModel;
 import winkhouse.model.PermessiUIModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Permessiui;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.util.WinkhouseUtils.DialogInfo;
@@ -74,7 +76,7 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 	private TableViewer tvRegole = null;
 	private TableViewer tvCriteri = null;
 	private Composite contenitore = null;
-	private AgentiModel agente = null;
+	private Agenti agente = null;
 	
 	private Label desagente = null;
 	
@@ -203,11 +205,11 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				
 				if (event.getChecked()){
-					PermessiUIModel pum = (PermessiUIModel)event.getElement();
+					Permessiui pum = (Permessiui)event.getElement();
 					pum.setSelected(true);
-					agente.getPermessiUIPerspectiveModels().add(pum);
+					agente.addToPermessiuis1(pum);					
 				}else{
-					agente.getPermessiUIPerspectiveModels().remove((PermessiUIModel)event.getElement());
+					agente.removeFromPermessiuis1((Permessiui)event.getElement());					
 				}
 								
 			}
@@ -327,17 +329,17 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 				if (event.getChecked()){
 					pum.setSelected(true);
 					if (pum.getType() == WinkhouseUtils.VISTA){
-						agente.getPermessiUIViewModels().add(pum);	
+//						agente.getPermessiUIViewModels().add(pum);	
 					}
 					if (pum.getType() == WinkhouseUtils.DIALOG){
-						agente.getPermessiUIDialogModels().add(pum);	
+//						agente.getPermessiUIDialogModels().add(pum);	
 					}					
 				}else{
 					if (pum.getType() == WinkhouseUtils.VISTA){
-						agente.getPermessiUIViewModels().remove((PermessiUIModel)event.getElement());	
+//						agente.getPermessiUIViewModels().remove((PermessiUIModel)event.getElement());	
 					}
 					if (pum.getType() == WinkhouseUtils.DIALOG){
-						agente.getPermessiUIDialogModels().remove((PermessiUIModel)event.getElement());	
+//						agente.getPermessiUIDialogModels().remove((PermessiUIModel)event.getElement());	
 					}										
 					
 				}
