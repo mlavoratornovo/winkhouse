@@ -48,11 +48,14 @@ import org.eclipse.ui.part.ViewPart;
 import winkhouse.Activator;
 import winkhouse.action.permessi.RefreshPermessiAgente;
 import winkhouse.action.permessi.SalvaPermessiAgente;
+import winkhouse.dao.PermessiDAO;
+import winkhouse.dao.PermessiUIDAO;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.PermessiModel;
 import winkhouse.model.PermessiUIModel;
 import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Permessi;
 import winkhouse.orm.Permessiui;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.WinkhouseUtils;
@@ -562,7 +565,7 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 			public void mouseUp(MouseEvent e) {
 				StructuredSelection ss = (StructuredSelection)tvRegole.getSelection();
 				if (ss.getFirstElement() != null){
-					agente.getPermessiModels().remove(ss.getFirstElement());
+					agente.removeFromPermessis1((Permessi)ss.getFirstElement());
 					tvRegole.refresh();
 				}else{
 					MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
@@ -830,15 +833,15 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 	
 	public void refreshMe(){
 		if (this.agente != null){
-			agente.setPermessiDialogUIModels(null);
-			agente.setPermessiModels(null);
-			agente.setPermessiPerspectiveUIModels(null);
-			agente.setPermessiViewUIModels(null);
+//			agente.setPermessiDialogUIModels(null);
+//			agente.setPermessiModels(null);
+//			agente.setPermessiPerspectiveUIModels(null);
+//			agente.setPermessiViewUIModels(null);
 			setAgente(this.agente);
 		}
 	}
 	
-	public void setAgente(AgentiModel agente){
+	public void setAgente(Agenti agente){
 		
 		this.agente = agente;
 		desagente.setText(this.agente.toString());
@@ -847,15 +850,17 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 		ArrayList<ViewInfo> viewInfo = WinkhouseUtils.getInstance().getViewInfo();
 		ArrayList<DialogInfo> dialogInfo = WinkhouseUtils.getInstance().getDialogInfo();
 		
-		ArrayList<PermessiUIModel> permessiUI_perspective = agente.getPermessiUIPerspectiveModels();
-		ArrayList<PermessiUIModel> permessiUI_view = agente.getPermessiUIViewModels();
-		ArrayList<PermessiUIModel> permessiUI_dialog = agente.getPermessiUIDialogModels();
+		PermessiUIDAO pDAO = new PermessiUIDAO();
+		
+		ArrayList<Permessiui> permessiUI_perspective = pDAO.getPermessiPerspectiveByAgente(agente, agente.getEditObjectContext());
+		ArrayList<Permessiui> permessiUI_view = pDAO.getPermessiViewByAgente(agente, agente.getEditObjectContext());
+		ArrayList<Permessiui> permessiUI_dialog = pDAO.getPermessiDialogByAgente(agente, agente.getEditObjectContext());
 		
 		for (PerspectiveInfo perspective : persectiveInfo) {			
 			boolean find_it = false;
-			for (PermessiUIModel permessoUIModel : permessiUI_perspective) {
+			for (Permessiui permessoUIModel : permessiUI_perspective) {
 				permessoUIModel.setType(WinkhouseUtils.PROSPETTIVA);
-				if (perspective.getId().equalsIgnoreCase(permessoUIModel.getPerspectiveId())){
+				if (perspective.getId().equalsIgnoreCase(permessoUIModel.getPerspectiveid())){
 					find_it = true;
 					permessoUIModel.setSelected(true);
 					break;
@@ -863,10 +868,10 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 			}
 			if (find_it == false){
 				
-				PermessiUIModel pUIModel = new PermessiUIModel();
+				Permessiui pUIModel = agente.getEditObjectContext().newObject(Permessiui.class);				
 				
-				pUIModel.setCodAgente(agente.getCodAgente());
-				pUIModel.setPerspectiveId(perspective.getId());
+				pUIModel.setAgenti1(agente);
+				pUIModel.setPerspectiveid(perspective.getId());
 				
 				permessiUI_perspective.add(pUIModel);
 			}
@@ -876,9 +881,10 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 		
 		for (ViewInfo view : viewInfo) {
 			boolean find_it = false;
-			for (PermessiUIModel permessoUIModel : permessiUI_view) {
+			for (Permessiui permessoUIModel : permessiUI_view) {
 				permessoUIModel.setType(WinkhouseUtils.VISTA);
-				if (view.getId().equalsIgnoreCase(permessoUIModel.getViewId())){
+				if (view.getId().equalsIgnoreCase(permessoUIModel.getViewid()
+						)){
 					find_it = true;
 					permessoUIModel.setSelected(true);
 					break;
@@ -886,41 +892,41 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 			}
 			if (find_it == false){
 				
-				PermessiUIModel pUIModel = new PermessiUIModel();
+				Permessiui pUIModel = agente.getEditObjectContext().newObject(Permessiui.class);				
 				
-				pUIModel.setCodAgente(agente.getCodAgente());
-				pUIModel.setViewId(view.getId());
+				pUIModel.setAgenti1(agente);
+				pUIModel.setViewid(view.getId());
 				
 				permessiUI_view.add(pUIModel);
 			}				
 		}
 		for (DialogInfo dialog : dialogInfo) {
 			boolean find_it = false;
-			for (PermessiUIModel permessoUIModel : permessiUI_dialog) {
+			for (Permessiui permessoUIModel : permessiUI_dialog) {
 				permessoUIModel.setType(WinkhouseUtils.DIALOG);
-				if (dialog.getId().equalsIgnoreCase(permessoUIModel.getDialogId())){
+				if (dialog.getId().equalsIgnoreCase(permessoUIModel.getDialogid())){
 					find_it = true;
 					permessoUIModel.setSelected(true);
 					break;
 				}
 			}
 			if (find_it == false){
+
+				Permessiui pUIModel = agente.getEditObjectContext().newObject(Permessiui.class);				
 				
-				PermessiUIModel pUIModel = new PermessiUIModel();
-				
-				pUIModel.setCodAgente(agente.getCodAgente());
-				pUIModel.setDialogId(dialog.getId());
-				
+				pUIModel.setAgenti1(agente);
+				pUIModel.setViewid(dialog.getId());
+								
 				permessiUI_view.add(pUIModel);
 			}
 		}
 		
 		tvViste.setInput(permessiUI_view);
-		tvRegole.setInput(agente.getPermessiModels());
+		tvRegole.setInput(agente.getPermessiuis1());
 		
 	}
 
-	public AgentiModel getAgente() {
+	public Agenti getAgente() {
 		return agente;
 	}
 

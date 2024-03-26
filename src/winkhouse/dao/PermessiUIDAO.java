@@ -70,6 +70,16 @@ public class PermessiUIDAO extends BaseDAO {
 		return super.getObjectsByIntFieldValue(classType, LIST_PERMESSIUI_DIALOG_BY_AGENTE, codAgente);
 	}
 
+	public ArrayList<Permessiui> getPermessiDialogByAgente(Agenti agente, ObjectContext context){
+		return new ArrayList<Permessiui>(ObjectSelect.query(Permessiui.class)
+		 		   .where(Permessiui.PERSPECTIVEID.isNull()) 
+		 		   .and(Permessiui.VIEWID.isNull())
+		 		   .and(Permessiui.DIALOGID.isNotNull())
+		 		   .and(Permessiui.AGENTI.eq(agente))
+		           .select(context));
+	}
+	
+	
 	public Boolean deletePermesso(Integer codPermessoui, Connection connection, Boolean doCommit){
 		return super.deleteObjectById(DELETE_PERMESSOUI, codPermessoui, connection, doCommit);
 	}
