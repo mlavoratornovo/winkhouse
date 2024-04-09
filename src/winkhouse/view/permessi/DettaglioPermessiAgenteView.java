@@ -57,6 +57,7 @@ import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Permessi;
 import winkhouse.orm.Permessiui;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.util.WinkhouseUtils.DialogInfo;
@@ -930,13 +931,13 @@ public class DettaglioPermessiAgenteView extends ViewPart {
 		return agente;
 	}
 
-	public void addPermessoDatiByRicerca(RicercheModel ricerca){
+	public void addPermessoDatiByRicerca(Ricerche ricerca){
 		
-		PermessiModel pm = new PermessiModel();
-		pm.setCodRicerca(ricerca.getCodRicerca());
-		pm.setCodAgente(agente.getCodAgente());
+		Permessi pm = agente.getEditObjectContext().newObject(Permessi.class);
+		pm.setRicerche(ricerca);
+		pm.setAgenti1(agente);
 		
-		agente.getPermessiModels().add(pm);
+		agente.addToPermessis1(pm);
 		tvRegole.refresh();
 		
 	}

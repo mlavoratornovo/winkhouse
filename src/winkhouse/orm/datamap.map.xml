@@ -2,7 +2,8 @@
 <data-map xmlns="http://cayenne.apache.org/schema/10/modelMap"
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 xsi:schemaLocation="http://cayenne.apache.org/schema/10/modelMap https://cayenne.apache.org/schema/10/modelMap.xsd"
-	 project-version="10">	
+	 project-version="10">
+	<property name="defaultPackage" value="winkhouse.orm"/>
 	<db-entity name="ABBINAMENTI" schema="PUBLIC" catalog="PUBLIC">
 		<db-attribute name="CODABBINAMENTO" type="INTEGER" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="32"/>
 		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
@@ -325,6 +326,7 @@
 	<db-entity name="IMMOBILIPROPIETARI" schema="PUBLIC" catalog="PUBLIC">
 		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
 		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
+		<db-attribute name="IDIMMPROP" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="32"/>
 	</db-entity>
 	<db-entity name="PERMESSI" schema="PUBLIC" catalog="PUBLIC">
 		<db-attribute name="CANREAD" type="BOOLEAN"/>
@@ -355,7 +357,7 @@
 		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="1048576"/>
 	</db-entity>
 	<db-entity name="PROMEMORIALINKS" schema="PUBLIC" catalog="PUBLIC">
-		<db-attribute name="CODPROMEMORIA" type="INTEGER" length="32"/>
+		<db-attribute name="CODPROMEMORIA" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="32"/>
 		<db-attribute name="DESCRIZIONE" type="VARCHAR" length="255"/>
 		<db-attribute name="ISFILE" type="BOOLEAN"/>
 		<db-attribute name="URILINK" type="VARCHAR" length="1048576"/>
@@ -363,6 +365,7 @@
 	<db-entity name="PROMEMORIAOGGETTI" schema="PUBLIC" catalog="PUBLIC">
 		<db-attribute name="CODOGGETTO" type="INTEGER" length="32"/>
 		<db-attribute name="CODPROMEMORIA" type="INTEGER" length="32"/>
+		<db-attribute name="IDPROMOBJ" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="32"/>
 		<db-attribute name="TIPO" type="INTEGER" length="32"/>
 	</db-entity>
 	<db-entity name="REPORT" schema="PUBLIC" catalog="PUBLIC">
@@ -1601,8 +1604,6 @@
 	<cgen xmlns="http://cayenne.apache.org/schema/10/cgen">
 		<destDir>.</destDir>
 		<mode>all</mode>
-		<template>templates/v4_1/subclass.vm</template>
-		<superTemplate>templates/v4_1/superclass.vm</superTemplate>
 		<template>templates/v4_1/subclass.vm</template>
 		<superTemplate>templates/v4_1/superclass.vm</superTemplate>
 		<embeddableTemplate>templates/v4_1/embeddable-subclass.vm</embeddableTemplate>

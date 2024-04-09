@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Ricerche;
 import winkhouse.vo.RicercheVO;
 
 
@@ -35,7 +36,12 @@ public class RicercheDAO extends BaseDAO {
 	public boolean delete(Integer codRicerca, Connection con, Boolean doCommit){
 		return super.deleteObjectById(DELETE_RICERCHE, codRicerca, con, doCommit);
 	}
-		
+	
+	public boolean saveUpdate(Ricerche rVO){
+		rVO.getEditObjectContext().commitChanges();
+		return true;
+	}
+	
 	public boolean saveUpdate(RicercheVO rVO, Connection connection, Boolean doCommit){
 		
 		boolean returnValue = false;

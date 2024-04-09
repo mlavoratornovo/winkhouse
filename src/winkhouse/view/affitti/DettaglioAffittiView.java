@@ -73,21 +73,23 @@ import winkhouse.action.stampa.StampaAffittiAction;
 import winkhouse.dialogs.custom.FileDialogCellEditor;
 import winkhouse.dialogs.custom.SWTCalendarCellEditor;
 import winkhouse.helper.ProfilerHelper;
-import winkhouse.model.AffittiAnagraficheModel;
-import winkhouse.model.AffittiModel;
-import winkhouse.model.AffittiRateModel;
-import winkhouse.model.AffittiSpeseModel;
-import winkhouse.model.AgentiModel;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ContattiModel;
+import winkhouse.orm.Affitti;
+//import winkhouse.model.AffittiAnagraficheModel;
+//import winkhouse.model.AffittiModel;
+//import winkhouse.model.AffittiRateModel;
+//import winkhouse.model.AffittiSpeseModel;
+//import winkhouse.model.AgentiModel;
+//import winkhouse.model.AnagraficheModel;
+//import winkhouse.model.ContattiModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.PopUpRicercaAnagrafica;
 import winkhouse.view.common.EAVView;
-import winkhouse.vo.AffittiAllegatiVO;
-import winkhouse.vo.AffittiRateVO;
-import winkhouse.vo.AgentiVO;
+//import winkhouse.vo.AffittiAllegatiVO;
+//import winkhouse.vo.AffittiRateVO;
+//import winkhouse.vo.AgentiVO;
 
 
 
@@ -107,7 +109,7 @@ public class DettaglioAffittiView extends ViewPart {
 	private TableViewer tvAllegati = null;
 	private TableViewer tvRate = null;
 	private TableViewer tvSpese = null;
-	private AffittiModel affitto = null;
+	private Affitti affitto = null;
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	private SimpleDateFormat formatterEditor = new SimpleDateFormat("yyyy-MM-dd");
 	private TableColumn tcDescrizioneAllegato = null;
@@ -121,7 +123,7 @@ public class DettaglioAffittiView extends ViewPart {
 		
 	private String[] desMesi = new String[12];
 	private String[] desAnagrafiche = null;
-	private ArrayList<AnagraficheModel> workAnagrafiche = null;
+	private ArrayList<Anagrafiche> workAnagrafiche = null;
 
 	private TableColumn tcDescrizioneSpesa = null;
 	private TableColumn tcSpeseInizioPeriodo = null;
@@ -164,13 +166,13 @@ public class DettaglioAffittiView extends ViewPart {
 		
 	};
 
-	private Comparator<AnagraficheModel> comparatorAnagrafiche = new Comparator<AnagraficheModel>(){
+	private Comparator<Anagrafiche> comparatorAnagrafiche = new Comparator<Anagrafiche>(){
 
 		@Override
-		public int compare(AnagraficheModel arg0,AnagraficheModel arg1) {
-			if (arg0.getCodAnagrafica().intValue() == arg1.getCodAnagrafica().intValue()){
+		public int compare(Anagrafiche arg0,Anagrafiche arg1) {
+			if (arg0.getCodAnagrafica() == arg1.getCodAnagrafica()){
 				return 0;
-			}else if (arg0.getCodAnagrafica().intValue() > arg1.getCodAnagrafica().intValue()){
+			}else if (arg0.getCodAnagrafica() > arg1.getCodAnagrafica()){
 				return 1;
 			}else{
 				return -1;
@@ -194,32 +196,32 @@ public class DettaglioAffittiView extends ViewPart {
 	
 	public void fillDescrizioniAnagrafiche(){						
 		
-		if (affitto.getAnagrafiche() != null){
-			desAnagrafiche = new String[affitto.getSavedAnagrafiche()];
-			workAnagrafiche = new ArrayList<AnagraficheModel>();
-			Iterator<AffittiAnagraficheModel> it = affitto.getAnagrafiche().iterator();			
-			while(it.hasNext()){				
-				AnagraficheModel am = it.next().getAnagrafica();
-				if ((am != null) && (am.getCodAnagrafica() != 0)){
-					workAnagrafiche.add(am);
-				}
-			}
+		if (affitto.getAffittianagrafiches() != null){
+//			desAnagrafiche = new String[affitto.getSavedAnagrafiche()];
+//			workAnagrafiche = new ArrayList<AnagraficheModel>();
+//			Iterator<AffittiAnagraficheModel> it = affitto.getAnagrafiche().iterator();			
+//			while(it.hasNext()){				
+//				AnagraficheModel am = it.next().getAnagrafica();
+//				if ((am != null) && (am.getCodAnagrafica() != 0)){
+//					workAnagrafiche.add(am);
+//				}
+//			}
 			
-			Collections.sort(workAnagrafiche, comparatorAnagrafiche);
+//			Collections.sort(workAnagrafiche, comparatorAnagrafiche);
 			
-			Iterator<AnagraficheModel> ite = workAnagrafiche.iterator();
-			int i = 0;
-			while (ite.hasNext()){
-				AnagraficheModel am = ite.next();
-				if (am.getCodAnagrafica() != 0){
-					desAnagrafiche[i] = am.toString();
-					i++;
-				}
-			}
+//			Iterator<AnagraficheModel> ite = workAnagrafiche.iterator();
+//			int i = 0;
+//			while (ite.hasNext()){
+//				AnagraficheModel am = ite.next();
+//				if (am.getCodAnagrafica() != 0){
+//					desAnagrafiche[i] = am.toString();
+//					i++;
+//				}
+//			}
 			
 		}else{
-			desAnagrafiche = new String[0];
-			workAnagrafiche = new ArrayList<AnagraficheModel>();
+//			desAnagrafiche = new String[0];
+//			workAnagrafiche = new ArrayList<AnagraficheModel>();
 		}		
 		
 		

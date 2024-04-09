@@ -16,6 +16,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import winkhouse.Activator;
 import winkhouse.dao.AgentiDAO;
+import winkhouse.orm.Agenti;
 import winkhouse.view.permessi.handler.DettaglioPermessiAgentiHandler;
 import winkhouse.vo.AgentiVO;
 
@@ -48,7 +49,7 @@ public class AgentiView extends ViewPart {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				
-				AgentiVO aVO = (AgentiVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
+				Agenti aVO = (Agenti)((StructuredSelection)viewer.getSelection()).getFirstElement();
 				DettaglioPermessiAgenteView div = DettaglioPermessiAgentiHandler.getInstance()
 																		        .getDettaglioPermessiAgenti(aVO);
 

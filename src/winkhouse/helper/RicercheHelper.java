@@ -32,33 +32,36 @@ public class RicercheHelper {
 	}
 	
 	public Boolean saveUpdateRicerca(Ricerche ricerca){
-		Boolean returnValue = true;
+		
 		RicercheDAO rDAO = new RicercheDAO();
-		Connection con = ConnectionManager.getInstance()
-										  .getConnection();
-		if (rDAO.saveUpdate(ricerca, con, false)){
-			if (updateListaCriteriRicerca(ricerca, con)){
-				try {
-					con.commit();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}else{
-				try {
-					returnValue = false;
-					con.rollback();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}else{
-			try {
-				returnValue = false;
-				con.rollback();				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		rDAO.saveUpdate(ricerca);
+		Boolean returnValue = true;
+//		RicercheDAO rDAO = new RicercheDAO();
+//		Connection con = ConnectionManager.getInstance()
+//										  .getConnection();
+//		if (rDAO.saveUpdate(ricerca, con, false)){
+//			if (updateListaCriteriRicerca(ricerca, con)){
+//				try {
+//					con.commit();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}else{
+//				try {
+//					returnValue = false;
+//					con.rollback();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}else{
+//			try {
+//				returnValue = false;
+//				con.rollback();				
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return returnValue;
 	}
 
@@ -66,48 +69,48 @@ public class RicercheHelper {
 		
 		Boolean returnValue = true;
 		
-		ColloquiCriteriRicercaDAO ccrDAO = new ColloquiCriteriRicercaDAO();
-		RicercheDAO rDAO = new RicercheDAO();
-		PermessiDAO pDAO = new PermessiDAO();
-		
-		Connection con = ConnectionManager.getInstance()
-										  .getConnection();
-		
-		boolean criteriResult = false;
-		criteriResult = ccrDAO.deleteByRicerca(ricerca.getCodRicerca(), con, false);
-		
-		boolean ricercaResult = false;
-		if (wiztype != RicercaWizard.PERMESSI){
-			ricercaResult = rDAO.delete(ricerca.getCodRicerca(), con, false);
-		}
-		if (wiztype == RicercaWizard.PERMESSI){
-				ricercaResult = rDAO.delete(ricerca.getCodRicerca(), con, false);
-				ricercaResult = pDAO.deletePermessoByCodRicerca(ricerca.getCodRicerca(), con, false);
-			}
-		
-		if (criteriResult){
-			if (ricercaResult){
-				try {
-					con.commit();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}else{
-				try {
-					returnValue = false;
-					con.rollback();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}else{
-			try {
-				returnValue = false;
-				con.rollback();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+//		ColloquiCriteriRicercaDAO ccrDAO = new ColloquiCriteriRicercaDAO();
+//		RicercheDAO rDAO = new RicercheDAO();
+//		PermessiDAO pDAO = new PermessiDAO();
+//		
+//		Connection con = ConnectionManager.getInstance()
+//										  .getConnection();
+//		
+//		boolean criteriResult = false;
+//		criteriResult = ccrDAO.deleteByRicerca(ricerca.getCodRicerca(), con, false);
+//		
+//		boolean ricercaResult = false;
+//		if (wiztype != RicercaWizard.PERMESSI){
+//			ricercaResult = rDAO.delete(ricerca.getCodRicerca(), con, false);
+//		}
+//		if (wiztype == RicercaWizard.PERMESSI){
+//				ricercaResult = rDAO.delete(ricerca.getCodRicerca(), con, false);
+//				ricercaResult = pDAO.deletePermessoByCodRicerca(ricerca.getCodRicerca(), con, false);
+//			}
+//		
+//		if (criteriResult){
+//			if (ricercaResult){
+//				try {
+//					con.commit();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}else{
+//				try {
+//					returnValue = false;
+//					con.rollback();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}else{
+//			try {
+//				returnValue = false;
+//				con.rollback();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return returnValue;
 	}
 	
@@ -166,7 +169,7 @@ public class RicercheHelper {
 		return returnValue;
 	}
 
-	public RicercheModel saveNewRicercaFromWizardRicerca(RicercaVO ricercaObjWizard){
+	public RicercheModel saveNewRicercaFromWizardRicerca(Ricerche ricercaObjWizard){
 		
 		RicercheModel rm = new RicercheModel();
 		
@@ -178,24 +181,24 @@ public class RicercheHelper {
 		
 		String tipo = "";
 		
-		if (ricercaObjWizard.getType() == RicercheVO.RICERCHE_IMMOBILI){
+		if (ricercaObjWizard.getTipo() == RicercheVO.RICERCHE_IMMOBILI){
 			rm.setTipo(RicercheVO.PERMESSI_IMMOBILI);
 			tipo = "immobili";
-			rm.setCriteri(ricercaObjWizard.getCriteriImmobili());
+//			rm.setCriteri(ricercaObjWizard.getColloquicriteriricercas(). getCriteriImmobili());
 		}
-		if (ricercaObjWizard.getType() == RicercheVO.RICERCHE_ANAGRAFICHE){
+		if (ricercaObjWizard.getTipo() == RicercheVO.RICERCHE_ANAGRAFICHE){
 			rm.setTipo(RicercheVO.PERMESSI_ANAGRAFICHE);
 			tipo = "anagrafiche";
-			rm.setCriteri(ricercaObjWizard.getCriteriAnagrafiche());			
+//			rm.setCriteri(ricercaObjWizard.getCriteriAnagrafiche());			
 		}
-		if (ricercaObjWizard.getType() == RicercheVO.RICERCHE_IMMOBILI_AFFITTI){
+		if (ricercaObjWizard.getTipo() == RicercheVO.RICERCHE_IMMOBILI_AFFITTI){
 			rm.setTipo(RicercheVO.PERMESSI_IMMOBILI_AFFITTI);
 			tipo = "affitti";
-			rm.setCriteri(ricercaObjWizard.getCriteriImmobiliAffitti());			
+//			rm.setCriteri(ricercaObjWizard.getCriteriImmobiliAffitti());			
 		}
-				
-		rm.setNome("Ricerca permessi " + tipo);
-		if (saveUpdateRicerca(rm)){
+		ricercaObjWizard.setNome("Ricerca permessi " + tipo);
+//		rm.setNome("Ricerca permessi " + tipo);
+		if (saveUpdateRicerca(ricercaObjWizard)){
 			return rm;
 		}else{
 			return null;

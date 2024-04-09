@@ -9,6 +9,7 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.model.AgentiModel;
+import winkhouse.orm.Agenti;
 import winkhouse.view.permessi.DettaglioPermessiAgenteView;
 import winkhouse.vo.AgentiVO;
 
@@ -29,7 +30,7 @@ public class DettaglioPermessiAgentiHandler {
 		return instance;
 	}
 	
-	public DettaglioPermessiAgenteView getDettaglioPermessiAgenti(AgentiVO viewInstance){
+	public DettaglioPermessiAgenteView getDettaglioPermessiAgenti(Agenti viewInstance){
 		DettaglioPermessiAgenteView div = null;
 		IViewReference vr = null;
 		
@@ -38,7 +39,7 @@ public class DettaglioPermessiAgentiHandler {
 	           			   .getActiveWorkbenchWindow()
 	           			   .getActivePage()
 	           			   .findViewReference(DettaglioPermessiAgenteView.ID,
-	           					   			  String.valueOf(viewInstance.getCodAgente().intValue()));
+	           					   			  String.valueOf(viewInstance.getCodAgente()));
 			
 			if (vr != null){				
 				div = (DettaglioPermessiAgenteView)PlatformUI.getWorkbench()
@@ -53,16 +54,15 @@ public class DettaglioPermessiAgentiHandler {
 											        		   	 String.valueOf(viewInstance.getCodAgente()),
 											        		   	 IWorkbenchPage.VIEW_CREATE);
 			}
-			div.setAgente(new AgentiModel(viewInstance));
+			div.setAgente(viewInstance);
 			
-			Activator.getDefault().getWorkbench()
+			PlatformUI.getWorkbench()
 	   		 		 .getActiveWorkbenchWindow()
 	   		 		 .getActivePage()
 	   		 		 .bringToTop(div);
 			
 			div.setFocus();
-			
-			
+						
 			return div;
 			
 		} catch (PartInitException e) {

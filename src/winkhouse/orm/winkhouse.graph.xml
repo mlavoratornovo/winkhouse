@@ -1,4 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <graphs xmlns="http://cayenne.apache.org/schema/10/graph">
-	<graph type="ER" scale="1.0"/>
+	<graph type="ER" scale="1.0">
+		<entity name="WINKSYS" x="885.0" y="33.0" width="93.0" height="66.0"/>
+		<entity name="PERMESSI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="AFFITTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="IMMAGINI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="STANZEIMMOBILI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="CONTATTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="DATICATASTALI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="RICERCHE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ATTRIBUTEVALUE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="CLASSIENERGETICHE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="AFFITTIANAGRAFICHE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ENTITY" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="TIPOLOGIECONTATTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="TIPOLOGIASTANZE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="IMMOBILI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ANAGRAFICHEAPPUNTAMENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="STATOCONSERVATIVO" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="COLLOQUI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="COMUNI" x="633.0" y="33.0" width="78.0" height="194.0"/>
+		<entity name="AFFITTIRATE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="PROMEMORIALINKS" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ATTRIBUTE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="TIPOLOGIEIMMOBILI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ALLEGATIIMMOBILI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="COLLOQUIANAGRAFICHE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="AFFITTISPESE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="APPUNTAMENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="COLLOQUIAGENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="COLLOQUICRITERIRICERCA" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="AGENTIAPPUNTAMENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="REPORT" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ALLEGATICOLLOQUIO" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="CLASSICLIENTE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="AGENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="PROMEMORIAOGGETTI" x="885.0" y="27.0" width="134.0" height="98.0"/>
+		<entity name="TIPOLOGIECOLLOQUI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="IMMOBILIPROPIETARI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="PERMESSIUI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="RISCALDAMENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="AFFITTIALLEGATI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ANAGRAFICHE" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="WINKGCALENDAR" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="ABBINAMENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="GDATA" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="GCALENDAR" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="TIPIAPPUNTAMENTI" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="REPORTMARKERS" x="10.0" y="10.0" width="20.0" height="20.0"/>
+		<entity name="PROMEMORIA" x="10.0" y="10.0" width="20.0" height="20.0"/>
+	</graph>
 </graphs>
