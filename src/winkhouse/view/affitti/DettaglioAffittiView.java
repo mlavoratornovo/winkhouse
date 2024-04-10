@@ -76,7 +76,9 @@ import winkhouse.dialogs.custom.FileDialogCellEditor;
 import winkhouse.dialogs.custom.SWTCalendarCellEditor;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.orm.Affitti;
+import winkhouse.orm.Affittiallegati;
 import winkhouse.orm.Affittianagrafiche;
+import winkhouse.orm.Affittirate;
 import winkhouse.orm.Affittispese;
 //import winkhouse.model.Affittianagrafiche;
 //import winkhouse.model.AffittiModel;
@@ -87,6 +89,7 @@ import winkhouse.orm.Affittispese;
 //import winkhouse.model.ContattiModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Contatti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.PopUpRicercaAnagrafica;
@@ -1017,10 +1020,10 @@ public class DettaglioAffittiView extends ViewPart {
 					   : (((Affittianagrafiche)((StructuredSelection)tvAnagrafiche.getSelection()).getFirstElement()).getAnagrafiche() == null)
 					     ? new ArrayList().toArray()
 					     : (((Affittianagrafiche)((StructuredSelection)tvAnagrafiche.getSelection()).getFirstElement()).getAnagrafiche()
-																												   		  .getContatti() == null)
+					    		 																					   .getContattis() == null)
 				           ? new ArrayList().toArray()
 				           : ((Affittianagrafiche)((StructuredSelection)tvAnagrafiche.getSelection()).getFirstElement()).getAnagrafiche()
-					 																									  .getContatti().toArray();
+					 																									.getContattis().toArray();
 			}
 
 			@Override
@@ -1041,13 +1044,13 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				ContattiModel cModel = ((ContattiModel)element);
+				Contatti cModel = ((Contatti)element);
 				switch (columnIndex){
-				case 0: return ((cModel.getTipologia() == null)
+				case 0: return ((cModel.getTipologiecontatti() == null)
 							   ? ""
-							   : (cModel.getTipologia().getDescrizione() == null)
+							   : (cModel.getTipologiecontatti().getDescrizione() == null)
 							     ? ""
-							     : cModel.getTipologia().getDescrizione());					        
+							     : cModel.getTipologiecontatti().getDescrizione());					        
 				
 				case 1: return ((cModel.getContatto() == null) || 
 								(cModel.getContatto().equalsIgnoreCase(""))
@@ -1098,8 +1101,8 @@ public class DettaglioAffittiView extends ViewPart {
 		if ((cvagenteinseritoreanagrafica != null) &&
 			(cvagenteinseritoreanagrafica.getContentProvider() != null)){
 			cvagenteinseritoreanagrafica.setInput(new Object());
-			if (affitto.getAgenteInseritore() != null){
-				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), affitto.getAgenteInseritore(), comparatorAgenti);
+			if (affitto.getAgenti1() != null){
+				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), affitto.getAgenti1(), comparatorAgenti);
 				Object[] sel = new Object[1];
 				sel[0] = MobiliaDatiBaseCache.getInstance().getAgenti().get(index);
 				StructuredSelection ss = new StructuredSelection(sel);
@@ -1108,33 +1111,33 @@ public class DettaglioAffittiView extends ViewPart {
 
 		}
 		
-		IViewPart eavv = Activator.getDefault()
+		IViewPart eavv = PlatformUI
  				  .getWorkbench()
  				  .getActiveWorkbenchWindow()
  				  .getActivePage()
  				  .findView(EAVView.ID);
 
 		if (eavv != null){			
-			if ((affitto != null) && (affitto.getEntity() != null) && (affitto.getEntity().getAttributes()!= null)){
-				((EAVView)eavv).setAttributes(affitto.getEntity().getAttributes(), affitto.getCodAffitti());
-			}
+//			if ((affitto != null) && (affitto.getEntity() != null) && (affitto.getEntity().getAttributes()!= null)){
+//				((EAVView)eavv).setAttributes(affitto.getEntity().getAttributes(), affitto.getCodAffitti());
+//			}
 		}
 
 	}
 
-	public AffittiModel getAffitto() {
+	public Affitti getAffitto() {
 		return affitto;
 	}
 
-	public void setAffitto(AffittiModel affitto) {
+	public void setAffitto(Affitti affitto) {
 		
 		isInCompareMode = false;
 		this.affitto = affitto;
 		DataBindingContext bindingContext = new DataBindingContext();
-		this.setPartName(formatter.format(affitto.getDataInizio())+ 
+		this.setPartName(formatter.format(affitto.getDatainizio())+ 
 						 " - " +
-						 ((affitto.getDataFine() != null)
-						  ? formatter.format(affitto.getDataFine())
+						 ((affitto.getDatafine() != null)
+						  ? formatter.format(affitto.getDatafine())
 						  :""));		
 		bindAffitto(bindingContext);
 		
@@ -1143,7 +1146,7 @@ public class DettaglioAffittiView extends ViewPart {
 	
 	private void bindAffitto(DataBindingContext bindingContext){
 		
-		tImmobile.setText("Immobile : " + affitto.getImmobile().toString());
+		tImmobile.setText("Immobile : " + affitto.getImmobili().toString());
 		
 		cvagenteinseritoreanagrafica.setContentProvider(new IStructuredContentProvider(){
 
@@ -1167,7 +1170,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {
-				return ((AgentiVO)element).getCognome() + " " + ((AgentiVO)element).getNome();
+				return ((Agenti)element).getCognome() + " " + ((Agenti)element).getNome();
 			}
 			
 		});
@@ -1175,8 +1178,8 @@ public class DettaglioAffittiView extends ViewPart {
 		cvagenteinseritoreanagrafica.addSelectionChangedListener(new ISelectionChangedListener(){
 
 			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				affitto.setAgenteInseritore(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
+			public void selectionChanged(SelectionChangedEvent event) {				
+				affitto.setAgenti1(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 			}
 			
 		});
@@ -1185,8 +1188,8 @@ public class DettaglioAffittiView extends ViewPart {
 						
 		cvagenteinseritoreanagrafica.setInput(new Object());
 		
-		if (affitto.getAgenteInseritore() != null){
-			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), affitto.getAgenteInseritore(), comparatorAgenti);
+		if (affitto.getAgenti1() != null){
+			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), affitto.getAgenti1(), comparatorAgenti);
 			Object[] sel = new Object[1];
 			sel[0] = MobiliaDatiBaseCache.getInstance().getAgenti().get(index);
 			StructuredSelection ss = new StructuredSelection(sel);
@@ -1250,12 +1253,12 @@ public class DettaglioAffittiView extends ViewPart {
 								 null);
 		
 		Calendar cinizio = Calendar.getInstance(Locale.ITALIAN);
-		cinizio.setTime(affitto.getDataInizio());
+		cinizio.setTime(Date.from(affitto.getDatainizio().atZone(ZoneId.systemDefault()).toInstant()));
 		dataInizio.setDate(cinizio);
 		
 		Calendar cfine = Calendar.getInstance(Locale.ITALIAN);
-		if (affitto.getDataFine() != null){       
-			cfine.setTime(affitto.getDataFine());
+		if (affitto.getDatafine() != null){       
+			cfine.setTime(Date.from(affitto.getDatafine().atZone(ZoneId.systemDefault()).toInstant()));
 			dataFine.setDate(cfine);
 		}
 		
@@ -1277,10 +1280,10 @@ public class DettaglioAffittiView extends ViewPart {
 	
 	private boolean checkAnagrafica(Integer codAnagrafica){
 		boolean returnValue = true;
-		if (affitto.getAnagrafiche() != null){
-			Iterator<Affittianagrafiche> it = affitto.getAnagrafiche().iterator();
+		if (affitto.getAffittianagrafiches() != null){
+			Iterator<Affittianagrafiche> it = affitto.getAffittianagrafiches().iterator();
 			while(it.hasNext()){
-				if (it.next().getCodAnagrafica().intValue() == codAnagrafica.intValue()){
+				if (it.next().getAnagrafiche().getCodAnagrafica() == codAnagrafica.intValue()){
 					returnValue = false;
 					break;
 				}
@@ -1291,13 +1294,14 @@ public class DettaglioAffittiView extends ViewPart {
 
 	public void addAnagrafica(Anagrafiche anagrafica){
 		if (checkAnagrafica(anagrafica.getCodAnagrafica())){
-			Affittianagrafiche aaModel = new Affittianagrafiche();
-			aaModel.setCodAnagrafica(anagrafica.getCodAnagrafica());
-			aaModel.setCodAffitto(affitto.getCodAffitti());
-			if (affitto.getAnagrafiche() == null){
-				affitto.setAnagrafiche(new ArrayList<Affittianagrafiche>());
-			}
-			affitto.getAnagrafiche().add(aaModel);
+			Affittianagrafiche aaModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Affittianagrafiche.class);
+			aaModel.setAnagrafiche(anagrafica);
+			aaModel.setAffitti(affitto);
+			
+//			if (affitto.getAffittianagrafiches() == null){				
+//				affitto.setAnagrafiche(new ArrayList<Affittianagrafiche>());
+//			}
+			affitto.addToAffittianagrafiches(aaModel);
 			tvAnagrafiche.setInput(new Object());
 			tvAnagrafiche.refresh();
 		}else{
@@ -1362,13 +1366,13 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				AffittiAllegatiVO aaVO = new AffittiAllegatiVO();
-				aaVO.setCodAffitto(affitto.getCodAffitti());
-				if (affitto.getAllegati() == null){
-					affitto.setAllegati(new ArrayList<AffittiAllegatiVO>());
-				}
-				affitto.getAllegati().add(aaVO);
-				tvAllegati.setInput(affitto.getAllegati());
+				Affittiallegati aaVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Affittiallegati.class);
+				aaVO.setAffitti(affitto);				
+//				if (affitto.getAllegati() == null){
+//					affitto.setAllegati(new ArrayList<AffittiAllegatiVO>());
+//				}
+				affitto.addToAffittiallegatis(aaVO);
+				tvAllegati.setInput(affitto.getAffittiallegatis());
 				tvAllegati.refresh();	
 				
 				TableItem ti = tvAllegati.getTable().getItem(tvAllegati.getTable().getItemCount()-1);
@@ -1407,8 +1411,8 @@ public class DettaglioAffittiView extends ViewPart {
 				if (tvAllegati.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvAllegati.getSelection()).iterator();
 					while (it.hasNext()) {
-						AffittiAllegatiVO aiVO = (AffittiAllegatiVO)it.next();
-						affitto.getAllegati().remove(aiVO);
+						Affittiallegati aiVO = (Affittiallegati)it.next();
+						affitto.removeFromAffittiallegatis(aiVO);
 					}
 					tvAllegati.refresh();
 					
@@ -1456,7 +1460,7 @@ public class DettaglioAffittiView extends ViewPart {
 										
 				pathRepositoryAllegati += File.separator + "affitti";
 																
-				AffittiAllegatiVO aaVO = (AffittiAllegatiVO)((StructuredSelection)tvAllegati.getSelection()).getFirstElement();
+				Affittiallegati aaVO = (Affittiallegati)((StructuredSelection)tvAllegati.getSelection()).getFirstElement();
 				
 				if ((aaVO.getFromPath() == null) ||
 					(aaVO.getFromPath().equalsIgnoreCase(""))){	
@@ -1465,7 +1469,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 						Program.launch(pathRepositoryAllegati +
 								       File.separator +
-								       aaVO.getCodAffitto() +
+								       aaVO.getAffitti().getCodAffitto() +
 								       File.separator +
 								       aaVO.getNome());
 					}
@@ -1494,9 +1498,9 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return (affitto.getAllegati()==null)
+				return (affitto.getAffittiallegatis()==null)
 				       ? new ArrayList().toArray()
-				       : affitto.getAllegati().toArray();
+				       : affitto.getAffittiallegatis().toArray();
 			}
 
 			@Override
@@ -1519,7 +1523,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				AffittiAllegatiVO aaVO = (AffittiAllegatiVO)element;
+				Affittiallegati aaVO = (Affittiallegati)element;
 				switch (columnIndex){
 					case 0: return (aaVO.getDescrizione() == null)
 								   ? ""
@@ -1559,8 +1563,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				if (((AffittiAllegatiVO)cell.getElement()).getDescrizione() != null){
-					cell.setText(((AffittiAllegatiVO)cell.getElement()).getDescrizione());
+				if (((Affittiallegati)cell.getElement()).getDescrizione() != null){
+					cell.setText(((Affittiallegati)cell.getElement()).getDescrizione());
 				}else{
 					cell.setText("");
 				}
@@ -1581,8 +1585,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				if (((AffittiAllegatiVO)element).getDescrizione() != null){
-					return ((AffittiAllegatiVO)element).getDescrizione();
+				if (((Affittiallegati)element).getDescrizione() != null){
+					return ((Affittiallegati)element).getDescrizione();
 				}else{
 					return "";
 				}
@@ -1590,7 +1594,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AffittiAllegatiVO)element).setDescrizione(String.valueOf(value));
+				((Affittiallegati)element).setDescrizione(String.valueOf(value));
 				tvAllegati.refresh();
 			}
 			
@@ -1602,10 +1606,10 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AffittiAllegatiVO)cell.getElement()).getFromPath() == null){
-					cell.setText(((AffittiAllegatiVO)cell.getElement()).getNome());
+				if (((Affittiallegati)cell.getElement()).getFromPath() == null){
+					cell.setText(((Affittiallegati)cell.getElement()).getNome());
 				}else{
-					cell.setText(((AffittiAllegatiVO)cell.getElement()).getFromPath());
+					cell.setText(((Affittiallegati)cell.getElement()).getFromPath());
 				}
 			}
 			
@@ -1614,7 +1618,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected boolean canEdit(Object element) {
-				if (((AffittiAllegatiVO)element).getNome().equalsIgnoreCase("")){
+				if (((Affittiallegati)element).getNome().equalsIgnoreCase("")){
 					return true;
 				}else{
 					return false;
@@ -1631,19 +1635,19 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AffittiAllegatiVO)element).getFromPath() != null){
-					return ((AffittiAllegatiVO)element).getFromPath();
+				if (((Affittiallegati)element).getFromPath() != null){
+					return ((Affittiallegati)element).getFromPath();
 				}else{
-					return ((AffittiAllegatiVO)element).getNome();
+					return ((Affittiallegati)element).getNome();
 				}
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AffittiAllegatiVO)element).setFromPath(String.valueOf(value));
-				((AffittiAllegatiVO)element).setNome(((AffittiAllegatiVO)element).getFromPath()
-																				 .substring(((AffittiAllegatiVO)element).getFromPath()
-																						   								.lastIndexOf(File.separator)+1)
+				((Affittiallegati)element).setFromPath(String.valueOf(value));
+				((Affittiallegati)element).setNome(((Affittiallegati)element).getFromPath()
+																	     	 .substring(((Affittiallegati)element).getFromPath()
+																						   				   		  .lastIndexOf(File.separator)+1)
 												      );
 				tvAllegati.refresh();
 			}
@@ -1712,13 +1716,13 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				AffittiRateModel arModel = new AffittiRateModel();
-				arModel.setCodAffitto(affitto.getCodAffitti());
-				if (affitto.getRate() == null){
-					affitto.setRate(new ArrayList<AffittiRateModel>());
-				}
-				affitto.getRate().add(arModel);
-				tvRate.setInput(affitto.getRate());
+				Affittirate arModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Affittirate.class);
+				arModel.setAffitti(affitto);
+//				if (affitto.getAffittirates() == null){
+//					affitto.setRate(new ArrayList<AffittiRateModel>());
+//				}
+				affitto.addToAffittirates(arModel);
+				tvRate.setInput(affitto.getAffittirates());
 				tvRate.refresh();	
 				
 				TableItem ti = tvRate.getTable().getItem(tvRate.getTable().getItemCount()-1);
@@ -1757,8 +1761,8 @@ public class DettaglioAffittiView extends ViewPart {
 				if (tvRate.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvRate.getSelection()).iterator();
 					while (it.hasNext()) {
-						AffittiRateVO aiVO = (AffittiRateVO)it.next();
-						affitto.getRate().remove(aiVO);
+						Affittirate aiVO = (Affittirate)it.next();
+						affitto.removeFromAffittirates(aiVO);
 					}
 					tvRate.refresh();
 					
@@ -1781,9 +1785,9 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return (affitto.getRate()==null)
+				return (affitto.getAffittirates()==null)
 				       ? new ArrayList().toArray()
-				       : affitto.getRate().toArray();
+				       : affitto.getAffittirates().toArray();
 			}
 
 			@Override
@@ -1806,7 +1810,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				AffittiRateModel arModel = (AffittiRateModel)element;
+				Affittirate arModel = (Affittirate)element;
 				switch (columnIndex){
 					case 0: return arModel.getNomeMese();
 					
@@ -1814,9 +1818,9 @@ public class DettaglioAffittiView extends ViewPart {
 					
 					case 2: return formatter.format(arModel.getScadenza());
 					
-					case 3: return (arModel.getDataPagato() != null)?formatter.format(arModel.getDataPagato()):"";
+					case 3: return (arModel.getDatapagato() != null)?formatter.format(arModel.getDatapagato()):"";
 					
-					case 4: return String.valueOf(arModel.getImporto().doubleValue());					
+					case 4: return String.valueOf(arModel.getImporto());					
 					
 					default : return "";
 				}
@@ -1895,7 +1899,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AffittiRateModel)cell.getElement()).getNomeMese());
+				cell.setText(((Affittirate)cell.getElement()).getNomeMese());
 /*				if (((AffittiRateModel)cell.getElement()).getNomeMese() != null){
 					cell.setText(((AffittiRateModel)cell.getElement()).getNomeMese());
 				}else{
@@ -1922,7 +1926,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				return ((AffittiRateModel)element).getMese();
+				return ((Affittirate)element).getMese();
 				/*
 				if (((AffittiRateModel)element).getNomeMese() != null){
 					return ((AffittiRateModel)element).getNomeMese();
@@ -1933,7 +1937,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AffittiRateModel)element).setMese((Integer)value);
+				((Affittirate)element).setMese((Integer)value);
 				tvRate.refresh();
 			}
 			
@@ -1945,9 +1949,9 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AffittiRateModel)cell.getElement()).getScadenza() != null){
+				if (((Affittirate)cell.getElement()).getScadenza() != null){
 					try {
-						cell.setText(formatterIT.format(((AffittiRateModel)cell.getElement()).getScadenza()));
+						cell.setText(formatterIT.format(((Affittirate)cell.getElement()).getScadenza()));
 					} catch (Exception e) {
 						cell.setText("");
 					}															
@@ -1968,10 +1972,10 @@ public class DettaglioAffittiView extends ViewPart {
 			protected CellEditor getCellEditor(Object element) {
 			
 				Calendar c = null;
-				if (((AffittiRateModel)element).getScadenza() != null){
+				if (((Affittirate)element).getScadenza() != null){
 					try {
 						c = Calendar.getInstance(Locale.ITALIAN);
-						c.setTime(((AffittiRateModel)element).getScadenza());
+						c.setTime(Date.from(((Affittirate)element).getScadenza().atZone(ZoneId.systemDefault()).toInstant()));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -1982,8 +1986,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AffittiRateModel)element).getScadenza() != null){
-					return formatterIT.format(((AffittiRateModel)element).getScadenza());
+				if (((Affittirate)element).getScadenza() != null){
+					return formatterIT.format(((Affittirate)element).getScadenza());
 				}else{
 					return formatterIT.format(new Date());
 				}
