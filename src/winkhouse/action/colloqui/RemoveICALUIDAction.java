@@ -43,21 +43,21 @@ public class RemoveICALUIDAction extends Action {
 				
 				WizardGCalendarSyncAction wizard = new WizardGCalendarSyncAction(null, null, ((DettaglioColloquioView) wp).getColloquio());				
 				wizard.run();
-				((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
+				//((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
 				((DettaglioColloquioView) wp).setColloquio(((DettaglioColloquioView) wp).getColloquio());
-				if (((DettaglioColloquioView) wp).getColloquio().getWinkGCalendarModels().size() == 0){
+				if (((DettaglioColloquioView) wp).getColloquio().getWinkgcalendars().size() == 0){
 					setChecked(false);
 					
 				}
-				((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
+				//((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
 				((DettaglioColloquioView) wp).setColloquio(((DettaglioColloquioView) wp).getColloquio());
 			}else{
 				PopUpGCalendarEvents popsc = new PopUpGCalendarEvents(((DettaglioColloquioView) wp).getColloquio());
-				((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
-				if (((DettaglioColloquioView) wp).getColloquio().getWinkGCalendarModels().size() > 0){
+				//((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
+				if (((DettaglioColloquioView) wp).getColloquio().getWinkgcalendars().size() > 0){
 					setChecked(true);
 				}
-				((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
+				//((DettaglioColloquioView) wp).getColloquio().setWinkGCalendarModels(null);
 				((DettaglioColloquioView) wp).setColloquio(((DettaglioColloquioView) wp).getColloquio());
 			}
 

@@ -1,5 +1,7 @@
 package winkhouse.action.affitti;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import winkhouse.helper.EntityHelper;
 import winkhouse.helper.OptimisticLockHelper;
 import winkhouse.model.AffittiModel;
 import winkhouse.model.AttributeModel;
+import winkhouse.orm.Affitti;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.affitti.DettaglioAffittiView;
 import winkhouse.view.affitti.ListaAffittiView;
@@ -41,23 +44,23 @@ public class SalvaAffittiAction extends Action {
 		
 		if ((dav != null) && (dav.getAffitto() != null)){
 			
-			AffittiModel afM = dav.getAffitto();
+			Affitti afM = dav.getAffitto();
 			
 			Calendar cInizio = Calendar.getInstance();
 			Calendar cFine = Calendar.getInstance();
-			cInizio.setTime(afM.getDataInizio());
+			cInizio.setTime(Date.from(afM.getDatainizio().atZone(ZoneId.systemDefault()).toInstant()));
 			
-			if (afM.getDataFine() != null){
-				cFine.setTime(afM.getDataFine());
+			if (afM.getDatafine() != null){
+				cFine.setTime(Date.from(afM.getDatafine().atZone(ZoneId.systemDefault()).toInstant()));
 			}
 			
-			if (cInizio.before(cFine) || afM.getDataFine() == null){
+			if (cInizio.before(cFine) || afM.getDatafine() == null){
 			
 				OptimisticLockHelper olh = new OptimisticLockHelper();
 				
-				afM.setDateUpdate(new Date());
+				afM.setDateupdate(LocalDateTime.ofInstant(new Date().toInstant(),ZoneId.systemDefault()));
 				if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
-					afM.setCodUserUpdate(WinkhouseUtils.getInstance().getLoggedAgent().getCodAgente());
+					afM.setAgenti(WinkhouseUtils.getInstance().getLoggedAgent());
 				}
 				
 				String decision = olh.checkOLAffitto(afM);
@@ -66,35 +69,35 @@ public class SalvaAffittiAction extends Action {
 				
 					AffittiHelper ah = new AffittiHelper();
 					EntityHelper eh = new EntityHelper();
-					
-					HashMap result = ah.saveAffitto(afM, null);
-					if ((Boolean)result.get(AffittiHelper.RESULT_AFFITTI_DB)){
-						for (AttributeModel attribute : afM.getAttributes()){
-							if (attribute.getValue(afM.getCodAffitti()) != null){
-								attribute.getValue(afM.getCodAffitti()).setIdObject(afM.getCodAffitti());
-								if (!eh.saveAttributeValue(attribute.getValue(afM.getCodAffitti()))){
-									MessageDialog.openError(PlatformUI.getWorkbench()
-											  						  .getActiveWorkbenchWindow()
-											                          .getShell(), 
-															"Errore salvataggio", 
-															"Errore durante il salvataggio del campo " + attribute.getAttributeName());
-								}
-							}
-						}
-	
-						ListaAffittiView lav = (ListaAffittiView)PlatformUI.getWorkbench()
-								  										   .getActiveWorkbenchWindow()
-								  										   .getActivePage()
-								  										   .findView(ListaAffittiView.ID);
-						lav.setImmobile(afM.getImmobile());
-						dav.setAffitto(afM);
-					}else{
-						MessageDialog.openError(PlatformUI.getWorkbench()
-														  .getActiveWorkbenchWindow()
-														  .getShell(), 
-												"Errore salvataggio affitto", 
-												"L'affitto non � stato salvato a causa di un errore nel salvataggio");		
-					}
+					afM.getObjectContext().commitChanges();
+//					HashMap result = ah.saveAffitto(afM, null);
+//					if ((Boolean)result.get(AffittiHelper.RESULT_AFFITTI_DB)){
+//						for (AttributeModel attribute : afM.getAttributes()){
+//							if (attribute.getValue(afM.getCodAffitti()) != null){
+//								attribute.getValue(afM.getCodAffitti()).setIdObject(afM.getCodAffitti());
+//								if (!eh.saveAttributeValue(attribute.getValue(afM.getCodAffitti()))){
+//									MessageDialog.openError(PlatformUI.getWorkbench()
+//											  						  .getActiveWorkbenchWindow()
+//											                          .getShell(), 
+//															"Errore salvataggio", 
+//															"Errore durante il salvataggio del campo " + attribute.getAttributeName());
+//								}
+//							}
+//						}
+//	
+//						ListaAffittiView lav = (ListaAffittiView)PlatformUI.getWorkbench()
+//								  										   .getActiveWorkbenchWindow()
+//								  										   .getActivePage()
+//								  										   .findView(ListaAffittiView.ID);
+//						lav.setImmobile(afM.getImmobile());
+//						dav.setAffitto(afM);
+//					}else{
+//						MessageDialog.openError(PlatformUI.getWorkbench()
+//														  .getActiveWorkbenchWindow()
+//														  .getShell(), 
+//												"Errore salvataggio affitto", 
+//												"L'affitto non � stato salvato a causa di un errore nel salvataggio");		
+//					}
 					
 				}else if (decision.equalsIgnoreCase(OptimisticLockHelper.VISUALIZZA)){
 					
@@ -106,7 +109,7 @@ public class SalvaAffittiAction extends Action {
 																				        		   	 String.valueOf(afM.getCodAffitti()) + "Comp",
 																				        		   	 IWorkbenchPage.VIEW_CREATE);
 						AffittiDAO a_compDAO = new AffittiDAO();
-						AffittiModel affitto_comp = (AffittiModel)a_compDAO.getAffittoByID(AffittiModel.class.getName(), afM.getCodAffitti());
+						Affitti affitto_comp = a_compDAO.getAffittoByID(afM.getCodAffitti());
 						
 						div_comp.setAffitto(affitto_comp);
 						div_comp.setCompareView(false);

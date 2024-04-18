@@ -6,6 +6,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.AffittiModel;
+import winkhouse.orm.Affitti;
 import winkhouse.vo.AffittiVO;
 
 
@@ -24,7 +25,7 @@ public class DettaglioAffittiHandler {
 		return instance;
 	}
 	
-	public DettaglioAffittiView getDettaglioAffitto(AffittiVO viewInstance){
+	public DettaglioAffittiView getDettaglioAffitto(Affitti viewInstance){
 		DettaglioAffittiView dav = null;
 		IViewReference vr = null;
 		try {
@@ -47,7 +48,7 @@ public class DettaglioAffittiHandler {
 															    	String.valueOf(viewInstance.getCodAffitti()),
 																	IWorkbenchPage.VIEW_CREATE);
 				}
-				dav.setAffitto(new AffittiModel(viewInstance));
+				dav.setAffitto(viewInstance);
 				PlatformUI.getWorkbench()
 		 		  		  .getActiveWorkbenchWindow()
 		 		  		  .getActivePage()

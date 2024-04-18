@@ -44,12 +44,12 @@ public class RefreshColloqui extends Action {
 			cv = (ColloquiView)vr.getView(true);
 			
 			if (cv.getImmobile() != null){
-				cv.getImmobile().setColloqui(null);
+//				cv.getImmobile().setColloqui(null);
 				cv.setImmobile(cv.getImmobile());
 			}
 			
 			if (cv.getAnagrafica() != null){
-				cv.getAnagrafica().setColloqui(null);
+//				cv.getAnagrafica().setColloqui(null);
 				cv.setAnagrafica(cv.getAnagrafica());
 			}
 		}

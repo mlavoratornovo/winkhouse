@@ -17,6 +17,7 @@ import winkhouse.dao.ReportDAO;
 import winkhouse.helper.ReportHelper;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.DettaglioImmobileView;
 
@@ -59,7 +60,7 @@ public class StampaAnagraficheAction extends Action implements IAction,
 					  				.getActivePart();
 			
 			if (vp instanceof DettaglioImmobileView){
-				ImmobiliModel im = ((DettaglioImmobileView)vp).getImmobile();
+				Immobili im = ((DettaglioImmobileView)vp).getImmobile();
 				ReportHelper rh = new ReportHelper();
 				ArrayList al = new ArrayList();
 				al.add(im);

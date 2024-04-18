@@ -8,6 +8,15 @@ import winkhouse.orm.auto._Anagrafiche;
 public class Anagrafiche extends _Anagrafiche {
 
     private static final long serialVersionUID = 1L;
+    private ObjectContext editObjectContext = null;
+    
+	public ObjectContext getEditObjectContext() {
+		return editObjectContext;
+	}
+
+	public void setEditObjectContext(ObjectContext editObjectContext) {
+		this.editObjectContext = editObjectContext;
+	}
 
 	public int getCodAnagrafica() {
     	try {

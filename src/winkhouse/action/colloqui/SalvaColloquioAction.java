@@ -1,5 +1,6 @@
 package winkhouse.action.colloqui;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.action.Action;
@@ -16,6 +17,7 @@ import winkhouse.helper.EntityHelper;
 import winkhouse.helper.OptimisticLockHelper;
 import winkhouse.model.AttributeModel;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Colloqui;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 
@@ -23,12 +25,12 @@ import winkhouse.view.colloqui.DettaglioColloquioView;
 
 public class SalvaColloquioAction extends Action {
 
-	private ColloquiModel cModel = null;
+	private Colloqui cModel = null;
 	public SalvaColloquioAction() {
 
 	}
 	
-	public SalvaColloquioAction(ColloquiModel colloquio) {
+	public SalvaColloquioAction(Colloqui colloquio) {
 		cModel = colloquio;
 	}	
 
@@ -50,41 +52,43 @@ public class SalvaColloquioAction extends Action {
 		if (cModel != null){
 			ColloquiHelper ch = new ColloquiHelper();
 			
-			cModel.setDateUpdate(new Date());
+			cModel.setDateupdate(new Date().toInstant()
+				      .atZone(ZoneId.systemDefault())
+				      .toLocalDateTime());
 			if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
-				cModel.setCodUserUpdate(WinkhouseUtils.getInstance().getLoggedAgent().getCodAgente());
+				cModel.setAgenti(WinkhouseUtils.getInstance().getLoggedAgent());
 			}
 			OptimisticLockHelper olh = new OptimisticLockHelper();
 			String decision = olh.checkOLColloquio(cModel);
 			
 			if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
 			
-			
-				if (ch.saveColloquio(cModel)){
-					
-					EntityHelper eh = new EntityHelper();
-					
-					for (AttributeModel attribute : cModel.getAttributes()){
-						if (attribute.getValue(cModel.getCodColloquio()) != null){
-							attribute.getValue(cModel.getCodColloquio()).setIdObject(cModel.getCodColloquio());
-							if (!eh.saveAttributeValue(attribute.getValue(cModel.getCodColloquio()))){
-								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-														"Errore salvataggio", 
-														"Errore durante il salvataggio del campo " + attribute.getAttributeName());
-							}
-						}
-					}
-					
-					MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-												  "Salvataggio colloquio", 
-												  "Salvataggio dati colloquio eseguito con successo");
-	
-				}else{
-					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											"Errore salvataggio colloquio", 
-											"Si � verificato un errore nel salvataggio del colloquio");
-	
-				}
+				cModel.getEditObjectContext().commitChanges();
+//				if (ch.saveColloquio(cModel)){
+//					
+//					EntityHelper eh = new EntityHelper();
+//					
+//					for (AttributeModel attribute : cModel.getAttributes()){
+//						if (attribute.getValue(cModel.getCodColloquio()) != null){
+//							attribute.getValue(cModel.getCodColloquio()).setIdObject(cModel.getCodColloquio());
+//							if (!eh.saveAttributeValue(attribute.getValue(cModel.getCodColloquio()))){
+//								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+//														"Errore salvataggio", 
+//														"Errore durante il salvataggio del campo " + attribute.getAttributeName());
+//							}
+//						}
+//					}
+//					
+//					MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//												  "Salvataggio colloquio", 
+//												  "Salvataggio dati colloquio eseguito con successo");
+//	
+//				}else{
+//					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											"Errore salvataggio colloquio", 
+//											"Si � verificato un errore nel salvataggio del colloquio");
+//	
+//				}
 				
 			}else if (decision.equalsIgnoreCase(OptimisticLockHelper.VISUALIZZA)){
 				
@@ -96,7 +100,7 @@ public class SalvaColloquioAction extends Action {
 																			        		   	  String.valueOf(cModel.getCodColloquio()) + "Comp",
 																			        		   	  IWorkbenchPage.VIEW_CREATE);
 					ColloquiDAO c_compDAO = new ColloquiDAO();
-					ColloquiModel colloqui_comp = (ColloquiModel)c_compDAO.getColloquioById(ColloquiModel.class.getName(), cModel.getCodColloquio());
+					Colloqui colloqui_comp = c_compDAO.getColloquioById(cModel.getCodColloquio());
 					
 					div_comp.setColloquio(colloqui_comp);
 					div_comp.setCompareView(false);

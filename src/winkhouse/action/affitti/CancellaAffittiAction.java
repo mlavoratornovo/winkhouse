@@ -47,7 +47,7 @@ public class CancellaAffittiAction extends Action {
 								  						  .getActiveWorkbenchWindow()
 								  						  .getShell(), 
 								  				"Errore cancellazione affitto", 
-												"L'affitto non � stato cancellato a causa di un errore durante l'operazione");
+												"L'affitto non è stato cancellato a causa di un errore durante l'operazione");
 
 					}else{
 						IViewReference ivr = PlatformUI.getWorkbench()
@@ -74,25 +74,25 @@ public class CancellaAffittiAction extends Action {
 																	   .getActiveWorkbenchWindow()
 																	   .getActivePage()
 																	   .getActivePart();
-			HashMap hm = ah.deleteAffitto(dav.getAffitto(),null);
-			
-			if ((Boolean)hm.get(AffittiHelper.RESULT_AFFITTI_DB)){
-				
-				PlatformUI.getWorkbench()
-						  .getActiveWorkbenchWindow()
-						  .getActivePage()
-						  .hideView(dav);
-				
-				lav.setImmobile(lav.getImmobile());
-				lav.getTvAffitti().refresh();
-
-			}else{
-				MessageDialog.openError(PlatformUI.getWorkbench()
-												  .getActiveWorkbenchWindow()
-												  .getShell(), 
-										"Errore cancellazione affitto", 
-										"L'affitto non � stato cancellato a causa di un errore durante l'operazione");
-			}
+//			HashMap hm = ah.deleteAffitto(dav.getAffitto(),null);
+//			
+//			if ((Boolean)hm.get(AffittiHelper.RESULT_AFFITTI_DB)){
+//				
+//				PlatformUI.getWorkbench()
+//						  .getActiveWorkbenchWindow()
+//						  .getActivePage()
+//						  .hideView(dav);
+//				
+//				lav.setImmobile(lav.getImmobile());
+//				lav.getTvAffitti().refresh();
+//
+//			}else{
+//				MessageDialog.openError(PlatformUI.getWorkbench()
+//												  .getActiveWorkbenchWindow()
+//												  .getShell(), 
+//										"Errore cancellazione affitto", 
+//										"L'affitto non � stato cancellato a causa di un errore durante l'operazione");
+//			}
 			
 		}
 		

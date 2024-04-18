@@ -39,14 +39,14 @@ public class SalvaAnagrafichePropietarieAction extends Action {
 									  				.getActivePage()
 									  				.getActivePart();
 		
-		if (apv.getImmobile() != null && apv.getImmobile().getCodImmobile() != null && apv.getImmobile().getCodImmobile() != 0){
+		if (apv.getImmobile() != null && apv.getImmobile().getCodImmobile() != 0){
 			
 			ImmobiliHelper ih = new ImmobiliHelper();
 			
-			if (ih.updateImmobiliPropietari(apv.getImmobile(), null, true) == true){
-				apv.getImmobile().setAnagrafichePropietarie(null);
-				apv.getTvAnagrafichePropietarie().refresh();
-			}
+//			if (ih.updateImmobiliPropietari(apv.getImmobile(), null, true) == true){
+//				apv.getImmobile().setAnagrafichePropietarie(null);
+//				apv.getTvAnagrafichePropietarie().refresh();
+//			}
 			
 		}else{
 			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),

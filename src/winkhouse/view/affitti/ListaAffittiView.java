@@ -36,6 +36,7 @@ import winkhouse.dao.AffittiDAO;
 import winkhouse.model.AffittiModel;
 import winkhouse.model.ContattiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Affitti;
 import winkhouse.orm.Immobili;
 import winkhouse.vo.ContattiVO;
 
@@ -274,7 +275,7 @@ public class ListaAffittiView extends ViewPart {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				Object o = ((StructuredSelection)tvAffitti.getSelection()).getFirstElement();
-				AffittiModel apm = (AffittiModel)o;
+				Affitti apm = (Affitti)o;
 				ApriAffittiAction aaa = new ApriAffittiAction(apm);
 				aaa.run();
 			}

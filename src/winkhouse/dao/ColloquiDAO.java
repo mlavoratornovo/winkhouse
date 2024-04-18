@@ -9,7 +9,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiVO;
 
 
@@ -366,7 +372,12 @@ public class ColloquiDAO extends BaseDAO{
 	public Object getColloquioById(String classType, Integer codColloquio){
 		return super.getObjectById(classType, COLLOQUI_BY_ID, codColloquio);
 	}	
-	
+
+	public Colloqui getColloquioById(Integer codColloquio){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Colloqui.class,codColloquio);
+	}	
+
 	public <T> ArrayList<T> getColloquiByImmobile(String classType,Integer codClasse){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_IMMOBILE, codClasse);
 	}

@@ -6,6 +6,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.AppuntamentiModel;
+import winkhouse.orm.Appuntamenti;
 import winkhouse.view.agenda.DettaglioAppuntamentoView;
 
 
@@ -23,7 +24,7 @@ public class NuovoAppuntamentoAction extends Action {
 					  								  							 .getActiveWorkbenchWindow()
 					  								  							 .getActivePage()
 					  								  							 .showView(DettaglioAppuntamentoView.ID);
-			AppuntamentiModel am = new AppuntamentiModel();
+			Appuntamenti am = new Appuntamenti();
 			dav.setAppuntamento(am);
 		} catch (PartInitException e) {
 			e.printStackTrace();

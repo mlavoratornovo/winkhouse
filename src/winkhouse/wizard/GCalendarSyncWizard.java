@@ -17,6 +17,9 @@ import winkhouse.engine.gcalendar.GoogleCalendarSyncEngine.ContattiResult;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
 import winkhouse.view.agenda.CalendarioView;
 import winkhouse.view.agenda.ListaAppuntamentiView;
 import winkhouse.wizard.gcalendar.GCalSyncOpeartions;
@@ -41,7 +44,7 @@ public class GCalendarSyncWizard extends Wizard {
 		public final static int UPLOAD_APPUNTAMENTI_MODEL = 0; 
 		public final static int DOWNLOAD_GCALENDAR_EVENTS = 1;
 		
-		private ArrayList<AgentiModel> alagenti = null;
+		private ArrayList<Agenti> alagenti = null;
 //		private HashMap<AgentiModel,ArrayList<CalendarListEntry>> hpselcal = null; 
 		private HashMap<Integer,AgenteResult> alagentiResult = null;
 		private ArrayList<ContattiResult> contattiAppuntamentiUPL = null;
@@ -54,8 +57,8 @@ public class GCalendarSyncWizard extends Wizard {
 		private HashMap<String,GoogleCalendarSyncEngine.ItemDownload> al_item_download = null;
 		
 		private boolean upl_from_detail = false;
-		private AppuntamentiModel from_appuntamento_detail = null;
-		private ColloquiModel from_colloqui_detail = null;
+		private Appuntamenti from_appuntamento_detail = null;
+		private Colloqui from_colloqui_detail = null;
 		
 		public GCalSyncVO(){
 			startDate = new Date();
@@ -120,17 +123,17 @@ public class GCalendarSyncWizard extends Wizard {
 			this.operarationType = operarationType;
 		}
 		
-		public ArrayList<AgentiModel> getAlagenti() {
+		public ArrayList<Agenti> getAlagenti() {
 			
 			if (alagenti == null){
-				alagenti = new ArrayList<AgentiModel>();
+				alagenti = new ArrayList<Agenti>();
 			}
 			
 			return alagenti;
 			
 		}
 		
-		public void setAlagenti(ArrayList<AgentiModel> alagenti) {
+		public void setAlagenti(ArrayList<Agenti> alagenti) {
 			this.alagenti = alagenti;
 		}
 
@@ -198,7 +201,7 @@ public class GCalendarSyncWizard extends Wizard {
 			return from_appuntamento_detail;
 		}
 
-		public void setFrom_appuntamento_detail(AppuntamentiModel from_appuntamento_detail) {
+		public void setFrom_appuntamento_detail(Appuntamenti from_appuntamento_detail) {
 			this.from_appuntamento_detail = from_appuntamento_detail;
 		}
 
@@ -206,7 +209,7 @@ public class GCalendarSyncWizard extends Wizard {
 			return from_colloqui_detail;
 		}
 
-		public void setFrom_colloqui_detail(ColloquiModel from_colloqui_detail) {
+		public void setFrom_colloqui_detail(Colloqui from_colloqui_detail) {
 			this.from_colloqui_detail = from_colloqui_detail;
 		}
 				

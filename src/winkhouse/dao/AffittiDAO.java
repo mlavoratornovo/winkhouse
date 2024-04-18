@@ -10,7 +10,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Affitti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AffittiVO;
 
 
@@ -47,7 +53,13 @@ public class AffittiDAO extends BaseDAO {
 	public Object getAffittoByID(String className, Integer codAffitto){
 		return super.getObjectById(className, FIND_AFFITTO_BY_ID, codAffitto);
 	}
-	
+
+	public Affitti getAffittoByID(int codAffitto){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Affitti.class,codAffitto);
+
+	}
+
 	public <T> ArrayList<T> getAffittiByCodImmobile(String className, Integer codImmobile){
 		return super.getObjectsByIntFieldValue(className, FIND_AFFITTI_BY_CODIMMOBILE, codImmobile);
 	}

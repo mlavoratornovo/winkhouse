@@ -14,6 +14,10 @@ import winkhouse.model.AgentiModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiAgentiModel_Age;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Agentiappuntamenti;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.wizard.GCalendarSyncWizard;
@@ -21,21 +25,21 @@ import winkhouse.wizard.GCalendarSyncWizard;
 public class WizardGCalendarSyncAction extends Action {
 
 	public static String ID = "winkhouse.wizardgcalendarsync";
-	private AppuntamentiModel appuntamento = null;
-	private ColloquiModel colloquio = null;
+	private Appuntamenti appuntamento = null;
+	private Colloqui colloquio = null;
 	
 	public WizardGCalendarSyncAction(String text, ImageDescriptor image) {
 		super(text, image);
 		setId(ID);
 	}
 
-	public WizardGCalendarSyncAction(String text, ImageDescriptor image, AppuntamentiModel appuntamento) {
+	public WizardGCalendarSyncAction(String text, ImageDescriptor image, Appuntamenti appuntamento) {
 		super(text, image);
 		setId(ID);
 		this.appuntamento = appuntamento;
 	}
 
-	public WizardGCalendarSyncAction(String text, ImageDescriptor image, ColloquiModel colloquio) {
+	public WizardGCalendarSyncAction(String text, ImageDescriptor image, Colloqui colloquio) {
 		super(text, image);
 		setId(ID);
 		this.colloquio = colloquio;
@@ -52,28 +56,28 @@ public class WizardGCalendarSyncAction extends Action {
 			wizard.getGcalsyncVO().setUpl_from_detail(true);
 			wizard.getGcalsyncVO().setFrom_appuntamento_detail(appuntamento);
 			
-			Iterator<AgentiAppuntamentiModel> it = null;
+			Iterator<Agentiappuntamenti> it = null;
 			
 			if (((WinkhouseUtils.getInstance().getHm_winkSys().get(IWinkSysProperties.LOGIN) != null)
 				    ? Boolean.valueOf(WinkhouseUtils.getInstance().getHm_winkSys().get(IWinkSysProperties.LOGIN))
 					: false)){
 				
-				ArrayList<AgentiAppuntamentiModel> al = new ArrayList<AgentiAppuntamentiModel>();
-				AgentiAppuntamentiModel aam = new AgentiAppuntamentiModel();
+				ArrayList<Agentiappuntamenti> al = new ArrayList<Agentiappuntamenti>();
+				Agentiappuntamenti aam = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Agentiappuntamenti.class);
 				//aam.setAgente(WinkhouseUtils.getInstance().getLoggedAgent());
 				al.add(aam);
 				
 				it = al.iterator();				
 				
 			}else{
-				it = this.appuntamento.getAgenti().iterator();
+				it = this.appuntamento.getAgentiappuntamentis().iterator();
 			}
 			
-			ArrayList<AgentiModel> agenti = new ArrayList<AgentiModel>();
+			ArrayList<Agenti> agenti = new ArrayList<Agenti>();
 			
 			while (it.hasNext()) {
-				AgentiAppuntamentiModel agentiAppuntamentiModel = (AgentiAppuntamentiModel) it.next();
-				AgentiModel am = agentiAppuntamentiModel.getAgente();
+				Agentiappuntamenti agentiAppuntamentiModel = (Agentiappuntamenti) it.next();
+				Agenti am = agentiAppuntamentiModel.getAgenti1();
 				if (am != null){
 					agenti.add(am);	
 				}
@@ -99,7 +103,7 @@ public class WizardGCalendarSyncAction extends Action {
 				it = al.iterator();
 				
 			}else{
-				it = this.colloquio.getAgenti().iterator();
+				//it = this.colloquio.getAllegaticolloquios().iterator();
 			}			
 			
 			ArrayList<AgentiModel> agenti = new ArrayList<AgentiModel>();
@@ -109,7 +113,7 @@ public class WizardGCalendarSyncAction extends Action {
 				agenti.add(colloquiAgentiModel.getAgente());
 			}
 			
-			wizard.getGcalsyncVO().setAlagenti(agenti);
+			//wizard.getGcalsyncVO().setAlagenti(agenti);
 			
 		}
 		

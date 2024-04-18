@@ -82,7 +82,7 @@ import winkhouse.orm.Affittirate;
 import winkhouse.orm.Affittispese;
 //import winkhouse.model.Affittianagrafiche;
 //import winkhouse.model.AffittiModel;
-//import winkhouse.model.AffittiRateModel;
+//import winkhouse.model.Affittirate;
 //import winkhouse.model.Affittispese;
 //import winkhouse.model.AgentiModel;
 //import winkhouse.model.AnagraficheModel;
@@ -1305,7 +1305,7 @@ public class DettaglioAffittiView extends ViewPart {
 			tvAnagrafiche.setInput(new Object());
 			tvAnagrafiche.refresh();
 		}else{
-			MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+			MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 					  				  "Errore selezione anagrafica", 
 					  				  "Anagrafica presente in lista");			
 		}
@@ -1469,7 +1469,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 						Program.launch(pathRepositoryAllegati +
 								       File.separator +
-								       aaVO.getAffitti().getCodAffitto() +
+								       aaVO.getAffitti().getCodAffitti() +
 								       File.separator +
 								       aaVO.getNome());
 					}
@@ -1719,7 +1719,7 @@ public class DettaglioAffittiView extends ViewPart {
 				Affittirate arModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Affittirate.class);
 				arModel.setAffitti(affitto);
 //				if (affitto.getAffittirates() == null){
-//					affitto.setRate(new ArrayList<AffittiRateModel>());
+//					affitto.setRate(new ArrayList<Affittirate>());
 //				}
 				affitto.addToAffittirates(arModel);
 				tvRate.setInput(affitto.getAffittirates());
@@ -1900,8 +1900,8 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				cell.setText(((Affittirate)cell.getElement()).getNomeMese());
-/*				if (((AffittiRateModel)cell.getElement()).getNomeMese() != null){
-					cell.setText(((AffittiRateModel)cell.getElement()).getNomeMese());
+/*				if (((Affittirate)cell.getElement()).getNomeMese() != null){
+					cell.setText(((Affittirate)cell.getElement()).getNomeMese());
 				}else{
 					cell.setText("");
 				}*/
@@ -1928,8 +1928,8 @@ public class DettaglioAffittiView extends ViewPart {
 			protected Object getValue(Object element) {
 				return ((Affittirate)element).getMese();
 				/*
-				if (((AffittiRateModel)element).getNomeMese() != null){
-					return ((AffittiRateModel)element).getNomeMese();
+				if (((Affittirate)element).getNomeMese() != null){
+					return ((Affittirate)element).getNomeMese();
 				}else{
 					return 0;
 				}*/
@@ -1996,9 +1996,9 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				try {
-					((AffittiRateModel)element).setScadenza(((Calendar)value).getTime());
+					((Affittirate)element).setScadenza(LocalDateTime.ofInstant(((Calendar)value).getTime().toInstant(), ZoneId.systemDefault()));
 				} catch (Exception e) {
-					((AffittiRateModel)element).setScadenza(new Date());
+					((Affittirate)element).setScadenza(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));;
 				}
 				tvRate.refresh();
 			}
@@ -2011,8 +2011,8 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AffittiRateModel)cell.getElement()).getDataPagato() != null){
-					cell.setText(formatterIT.format(((AffittiRateModel)cell.getElement()).getDataPagato()));
+				if (((Affittirate)cell.getElement()).getDatapagato() != null){
+					cell.setText(formatterIT.format(((Affittirate)cell.getElement()).getDatapagato()));
 				}else{
 					cell.setText("");
 				}
@@ -2029,10 +2029,10 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			protected CellEditor getCellEditor(Object element) {
 				Calendar c = null;
-				if (((AffittiRateModel)element).getDataPagato() != null){
+				if (((Affittirate)element).getDatapagato() != null){
 					try {
 						c = Calendar.getInstance(Locale.ITALIAN);
-						c.setTime(((AffittiRateModel)element).getDataPagato());
+						c.setTime(Date.from(((Affittirate)element).getDatapagato().atZone(ZoneId.systemDefault()).toInstant()));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -2043,8 +2043,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AffittiRateModel)element).getDataPagato() != null){
-					return formatterIT.format(((AffittiRateModel)element).getDataPagato());
+				if (((Affittirate)element).getDatapagato() != null){
+					return formatterIT.format(((Affittirate)element).getDatapagato());
 				}else{
 					return formatterIT.format(new Date());
 				}
@@ -2053,9 +2053,9 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				try {
-					((AffittiRateModel)element).setDataPagato(((Calendar)value).getTime());
+					((Affittirate)element).setDatapagato(LocalDateTime.ofInstant(((Calendar)value).getTime().toInstant(), ZoneId.systemDefault()));
 				} catch (Exception e) {
-					((AffittiRateModel)element).setDataPagato(null);
+					((Affittirate)element).setDatapagato(null);
 				}
 				tvRate.refresh();
 			}
@@ -2068,8 +2068,8 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AffittiRateModel)cell.getElement()).getImporto() != null){
-					cell.setText(String.valueOf(((AffittiRateModel)cell.getElement()).getImporto()));
+				if (((Affittirate)cell.getElement()).getImporto() != 0.0){
+					cell.setText(String.valueOf(((Affittirate)cell.getElement()).getImporto()));
 				}else{
 					cell.setText("0.0");
 				}
@@ -2090,8 +2090,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AffittiRateModel)element).getImporto() != null){
-					return String.valueOf(((AffittiRateModel)element).getImporto());
+				if (((Affittirate)element).getImporto() != 0.0){
+					return String.valueOf(((Affittirate)element).getImporto());
 				}else{
 					return String.valueOf(0.0);
 				}
@@ -2100,9 +2100,9 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				try {
-					((AffittiRateModel)element).setImporto(Double.parseDouble((String)value));
+					((Affittirate)element).setImporto(Double.parseDouble((String)value));
 				} catch (NumberFormatException e) {
-					((AffittiRateModel)element).setImporto(0.0);
+					((Affittirate)element).setImporto(0.0);
 				}
 				tvRate.refresh();
 			}
@@ -2115,8 +2115,8 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AffittiRateModel)cell.getElement()).getAnagrafiche() != null){
-					cell.setText(((AffittiRateModel)cell.getElement()).getAnagrafiche().toString());
+				if (((Affittirate)cell.getElement()).getAnagrafiche() != null){
+					cell.setText(((Affittirate)cell.getElement()).getAnagrafiche().toString());
 				}else{
 					cell.setText("");
 				}
@@ -2142,8 +2142,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AffittiRateModel)element).getAnagrafiche() != null){
-					int index = Collections.binarySearch(workAnagrafiche, ((AffittiRateModel)element).getAnagrafiche(), comparatorAnagrafiche);
+				if (((Affittirate)element).getAnagrafiche() != null){
+					int index = Collections.binarySearch(workAnagrafiche, ((Affittirate)element).getAnagrafiche(), comparatorAnagrafiche);
 					return (index >= 0)?index:0;
 				}else{
 					return 0;
@@ -2153,7 +2153,7 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				if (((Integer)value).intValue() > -1){
-					((AffittiRateModel)element).setAnagrafica(workAnagrafiche.get((Integer)value));
+					((Affittirate)element).setAnagrafiche(workAnagrafiche.get((Integer)value));					
 		        }
 				tvRate.refresh();
 			}
@@ -2220,13 +2220,13 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Affittispese asModel = new Affittispese();
-				asModel.setCodAffitto(affitto.getCodAffitti());
-				if (affitto.getSpese() == null){
-					affitto.setSpese(new ArrayList<Affittispese>());
-				}
-				affitto.getSpese().add(asModel);
-				tvSpese.setInput(affitto.getSpese());
+				Affittispese asModel = affitto.getObjectContext().newObject(Affittispese.class);
+				
+//				if (affitto.getAffittispeses() == null){
+//					affitto.setSpese(new ArrayList<Affittispese>());
+//				}
+				affitto.addToAffittispeses(asModel);
+				tvSpese.setInput(affitto.getAffittispeses());
 				tvSpese.refresh();	
 				
 				TableItem ti = tvSpese.getTable().getItem(tvSpese.getTable().getItemCount()-1);
@@ -2266,7 +2266,7 @@ public class DettaglioAffittiView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvSpese.getSelection()).iterator();
 					while (it.hasNext()) {
 						Affittispese asModel = (Affittispese)it.next();
-						affitto.getSpese().remove(asModel);
+						affitto.removeFromAffittispeses(asModel);
 					}
 					tvSpese.refresh();
 					
@@ -2289,9 +2289,9 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return (affitto.getSpese()==null)
+				return (affitto.getAffittispeses()==null)
 				       ? new ArrayList().toArray()
-				       : affitto.getSpese().toArray();
+				       : affitto.getAffittispeses().toArray();
 			}
 
 			@Override
@@ -2320,17 +2320,17 @@ public class DettaglioAffittiView extends ViewPart {
 					
 					case 1: return (asModel.getAnagrafiche() != null)?asModel.getAnagrafiche().toString():"";
 					
-					case 2: return formatter.format(asModel.getDataInizio());
+					case 2: return formatter.format(asModel.getDatainizio());
 					
-					case 3: return formatter.format(asModel.getDataFine());
+					case 3: return formatter.format(asModel.getDatafine());
 					
 					case 4: return formatter.format(asModel.getScadenza());
 					
-					case 5: return String.valueOf(asModel.getImporto().doubleValue());
+					case 5: return String.valueOf(asModel.getImporto());
 					
-					case 6: return String.valueOf(asModel.getVersato().doubleValue());
+					case 6: return String.valueOf(asModel.getVersato());
 					
-					case 7: return ((asModel.getDataPagato() != null)?formatter.format(asModel.getDataPagato()):"");					
+					case 7: return ((asModel.getDatapagato() != null)?formatter.format(asModel.getDatapagato()):"");					
 					
 					default : return "";
 				}
@@ -2454,8 +2454,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				if (((Affittispese)cell.getElement()).getDataInizio() != null){
-					cell.setText(formatterIT.format(((Affittispese)cell.getElement()).getDataInizio()));
+				if (((Affittispese)cell.getElement()).getDatainizio() != null){
+					cell.setText(formatterIT.format(((Affittispese)cell.getElement()).getDatainizio()));
 				}else{
 					cell.setText("");
 				}
@@ -2477,7 +2477,7 @@ public class DettaglioAffittiView extends ViewPart {
 				if (((Affittispese)element).getScadenza() != null){
 					try {
 						c = Calendar.getInstance(Locale.ITALIAN);
-						c.setTime(((Affittispese)element).getDataInizio());
+						c.setTime(Date.from(((Affittispese)element).getDatainizio().atZone(ZoneId.systemDefault()).toInstant()));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -2488,8 +2488,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				if (((Affittispese)element).getDataInizio()!= null){
-					return formatterIT.format(((Affittispese)element).getDataInizio());
+				if (((Affittispese)element).getDatainizio()!= null){
+					return formatterIT.format(((Affittispese)element).getDatainizio());
 				}else{
 					return formatterIT.format(new Date());
 				}
@@ -2499,16 +2499,16 @@ public class DettaglioAffittiView extends ViewPart {
 			protected void setValue(Object element, Object value) {
 				if (value instanceof String){
 					try {
-						((Affittispese)element).setDataInizio(formatterIT.parse((String)value));
+						((Affittispese)element).setDatainizio(LocalDateTime.ofInstant(formatterIT.parse((String)value).toInstant(), ZoneId.systemDefault()));
 					} catch (ParseException e) {
-						((Affittispese)element).setDataInizio(new Date());
+						((Affittispese)element).setDatainizio(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 					}
 				}
 				if (value instanceof Calendar){
 					try {
-						((Affittispese)element).setDataInizio(((Calendar)value).getTime());
+						((Affittispese)element).setDatainizio(LocalDateTime.ofInstant(((Calendar)value).getTime().toInstant(), ZoneId.systemDefault()));
 					} catch (Exception e) {
-						((Affittispese)element).setDataInizio(new Date());
+						((Affittispese)element).setDatainizio(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 					}					
 				}				
 				tvSpese.refresh();
@@ -2521,8 +2521,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				if (((Affittispese)cell.getElement()).getDataFine() != null){
-					cell.setText(formatterIT.format(((Affittispese)cell.getElement()).getDataFine()));
+				if (((Affittispese)cell.getElement()).getDatafine() != null){
+					cell.setText(formatterIT.format(((Affittispese)cell.getElement()).getDatafine()));
 				}else{
 					cell.setText("");
 				}
@@ -2543,7 +2543,7 @@ public class DettaglioAffittiView extends ViewPart {
 				if (((Affittispese)element).getScadenza() != null){
 					try {
 						c = Calendar.getInstance(Locale.ITALIAN);
-						c.setTime(((Affittispese)element).getDataFine());
+						c.setTime(Date.from(((Affittispese)element).getDatafine().atZone(ZoneId.systemDefault()).toInstant()));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -2554,8 +2554,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				if (((Affittispese)element).getDataFine()!= null){
-					return formatterIT.format(((Affittispese)element).getDataFine());
+				if (((Affittispese)element).getDatafine()!= null){
+					return formatterIT.format(((Affittispese)element).getDatafine());
 				}else{
 					return formatterIT.format(new Date());
 				}
@@ -2565,16 +2565,16 @@ public class DettaglioAffittiView extends ViewPart {
 			protected void setValue(Object element, Object value) {
 				if (value instanceof String){
 					try {
-						((Affittispese)element).setDataFine(formatterIT.parse((String)value));
+						((Affittispese)element).setDatafine(LocalDateTime.ofInstant(formatterIT.parse((String)value).toInstant(),ZoneId.systemDefault()));
 					} catch (ParseException e) {
-						((Affittispese)element).setDataFine(new Date());
+						((Affittispese)element).setDatafine(LocalDateTime.ofInstant(new Date().toInstant(),ZoneId.systemDefault()));
 					}
 				}
 				if (value instanceof Calendar){
 					try {
-						((Affittispese)element).setDataFine(((Calendar)value).getTime());
+						((Affittispese)element).setDatafine(LocalDateTime.ofInstant(((Calendar)value).getTime().toInstant(),ZoneId.systemDefault()));
 					} catch (Exception e) {
-						((Affittispese)element).setDataFine(new Date());
+						((Affittispese)element).setDatafine(LocalDateTime.ofInstant(new Date().toInstant(),ZoneId.systemDefault()));
 					}					
 				}				
 				tvSpese.refresh();
@@ -2609,7 +2609,7 @@ public class DettaglioAffittiView extends ViewPart {
 				if (((Affittispese)element).getScadenza() != null){
 					try {
 						c = Calendar.getInstance(Locale.ITALIAN);
-						c.setTime(((Affittispese)element).getScadenza());
+						c.setTime(Date.from(((Affittispese)element).getScadenza().atZone(ZoneId.systemDefault()).toInstant()));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -2631,16 +2631,16 @@ public class DettaglioAffittiView extends ViewPart {
 			protected void setValue(Object element, Object value) {
 				if (value instanceof String){
 					try {
-						((Affittispese)element).setScadenza(formatterIT.parse((String)value));
+						((Affittispese)element).setScadenza(LocalDateTime.ofInstant(formatterIT.parse((String)value).toInstant(),ZoneId.systemDefault()));
 					} catch (ParseException e) {
-						((Affittispese)element).setScadenza(new Date());
+						((Affittispese)element).setScadenza(LocalDateTime.ofInstant(new Date().toInstant(),ZoneId.systemDefault()));
 					}
 				}
 				if (value instanceof Calendar){
 					try {
-						((Affittispese)element).setScadenza(((Calendar)value).getTime());
+						((Affittispese)element).setScadenza(LocalDateTime.ofInstant(((Calendar)value).getTime().toInstant(),ZoneId.systemDefault()));
 					} catch (Exception e) {
-						((Affittispese)element).setScadenza(new Date());
+						((Affittispese)element).setScadenza(LocalDateTime.ofInstant(new Date().toInstant(),ZoneId.systemDefault()));
 					}					
 				}				
 				tvSpese.refresh();
@@ -2654,7 +2654,7 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((Affittispese)cell.getElement()).getImporto() != null){
+				if (((Affittispese)cell.getElement()).getImporto() != 0.0){
 					cell.setText(String.valueOf(((Affittispese)cell.getElement()).getImporto()));
 				}else{
 					cell.setText("0.0");
@@ -2676,7 +2676,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((Affittispese)element).getImporto() != null){
+				if (((Affittispese)element).getImporto() != 0.0){
 					return String.valueOf(((Affittispese)element).getImporto());
 				}else{
 					return String.valueOf(0.0);
@@ -2701,7 +2701,7 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((Affittispese)cell.getElement()).getVersato() != null){
+				if (((Affittispese)cell.getElement()).getVersato() != 0.0){
 					cell.setText(String.valueOf(((Affittispese)cell.getElement()).getVersato()));
 				}else{
 					cell.setText("0.0");
@@ -2723,7 +2723,7 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((Affittispese)element).getVersato() != null){
+				if (((Affittispese)element).getVersato() != 0.0){
 					return String.valueOf(((Affittispese)element).getVersato());
 				}else{
 					return String.valueOf(0.0);
@@ -2748,8 +2748,8 @@ public class DettaglioAffittiView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((Affittispese)cell.getElement()).getDataPagato() != null){
-					cell.setText(formatterIT.format(((Affittispese)cell.getElement()).getDataPagato()));
+				if (((Affittispese)cell.getElement()).getDatapagato() != null){
+					cell.setText(formatterIT.format(((Affittispese)cell.getElement()).getDatapagato()));
 				}else{
 					cell.setText("");
 				}
@@ -2768,9 +2768,9 @@ public class DettaglioAffittiView extends ViewPart {
 				Calendar c = null;
 				if (((Affittispese)element).getScadenza() != null){
 					try {
-						if (((Affittispese)element).getDataPagato() != null){
+						if (((Affittispese)element).getDatapagato() != null){
 							c = Calendar.getInstance(Locale.ITALIAN);
-							c.setTime(((Affittispese)element).getDataPagato());
+							c.setTime(Date.from(((Affittispese)element).getDatapagato().atZone(ZoneId.systemDefault()).toInstant()));
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -2782,8 +2782,8 @@ public class DettaglioAffittiView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((Affittispese)element).getDataPagato()!= null){
-					return formatterIT.format(((Affittispese)element).getDataPagato());
+				if (((Affittispese)element).getDatapagato()!= null){
+					return formatterIT.format(((Affittispese)element).getDatapagato());
 				}else{
 					return formatterIT.format(new Date());
 				}
@@ -2793,16 +2793,16 @@ public class DettaglioAffittiView extends ViewPart {
 			protected void setValue(Object element, Object value) {
 				if (value instanceof String){
 					try {
-						((Affittispese)element).setDataPagato(formatterIT.parse((String)value));
+						((Affittispese)element).setDatapagato(LocalDateTime.ofInstant(formatterIT.parse((String)value).toInstant(),ZoneId.systemDefault()));
 					} catch (ParseException e) {
-						((Affittispese)element).setDataPagato(null);
+						((Affittispese)element).setDatapagato(null);
 					}
 				}
 				if (value instanceof Calendar){
 					try {
-						((Affittispese)element).setDataPagato(((Calendar)value).getTime());
+						((Affittispese)element).setDatapagato(LocalDateTime.ofInstant(((Calendar)value).getTime().toInstant(),ZoneId.systemDefault()));
 					} catch (Exception e) {
-						((Affittispese)element).setDataPagato(null);
+						((Affittispese)element).setDatapagato(null);
 					}					
 				}				
 				tvSpese.refresh();

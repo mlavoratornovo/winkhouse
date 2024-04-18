@@ -16,8 +16,11 @@ import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Affitti;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.vo.AgentiVO;
 
@@ -118,29 +121,25 @@ public class OptimisticLockHelper {
 		
 	}
 
-	public String checkOLAffitto(AffittiModel affitto){
+	public String checkOLAffitto(Affitti affitto){
 		
-		if ((affitto.getCodAffitti() == null) || (affitto.getCodAffitti() == 0)){
+		if (affitto.getCodAffitti() == 0){
 			return SOVRASCRIVI;
 		}else{
 			
 			AffittiDAO aDAO = new AffittiDAO();
-			AffittiModel am_DB = (AffittiModel)aDAO.getAffittoByID(AffittiModel.class.getName(), affitto.getCodAffitti());
+			Affitti am_DB = aDAO.getAffittoByID(affitto.getCodAffitti());
 			
-			if (am_DB.getDateUpdate() != null){
+			if (am_DB.getDateupdate() != null){
 				
-				if (am_DB.getDateUpdate().after(affitto.getDateUpdate())){
+				if (am_DB.getDateupdate().isAfter(affitto.getDateupdate())){
 					
-					String message = "ATTENZIONE : l'affitto " + affitto.toString() + "\n � stato modificato da un altro agente mentre lo stavi editando.\n";
-					if (am_DB.getCodUserUpdate() != null){
-						AgentiDAO agDAO = new AgentiDAO();
-						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
-						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche � " + aVO.toString();
-						}
+					String message = "ATTENZIONE : l'affitto " + affitto.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					if (am_DB.getAgenti1() != null){
+						message += "L'agente che ha effettuato le modifiche è " + am_DB.getAgenti1().toString();
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'affitto � stato modificato", null,
+															 "Winkhouse : l'affitto è stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){
@@ -162,7 +161,7 @@ public class OptimisticLockHelper {
 		
 	}
 
-	public String checkOLColloquio(ColloquiModel colloquio){
+	public String checkOLColloquio(Colloqui colloquio){
 		
 		if ((colloquio.getCodColloquio() == null) || (colloquio.getCodColloquio() == 0)){
 			return SOVRASCRIVI;
@@ -211,7 +210,7 @@ public class OptimisticLockHelper {
 		
 	}
 
-	public String checkOLAppuntamento(AppuntamentiModel appuntamento){
+	public String checkOLAppuntamento(Appuntamenti appuntamento){
 		
 		if ((appuntamento.getCodAppuntamento() == null) || (appuntamento.getCodAppuntamento() == 0)){
 			return SOVRASCRIVI;

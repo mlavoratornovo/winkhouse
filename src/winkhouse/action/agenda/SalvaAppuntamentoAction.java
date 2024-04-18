@@ -1,5 +1,6 @@
 package winkhouse.action.agenda;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.action.Action;
@@ -14,6 +15,7 @@ import winkhouse.dao.AppuntamentiDAO;
 import winkhouse.helper.AppuntamentiHelper;
 import winkhouse.helper.OptimisticLockHelper;
 import winkhouse.model.AppuntamentiModel;
+import winkhouse.orm.Appuntamenti;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.agenda.CalendarioView;
 import winkhouse.view.agenda.DettaglioAppuntamentoView;
@@ -50,13 +52,15 @@ public class SalvaAppuntamentoAction extends Action {
 				  															 .getActivePart();
 		if (dav != null){
 			
-			AppuntamentiModel am = dav.getAppuntamento();
+			Appuntamenti am = dav.getAppuntamento();
 			
 			OptimisticLockHelper olh = new OptimisticLockHelper();
 						
-			am.setDateUpdate(new Date());
+			am.setDateupdate(new Date().toInstant()
+				      .atZone(ZoneId.systemDefault())
+				      .toLocalDateTime());
 			if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
-				am.setCodUserUpdate(WinkhouseUtils.getInstance().getLoggedAgent().getCodAgente());
+				am.setAgenti(WinkhouseUtils.getInstance().getLoggedAgent());
 			}
 			
 			String decision = olh.checkOLAppuntamento(am);
@@ -64,22 +68,23 @@ public class SalvaAppuntamentoAction extends Action {
 			if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
 			
 			
-				if ((am.getCodAppuntamento() != null) && (am.getCodAppuntamento() != 0)){
+				if (am.getCodAppuntamento() != 0){
 					AppuntamentiDAO aDAO = new AppuntamentiDAO();
-					AppuntamentiVO dbapVO = (AppuntamentiVO)aDAO.getAppuntamentoByID(AppuntamentiVO.class.getName(), am.getCodAppuntamento());
+					Appuntamenti dbapVO = aDAO.getAppuntamentoByID(am.getCodAppuntamento());
 					
-					if (am.getDataAppuntamento().compareTo(dbapVO.getDataAppuntamento()) != 0){
-						am.setiCalUID(null);
-					}else if(am.getDataFineAppuntamento().compareTo(dbapVO.getDataFineAppuntamento()) != 0){
-						am.setiCalUID(null);
+					if (am.getDataappuntamento().compareTo(dbapVO.getDataappuntamento()) != 0){
+						am.setIcaluid(null);
+					}else if(am.getDatafineappuntamento().compareTo(dbapVO.getDatafineappuntamento()) != 0){
+						am.setIcaluid(null);
 					}
 						
 					
 				}
 				
-				if ((am.getAgenti() != null) && (am.getAgenti().size() > 0)){
-					AppuntamentiHelper ah = new AppuntamentiHelper();
-					if (ah.saveAppuntamento(am)){
+				if ((am.getAgentiappuntamentis() != null) && (am.getAgentiappuntamentis().size() > 0)){
+//					AppuntamentiHelper ah = new AppuntamentiHelper();
+//					if (ah.saveAppuntamento(am)){
+					am.getEditObjectContext().commitChanges();
 						PlatformUI.getWorkbench()
 				 		  		  .getActiveWorkbenchWindow()
 				 		  		  .getActivePage()
@@ -87,7 +92,7 @@ public class SalvaAppuntamentoAction extends Action {
 						dav = DettaglioAppuntamentoHandler.getInstance()
 														  .getDettaglioAppuntamento(am);
 	
-					}
+//					}
 				
 					CercaAppuntamentiAction caa = new CercaAppuntamentiAction(returnView);
 					caa.run();
@@ -119,7 +124,7 @@ public class SalvaAppuntamentoAction extends Action {
 																			        		   	String.valueOf(am.getCodAppuntamento()) + "Comp",
 																			        		   	IWorkbenchPage.VIEW_CREATE);
 					AppuntamentiDAO i_compDAO = new AppuntamentiDAO();
-					AppuntamentiModel appuntamento_comp = (AppuntamentiModel)i_compDAO.getAppuntamentoByID(AppuntamentiModel.class.getName(), am.getCodAppuntamento());
+					Appuntamenti appuntamento_comp = i_compDAO.getAppuntamentoByID(am.getCodAppuntamento());
 					
 					div_comp.setAppuntamento(appuntamento_comp);
 					div_comp.setCompareView(false);

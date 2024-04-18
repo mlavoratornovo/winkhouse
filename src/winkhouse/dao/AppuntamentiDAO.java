@@ -9,7 +9,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Affitti;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AppuntamentiVO;
 
 
@@ -35,7 +41,12 @@ public class AppuntamentiDAO extends BaseDAO {
 	public Object getAppuntamentoByID(String ClassName,Integer codAppuntamento){
 		return super.getObjectById(ClassName, GET_APPUNTAMENTO_BY_ID, codAppuntamento);
 	}
-	
+
+	public Appuntamenti getAppuntamentoByID(Integer codAppuntamento){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Appuntamenti.class,codAppuntamento);
+	}
+
 	public boolean delete(Integer codAppuntamento,Connection con,Boolean doCommit){
 		return super.deleteObjectById(DELETE_APPUNTAMENTO, codAppuntamento, con, doCommit);
 	}

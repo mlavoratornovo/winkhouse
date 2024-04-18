@@ -8,6 +8,8 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.model.AffittiModel;
+import winkhouse.orm.Affitti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.affitti.DettaglioAffittiView;
 import winkhouse.view.affitti.ListaAffittiView;
 
@@ -35,13 +37,13 @@ public class NuovoAffittoAction extends Action {
  				   														   .getActiveWorkbenchWindow()
  				   														   .getActivePage()
  				   														   .showView(DettaglioAffittiView.ID);			
-				AffittiModel am = new AffittiModel();
-				am.setCodImmobile(lav.getImmobile().getCodImmobile());
+				Affitti am = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Affitti.class);
+				am.setImmobili(lav.getImmobile());
 				dav.setAffitto(am);
 				dav.setFocus();
 				
 			}else{
-				MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+				MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						  				  "Errore nuovo affitto", 
 						  				  "Selezionare un dettaglio immobile");
 

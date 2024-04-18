@@ -9,6 +9,8 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
+import winkhouse.orm.Immobilipropietari;
 import winkhouse.view.immobili.AnagrafichePropietarieView;
 
 public class CancellaAnagraficaPropietariaAction extends Action {
@@ -42,13 +44,13 @@ public class CancellaAnagraficaPropietariaAction extends Action {
 																			   .getActivePage()
 																			   .getActivePart();
 
-		ImmobiliModel immobili = dav.getImmobile();
+		Immobili immobili = dav.getImmobile();
 		StructuredSelection ss = (StructuredSelection)dav.getTvAnagrafichePropietarie().getSelection();
 		
 		Iterator it = ss.iterator();
 		while (it.hasNext()){
-			AnagraficheModel am = (AnagraficheModel)it.next();
-			immobili.getAnagrafichePropietarie().remove(am);
+			Immobilipropietari am = (Immobilipropietari)it.next();
+			immobili.removeFromImmobilipropietaris(am);
 			
 		}
 		dav.getTvAnagrafichePropietarie().refresh();

@@ -14,6 +14,9 @@ import winkhouse.dao.ImmobiliDAO;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
+import winkhouse.orm.Immobili;
 import winkhouse.perspective.AnagrafichePerspective;
 import winkhouse.perspective.ColloquiPerspective;
 import winkhouse.perspective.ImmobiliPerspective;
@@ -48,18 +51,15 @@ public class NuovoColloquioAction extends Action {
 							  .getLastCodImmobileSelected() != null){
 
 				ImmobiliDAO iDAO = new ImmobiliDAO();
-				Object o = iDAO.getImmobileById(ImmobiliVO.class.getName(), 
-									 			WinkhouseUtils.getInstance()
-									 				  		  .getLastCodImmobileSelected());
+				Immobili o = iDAO.getImmobileById(WinkhouseUtils.getInstance().getLastCodImmobileSelected());
 				
 				if (o != null){
 					
-					ImmobiliVO ivo = (ImmobiliVO)o; 
-					DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance()
-												 					    .getDettaglioImmobile(ivo);
-					ImmobiliModel im = div.getImmobile();
+					DettaglioImmobileView div = DettaglioImmobiliHandler.getInstance().getDettaglioImmobile(o);
+												 					    
+					Immobili im = div.getImmobile();
 					
-					ColloquiModel cm = new ColloquiModel();
+					Colloqui cm = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
 					
 					try {
 						DettaglioColloquioView dcv = (DettaglioColloquioView)PlatformUI.getWorkbench()
@@ -70,7 +70,7 @@ public class NuovoColloquioAction extends Action {
 						dcv.setImmobile(im);
 						dcv.setFocus();
 						
-						Activator.getDefault().getWorkbench()
+						PlatformUI.getWorkbench()
 		   		 		 					  .getActiveWorkbenchWindow()
 		   		 		 					  .getActivePage()
 		   		 		 					  .bringToTop(dcv);
@@ -85,7 +85,7 @@ public class NuovoColloquioAction extends Action {
 						MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 			   					   					   SWT.ICON_WARNING);
 						mb.setText("Attenzione, selezione immobile non valida");
-						mb.setMessage("L'immobile selezionato non � presente in archivio, \n " +
+						mb.setMessage("L'immobile selezionato non è presente in archivio, \n " +
 									  "potrebbe essere stato cancellato da un altro utente");			
 						mb.open();																    	
 				 					
@@ -108,18 +108,16 @@ public class NuovoColloquioAction extends Action {
 			  	 			 .getLastCodAnagraficaSelected() != null){
 			   
 				AnagraficheDAO aDAO = new AnagraficheDAO();
-				Object o = aDAO.getAnagraficheById(AnagraficheVO.class.getName(), 
-											 	   WinkhouseUtils.getInstance()
-											 				  	 .getLastCodAnagraficaSelected());
+				Anagrafiche o = aDAO.getAnagraficheById(WinkhouseUtils.getInstance().getLastCodAnagraficaSelected());
 						
 				if (o != null){
 							
-					AnagraficheVO avo = (AnagraficheVO)o; 
-//					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance()
-//												 					        .getDettaglioAnagrafica(avo);
+					
+					DettaglioAnagraficaView dav = DettaglioAnagraficaHandler.getInstance().getDettaglioAnagrafica(o);
+												 					        
 //					AnagraficheModel am = dav.getAnagrafica();
 					
-					ColloquiModel cm = new ColloquiModel();
+					Colloqui cm = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
 					
 					try {
 						DettaglioColloquioView dcv = (DettaglioColloquioView)PlatformUI.getWorkbench()
@@ -127,7 +125,7 @@ public class NuovoColloquioAction extends Action {
 							    													   .getActivePage()															 
 							    													   .showView(DettaglioColloquioView.ID,String.valueOf(cm.getCodColloquio()),IWorkbenchPage.VIEW_CREATE);
 						dcv.setColloquio(cm);
-//						dcv.addAnagrafica(am);
+						dcv.addAnagrafica(o);
 						
 						Activator.getDefault().getWorkbench()
 		   		 		 					  .getActiveWorkbenchWindow()
@@ -164,7 +162,7 @@ public class NuovoColloquioAction extends Action {
 		
 		if ((currentPerspectiveId != null) && 
 			(currentPerspectiveId.equalsIgnoreCase(ColloquiPerspective.ID))){
-			ColloquiModel cm = new ColloquiModel();
+			Colloqui cm = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
 			try {
 				DettaglioColloquioView dcv = (DettaglioColloquioView)PlatformUI.getWorkbench()
 					    													   .getActiveWorkbenchWindow()
@@ -172,7 +170,7 @@ public class NuovoColloquioAction extends Action {
 					    													   .showView(DettaglioColloquioView.ID,String.valueOf(cm.getCodColloquio()),IWorkbenchPage.VIEW_CREATE);
 				dcv.setColloquio(cm);				
 				
-				Activator.getDefault().getWorkbench()
+				PlatformUI.getWorkbench()
    		 		 					  .getActiveWorkbenchWindow()
    		 		 					  .getActivePage()
    		 		 					  .bringToTop(dcv);

@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.db.ConnectionManager;
 import winkhouse.helper.ColloquiHelper;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Colloqui;
 import winkhouse.view.colloqui.ColloquiTreeView;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 import winkhouse.view.common.ColloquiView;
@@ -54,7 +55,7 @@ public class CancellaColloquio extends Action {
 		
 		DettaglioColloquioView dcv = null;
 		ColloquiView cv = null;
-		ColloquiModel cm = null;
+		Colloqui cm = null;
 		ColloquiTreeView ctv = null;
 		
 		try {
@@ -80,7 +81,7 @@ public class CancellaColloquio extends Action {
 					  					 .getActiveWorkbenchWindow()
 					  					 .getActivePage()
 					  					 .findView(ColloquiTreeView.ID);
-			cm = (ColloquiModel)((StructuredSelection)ctv.getViewer().getSelection()).getFirstElement();
+			cm = (Colloqui)((StructuredSelection)ctv.getViewer().getSelection()).getFirstElement();
 		} catch (Exception e) {
 			ctv = null;			
 		}
@@ -91,78 +92,78 @@ public class CancellaColloquio extends Action {
 			Connection con  = ConnectionManager.getInstance()
 											   .getConnection();
 			
-			HashMap hm = ch.deleteColloquio(cm, con, false);
-			if ((Boolean)hm.get(ColloquiHelper.RESULT_DELETE_COLLOQUIO_DB)){
-				if ((Boolean)hm.get(ColloquiHelper.RESULT_DELETE_ALLEGATI_DB)){
-					ArrayList alAllegati = (ArrayList)hm.get(ColloquiHelper.LIST_DELETE_ALLEGATI_FILE);
-					try {
-						con.commit();
-						if (!ch.deleteAllegatiColloqui(alAllegati)){
-							MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ICON_WARNING);
-							mb.setText("Cancellazione");
-							mb.setMessage("Cancellazione eseguita, ma alcuni file allegati non sono stati cancellati");
-							mb.open();
-						}else{
-							MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ICON_INFORMATION);
-							mb.setText("Cancellazione");
-							mb.setMessage("Cancellazione eseguita corretamente");			
-							mb.open();
-						}
-						if (dcv != null){
-							PlatformUI.getWorkbench()
-									  .getActiveWorkbenchWindow()
-									  .getActivePage()
-									  .hideView(dcv);
-						}
-						if (cv != null){
-							if (cv.getAnagrafica() != null){
-								cv.getAnagrafica().setColloqui(null);
-								cv.setAnagrafica(cv.getAnagrafica());
-							}else if (cv.getImmobile() != null){
-								cv.getImmobile().setColloqui(null);
-								cv.setImmobile(cv.getImmobile());
-							}	
-						}
-						if (ctv != null){
-							ctv.getViewer().refresh();
-						}
-					} catch (SQLException e) {
-						try {
-							con.rollback();
-							MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
-							mb.setText("Errore cancellazione");
-							mb.setMessage("Cancellazione non eseguita, errore nella cancellazione dalla base dati");			
-							mb.open();	
-							
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					}
-				}else{
-					try {
-						con.rollback();
-						MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
-						mb.setText("Errore cancellazione");
-						mb.setMessage("Cancellazione non eseguita, errore nella cancellazione dalla base dati");			
-						mb.open();	
-						
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-
-				}
-			}else{
-				try {
-					con.rollback();
-					MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
-					mb.setText("Errore cancellazione");
-					mb.setMessage("Cancellazione non eseguita, errore nella cancellazione dalla base dati");			
-					mb.open();	
-					
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}					
-			}
+//			HashMap hm = ch.deleteColloquio(cm, con, false);
+//			if ((Boolean)hm.get(ColloquiHelper.RESULT_DELETE_COLLOQUIO_DB)){
+//				if ((Boolean)hm.get(ColloquiHelper.RESULT_DELETE_ALLEGATI_DB)){
+//					ArrayList alAllegati = (ArrayList)hm.get(ColloquiHelper.LIST_DELETE_ALLEGATI_FILE);
+//					try {
+//						con.commit();
+//						if (!ch.deleteAllegatiColloqui(alAllegati)){
+//							MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ICON_WARNING);
+//							mb.setText("Cancellazione");
+//							mb.setMessage("Cancellazione eseguita, ma alcuni file allegati non sono stati cancellati");
+//							mb.open();
+//						}else{
+//							MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ICON_INFORMATION);
+//							mb.setText("Cancellazione");
+//							mb.setMessage("Cancellazione eseguita corretamente");			
+//							mb.open();
+//						}
+//						if (dcv != null){
+//							PlatformUI.getWorkbench()
+//									  .getActiveWorkbenchWindow()
+//									  .getActivePage()
+//									  .hideView(dcv);
+//						}
+//						if (cv != null){
+//							if (cv.getAnagrafica() != null){
+//								cv.getAnagrafica().setColloqui(null);
+//								cv.setAnagrafica(cv.getAnagrafica());
+//							}else if (cv.getImmobile() != null){
+//								cv.getImmobile().setColloqui(null);
+//								cv.setImmobile(cv.getImmobile());
+//							}	
+//						}
+//						if (ctv != null){
+//							ctv.getViewer().refresh();
+//						}
+//					} catch (SQLException e) {
+//						try {
+//							con.rollback();
+//							MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
+//							mb.setText("Errore cancellazione");
+//							mb.setMessage("Cancellazione non eseguita, errore nella cancellazione dalla base dati");			
+//							mb.open();	
+//							
+//						} catch (SQLException e1) {
+//							e1.printStackTrace();
+//						}
+//					}
+//				}else{
+//					try {
+//						con.rollback();
+//						MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
+//						mb.setText("Errore cancellazione");
+//						mb.setMessage("Cancellazione non eseguita, errore nella cancellazione dalla base dati");			
+//						mb.open();	
+//						
+//					} catch (SQLException e1) {
+//						e1.printStackTrace();
+//					}
+//
+//				}
+//			}else{
+//				try {
+//					con.rollback();
+//					MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
+//					mb.setText("Errore cancellazione");
+//					mb.setMessage("Cancellazione non eseguita, errore nella cancellazione dalla base dati");			
+//					mb.open();	
+//					
+//				} catch (SQLException e1) {
+//					e1.printStackTrace();
+//				}					
+//			}
 		}else{
 			MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ERROR);
 			mb.setText("Errore salvataggio");

@@ -37,7 +37,7 @@ public class RefreshAnagrafichePropietarieAction extends Action {
 				   															   .getActivePage()
 				   															   .getActivePart();
 		
-		dav.getImmobile().setAnagrafichePropietarie(null);
+		//dav.getImmobile().setAnagrafichePropietarie(null);
 		dav.getTvAnagrafichePropietarie().refresh();
 		
 	}
