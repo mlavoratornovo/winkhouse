@@ -17,6 +17,8 @@ import winkhouse.dao.ImmaginiDAO;
 import winkhouse.db.ConnectionManager;
 import winkhouse.helper.ImmaginiHelper;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immagini;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
 import winkhouse.vo.ImmagineVO;
@@ -50,9 +52,9 @@ public class AggiungiImmaginiAction extends Action {
 																	   .getActiveWorkbenchWindow()
 					  							 					   .getActivePage()
 					  							 					   .findView(ImmaginiImmobiliView.ID);
-			ImmobiliModel im = iiv.getImmobile();
-			if ((im != null) && (im.getCodImmobile() != null) && (im.getCodImmobile() != 0)){
-				FileDialog fd = new FileDialog(Activator.getDefault().getWorkbench()
+			Immobili im = iiv.getImmobile();
+			if ((im != null) && (im.getCodImmobile() != 0)){
+				FileDialog fd = new FileDialog(PlatformUI.getWorkbench()
 						   								.getActiveWorkbenchWindow().getShell(),
 						   					   SWT.OPEN|SWT.MULTI);
 				
@@ -61,7 +63,7 @@ public class AggiungiImmaginiAction extends Action {
 
 				fd.open();
 				ImmaginiDAO immaginiDAO = new ImmaginiDAO();
-				ImmagineVO iVO = new ImmagineVO();			
+				Immagini iVO = im.getEditObjectContext().newObject(Immagini.class);			
 				if (fd.getFileNames().length > 0){
 					for (int i = 0; i < fd.getFileNames().length; i++) {
 						if (WinkhouseUtils.getInstance()
@@ -73,26 +75,26 @@ public class AggiungiImmaginiAction extends Action {
 													   File.separator + File.separator + fd.getFileNames()[i])
 							){
 							Connection con = ConnectionManager.getInstance().getConnection();						
-							iVO.setCodImmobile(WinkhouseUtils.getInstance().getLastCodImmobileSelected());
-							iVO.setOrdine(im.getImmagini().size()+1);
-							iVO.setPathImmagine(fd.getFileNames()[i]);
-							if (immaginiDAO.saveUpdate(iVO, con, true)){
-								iVO.setCodImmagine(new Integer(0));
-								im.getImmagini().add(iVO);
-							}else{
-								MessageBox mb = new MessageBox(Activator.getDefault()
-																		.getWorkbench()
-																		.getActiveWorkbenchWindow().getShell(),
-															   SWT.ERROR);
-								mb.setMessage("Errore salvataggio dati immagine");
-								mb.open();										
-								ImmaginiHelper ih = new ImmaginiHelper();
-								ArrayList al = new ArrayList();
-								al.add(iVO);
-								ih.deleteImmagini(al);											
-							}
+//							iVO.setCodImmobile(WinkhouseUtils.getInstance().getLastCodImmobileSelected());
+							iVO.setOrdine(im.getImmaginis().size()+1);
+							iVO.setPathimmagine(fd.getFileNames()[i]);
+							im.addToImmaginis(iVO);
+//							if (immaginiDAO.saveUpdate(iVO, con, true)){								
+//								im.addToImmaginis(iVO);
+//							}else{
+//								MessageBox mb = new MessageBox(Activator.getDefault()
+//																		.getWorkbench()
+//																		.getActiveWorkbenchWindow().getShell(),
+//															   SWT.ERROR);
+//								mb.setMessage("Errore salvataggio dati immagine");
+//								mb.open();										
+//								ImmaginiHelper ih = new ImmaginiHelper();
+//								ArrayList al = new ArrayList();
+//								al.add(iVO);
+//								ih.deleteImmagini(al);											
+//							}
 						}else{
-							MessageBox mb = new MessageBox(Activator.getDefault()
+							MessageBox mb = new MessageBox(PlatformUI
 																	.getWorkbench()
 																	.getActiveWorkbenchWindow().getShell(),
 														   SWT.ERROR);
@@ -103,17 +105,16 @@ public class AggiungiImmaginiAction extends Action {
 					}
 					
 				}				
-				im.setImmagini(null);
 				iiv.showImages();
 			}else{
-				MessageDialog.openWarning(Activator.getDefault().getWorkbench()
+				MessageDialog.openWarning(PlatformUI.getWorkbench()
 						     					   .getActiveWorkbenchWindow().getShell(),
 						     			  "Attenzione", 
 				  						  "Selezionare un file");
 				
 			}
 		}else{
-			MessageDialog.openWarning(Activator.getDefault().getWorkbench()
+			MessageDialog.openWarning(PlatformUI.getWorkbench()
 											   .getActiveWorkbenchWindow().getShell(),
 									  "Attenzione", 
 									  "Selezionare un immobile o, se nuovo, salvare l'immobile selezionato");

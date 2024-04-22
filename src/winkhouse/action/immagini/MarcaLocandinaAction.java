@@ -6,6 +6,7 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.dao.ImmaginiDAO;
 import winkhouse.model.ImmagineModel;
+import winkhouse.orm.Immagini;
 import winkhouse.util.ImageProperties;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
 
@@ -38,21 +39,21 @@ public class MarcaLocandinaAction extends Action{
 		Pattern p = Pattern.compile("\\|");
 	    String[] immagineStr = p.split(iiv.getGallery().getSelection()[0].getText());					
 		*/
-		ImmagineModel im = (ImmagineModel)iiv.getGallery().getSelection()[0].getData();
-	    ImmaginiDAO iDAO = new ImmaginiDAO();
+		Immagini im = (Immagini)iiv.getGallery().getSelection()[0].getData();
+//	    ImmaginiDAO iDAO = new ImmaginiDAO();
 	    
 	    if (!im.getProprieta().containsKey(ImageProperties.LOCANDINA)){
-	    	im.setImgPropsStr((((im.getImgPropsStr() != null)&&(!im.getImgPropsStr().equalsIgnoreCase("")))
+	    	im.setImgprops((((im.getImgprops() != null)&&(!im.getImgprops().equalsIgnoreCase("")))
 	    					  ?""
-	    					  :im.getImgPropsStr() + ImageProperties.PROPERTY_SEPARATOR) + 
+	    					  :im.getImgprops() + ImageProperties.PROPERTY_SEPARATOR) + 
 	    					   ImageProperties.LOCANDINA);
 	    }else{
-	    	im.setImgPropsStr("");	    	
+	    	im.setImgprops("");	    	
 	    }
 		
-		iDAO.saveUpdate(im, null, true);
+		//iDAO.saveUpdate(im, null, true);
 		
-		iiv.getImmobile().setImmagini(null);
+		//iiv.getImmobile().setImmagini(null);
 		iiv.showImages();
 		
 	}

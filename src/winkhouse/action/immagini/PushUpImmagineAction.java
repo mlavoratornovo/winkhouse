@@ -11,6 +11,7 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.dao.ImmaginiDAO;
 import winkhouse.model.ImmagineModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
 
 
@@ -26,27 +27,27 @@ public class PushUpImmagineAction extends Action {
 													  						.getActiveWorkbenchWindow()
 																		    .getActivePage()
 																			.findView(ImmaginiImmobiliView.ID);
-		ImmobiliModel im = immaginiView.getImmobile();
-		ImmaginiDAO iDAO = new ImmaginiDAO();
+		Immobili im = immaginiView.getImmobile();
+		//ImmaginiDAO iDAO = new ImmaginiDAO();
 		if (im != null){
 			GalleryItem[] gi = immaginiView.getGallery().getSelection();			
 			if ((gi[0] != null)&&(gi[0].getData() != null)){
-				Iterator it = im.getImmagini().iterator();
+				Iterator it = im.getImmaginis().iterator();
 				while (it.hasNext()){
 					ImmagineModel img = (ImmagineModel)it.next();
 					if (img.getOrdine() == 1){
-						img.setOrdine(im.getImmagini().size());
+						img.setOrdine(im.getImmaginis().size());
 					}else{
 						img.setOrdine(img.getOrdine() - 1);
 					}
 
-					if (!iDAO.saveUpdate(img, null, true)){
-						MessageDialog.openError(PlatformUI.getWorkbench()
-														  .getActiveWorkbenchWindow()
-														  .getShell(), 
-														  "Errore salvaggio immagine", 
-														  "Si � verificato un errore nell'aggiornamento dell'ordine dell'immagine");
-					}
+//					if (!iDAO.saveUpdate(img, null, true)){
+//						MessageDialog.openError(PlatformUI.getWorkbench()
+//														  .getActiveWorkbenchWindow()
+//														  .getShell(), 
+//														  "Errore salvaggio immagine", 
+//														  "Si � verificato un errore nell'aggiornamento dell'ordine dell'immagine");
+//					}
 				}
 				
 			}else{
@@ -57,7 +58,7 @@ public class PushUpImmagineAction extends Action {
 						  				  "Selezionare una immagine");
 				
 			}
-			im.setImmagini(null);
+//			im.setImmagini(null);
 			immaginiView.setImmobile(im);
 		}
 		

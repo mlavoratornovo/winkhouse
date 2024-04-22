@@ -5,6 +5,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.PlatformUI;
 
+import winkhouse.dao.ImmobiliDAO;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
 
 
@@ -38,8 +39,9 @@ public class RefreshImmaginiAction extends Action {
 				  					 .getActivePage()
 				  					 .getActivePart();
 		if (iiv.getImmobile() != null){
-			iiv.getImmobile().setImmagini(null);
-			iiv.setImmobile(iiv.getImmobile());
+			//iiv.getImmobile().setImmagini(null);
+			ImmobiliDAO iDAO = new ImmobiliDAO();
+			iiv.setImmobile(iDAO.getImmobileById(iiv.getImmobile().getCodImmobile()));
 		}else{
 			MessageDialog.openWarning(PlatformUI.getWorkbench()
 												.getActiveWorkbenchWindow()

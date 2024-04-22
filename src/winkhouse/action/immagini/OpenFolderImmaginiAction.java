@@ -44,7 +44,7 @@ public class OpenFolderImmaginiAction extends Action {
 				  					 .getActivePage()
 				  					 .getActivePart();
 		
-		if ((iiv.getImmobile() != null) && (iiv.getImmobile().getCodImmobile() != null)){
+		if ((iiv.getImmobile() != null) && (iiv.getImmobile().getCodImmobile() != 0)){
 			
 			String pathRepositoryAllegati = (WinkhouseUtils.getInstance()
 					   									   .getPreferenceStore()
@@ -57,7 +57,7 @@ public class OpenFolderImmaginiAction extends Action {
 					   		                 				 .getPreferenceStore()
 					   		                 				 .getString(WinkhouseUtils.IMAGEPATH);
 	       				
-			File f = new File(pathRepositoryAllegati + File.separator + iiv.getImmobile().getCodImmobile().toString());
+			File f = new File(pathRepositoryAllegati + File.separator + String.valueOf(iiv.getImmobile().getCodImmobile()));
 			if (!f.exists()){
 				f.mkdirs();
 			}
