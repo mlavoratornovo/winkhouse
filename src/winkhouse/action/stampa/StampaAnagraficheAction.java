@@ -17,6 +17,8 @@ import winkhouse.dao.ReportDAO;
 import winkhouse.helper.ReportHelper;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Report;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 
@@ -45,9 +47,9 @@ public class StampaAnagraficheAction extends Action
 	
 	private class ReportAction extends Action{
 		
-		private ReportModel report = null;
+		private Report report = null;
 		
-		public ReportAction(String label, ReportModel report){
+		public ReportAction(String label, Report report){
 			super(label);
 			this.report = report;
 		}
@@ -60,10 +62,10 @@ public class StampaAnagraficheAction extends Action
 					  				.getActivePart();
 			
 			if (vp instanceof DettaglioAnagraficaView){
-//				AnagraficheModel am = ((DettaglioAnagraficaView)vp).getAnagrafica();
+				Anagrafiche am = ((DettaglioAnagraficaView)vp).getAnagrafica();
 				ReportHelper rh = new ReportHelper();
 				ArrayList al = new ArrayList();
-//				al.add(am);
+				al.add(am);
 				rh.doReport(al, report);
 			}
 			
@@ -80,13 +82,11 @@ public class StampaAnagraficheAction extends Action
 		fMenu = new Menu(parent);
 				
 		ReportDAO rDAO = new ReportDAO();
-		ArrayList al = rDAO.getReportByTipologia(ReportModel.class.getName(),
-								  				 WinkhouseUtils.ANAGRAFICHE
-								  				 );
+		ArrayList<Report> al = rDAO.getReportByTipologia(WinkhouseUtils.ANAGRAFICHE);
 			
-		Iterator it = al.iterator();
+		Iterator<Report> it = al.iterator();
 		while (it.hasNext()){
-			ReportModel rm = (ReportModel)it.next();
+			Report rm = (Report)it.next();
 			addActionToMenu(fMenu, new ReportAction(rm.getNome(), rm));
 		}
 		

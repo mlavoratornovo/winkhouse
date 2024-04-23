@@ -82,6 +82,7 @@ import winkhouse.model.ReportModel;
 import winkhouse.model.StanzeImmobiliModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Report;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.perspective.AgendaPerspective;
 import winkhouse.perspective.AnagrafichePerspective;
@@ -1897,13 +1898,13 @@ public class WinkhouseUtils {
 		public final static int STAMPA_PIU_FILE = 1;
 		
 		private ArrayList objsToPrint = null;
-		private ReportModel report = null;
+		private Report report = null;
 		private String destinationPath = null;
 		private int returnFileType = 1;
 		
-		public ReportEngineRunner(ArrayList objsToPrint, ReportModel report, String destinationPath,int resultFileType){
+		public ReportEngineRunner(ArrayList objsToPrint, Report report2, String destinationPath,int resultFileType){
 			this.objsToPrint = objsToPrint;
-			this.report = report;
+			this.report = report2;
 			this.destinationPath = destinationPath;
 			this.returnFileType = resultFileType;
 		}

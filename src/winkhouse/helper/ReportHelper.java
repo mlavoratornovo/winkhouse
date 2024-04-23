@@ -38,6 +38,7 @@ import winkhouse.db.ConnectionManager;
 import winkhouse.model.ReportModel;
 import winkhouse.model.xml.ReportMarkersXMLModel;
 import winkhouse.model.xml.ReportXMLModel;
+import winkhouse.orm.Report;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ReportMarkersVO;
 
@@ -252,7 +253,7 @@ public class ReportHelper {
 	
 
 	
-	public void doReport(ArrayList objsToPrint, ReportModel report){
+	public void doReport(ArrayList objsToPrint, Report report){
 		
 		FileDialog fd = new FileDialog(PlatformUI.getWorkbench()
 				 								 .getActiveWorkbenchWindow()
@@ -302,7 +303,7 @@ public class ReportHelper {
 		
 	}
 	
-	public void doReportList(ArrayList objsToPrint, ReportModel report){
+	public void doReportList(ArrayList objsToPrint, Report report){
 		
 		FileDialog fd = new FileDialog(PlatformUI.getWorkbench()
 				 								 .getActiveWorkbenchWindow()

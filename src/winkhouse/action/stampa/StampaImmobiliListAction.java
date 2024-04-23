@@ -14,6 +14,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ReportDAO;
 import winkhouse.helper.ReportHelper;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Report;
 import winkhouse.util.WinkhouseUtils;
 
 
@@ -40,9 +41,9 @@ public class StampaImmobiliListAction extends Action implements IAction,
 	
 	private class ReportAction extends Action{
 		
-		private ReportModel report = null;		
+		private Report report = null;		
 		
-		public ReportAction(String label, ReportModel report){
+		public ReportAction(String label, Report report){
 			super(label);
 			this.report = report;
 		}
@@ -58,7 +59,7 @@ public class StampaImmobiliListAction extends Action implements IAction,
 	    		    						   .getRisultati() != null)){
 				
 				ReportHelper rh = new ReportHelper();
-				if (report.getIsList()){
+				if (report.isIslist()){
 					rh.doReportList(WinkhouseUtils.getInstance()
 													.getRicercaWiz()
 							   						.getRicerca()
@@ -85,14 +86,13 @@ public class StampaImmobiliListAction extends Action implements IAction,
 		fMenu = new Menu(parent);
 				
 		ReportDAO rDAO = new ReportDAO();
-		ArrayList al = rDAO.getReportListByTipologia(ReportModel.class.getName(),
-								  				 	 WinkhouseUtils.IMMOBILI);
+		ArrayList<Report> al = rDAO.getReportListByTipologia(WinkhouseUtils.IMMOBILI);
 		al.addAll(rDAO.getReportByTipologia(ReportModel.class.getName(),
 				 	 						WinkhouseUtils.IMMOBILI));
 			
-		Iterator it = al.iterator();
+		Iterator<Report> it = al.iterator();
 		while (it.hasNext()){
-			ReportModel rm = (ReportModel)it.next();
+			Report rm = it.next();
 			addActionToMenu(fMenu, new ReportAction(rm.getNome(), rm));
 		}
 		

@@ -9,8 +9,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Report;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ReportVO;
 
 
@@ -31,8 +37,25 @@ public class ReportDAO extends BaseDAO {
 		return super.getObjectsByStringFieldValue(classType, REPORT_BY_TIPOLOGIA,tipologia);
 	}
 
+	public ArrayList<Report> getReportByTipologia(String tipologia){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Report>(ObjectSelect.query(Report.class)
+		 		   .where(Report.TIPO.eq(tipologia))
+		 		   .and(Report.ISLIST.isFalse())
+		           .select(context));			
+	}
+
 	public <T> ArrayList<T> getReportListByTipologia(String classType, String tipologia){
 		return super.getObjectsByStringFieldValue(classType, REPORT_LISTA_BY_TIPOLOGIA,tipologia);
+	}
+
+	public ArrayList<Report> getReportListByTipologia(String tipologia){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Report>(ObjectSelect.query(Report.class)
+		 		   .where(Report.TIPO.eq(tipologia))
+		 		   .and(Report.ISLIST.isTrue())
+		           .select(context));			
+
 	}
 
 	public Object getReportByID(Integer codReport){

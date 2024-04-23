@@ -55,6 +55,8 @@ import winkhouse.model.AttributeValueModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.ReportModel;
+import winkhouse.orm.Report;
+import winkhouse.orm.Reportmarkers;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.util.WinkhouseUtils.ObjectSearchGetters;
@@ -149,23 +151,23 @@ public class ReportEngine {
 		
 	}
 	
-	public Boolean doReport(ReportModel report, ArrayList elements, String destinationPath,int returnFileType){
+	public Boolean doReport(Report report, ArrayList elements, String destinationPath,int returnFileType){
 		
-		if (report.getIsList()){
+		if (report.isIslist()){
 			return createReportList(report, elements, destinationPath);
 		}else{
 			return createReport(report,elements,destinationPath,returnFileType);
 		}
 	}
 	
-	public Boolean createReportList(ReportModel report, ArrayList elements, String destinationPath){
+	public Boolean createReportList(Report report, ArrayList elements, String destinationPath){
 		Boolean returnValue = true;
 		
 		try {
 			OdfTextDocument odfdoc = OdfTextDocument.newTextDocument();
-			String[] methodDescription = getMethodDescriptions(report.getMarkers().get(0));
+			String[] methodDescription = getMethodDescriptions(report.getReportmarkerss().get(0));
 			
-			ArrayList params = getMarkerParametersValues(report.getMarkers().get(0).getParams());
+			ArrayList params = getMarkerParametersValues(report.getReportmarkerss().get(0).getParams());
 						
 			ArrayList objstoprint = new ArrayList();
 			
@@ -235,13 +237,13 @@ public class ReportEngine {
 		return returnValue;
 	}
 	
-	public Boolean createReport(ReportModel reportTemplate, ArrayList elements, String destinationPath,int returnFileType){
+	public Boolean createReport(Report reportTemplate, ArrayList elements, String destinationPath,int returnFileType){
 		
 		Boolean returnValue = true;
 		
 		try {
 			
-			ArrayList<ReportMarkersVO> markers = reportTemplate.getMarkers();
+			ArrayList<Reportmarkers> markers = new ArrayList<Reportmarkers>(reportTemplate.getReportmarkerss());
 			
 			Iterator it = elements.iterator();
 			int docCounter = 0;
@@ -266,10 +268,10 @@ public class ReportEngine {
 				Object methodResult = null;
 				Object o = it.next();
 				String pathPrefix = "";
-				Iterator<ReportMarkersVO> itM = markers.iterator();
+				Iterator<Reportmarkers> itM = markers.iterator();
 				
 				while (itM.hasNext()){
-					ReportMarkersVO rmVO = itM.next();
+					Reportmarkers rmVO = itM.next();
 					ArrayList params = getMarkerParametersValues(rmVO.getParams());
 					
 					for (int i = 0; i < nl.getLength(); i++) {
@@ -277,27 +279,27 @@ public class ReportEngine {
 						if (rmVO.getNome().equalsIgnoreCase(nl.item(i)/*nl.item(i).getTextContent()*/)){
 							String classToPrint = null;							
 							if (reportTemplate.getTipo().equalsIgnoreCase(WinkhouseUtils.IMMOBILI)){
-								methodResult = getMethodResult(o, ImmobiliModel.class, rmVO.getGetMethodName());
+								methodResult = getMethodResult(o, ImmobiliModel.class, rmVO.getGetmethodname());
 								classToPrint = ImmobiliModel.class.getName();
 								pathPrefix = String.valueOf(((ImmobiliModel)o).getCodImmobile());
 							}
 							if (reportTemplate.getTipo().equalsIgnoreCase(WinkhouseUtils.ANAGRAFICHE)){
-								methodResult = getMethodResult(o, AnagraficheModel.class, rmVO.getGetMethodName());
+								methodResult = getMethodResult(o, AnagraficheModel.class, rmVO.getGetmethodname());
 								classToPrint = AnagraficheModel.class.getName();
 								pathPrefix = String.valueOf(((AnagraficheModel)o).getCodAnagrafica());
 							}
 							if (reportTemplate.getTipo().equalsIgnoreCase(WinkhouseUtils.COLLOQUI)){
-								methodResult = getMethodResult(o, ColloquiModel.class, rmVO.getGetMethodName());
+								methodResult = getMethodResult(o, ColloquiModel.class, rmVO.getGetmethodname());
 								classToPrint = ColloquiModel.class.getName();
 								pathPrefix = String.valueOf(((ColloquiModel)o).getCodColloquio());
 							}
 							if (reportTemplate.getTipo().equalsIgnoreCase(WinkhouseUtils.APPUNTAMENTI)){
-								methodResult = getMethodResult(o, AppuntamentiModel.class, rmVO.getGetMethodName());
+								methodResult = getMethodResult(o, AppuntamentiModel.class, rmVO.getGetmethodname());
 								classToPrint = AppuntamentiModel.class.getName();
 								pathPrefix = String.valueOf(((AppuntamentiModel)o).getCodAppuntamento());
 							}
 							if (reportTemplate.getTipo().equalsIgnoreCase(WinkhouseUtils.AFFITTI)){
-								methodResult = getMethodResult(o, AffittiModel.class, rmVO.getGetMethodName());
+								methodResult = getMethodResult(o, AffittiModel.class, rmVO.getGetmethodname());
 								classToPrint = AffittiModel.class.getName();
 								pathPrefix = String.valueOf(((AffittiModel)o).getCodAffitti());
 							}
@@ -307,13 +309,13 @@ public class ReportEngine {
 								methodResult = (methodResult == null)?"":methodResult;
 								objstoprint = new ArrayList();								
 								objstoprint.add(methodResult);
-								if ((rmVO.getParamsDesc() != null) &&
-									(!rmVO.getParamsDesc().equalsIgnoreCase(""))){									
-									classToPrint = getClassNameObjList(reportTemplate.getTipo(), rmVO.getGetMethodName());
+								if ((rmVO.getParamsdesc() != null) &&
+									(!rmVO.getParamsdesc().equalsIgnoreCase(""))){									
+									classToPrint = getClassNameObjList(reportTemplate.getTipo(), rmVO.getGetmethodname());
 								}
 							}else{
 								objstoprint = new ArrayList();
-								classToPrint = getClassNameObjList(reportTemplate.getTipo(), rmVO.getGetMethodName());
+								classToPrint = getClassNameObjList(reportTemplate.getTipo(), rmVO.getGetmethodname());
 								if (params.size() == 0){
 									objstoprint = (List)methodResult;
 								}else{
@@ -849,14 +851,14 @@ public class ReportEngine {
 		
 	} 
 	
-	private String[] getMethodDescriptions(ReportMarkersVO rm){
+	private String[] getMethodDescriptions(Reportmarkers rm){
 		
 		String [] returnValue = new String[0];
 		
-		if ((rm.getParamsDesc() != null) && 
-			(!rm.getParamsDesc().equalsIgnoreCase(""))){
+		if ((rm.getParamsdesc() != null) && 
+			(!rm.getParamsdesc().equalsIgnoreCase(""))){
 			
-			returnValue = rm.getParamsDesc().split(",");
+			returnValue = rm.getParamsdesc().split(",");
 			
 		}
 		
