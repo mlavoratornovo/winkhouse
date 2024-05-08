@@ -3,12 +3,16 @@ package winkhouse.export.helpers;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.dao.AnagraficheDAO;
 import winkhouse.engine.search.SearchEngineAnagrafiche;
 import winkhouse.export.WrongCriteriaSequenceException;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AnagraficheVO;
 
 public class AnagraficheHelper {
@@ -40,9 +44,9 @@ public class AnagraficheHelper {
 	 * @return ArrayList<ImmobiliModel>
 	 * @throws WrongCriteriaSequenceException
 	 */
-	public ArrayList<AnagraficheModel> getAnagraficheByProperties(ArrayList<ColloquiCriteriRicercaModel> properties) throws WrongCriteriaSequenceException{
+	public ArrayList<Anagrafiche> getAnagraficheByProperties(ArrayList<Colloquicriteriricerca> properties) throws WrongCriteriaSequenceException{
 		
-		ArrayList<AnagraficheModel> returnValue  = new ArrayList<AnagraficheModel>();
+		ArrayList<Anagrafiche> returnValue  = new ArrayList<Anagrafiche>();
 		
 		SearchEngineAnagrafiche sea = new SearchEngineAnagrafiche(properties);
 		
@@ -118,13 +122,13 @@ public class AnagraficheHelper {
 	 * @return ArrayList<AnagraficheModel> lista delle anagrafiche corrispondenti all'anagrafica
 	 * passata in input
 	 */
-	public ArrayList<AnagraficheModel> getAnagraficheExist(AnagraficheModel anagrafica){
+	public ArrayList<Anagrafiche> getAnagraficheExist(Anagrafiche anagrafica){
 		
 		boolean nomeok = false,cognomeok = false,cittaok = false,indirizzook = false,codicefiscaleok = false,partitaivaok = false;
 		
-		ArrayList<AnagraficheModel> returnValue = new ArrayList<AnagraficheModel>();
+		ArrayList<Anagrafiche> returnValue = new ArrayList<Anagrafiche>();
 		
-		ArrayList<ColloquiCriteriRicercaModel> criteri = new ArrayList<ColloquiCriteriRicercaModel>();
+		ArrayList<Colloquicriteriricerca> criteri = new ArrayList<Colloquicriteriricerca>();
 		
 		if (anagrafica.getNome() != null && !anagrafica.getNome().trim().equalsIgnoreCase("")){	
 			nomeok = true;
@@ -143,81 +147,83 @@ public class AnagraficheHelper {
 		}
 		
 		
-		if (anagrafica.getCodiceFiscale() != null && !anagrafica.getCodiceFiscale().trim().equalsIgnoreCase("")){
+		if (anagrafica.getCodicefiscale() != null && !anagrafica.getCodicefiscale().trim().equalsIgnoreCase("")){
 			codicefiscaleok = true;
 		}
 		
-		if (anagrafica.getPartitaIva() != null && !anagrafica.getPartitaIva().trim().equalsIgnoreCase("")){
+		if (anagrafica.getPiva() != null && !anagrafica.getPiva().trim().equalsIgnoreCase("")){
 			partitaivaok = true;
 		}
 		
-		ColloquiCriteriRicercaModel criterioOpen = new ColloquiCriteriRicercaModel();
-		criterioOpen.setGetterMethodName("(");			
+		ObjectContext oc = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		
+		Colloquicriteriricerca criterioOpen = oc.newObject(Colloquicriteriricerca.class);		
+		criterioOpen.setGettermethodname("(");			
 		criterioOpen.setLineNumber(1);		
 		criteri.add(criterioOpen);
 		
-		if (nomeok == true){
-			ColloquiCriteriRicercaModel criterioNome = new ColloquiCriteriRicercaModel();
-			criterioNome.setFromValue(anagrafica.getNome());			
-			criterioNome.setGetterMethodName("getNome");
+		if (nomeok == true){			
+			Colloquicriteriricerca criterioNome = oc.newObject(Colloquicriteriricerca.class);
+			criterioNome.setFromvalue(anagrafica.getNome());			
+			criterioNome.setGettermethodname("getNome");
 			if(cognomeok == true || cittaok == true || indirizzook == true){
-				criterioNome.setLogicalOperator("AND");
+				criterioNome.setLogicaloperator("AND");
 			}
 			criterioNome.setLineNumber(2);		
 			criteri.add(criterioNome);
 		}
 		
-		if (cognomeok == true){
-			ColloquiCriteriRicercaModel criterioCognome = new ColloquiCriteriRicercaModel();
-			criterioCognome.setFromValue(anagrafica.getCognome());			
-			criterioCognome.setGetterMethodName("getCognome");
+		if (cognomeok == true){			
+			Colloquicriteriricerca criterioCognome = oc.newObject(Colloquicriteriricerca.class);
+			criterioCognome.setFromvalue(anagrafica.getCognome());			
+			criterioCognome.setGettermethodname("getCognome");
 			if(cittaok == true || indirizzook == true){
-				criterioCognome.setLogicalOperator("AND");
+				criterioCognome.setLogicaloperator("AND");
 			}
 			criterioCognome.setLineNumber(3);		
 			criteri.add(criterioCognome);
 		}
 
-		if (cittaok == true){
-			ColloquiCriteriRicercaModel criterioCitta = new ColloquiCriteriRicercaModel();
-			criterioCitta.setFromValue(anagrafica.getCitta());			
-			criterioCitta.setGetterMethodName("getCitta");
+		if (cittaok == true){			
+			Colloquicriteriricerca criterioCitta = oc.newObject(Colloquicriteriricerca.class);
+			criterioCitta.setFromvalue(anagrafica.getCitta());			
+			criterioCitta.setGettermethodname("getCitta");
 			if(indirizzook == true){
-				criterioCitta.setLogicalOperator("AND");
+				criterioCitta.setLogicaloperator("AND");
 			}
 			criterioCitta.setLineNumber(4);		
 			criteri.add(criterioCitta);
 		}
 		
-		if (indirizzook == true){
-			ColloquiCriteriRicercaModel criterioIndirizzo = new ColloquiCriteriRicercaModel();
-			criterioIndirizzo.setFromValue(anagrafica.getIndirizzo());
-			criterioIndirizzo.setGetterMethodName("getIndirizzo");
+		if (indirizzook == true){			
+			Colloquicriteriricerca criterioIndirizzo = oc.newObject(Colloquicriteriricerca.class);
+			criterioIndirizzo.setFromvalue(anagrafica.getIndirizzo());
+			criterioIndirizzo.setGettermethodname("getIndirizzo");
 			criterioIndirizzo.setLineNumber(5);		
 			criteri.add(criterioIndirizzo);			
 		}
-		
-		ColloquiCriteriRicercaModel criterioClose = new ColloquiCriteriRicercaModel();
-		criterioClose.setGetterMethodName(")");			
+				
+		Colloquicriteriricerca criterioClose = oc.newObject(Colloquicriteriricerca.class);
+		criterioClose.setGettermethodname(")");			
 		criterioClose.setLineNumber(6);
-		criterioClose.setLogicalOperator("OR");
+		criterioClose.setLogicaloperator("OR");
 		criteri.add(criterioClose);
 
-		if (codicefiscaleok == true){
-			ColloquiCriteriRicercaModel criterioCF = new ColloquiCriteriRicercaModel();
-			criterioCF.setFromValue(anagrafica.getCodiceFiscale());			
-			criterioCF.setGetterMethodName("getCodiceFiscale");
+		if (codicefiscaleok == true){			
+			Colloquicriteriricerca criterioCF = oc.newObject(Colloquicriteriricerca.class);
+			criterioCF.setFromvalue(anagrafica.getCodicefiscale());			
+			criterioCF.setGettermethodname("getCodiceFiscale");
 			if (partitaivaok == true){
-				criterioCF.setLogicalOperator("OR");
+				criterioCF.setLogicaloperator("OR");
 			}
 			criterioCF.setLineNumber(7);		
 			criteri.add(criterioCF);			
 		}
 		
-		if (partitaivaok == true){
-			ColloquiCriteriRicercaModel criterioPIVA = new ColloquiCriteriRicercaModel();
-			criterioPIVA.setFromValue(anagrafica.getPartitaIva());			
-			criterioPIVA.setGetterMethodName("getPartitaIva");			
+		if (partitaivaok == true){			
+			Colloquicriteriricerca criterioPIVA = oc.newObject(Colloquicriteriricerca.class);
+			criterioPIVA.setFromvalue(anagrafica.getPiva());			
+			criterioPIVA.setGettermethodname("getPartitaIva");			
 			criterioPIVA.setLineNumber(8);		
 			criteri.add(criterioPIVA);
 		}

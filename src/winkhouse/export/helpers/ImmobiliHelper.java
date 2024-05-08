@@ -3,6 +3,8 @@ package winkhouse.export.helpers;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.dao.AbbinamentiDAO;
 import winkhouse.dao.AllegatiImmobiliDAO;
 import winkhouse.dao.DatiCatastaliDAO;
@@ -14,7 +16,9 @@ import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.export.WrongCriteriaSequenceException;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.orm.Immobili;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AbbinamentiVO;
 import winkhouse.vo.AllegatiImmobiliVO;
 import winkhouse.vo.DatiCatastaliVO;
@@ -56,9 +60,9 @@ public class ImmobiliHelper {
 	 * @return ArrayList<ImmobiliModel>
 	 * @throws WrongCriteriaSequenceException
 	 */
-	public ArrayList<ImmobiliModel> getImmobiliByProperties(ArrayList<ColloquiCriteriRicercaModel> properties) throws WrongCriteriaSequenceException{
+	public ArrayList<Immobili> getImmobiliByProperties(ArrayList<Colloquicriteriricerca> properties) throws WrongCriteriaSequenceException{
 		
-		ArrayList<ImmobiliModel> returnValue  = new ArrayList<ImmobiliModel>();
+		ArrayList<Immobili> returnValue  = new ArrayList<Immobili>();
 		
 		SearchEngineImmobili sei = new SearchEngineImmobili(properties);
 		
@@ -218,39 +222,40 @@ public class ImmobiliHelper {
 	 * @return ArrayList<ImmobiliModel> lista degli immobili corrispondenti all'immobile
 	 * passato in input
 	 */
-	public ArrayList<ImmobiliModel> getImmobiliExist(ImmobiliModel immobile){
+	public ArrayList<Immobili> getImmobiliExist(Immobili immobile){
 		
-		ArrayList<ImmobiliModel> returnValue = new ArrayList<ImmobiliModel>();
+		ArrayList<Immobili> returnValue = new ArrayList<Immobili>();		
+		ArrayList<Colloquicriteriricerca> criteri = new ArrayList<Colloquicriteriricerca>();
 		
-		ArrayList<ColloquiCriteriRicercaModel> criteri = new ArrayList<ColloquiCriteriRicercaModel>();
-
-		ColloquiCriteriRicercaModel criterioOpen = new ColloquiCriteriRicercaModel();
-		criterioOpen.setGetterMethodName("(");			
+		ObjectContext oc = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		
+		Colloquicriteriricerca criterioOpen = oc.newObject(Colloquicriteriricerca.class);
+		criterioOpen.setGettermethodname("(");			
 		criterioOpen.setLineNumber(1);		
 		criteri.add(criterioOpen);
-		
-		ColloquiCriteriRicercaModel criterioIndirizzo = new ColloquiCriteriRicercaModel();
-		criterioIndirizzo.setFromValue(immobile.getIndirizzo());			
-		criterioIndirizzo.setGetterMethodName("getIndirizzo");
-		criterioIndirizzo.setLogicalOperator("AND");	
+				
+		Colloquicriteriricerca criterioIndirizzo = oc.newObject(Colloquicriteriricerca.class);
+		criterioIndirizzo.setFromvalue(immobile.getIndirizzo());			
+		criterioIndirizzo.setGettermethodname("getIndirizzo");
+		criterioIndirizzo.setLogicaloperator("AND");	
 		criterioIndirizzo.setLineNumber(2);		
 		criteri.add(criterioIndirizzo);
-
-		ColloquiCriteriRicercaModel criterioCitta = new ColloquiCriteriRicercaModel();
-		criterioCitta.setFromValue(immobile.getCitta());			
-		criterioCitta.setGetterMethodName("getCitta");
+		
+		Colloquicriteriricerca criterioCitta = oc.newObject(Colloquicriteriricerca.class);
+		criterioCitta.setFromvalue(immobile.getCitta());			
+		criterioCitta.setGettermethodname("getCitta");
 		criterioCitta.setLineNumber(3);		
 		criteri.add(criterioCitta);				
-		
-		ColloquiCriteriRicercaModel criterioClose = new ColloquiCriteriRicercaModel();
-		criterioClose.setGetterMethodName(")");			
+						
+		Colloquicriteriricerca criterioClose = oc.newObject(Colloquicriteriricerca.class);
+		criterioClose.setGettermethodname(")");			
 		criterioClose.setLineNumber(4);
-		criterioClose.setLogicalOperator("OR");
+		criterioClose.setLogicaloperator("OR");
 		criteri.add(criterioClose);
-
-		ColloquiCriteriRicercaModel criterioRif = new ColloquiCriteriRicercaModel();
-		criterioRif.setFromValue(immobile.getRif());			
-		criterioRif.setGetterMethodName("getRif");		
+		
+		Colloquicriteriricerca criterioRif = oc.newObject(Colloquicriteriricerca.class);		
+		criterioRif.setFromvalue(immobile.getRif());			
+		criterioRif.setGettermethodname("getRif");		
 		criterioRif.setLineNumber(5);		
 		criteri.add(criterioRif);
 				

@@ -73,6 +73,7 @@ import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.PromemoriaModel;
+import winkhouse.orm.Affitti;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
@@ -469,7 +470,7 @@ public class DesktopView extends ViewPart implements IZoomableWorkbenchPart{
 					adapa.run();					
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.AFFITTI)){
-					ApriAffittiAction aaa = new ApriAffittiAction((AffittiModel)myn.getObjModel());					
+					ApriAffittiAction aaa = new ApriAffittiAction((Affitti)myn.getObjModel());					
 					aaa.run();					
 				}
 				if (myn.getType().equalsIgnoreCase(WinkhouseUtils.COLLOQUI)){

@@ -163,46 +163,35 @@ public class OptimisticLockHelper {
 
 	public String checkOLColloquio(Colloqui colloquio){
 		
-		if ((colloquio.getCodColloquio() == null) || (colloquio.getCodColloquio() == 0)){
+		if (colloquio.getCodColloquio() == 0){
 			return SOVRASCRIVI;
 		}else{
+			ColloquiDAO cDAO = new ColloquiDAO();
+			Colloqui cm_DB = cDAO.getColloquioById(colloquio.getCodColloquio());
 			
-		
-			if (colloquio.getCodColloquio() != null){
-							
-				ColloquiDAO cDAO = new ColloquiDAO();
-				ColloquiModel cm_DB = (ColloquiModel)cDAO.getColloquioById(ColloquiModel.class.getName(), colloquio.getCodColloquio());
+			if (cm_DB.getDateupdate() != null){
 				
-				if (cm_DB.getDateUpdate() != null){
+				if (cm_DB.getDateupdate().isAfter(colloquio.getDateupdate())){
 					
-					if (cm_DB.getDateUpdate().after(colloquio.getDateUpdate())){
-						
-						String message = "ATTENZIONE : il colloquio " + colloquio.toString() + "\n � stato modificato da un altro agente mentre lo stavi editando.\n";
-						if (cm_DB.getCodUserUpdate() != null){
-							AgentiDAO agDAO = new AgentiDAO();
-							AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), cm_DB.getCodUserUpdate());
-							if (aVO != null){
-								message += "L'agente che ha effettuato le modifiche � " + aVO.toString();
-							}
-						}
-						MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-																 "Winkhouse : il colloquio � stato modificato", null,
-																 message,
-																 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
-						switch (dialog.open()){
-							case 0 :return SOVRASCRIVI;
-							case 1 :return VISUALIZZA;
-							case 2 :return ANNULLA;
-							default : return ANNULLA;
-						} 		
-						
-					}else{
-						return SOVRASCRIVI;
+					String message = "ATTENZIONE : il colloquio " + colloquio.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					if (cm_DB.getAgenti()!= null){
+						message += "L'agente che ha effettuato le modifiche è " + cm_DB.getAgenti().toString();
 					}
-			
+					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
+															 "Winkhouse : il colloquio è stato modificato", null,
+															 message,
+															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
+					switch (dialog.open()){
+						case 0 :return SOVRASCRIVI;
+						case 1 :return VISUALIZZA;
+						case 2 :return ANNULLA;
+						default : return ANNULLA;
+					} 		
+					
 				}else{
 					return SOVRASCRIVI;
 				}
+		
 			}else{
 				return SOVRASCRIVI;
 			}
@@ -212,27 +201,23 @@ public class OptimisticLockHelper {
 
 	public String checkOLAppuntamento(Appuntamenti appuntamento){
 		
-		if ((appuntamento.getCodAppuntamento() == null) || (appuntamento.getCodAppuntamento() == 0)){
+		if (appuntamento.getCodAppuntamento() == 0){
 			return SOVRASCRIVI;
 		}else{
 			
 			AppuntamentiDAO aDAO = new AppuntamentiDAO();
-			AppuntamentiModel am_DB = (AppuntamentiModel)aDAO.getAppuntamentoByID(AppuntamentiModel.class.getName(), appuntamento.getCodAppuntamento());
+			Appuntamenti am_DB = aDAO.getAppuntamentoByID(appuntamento.getCodAppuntamento());
 			
-			if (am_DB.getDateUpdate() != null){
+			if (am_DB.getDateupdate() != null){
 				
-				if (am_DB.getDateUpdate().after(appuntamento.getDateUpdate())){
+				if (am_DB.getDateupdate().isAfter(appuntamento.getDateupdate())){
 					
-					String message = "ATTENZIONE : l'appuntamento " + appuntamento.toString() + "\n � stato modificato da un altro agente mentre lo stavi editando.\n";
-					if (am_DB.getCodUserUpdate() != null){
-						AgentiDAO agDAO = new AgentiDAO();
-						AgentiVO aVO = (AgentiVO)agDAO.getAgenteById(AgentiVO.class.getName(), am_DB.getCodUserUpdate());
-						if (aVO != null){
-							message += "L'agente che ha effettuato le modifiche � " + aVO.toString();
-						}
+					String message = "ATTENZIONE : l'appuntamento " + appuntamento.toString() + "\n è stato modificato da un altro agente mentre lo stavi editando.\n";
+					if (am_DB.getAgenti() != null){
+						message += "L'agente che ha effettuato le modifiche è " + am_DB.getAgenti().toString();
 					}
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-															 "Winkhouse : l'appuntamento � stato modificato", null,
+															 "Winkhouse : l'appuntamento è stato modificato", null,
 															 message,
 															 MessageDialog.WARNING, new String[] {SOVRASCRIVI,VISUALIZZA,ANNULLA}, 0);
 					switch (dialog.open()){

@@ -1,5 +1,6 @@
 package winkhouse.wizard;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.jface.wizard.IWizardPage;
@@ -11,6 +12,9 @@ import winkhouse.Activator;
 import winkhouse.action.colloqui.SalvaColloquioAction;
 import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Colloqui;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.wizard.colloqui.AllegatiColloquio;
 import winkhouse.wizard.colloqui.CriteriRicercaColloquio;
@@ -47,7 +51,7 @@ public class ColloquiWizard extends Wizard {
 	private SelezioneImmobile selezioneImmobile = null;
 	private RiassuntoColloquio riassuntoColloquio = null;
 	
-	private ColloquiModel colloquio = null;
+	private Colloqui colloquio = null;
 	private boolean wizardResult = true;
 		
 	public ColloquiWizard() {
@@ -122,14 +126,14 @@ public class ColloquiWizard extends Wizard {
 		
 	}
 
-	public ColloquiModel getColloquio() {
+	public Colloqui getColloquio() {
 		if (colloquio == null){
-			colloquio = new ColloquiModel();
+			colloquio = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloqui.class);
 		}
 		return colloquio;
 	}
 
-	public void setColloquio(ColloquiModel colloquio) {
+	public void setColloquio(Colloqui colloquio) {
 		this.colloquio = colloquio;
 	}
 
@@ -138,8 +142,8 @@ public class ColloquiWizard extends Wizard {
 		
 		IWizardPage returnValue = null;
 		if (page instanceof SelezioneTipoColloquio){
-			if((getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 1) || 
-			   (getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 3)){
+			if((getColloquio().getCodtipologiacolloquio() == 1) || 
+			   (getColloquio().getCodtipologiacolloquio() == 3)){
 				returnValue = datiComuniColloquio;
 				
 			}else{
@@ -147,57 +151,56 @@ public class ColloquiWizard extends Wizard {
 			}	
 		} 
 		if ((page instanceof DatiComuniColloquio)){
-			if((getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 1) || 
-			   (getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 3)){
-				if (colloquio.getAgenteInseritore() != null){
+			if((getColloquio().getCodtipologiacolloquio() == 1) || 
+			   (getColloquio().getCodtipologiacolloquio() == 3)){
+				if (colloquio.getAgenti1() != null){
 					returnValue = inserimentoAggiornamentoAnagrafica;
 				}
 			}else{
-				if (colloquio.getAgenteInseritore() != null){
+				if (colloquio.getAgenti1() != null){
 					returnValue = inserimentoAgenti;
 				}
 			}
 		}
 		
 		if (page instanceof SelezioneImmobile){
-			if ((colloquio.getCodImmobileAbbinato() != null) &&
-				(colloquio.getCodImmobileAbbinato() != 0)){	
+			if (colloquio.getImmobili()!= null){	
 				returnValue = inserimentoAggiornamentoAnagrafica;
 			}
 		}
 		
 		if (page instanceof InserimentoAggiornamentoAnagrafica){
-			if(getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 1){
-				if ((colloquio.getAnagrafiche() != null) && 
-					(colloquio.getAnagrafiche().size() > 0)){
+			if(getColloquio().getCodtipologiacolloquio() == 1){
+				if ((colloquio.getColloquianagrafiches() != null) && 
+					(colloquio.getColloquianagrafiches().size() > 0)){
 					returnValue = criteriRicercaColloquio;
 				}
 			}
-			if(getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 2){
-				if ((colloquio.getAnagrafiche() != null) && 
-					(colloquio.getAnagrafiche().size() > 0)){
+			if(getColloquio().getCodtipologiacolloquio() == 2){
+				if ((colloquio.getColloquianagrafiches() != null) && 
+					(colloquio.getColloquianagrafiches().size() > 0)){
 					returnValue = datiComuniColloquio;
 				}
 			}						
-			if(getColloquio().getTipologia().getCodTipologiaColloquio().intValue() == 3){
-				if ((colloquio.getAnagrafiche() != null) && 
-					(colloquio.getAnagrafiche().size() > 0)){
+			if(getColloquio().getCodtipologiacolloquio() == 3){
+				if ((colloquio.getColloquianagrafiches() != null) && 
+					(colloquio.getColloquianagrafiches().size() > 0)){
 					returnValue = inserimentoAgenti;
 				}
 			}						
 		}
 		if (page instanceof CriteriRicercaColloquio){
-			if (colloquio.getCriteriRicerca() != null){
-				if (colloquio.getCriteriRicerca().size() > 0){
-					if (colloquio.getCriteriRicerca().size() == 1){
-						if (((ColloquiCriteriRicercaVO)colloquio.getCriteriRicerca()
-																.get(0)).getGetterMethodName()
+			if (colloquio.getColloquicriteriricercas() != null){
+				if (colloquio.getColloquicriteriricercas().size() > 0){
+					if (colloquio.getColloquicriteriricercas().size() == 1){
+						if (((Colloquicriteriricerca)colloquio.getColloquicriteriricercas()
+																.get(0)).getGettermethodname()
 																		.equalsIgnoreCase("(") ||
-							((ColloquiCriteriRicercaVO)colloquio.getCriteriRicerca()
-																.get(0)).getGetterMethodName()
+							((Colloquicriteriricerca)colloquio.getColloquicriteriricercas()
+																.get(0)).getGettermethodname()
 																		.equalsIgnoreCase(")") ||
-							((ColloquiCriteriRicercaVO)colloquio.getCriteriRicerca()
-																.get(0)).getGetterMethodName()
+							((Colloquicriteriricerca)colloquio.getColloquicriteriricercas()
+																.get(0)).getGettermethodname()
 																		.equalsIgnoreCase("")																		
 						   ){
 							
@@ -240,12 +243,12 @@ public class ColloquiWizard extends Wizard {
 		boolean returnValue = true;
 		int numOpen = 0;
 		int numClose = 0;
-		if ((colloquio != null) && (colloquio.getCriteriRicerca() != null)){
-			Iterator it = colloquio.getCriteriRicerca().iterator();
+		if ((colloquio != null) && (colloquio.getColloquicriteriricercas() != null)){
+			Iterator<Colloquicriteriricerca> it = colloquio.getColloquicriteriricercas().iterator();
 			String prev = "";
 			while (it.hasNext()){
-				ColloquiCriteriRicercaVO ccrVO = (ColloquiCriteriRicercaVO)it.next();
-				if (ccrVO.getGetterMethodName().equalsIgnoreCase("(")){
+				Colloquicriteriricerca ccrVO = it.next();
+				if (ccrVO.getGettermethodname().equalsIgnoreCase("(")){
 					if (!prev.equalsIgnoreCase(")")){
 						numOpen++;					 
 					}else{
@@ -253,7 +256,7 @@ public class ColloquiWizard extends Wizard {
 						break;
 					}					
 				}
-				if (ccrVO.getGetterMethodName().equalsIgnoreCase(")")){
+				if (ccrVO.getGettermethodname().equalsIgnoreCase(")")){
 					if (!prev.equalsIgnoreCase("(")){
 						numClose++;						 
 					}else{
@@ -261,7 +264,7 @@ public class ColloquiWizard extends Wizard {
 						break;
 					}															
 				}	
-				prev = ccrVO.getGetterMethodName();
+				prev = ccrVO.getGettermethodname();
 			}
 		}
 		if (returnValue){
@@ -274,7 +277,7 @@ public class ColloquiWizard extends Wizard {
 					mb.open();							
 				}
 			}else{
-				SearchEngineImmobili sei = new SearchEngineImmobili(colloquio.getCriteriRicerca());
+				SearchEngineImmobili sei = new SearchEngineImmobili(new ArrayList<Colloquicriteriricerca>(colloquio.getColloquicriteriricercas()));
 				if (sei.verifyQuery()){
 					if (showpopup){
 						MessageBox mb = new MessageBox(this.getShell(),SWT.ICON_INFORMATION);
