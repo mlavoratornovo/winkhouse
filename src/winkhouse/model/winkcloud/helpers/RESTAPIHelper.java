@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import winkhouse.util.AnagraficheMethodName;
 import winkhouse.util.ColloquiMethodName;
 import winkhouse.util.ImmobiliMethodName;
+import winkhouse.util.WinkhouseUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -52,6 +53,7 @@ import winkhouse.orm.Classicliente;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Colloquianagrafiche;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.orm.Immobili;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
@@ -303,40 +305,40 @@ public class RESTAPIHelper {
 		return gson.toJson(returnValue);
 	}
 	
-	public CriteriRicercaModel serchCoreCriteria(Request req){
-		CriteriRicercaModel returnValue = new CriteriRicercaModel();
+	public Colloquicriteriricerca serchCoreCriteria(Request req){
+		Colloquicriteriricerca returnValue = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);
 		String id = null;
 		try {
 			id = req.queryParams("id");
 		} catch (Exception e) {
 			id = "";
 		}	
-		returnValue.setFromValue(id);
+		returnValue.setFromvalue(id);
 		String tipo = req.queryParams("tipo");
 		switch (tipo) {
 		case "ce": 
-			returnValue.setGetterMethodName(ImmobiliMethodName.GET_CODCLASSEENERGETICA);	
+			returnValue.setGettermethodname(ImmobiliMethodName.GET_CODCLASSEENERGETICA);	
 			break;
 		case "ti":
-			returnValue.setGetterMethodName(ImmobiliMethodName.GET_CODTIPOLOGIA);
+			returnValue.setGettermethodname(ImmobiliMethodName.GET_CODTIPOLOGIA);
 			break;
 		case "cc":
-			returnValue.setGetterMethodName(AnagraficheMethodName.GET_CODCLASSECLIENTE);
+			returnValue.setGettermethodname(AnagraficheMethodName.GET_CODCLASSECLIENTE);
 			break;
 		case "tc":			
-			returnValue.setGetterMethodName(ColloquiMethodName.GET_CODTIPOLOGIA);
+			returnValue.setGettermethodname(ColloquiMethodName.GET_CODTIPOLOGIA);
 			break;
 		case "ts":
-			returnValue.setGetterMethodName("Tipi stanze");
+			returnValue.setGettermethodname("Tipi stanze");
 			break;
 		case "tcon":
-			returnValue.setGetterMethodName("Tipi contatti");
+			returnValue.setGettermethodname("Tipi contatti");
 			break;
 		case "ri":
-			returnValue.setGetterMethodName(ImmobiliMethodName.GET_CODRISCALDAMENTO);
+			returnValue.setGettermethodname(ImmobiliMethodName.GET_CODRISCALDAMENTO);
 			break;
 		case "sc":
-			returnValue.setGetterMethodName(ImmobiliMethodName.GET_CODSTATO);
+			returnValue.setGettermethodname(ImmobiliMethodName.GET_CODSTATO);
 			break;
 
 		default:
@@ -512,7 +514,7 @@ public class RESTAPIHelper {
 	public ArrayList searchItems(Request req){
 		
 		ArrayList returnValue = new ArrayList();
-		ArrayList<CriteriRicercaModel> criteri = new ArrayList<CriteriRicercaModel>();		
+		ArrayList<Colloquicriteriricerca> criteri = new ArrayList<Colloquicriteriricerca>();		
 		
 		GsonBuilder jsonBuilder = new GsonBuilder();
 		Gson gson = jsonBuilder.create();		
@@ -528,7 +530,7 @@ public class RESTAPIHelper {
 			criteri.add(type.toCriteriRicercaModel());
 		}
 		if (criteri.size()>0){
-			criteri.get(criteri.size()-1).setLogicalOperator("");
+			criteri.get(criteri.size()-1).setLogicaloperator("");
 		}
 
 		if (retval.size() > 0 && retval.get(0).getSearchType().equalsIgnoreCase("SEARCH_IMMOBILI")){
@@ -609,7 +611,7 @@ public class RESTAPIHelper {
 	}
 
 	
-	protected String searchImmobiliData(ArrayList<CriteriRicercaModel> criteria){
+	protected String searchImmobiliData(ArrayList<Colloquicriteriricerca> criteria){
 		SearchEngineImmobili sei = new SearchEngineImmobili(criteria);
 		ArrayList immobili = sei.find();
 		for (Object object : immobili) {
@@ -622,7 +624,7 @@ public class RESTAPIHelper {
 
 	}
 	
-	public String searchAngraficheData(ArrayList<CriteriRicercaModel> criteria){
+	public String searchAngraficheData(ArrayList<Colloquicriteriricerca> criteria){
 		SearchEngineAnagrafiche sea = new SearchEngineAnagrafiche(criteria);
 		ArrayList anagrafiche = sea.find();
 		GsonBuilder jsonBuilder = new GsonBuilder();
@@ -631,7 +633,7 @@ public class RESTAPIHelper {
 		
 	}
 
-	public String searchColloquiData(ArrayList<CriteriRicercaModel> criteria){
+	public String searchColloquiData(ArrayList<Colloquicriteriricerca> criteria){
 		SearchEngineColloqui sec = new SearchEngineColloqui(criteria);
 		ArrayList colloqui = sec.find();
 		GsonBuilder jsonBuilder = new GsonBuilder();

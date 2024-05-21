@@ -38,6 +38,7 @@ import winkhouse.model.winkcloud.helpers.RESTAPIHelper;
 import winkhouse.model.winkcloud.mobilecolumns.ImmobiliColumnNames;
 import winkhouse.model.winkcloud.restmsgs.QueryByCode;
 import winkhouse.model.xml.RicercheXMLModel;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.util.AnagraficheMethodName;
 import winkhouse.util.ColloquiMethodName;
 import winkhouse.util.ImmobiliMethodName;
@@ -73,7 +74,7 @@ public class HTTPJob extends Job {
 				ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 				CloudQueryOrigin type = (CloudQueryOrigin)searchResult.get(2);
 				CloudQueryModel cqm = new CloudQueryModel(type, "", new Date());
-				ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+				ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
 				for (RicercaModel ricerca : (ArrayList<RicercaModel>)searchResult.get(0)) {
 					al.add(ricerca.toCriteriRicercaModel());
 				} 
@@ -120,7 +121,7 @@ public class HTTPJob extends Job {
 			}
 			CloudQueryModel cqm = new CloudQueryModel(type, "", new Date());
 			
-			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
+			ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
 			al.add(restAPIHelper.serchCoreCriteria(req));
 			cqm.setCriteri(al);
 			alq.add(cqm);
@@ -130,10 +131,10 @@ public class HTTPJob extends Job {
 		get("/colloqui/immobile/:idimmobile", (req, res) -> {
 			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_COLLOQUI_IMMOBILE, "", new Date());
-			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
-			CriteriRicercaModel c = new CriteriRicercaModel();
-			c.setGetterMethodName(ImmobiliMethodName.GET_CODIMMOBILE);
-			c.setFromValue(req.params(":idimmobile"));
+			ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
+			Colloquicriteriricerca c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);
+			c.setGettermethodname(ImmobiliMethodName.GET_CODIMMOBILE);
+			c.setFromvalue(req.params(":idimmobile"));
 			al.add(c);			
 			cqm.setCriteri(al);
 			alq.add(cqm);
@@ -143,10 +144,10 @@ public class HTTPJob extends Job {
 		get("/colloqui/anagrafica/:idanagrafica", (req, res) -> {
 			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_COLLOQUI_ANAGRAFICA, "", new Date());
-			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
-			CriteriRicercaModel c = new CriteriRicercaModel();
-			c.setGetterMethodName(AnagraficheMethodName.GET_CODANAGRAFICA);
-			c.setFromValue(req.params(":idanagrafica"));
+			ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
+			Colloquicriteriricerca c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);;
+			c.setGettermethodname(AnagraficheMethodName.GET_CODANAGRAFICA);
+			c.setFromvalue(req.params(":idanagrafica"));
 			al.add(c);			
 			cqm.setCriteri(al);			
 			cqm.setCriteri(al);
@@ -157,10 +158,10 @@ public class HTTPJob extends Job {
 		get("/anagrafica/:idanagrafica/abbinati", (req, res) -> {
 			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_ABBINAMENTI_IMMOBILI_ANAGRAFICA, "", new Date());
-			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
-			CriteriRicercaModel c = new CriteriRicercaModel();
-			c.setGetterMethodName(AnagraficheMethodName.GET_CODANAGRAFICA);
-			c.setFromValue(req.params(":idanagrafica"));
+			ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
+			Colloquicriteriricerca c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);;
+			c.setGettermethodname(AnagraficheMethodName.GET_CODANAGRAFICA);
+			c.setFromvalue(req.params(":idanagrafica"));
 			al.add(c);			
 			cqm.setCriteri(al);
 			alq.add(cqm);
@@ -170,10 +171,10 @@ public class HTTPJob extends Job {
 		get("/immobile/:idimmobile/abbinati", (req, res) -> {
 			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.GET_ABBINAMENTI_ANAGRAFICHE_IMMOBILE, "", new Date());			
-			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
-			CriteriRicercaModel c = new CriteriRicercaModel();
-			c.setGetterMethodName(ImmobiliMethodName.GET_CODIMMOBILE);
-			c.setFromValue(req.params(":idimmobile"));
+			ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
+			Colloquicriteriricerca c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);;
+			c.setGettermethodname(ImmobiliMethodName.GET_CODIMMOBILE);
+			c.setFromvalue(req.params(":idimmobile"));
 			al.add(c);
 			cqm.setCriteri(al);
 			alq.add(cqm);
@@ -183,9 +184,9 @@ public class HTTPJob extends Job {
 		post("/immobile", (req, res) -> {
 			ArrayList<CloudQueryModel> alq = this.monitorHTTP.getCloudQueries();
 			CloudQueryModel cqm = new CloudQueryModel(CloudQueryOrigin.POST_PUT_IMMOBILE, "", new Date());
-			ArrayList<CriteriRicercaModel> al = new ArrayList<CriteriRicercaModel>();
-			CriteriRicercaModel c = new CriteriRicercaModel();
-			c.setGetterMethodName("invio immobili");			
+			ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
+			Colloquicriteriricerca c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);;
+			c.setGettermethodname("invio immobili");			
 			al.add(c);
 			cqm.setCriteri(al);
 			alq.add(cqm);

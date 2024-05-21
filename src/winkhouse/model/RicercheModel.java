@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.ColloquiCriteriRicercaDAO;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.vo.RicercheVO;
 
 
 public class RicercheModel extends RicercheVO {
 
-	private ArrayList<ColloquiCriteriRicercaModel> criteri = null;
+	private ArrayList<Colloquicriteriricerca> criteri = null;
 	
 	public RicercheModel() {
 		super();
@@ -25,20 +26,20 @@ public class RicercheModel extends RicercheVO {
 	 * Ritorna la lista dei criteri di ricerca salvati dall'utente per la ricerca di appartenenza
 	 * @return ArrayList<CriteriRicercaModel>
 	 */
-	public ArrayList<ColloquiCriteriRicercaModel> getCriteri() {
-		if (criteri == null){
-			if (getCodRicerca() != null){
-				ColloquiCriteriRicercaDAO ccrDAO = new ColloquiCriteriRicercaDAO();
-				criteri = ccrDAO.getColloquiCriteriRicercaByRicerca(ColloquiCriteriRicercaModel.class.getName(), getCodRicerca());
-				for (ColloquiCriteriRicercaModel criterio : criteri) {
-					criterio.setTypeSearch(this.getTipo());
-				}
-			}
-		}
+	public ArrayList<Colloquicriteriricerca> getCriteri() {
+//		if (criteri == null){
+//			if (getCodRicerca() != null){
+//				ColloquiCriteriRicercaDAO ccrDAO = new ColloquiCriteriRicercaDAO();
+//				criteri = ccrDAO.getColloquiCriteriRicercaByRicerca(ColloquiCriteriRicercaModel.class.getName(), getCodRicerca());
+//				for (ColloquiCriteriRicercaModel criterio : criteri) {
+//					criterio.setTypeSearch(this.getTipo());
+//				}
+//			}
+//		}
 		return criteri;
 	}
 	
-	public void setCriteri(ArrayList<ColloquiCriteriRicercaModel> criteriRicerca){
+	public void setCriteri(ArrayList<Colloquicriteriricerca> criteriRicerca){
 		criteri = criteriRicerca;
 	}
 
@@ -55,9 +56,9 @@ public class RicercheModel extends RicercheVO {
 					
 					if(((RicercheModel)obj).getTipo() == this.getTipo()){
 						
-						Iterator<ColloquiCriteriRicercaModel> it = ((RicercheModel)obj).getCriteri().iterator();
+						Iterator<Colloquicriteriricerca> it = ((RicercheModel)obj).getCriteri().iterator();
 						while(it.hasNext()){
-							Iterator<ColloquiCriteriRicercaModel> ite = getCriteri().iterator();
+							Iterator<Colloquicriteriricerca> ite = getCriteri().iterator();
 							if (!it.next().equals(ite.next())){
 								returnValue = false;
 								break;

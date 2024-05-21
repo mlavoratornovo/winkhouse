@@ -13,6 +13,7 @@ import com.google.common.collect.ArrayListMultimap;
 
 import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.model.CriteriRicercaModel;
+import winkhouse.orm.Colloquicriteriricerca;
 
 
 
@@ -24,7 +25,7 @@ public class CloudQueryModel {
 	private String filePathName = null;
 	private Date dataRicezioneFile = null;
 	private String descrizioneQuery = null;
-	private ArrayList<CriteriRicercaModel> criteri = null;
+	private ArrayList<Colloquicriteriricerca> criteri = null;
 	
 	public CloudQueryModel() {
 
@@ -83,7 +84,7 @@ public class CloudQueryModel {
 		if (descrizioneQuery == null){
 			if (getCriteri() != null && getCriteri().size() > 0){
 				descrizioneQuery = "";
-				for (CriteriRicercaModel crm : getCriteri()) {
+				for (Colloquicriteriricerca crm : getCriteri()) {
 					descrizioneQuery += crm.toString() + " ";
 				}
 			}
@@ -97,12 +98,12 @@ public class CloudQueryModel {
 	}
 
 	
-	public ArrayList<CriteriRicercaModel> getCriteri() {
+	public ArrayList<Colloquicriteriricerca> getCriteri() {
 		return criteri;
 	}
 
 	
-	public void setCriteri(ArrayList<CriteriRicercaModel> criteri) {
+	public void setCriteri(ArrayList<Colloquicriteriricerca> criteri) {
 		this.criteri = criteri;
 	}
 

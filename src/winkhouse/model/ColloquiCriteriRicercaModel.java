@@ -11,6 +11,7 @@ import winkhouse.dao.ClassiEnergeticheDAO;
 import winkhouse.dao.RiscaldamentiDAO;
 import winkhouse.dao.StatoConservativoDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.util.AnagraficheMethodName;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.util.WinkhouseUtils;
@@ -75,6 +76,17 @@ public class ColloquiCriteriRicercaModel extends ColloquiCriteriRicercaVO
 	
 	public ColloquiCriteriRicercaModel(ResultSet rs) throws SQLException {
 		super(rs);
+	}
+	
+	public ColloquiCriteriRicercaModel(Colloquicriteriricerca ccrVO){
+		this.setCodColloquio(ccrVO.getColloqui().getCodColloquio());
+		this.setCodRicerca(ccrVO.getRicerche().getCodRicerche());
+		this.setCodCriterioRicerca(ccrVO.getCodColloquicriteriricerca());
+		this.setGetterMethodName(ccrVO.getGettermethodname());
+		this.setFromValue(ccrVO.getFromvalue());
+		this.setToValue(ccrVO.getTovalue());
+		this.setLogicalOperator(ccrVO.getLogicaloperator());
+		this.setIsPersonal(ccrVO.isIspersonal());		
 	}
 
 	@Override

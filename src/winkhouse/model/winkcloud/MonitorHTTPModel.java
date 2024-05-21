@@ -15,6 +15,7 @@ import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.winkcloud.helpers.HTTPHelper;
 import winkhouse.model.winkcloud.jobs.HTTPJob;
 import winkhouse.model.xml.RicercheXMLModel;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.view.winkcloud.QueryFilesView;
 import winkhouse.xmlser.helper.XMLExportHelper;
 
@@ -243,7 +244,7 @@ public class MonitorHTTPModel implements XMLSerializable, MonitorModel {
 		return false;
 	}
 
-	public void setAl_criteri(ArrayList<ColloquiCriteriRicercaModel> criteri){
+	public void setAl_criteri(ArrayList<Colloquicriteriricerca> criteri){
 		
 		RicercheXMLModel rm = new RicercheXMLModel();
 		rm.setTipo(RicercheXMLModel.RICERCHE_IMMOBILI);

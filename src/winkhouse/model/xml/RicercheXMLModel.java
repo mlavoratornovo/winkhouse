@@ -17,6 +17,7 @@ import winkhouse.model.winkcloud.CloudMonitorState;
 import winkhouse.model.winkcloud.MonitorHTTPModel;
 import winkhouse.model.winkcloud.RicercaModel;
 import winkhouse.model.winkcloud.jobs.HTTPRicercaJob;
+import winkhouse.orm.Colloquicriteriricerca;
 //import winkhouse.model.winkcloud.jobs.HTTPRicercaJob;
 import winkhouse.xmldeser.wizard.importer.vo.ImporterVO;
 
@@ -34,8 +35,8 @@ public class RicercheXMLModel extends RicercheModel {
 	}
 	
 	public RicercheXMLModel(RicercaModel ricerca) {
-		ArrayList<ColloquiCriteriRicercaModel> al = new ArrayList<ColloquiCriteriRicercaModel>();
-		al.add(new ColloquiCriteriRicercaModel(ricerca.toCriteriRicercaModel()));
+		ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>();
+		al.add(ricerca.toCriteriRicercaModel());
 		this.setCriteri(al);
 		this.setNome(((ricerca.getSearchType() != null)?ricerca.getSearchType():"") + "@"+
 					 ((ricerca.getColumn_name() != null)?ricerca.getColumn_name():"")+"="+
@@ -80,9 +81,9 @@ public class RicercheXMLModel extends RicercheModel {
 			xml.setAttribute("pathRequestZipFile", a_xml.getPathRequestZipFile());
 			
 			FastList<DummyColloquiCriteriRicercaXMLModel> alcriteri = new FastList();
-			for (ColloquiCriteriRicercaModel criterio : a_xml.getCriteri()) {
-				alcriteri.add(new DummyColloquiCriteriRicercaXMLModel(criterio));
-			}
+//			for (Colloquicriteriricerca criterio : a_xml.getCriteri()) {
+//				alcriteri.add(new DummyColloquiCriteriRicercaXMLModel(criterio));
+//			}
 			xml.add(alcriteri);
         }
         
@@ -120,7 +121,7 @@ public class RicercheXMLModel extends RicercheModel {
 	public String toString() {
 		
 		StringBuffer retval = new StringBuffer();
-		for (Iterator<ColloquiCriteriRicercaModel> iterator = getCriteri().iterator(); iterator.hasNext();) {
+		for (Iterator<Colloquicriteriricerca> iterator = getCriteri().iterator(); iterator.hasNext();) {
 			retval.append(iterator.next().toString().replace("(", "").replace(")", "").replace(" ", "_").replace(":", ""));			
 		}
 		return retval.toString();

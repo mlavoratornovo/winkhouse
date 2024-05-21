@@ -7,11 +7,13 @@ import javolution.xml.XMLFormat;
 import javolution.xml.stream.XMLStreamException;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.CriteriRicercaModel;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
 
 public class DummyColloquiCriteriRicercaXMLModel extends ColloquiCriteriRicercaModel {
 	
-	private CriteriRicercaModel criteriRicercaModel = null;
+	private Colloquicriteriricerca criteriRicercaModel = null;
 	
 	public DummyColloquiCriteriRicercaXMLModel() {
 	}
@@ -23,7 +25,11 @@ public class DummyColloquiCriteriRicercaXMLModel extends ColloquiCriteriRicercaM
 	public DummyColloquiCriteriRicercaXMLModel(ResultSet rs) throws SQLException {
 		super(rs);
 	}
-	
+
+	public DummyColloquiCriteriRicercaXMLModel(Colloquicriteriricerca rs){
+		super(rs);
+	}
+
 	protected static final XMLFormat<DummyColloquiCriteriRicercaXMLModel> COLLOQUICRITERIRICERCA_XML = new XMLFormat<DummyColloquiCriteriRicercaXMLModel>(DummyColloquiCriteriRicercaXMLModel.class){
 		
         public void write(DummyColloquiCriteriRicercaXMLModel a_xml, OutputElement xml)throws XMLStreamException {
@@ -62,15 +68,15 @@ public class DummyColloquiCriteriRicercaXMLModel extends ColloquiCriteriRicercaM
         
    };
 
-   public CriteriRicercaModel toCriteriRicercaModel(){
+   public Colloquicriteriricerca toCriteriRicercaModel(){
 	   
 	   if (criteriRicercaModel == null){
-		   criteriRicercaModel = new CriteriRicercaModel();
-		   criteriRicercaModel.setFromValue(this.getFromValue());
-		   criteriRicercaModel.setToValue(this.getToValue());
-		   criteriRicercaModel.setLogicalOperator(this.getLogicalOperator());
-		   criteriRicercaModel.setGetterMethodName(this.getGetterMethodName());
-		   criteriRicercaModel.setLogicalOperator(this.getLogicalOperator());
+		   criteriRicercaModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);
+		   criteriRicercaModel.setFromvalue(this.getFromValue());
+		   criteriRicercaModel.setTovalue(this.getToValue());
+		   criteriRicercaModel.setLogicaloperator(this.getLogicalOperator());
+		   criteriRicercaModel.setGettermethodname(this.getGetterMethodName());
+		   criteriRicercaModel.setLogicaloperator(this.getLogicalOperator());
 		   criteriRicercaModel.setLineNumber(this.getLineNumber());
 	   }
 	   

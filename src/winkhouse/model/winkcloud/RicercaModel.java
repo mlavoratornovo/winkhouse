@@ -5,6 +5,8 @@ import javolution.xml.XMLFormat.OutputElement;
 import javolution.xml.stream.XMLStreamException;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.winkcloud.mobilecolumns.MobileColumns2MethodsAdapter;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.util.WinkhouseUtils;
 
 public class RicercaModel {
 	
@@ -59,16 +61,16 @@ public class RicercaModel {
 		this.searchType = searchType;
 	}
 	
-	public CriteriRicercaModel toCriteriRicercaModel(){
+	public Colloquicriteriricerca toCriteriRicercaModel(){
 		
-		CriteriRicercaModel returnValue = new CriteriRicercaModel();
+		Colloquicriteriricerca returnValue = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);
 		MobileColumns2MethodsAdapter mc2ma = new MobileColumns2MethodsAdapter((this.searchType.equalsIgnoreCase("immobili"))
 																			  ? CloudQueryTypes.IMMOBILI
 																			  : CloudQueryTypes.ANAGRAFICHE);
-		returnValue.setFromValue(getValue_da());
-		returnValue.setToValue(getValue_a());
-		returnValue.setGetterMethodName(mc2ma.getMethod(getColumn_name()));
-		returnValue.setLogicalOperator(getLogic_operatore());		
+		returnValue.setFromvalue(getValue_da());
+		returnValue.setTovalue(getValue_a());
+		returnValue.setGettermethodname(mc2ma.getMethod(getColumn_name()));
+		returnValue.setLogicaloperator(getLogic_operatore());		
 		
 		return returnValue;
 		
