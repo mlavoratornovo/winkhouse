@@ -401,7 +401,11 @@ public class ColloquiDAO extends BaseDAO{
 	public <T> ArrayList<T> getColloquiByAnagraficaRicerca(String classType,Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_RICERCA, codAnagrafica);
 	}
-	
+
+	public <T> ArrayList<T> getColloquiByAnagraficaRicerca(Integer codAnagrafica){
+		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_RICERCA, codAnagrafica);
+	}
+
 	public <T> ArrayList<T> getColloquiByTipologia(String classType,Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_TYPE, codTipologia);
 	}

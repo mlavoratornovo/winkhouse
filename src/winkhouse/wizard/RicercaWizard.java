@@ -40,6 +40,7 @@ import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.common.AbbinamentiView;
 import winkhouse.view.permessi.DettaglioPermessiAgenteView;
@@ -78,7 +79,7 @@ public class RicercaWizard extends Wizard {
 	
 	private int wiztype = 0;
 	
-	private RicercaVO ricerca = null;
+	private Ricerche ricerca = null;
 	private WizardPage currentPage = null;
 	private ListaCriteriImmobili listaCriteriImmobili = null;
 	private ListaCriteriAnagrafiche listaCriteriAnagrafiche = null;
@@ -96,7 +97,7 @@ public class RicercaWizard extends Wizard {
 	
 
 	public RicercaWizard(int type) {
-		getRicerca().setType(type);
+		getRicerca().setTipo(type);
 	}
 		
 	@Override
@@ -110,13 +111,13 @@ public class RicercaWizard extends Wizard {
 			
 			
 			DettaglioPermessiAgenteView dpav = (DettaglioPermessiAgenteView)iv.getView(true);
-			if (getRicerca().getRicerca() == null){
+			if (getRicerca() == null){
 				
 			
 //				if (getRicerca().getRicerca().getCriteri().size() > 0){
 				
 					RicercheHelper rh = new RicercheHelper();
-					RicercheModel rm = rh.saveNewRicercaFromWizardRicerca(getRicerca());
+					Ricerche rm = rh.saveNewRicercaFromWizardRicerca(getRicerca());
 					if (rm != null){
 						dpav.addPermessoDatiByRicerca(rm);
 					}else{
@@ -131,20 +132,20 @@ public class RicercaWizard extends Wizard {
 			}else{
 				
 				RicercheDAO rDAO = new RicercheDAO();
-				RicercheModel rmDB = (RicercheModel)rDAO.getRicercaById(RicercheModel.class.getName(), getRicerca().getRicerca().getCodRicerca());
+				Ricerche rmDB = rDAO.getRicercaById(getRicerca().getCodRicerche());
 				
-				if (!getRicerca().getRicerca().equals(rmDB)){
+				if (!getRicerca().equals(rmDB)){
 					MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
-							 								 "Winkhouse : la regola � stata modificata", null,
+							 								 "Winkhouse : la regola è stata modificata", null,
 							 								 "Vuoi usare la regola originale, salvare ed usare una nuova regola o \n" +
 							 								 "aggiornare ed usare la regola originale ?",
 							 								 MessageDialog.WARNING, new String[] {"Usa originale","Salva ed usa nuova","Aggiorna ed usa originale"}, 0);
 					
 					switch (dialog.open()){
-					case 0 : dpav.addPermessoDatiByRicerca(getRicerca().getRicerca());
+					case 0 : dpav.addPermessoDatiByRicerca(getRicerca());
 							 break;
 					case 1 : RicercheHelper rh = new RicercheHelper();
-							 RicercheModel rm = rh.saveNewRicercaFromWizardRicerca(getRicerca());
+							 Ricerche rm = rh.saveNewRicercaFromWizardRicerca(getRicerca());
 							 if (rm != null){
 							 	dpav.addPermessoDatiByRicerca(rm);
 							 }else{
@@ -154,8 +155,8 @@ public class RicercaWizard extends Wizard {
 							 }
 							 break;
 					case 2 : RicercheHelper rh1 = new RicercheHelper();
-							 if (rh1.saveUpdateRicerca(getRicerca().getRicerca())){
-								 dpav.addPermessoDatiByRicerca(getRicerca().getRicerca());
+							 if (rh1.saveUpdateRicerca(getRicerca())){
+								 dpav.addPermessoDatiByRicerca(getRicerca());
 							 }else{
 								 MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 										 				 "Errore creazione ricerca",
@@ -199,16 +200,16 @@ public class RicercaWizard extends Wizard {
 				
 				try {
 					Method m = returnObject.getClass().getMethod(returnObjectMethodName, returnType);
-					if (getRicerca().getType() == IMMOBILI){
+					if (getRicerca().getTipo() == IMMOBILI){
 						m.invoke(returnObject, getRicerca().getCriteriImmobili());
 					}
-					if (getRicerca().getType() == ANAGRAFICHE){
+					if (getRicerca().getTipo() == ANAGRAFICHE){
 						m.invoke(returnObject, getRicerca().getCriteriAnagrafiche());
 					}
-					if (getRicerca().getType() == AFFITTI){
+					if (getRicerca().getTipo() == AFFITTI){
 						m.invoke(returnObject, getRicerca().getCriteriImmobiliAffitti());
 					}
-					if (getRicerca().getType() == COLLOQUI){
+					if (getRicerca().getTipo() == COLLOQUI){
 						m.invoke(returnObject, getRicerca().getCriteriColloqui());
 					}
 								
@@ -229,7 +230,7 @@ public class RicercaWizard extends Wizard {
 			
 		}else{
 			
-			if (getRicerca().getType() == RicercaWizard.ABBINAMENTI_ANAGRAFICHE){
+			if (getRicerca().getTipo() == RicercaWizard.ABBINAMENTI_ANAGRAFICHE){
 				
 				AbbinamentiView av = (AbbinamentiView)PlatformUI.getWorkbench()
 																.getActiveWorkbenchWindow()
@@ -317,7 +318,7 @@ public class RicercaWizard extends Wizard {
 	
 				}
 			}
-			if (getRicerca().getType() == RicercaWizard.ABBINAMENTI_IMMOBILI){
+			if (getRicerca().getTipo() == RicercaWizard.ABBINAMENTI_IMMOBILI){
 				AbbinamentiView av = (AbbinamentiView)PlatformUI.getWorkbench()
 						  										.getActiveWorkbenchWindow()
 						  										.getActivePage()
@@ -404,10 +405,10 @@ public class RicercaWizard extends Wizard {
 				}
 				
 			}
-			if ((getRicerca().getType() == RicercaWizard.IMMOBILI) || 
-			    (getRicerca().getType() == RicercaWizard.AFFITTI) || 
-			    (getRicerca().getType() == RicercaWizard.RICERCAFAST_IMMOBILI) || 
-			    (getRicerca().getType() == RicercaWizard.RICERCAFAST_AFFITTI)){
+			if ((getRicerca().getTipo() == RicercaWizard.IMMOBILI) || 
+			    (getRicerca().getTipo() == RicercaWizard.AFFITTI) || 
+			    (getRicerca().getTipo() == RicercaWizard.RICERCAFAST_IMMOBILI) || 
+			    (getRicerca().getTipo() == RicercaWizard.RICERCAFAST_AFFITTI)){
 				
 				ProgressMonitorDialog pmd = new ProgressMonitorDialog(this.getShell());
 				IRunnableWithProgress irwpOpenImmobile = new IRunnableWithProgress() {
@@ -457,8 +458,8 @@ public class RicercaWizard extends Wizard {
 				
 			}
 			
-			if ((getRicerca().getType() == RicercaWizard.ANAGRAFICHE) ||
-				(getRicerca().getType() == RicercaWizard.RICERCAFAST_ANAGRAFICHE)){
+			if ((getRicerca().getTipo() == RicercaWizard.ANAGRAFICHE) ||
+				(getRicerca().getTipo() == RicercaWizard.RICERCAFAST_ANAGRAFICHE)){
 				
 				ProgressMonitorDialog pmd = new ProgressMonitorDialog(this.getShell());
 				IRunnableWithProgress irwpOpenAnagrafica = new IRunnableWithProgress() {
@@ -500,8 +501,8 @@ public class RicercaWizard extends Wizard {
 				}
 							
 			}
-			if ((getRicerca().getType() == RicercaWizard.COLLOQUI) ||
-				(getRicerca().getType() == RicercaWizard.RICERCAFAST_COLLOQUI)){
+			if ((getRicerca().getTipo() == RicercaWizard.COLLOQUI) ||
+				(getRicerca().getTipo() == RicercaWizard.RICERCAFAST_COLLOQUI)){
 				
 				ProgressMonitorDialog pmd = new ProgressMonitorDialog(this.getShell());
 				IRunnableWithProgress irwpOpenColloquio = new IRunnableWithProgress() {
@@ -545,7 +546,7 @@ public class RicercaWizard extends Wizard {
 				}
 							
 			}
-			if (getRicerca().getType() == RicercaWizard.RICERCACLOUD){
+			if (getRicerca().getTipo() == RicercaWizard.RICERCACLOUD){
 				
 //				ProgressMonitorDialog pmd = new ProgressMonitorDialog(this.getShell());
 //				IRunnableWithProgress irwpOpenColloquio = new IRunnableWithProgress() {
@@ -596,12 +597,12 @@ public class RicercaWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		if ((getRicerca().getType() == RicercaWizard.RICERCAFAST_IMMOBILI) || 
-			(getRicerca().getType() == RicercaWizard.RICERCAFAST_ANAGRAFICHE) || 
-			(getRicerca().getType() == RicercaWizard.RICERCAFAST_AFFITTI) || 
-			(getRicerca().getType() == RicercaWizard.RICERCAFAST_COLLOQUI)){
+		if ((getRicerca().getTipo() == RicercaWizard.RICERCAFAST_IMMOBILI) || 
+			(getRicerca().getTipo() == RicercaWizard.RICERCAFAST_ANAGRAFICHE) || 
+			(getRicerca().getTipo() == RicercaWizard.RICERCAFAST_AFFITTI) || 
+			(getRicerca().getTipo() == RicercaWizard.RICERCAFAST_COLLOQUI)){
 			
-			switch (getRicerca().getType()) {
+			switch (getRicerca().getTipo()) {
 			
 			case RicercaWizard.RICERCAFAST_IMMOBILI:{
 				
@@ -673,22 +674,22 @@ public class RicercaWizard extends Wizard {
 				break;
 			}
 		}else{
-			if ((getRicerca().getType() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE) && 
-					(getRicerca().getType() != RicercaWizard.ABBINAMENTI_IMMOBILI)){
+			if ((getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE) && 
+					(getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_IMMOBILI)){
 					selezioneTipologiaRicerca = new SelezioneTipologiaRicerca ("Selezione tipologia ricerca",
 																			   "Selezione tipologia ricerca",
 																			   Activator.getImageDescriptor("icons/wizardricerca/kfind.png"));
 					selezioneTipologiaRicerca.setDescription("Selezionare la tipologia di oggetti su cui effettuare la ricerca");		
 					addPage(selezioneTipologiaRicerca);
 				}
-				if (getRicerca().getType() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE){
+				if (getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE){
 					listaCriteriAnagrafiche = new ListaCriteriAnagrafiche("Lista criteri selezione anagrafiche",
 																		  "Lista criteri selezione anagrafiche",
 																		  Activator.getImageDescriptor("icons/wizardricerca/filefind.png"));
 					listaCriteriAnagrafiche.setDescription("Inserire i criteri di ricerca per le anagrafiche");
 					addPage(listaCriteriAnagrafiche);
 				}
-				if (getRicerca().getType() != RicercaWizard.ABBINAMENTI_IMMOBILI){
+				if (getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_IMMOBILI){
 					listaCriteriImmobili = new ListaCriteriImmobili("Lista criteri selezione immobili",
 																	"Lista criteri selezione immobili",
 																	Activator.getImageDescriptor("icons/wizardricerca/filefind.png"));
@@ -712,8 +713,8 @@ public class RicercaWizard extends Wizard {
 				listaRisultatiAnagrafiche = new ListaRisultatiAnagrafiche("Risultati ricerca anagrafiche",
 																		  "Risultati ricerca anagrafiche",
 																		  Activator.getImageDescriptor("icons/wizardricerca/ktqueuemanager.png"));
-				if ((getRicerca().getType() != RicercaWizard.ABBINAMENTI_IMMOBILI) &&
-					(getRicerca().getType() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE)){
+				if ((getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_IMMOBILI) &&
+					(getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE)){
 					listaRisultatiAnagrafiche.setDescription("Lista anagrafiche corrispondenti ai criteri di ricerca inseriti, \n premere Finish per aprire i dettagli selezionati");
 				}else{
 					listaRisultatiAnagrafiche.setDescription("Lista anagrafiche corrispondenti ai criteri di ricerca inseriti, \n premere Finish per eseguire gli abbinamenti con le anagrafiche selezionate");
@@ -723,8 +724,8 @@ public class RicercaWizard extends Wizard {
 				listaRisultatiImmobili = new ListaRisultatiImmobili("Risultati ricerca immobili",
 																	"Risultati ricerca immobili",
 																	Activator.getImageDescriptor("icons/wizardricerca/gohome.png"));
-				if ((getRicerca().getType() != RicercaWizard.ABBINAMENTI_IMMOBILI) &&
-					(getRicerca().getType() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE)){
+				if ((getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_IMMOBILI) &&
+					(getRicerca().getTipo() != RicercaWizard.ABBINAMENTI_ANAGRAFICHE)){
 					listaRisultatiImmobili.setDescription("Lista immobili corrispondenti ai criteri di ricerca inseriti, \n premere Finish per aprire i dettagli selezionati");
 				}else{
 					listaRisultatiAnagrafiche.setDescription("Lista anagrafiche corrispondenti ai criteri di ricerca inseriti, \n premere Finish per eseguire gli abbinamenti con gli immobili selezionati");
@@ -741,14 +742,14 @@ public class RicercaWizard extends Wizard {
 		
 	}
 
-	public RicercaVO getRicerca() {
+	public Ricerche getRicerca() {
 		if (ricerca == null){
-			ricerca = new RicercaVO();
+			ricerca = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class);
 		}
 		return ricerca;
 	}
 
-	public void setRicerca(RicercaVO ricerca) {
+	public void setRicerca(Ricerche ricerca) {
 		this.ricerca = ricerca;
 	}
 
@@ -758,22 +759,22 @@ public class RicercaWizard extends Wizard {
 		IWizardPage returnValue = null;
 		
 		if ((page instanceof SelezioneTipologiaRicerca) &&
-			(ricerca.getType() == RicercaWizard.IMMOBILI)){
+			(ricerca.getTipo() == RicercaWizard.IMMOBILI)){
 	//		currentPage = listaCriteriImmobili;
 			returnValue = listaCriteriImmobili;
 		}
 		if ((page instanceof SelezioneTipologiaRicerca) &&
-			(ricerca.getType() == RicercaWizard.ANAGRAFICHE)){
+			(ricerca.getTipo() == RicercaWizard.ANAGRAFICHE)){
 		//		currentPage = listaCriteriAnagrafiche;
 			returnValue = listaCriteriAnagrafiche;
 		}
 		if ((page instanceof SelezioneTipologiaRicerca) &&
-			(ricerca.getType() == RicercaWizard.AFFITTI)){
+			(ricerca.getTipo() == RicercaWizard.AFFITTI)){
 			//		currentPage = listaCriteriAnagrafiche;
 			returnValue = listaCriteriImmobiliAffitti;
 		}
 		if ((page instanceof SelezioneTipologiaRicerca) &&
-				(ricerca.getType() == RicercaWizard.COLLOQUI)){
+				(ricerca.getTipo() == RicercaWizard.COLLOQUI)){
 				//		currentPage = listaCriteriAnagrafiche;
 			returnValue = listaCriteriColloqui;
 		}		

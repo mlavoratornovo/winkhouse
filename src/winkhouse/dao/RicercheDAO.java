@@ -7,8 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Ricerche;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.RicercheVO;
 
 
@@ -27,6 +32,11 @@ public class RicercheDAO extends BaseDAO {
 
 	public Object getRicercaById (String classType, Integer codRicerca){
 		return super.getObjectById(classType, RICERCHE_BY_ID, codRicerca);
+	}
+	
+	public Ricerche getRicercaById (Integer codRicerca){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Ricerche.class,codRicerca);
 	}
 
 	public <T> ArrayList<T> getRichercheByTipo(String classType, Integer codTipo){

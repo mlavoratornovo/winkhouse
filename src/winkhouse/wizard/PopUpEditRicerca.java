@@ -36,7 +36,7 @@ public class PopUpEditRicerca {
 	private Shell popup = null;
 	private Text nome = null;
 	private Text descrizione = null;
-	private RicercheModel ricerche = null;
+	private Ricerche ricerche = null;
 	private Object callerObj = null;
 	private String setterMethodName = null;
 
@@ -219,12 +219,12 @@ public class PopUpEditRicerca {
 		this.setterMethodName = setterMethodName;
 	}
 	
-	private void returnValue(RicercheModel returnObj){
+	private void returnValue(Ricerche returnObj){
 		
 		if ((callerObj != null) && (setterMethodName != null)){
 		
 				try {
-					Method m = callerObj.getClass().getMethod(setterMethodName, RicercheModel.class);
+					Method m = callerObj.getClass().getMethod(setterMethodName, Ricerche.class);
 					m.invoke(callerObj, returnObj);			
 					popup.close();
 				} catch (SecurityException e) {

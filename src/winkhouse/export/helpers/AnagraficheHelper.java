@@ -14,6 +14,7 @@ import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AnagraficheVO;
+import winkhouse.xmldeser.models.xml.AnagraficheXMLModel;
 
 public class AnagraficheHelper {
 
@@ -122,7 +123,7 @@ public class AnagraficheHelper {
 	 * @return ArrayList<AnagraficheModel> lista delle anagrafiche corrispondenti all'anagrafica
 	 * passata in input
 	 */
-	public ArrayList<Anagrafiche> getAnagraficheExist(Anagrafiche anagrafica){
+	public ArrayList<Anagrafiche> getAnagraficheExist(AnagraficheXMLModel anagrafica){
 		
 		boolean nomeok = false,cognomeok = false,cittaok = false,indirizzook = false,codicefiscaleok = false,partitaivaok = false;
 		
@@ -147,11 +148,11 @@ public class AnagraficheHelper {
 		}
 		
 		
-		if (anagrafica.getCodicefiscale() != null && !anagrafica.getCodicefiscale().trim().equalsIgnoreCase("")){
+		if (anagrafica.getCodiceFiscale() != null && !anagrafica.getCodiceFiscale().trim().equalsIgnoreCase("")){
 			codicefiscaleok = true;
 		}
 		
-		if (anagrafica.getPiva() != null && !anagrafica.getPiva().trim().equalsIgnoreCase("")){
+		if (anagrafica.getPartitaIva() != null && !anagrafica.getPartitaIva().trim().equalsIgnoreCase("")){
 			partitaivaok = true;
 		}
 		
@@ -211,7 +212,7 @@ public class AnagraficheHelper {
 
 		if (codicefiscaleok == true){			
 			Colloquicriteriricerca criterioCF = oc.newObject(Colloquicriteriricerca.class);
-			criterioCF.setFromvalue(anagrafica.getCodicefiscale());			
+			criterioCF.setFromvalue(anagrafica.getCodiceFiscale());			
 			criterioCF.setGettermethodname("getCodiceFiscale");
 			if (partitaivaok == true){
 				criterioCF.setLogicaloperator("OR");
@@ -222,7 +223,7 @@ public class AnagraficheHelper {
 		
 		if (partitaivaok == true){			
 			Colloquicriteriricerca criterioPIVA = oc.newObject(Colloquicriteriricerca.class);
-			criterioPIVA.setFromvalue(anagrafica.getPiva());			
+			criterioPIVA.setFromvalue(anagrafica.getPartitaIva());			
 			criterioPIVA.setGettermethodname("getPartitaIva");			
 			criterioPIVA.setLineNumber(8);		
 			criteri.add(criterioPIVA);

@@ -169,7 +169,7 @@ public class RicercheHelper {
 		return returnValue;
 	}
 
-	public RicercheModel saveNewRicercaFromWizardRicerca(Ricerche ricercaObjWizard){
+	public Ricerche saveNewRicercaFromWizardRicerca(Ricerche ricercaObjWizard){
 		
 		RicercheModel rm = new RicercheModel();
 		

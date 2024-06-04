@@ -12,6 +12,8 @@ import winkhouse.dao.ColloquiAnagraficheDAO;
 import winkhouse.dao.ColloquiCriteriRicercaDAO;
 import winkhouse.dao.ColloquiDAO;
 import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.AllegatiColloquiVO;
 import winkhouse.vo.AnagraficheVO;
@@ -36,7 +38,7 @@ public class ColloquiHelper {
 	 * @param anagrafica
 	 * @return ArrayList<ColloquiModel>
 	 */
-	public ArrayList<ColloquiModel> getColloquiExist(ColloquiVO colloquio,AnagraficheVO anagrafica){
+	public ArrayList<Colloqui> getColloquiExist(Colloqui colloquio,Anagrafiche anagrafica){
 		
 		ArrayList<ColloquiModel> returnValue = new ArrayList<ColloquiModel>();
 		ColloquiDAO cdao = new ColloquiDAO();
@@ -69,7 +71,7 @@ public class ColloquiHelper {
 						(c1.get(Calendar.MINUTE) == c2.get(Calendar.MINUTE)) &&
 						(c1.get(Calendar.SECOND) == c2.get(Calendar.SECOND))						
 				) && 
-				(cm.getScadenziere() == colloquio.getScadenziere()) &&
+				(cm.getScadenziere() == colloquio.isScadenziere())) &&
 				(cm.getiCalUid().equalsIgnoreCase(colloquio.getiCalUid())) &&
 				(cm.getLuogoIncontro().equalsIgnoreCase(colloquio.getLuogoIncontro()))){
 				

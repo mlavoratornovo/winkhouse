@@ -197,7 +197,7 @@ public class GCalendarSyncWizard extends Wizard {
 			this.upl_from_detail = upl_from_detail;
 		}
 
-		public AppuntamentiModel getFrom_appuntamento_detail() {
+		public Appuntamenti getFrom_appuntamento_detail() {
 			return from_appuntamento_detail;
 		}
 
@@ -205,7 +205,7 @@ public class GCalendarSyncWizard extends Wizard {
 			this.from_appuntamento_detail = from_appuntamento_detail;
 		}
 
-		public ColloquiModel getFrom_colloqui_detail() {
+		public Colloqui getFrom_colloqui_detail() {
 			return from_colloqui_detail;
 		}
 

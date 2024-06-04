@@ -24,6 +24,8 @@ import winkhouse.model.ColloquiModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.EntityModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AffittiAnagraficheVO;
 import winkhouse.vo.AffittiRateVO;
@@ -214,9 +216,10 @@ public class CheckExists implements IRunnableWithProgress {
 		while (it.hasNext()) {
 			
 			Entry<Integer, AnagraficheXMLModel> anagrafica = it.next();
-			ArrayList<AnagraficheModel> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(anagrafica.getValue());
-			
-			for (AnagraficheModel am : al_anagrafiche) {
+			//ArrayList<Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(anagrafica.getValue());
+			// TO DO 
+			ArrayList<Anagrafiche> al_anagrafiche = new ArrayList<Anagrafiche>();
+			for (Anagrafiche am : al_anagrafiche) {
 				ArrayList<ColloquiModel> al = colloquiHelper.getColloquiExist(colloqui, am);
 				
 				if (al.size() > 0){
@@ -334,7 +337,7 @@ public class CheckExists implements IRunnableWithProgress {
 	
 	protected void checkAnagrafiche(AnagraficheXMLModel anagrafica){
 		
-		ArrayList<AnagraficheModel> amlist = anagraficheHelper.getAnagraficheExist(anagrafica);
+		ArrayList<Anagrafiche> amlist = anagraficheHelper.getAnagraficheExist(anagrafica);
 		
 		if (amlist.size() > 0){
 			importerVO.getRisultati_merge().add(anagrafica);
@@ -413,7 +416,7 @@ public class CheckExists implements IRunnableWithProgress {
 		ColloquiXMLModel cxmlModel = this.importerVO.getColloquiSelected().get(colloquiAnagrafiche.getCodColloquio());
 		AnagraficheXMLModel axmlModel = this.importerVO.getAnagraficheSelected().get(colloquiAnagrafiche.getCodAnagrafica());
 		if (axmlModel != null && cxmlModel != null){
-			ArrayList<AnagraficheModel> al_anagraficheModel = this.anagraficheHelper.getAnagraficheExist(axmlModel);
+			ArrayList<Anagrafiche> al_anagraficheModel = this.anagraficheHelper.getAnagraficheExist(axmlModel);
 				
 			Iterator it = al_anagraficheModel.iterator();
 				
@@ -514,8 +517,8 @@ public class CheckExists implements IRunnableWithProgress {
 		
 		if (ixmlModel != null && axmlModel != null){
 			
-			ArrayList<ImmobiliModel> al_im = this.immobiliHelper.getImmobiliExist(ixmlModel);
-			ArrayList<AnagraficheModel> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(axmlModel);
+			ArrayList<Immobili> al_im = this.immobiliHelper.getImmobiliExist(ixmlModel);
+			ArrayList<Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(axmlModel);
 			
 			if (al_im.size() > 0 && al_anagrafiche.size() > 0){
 				this.importerVO.getRisultati_merge().add(abbinamenti);
@@ -584,7 +587,7 @@ public class CheckExists implements IRunnableWithProgress {
 			if (aselected != null && iselected != null){
 				
 				ArrayList <AffittiModel> al_affitti = this.affittiHelper.getAffittiByRifDate(iselected.getRif(), aXMLModel.getDataInizio(), aXMLModel.getDataFine());
-				ArrayList <AnagraficheModel> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(aselected);
+				ArrayList <Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(aselected);
 				
 				if (al_affitti.size() > 0 && al_anagrafiche.size() > 0){
 					AffittiAnagraficheVO aaVO = this.affittiHelper
@@ -614,7 +617,7 @@ public class CheckExists implements IRunnableWithProgress {
 			if (aselected != null && iselected != null){
 				
 				ArrayList <AffittiModel> al_affitti = this.affittiHelper.getAffittiByRifDate(iselected.getRif(), aXMLModel.getDataInizio(), aXMLModel.getDataFine());
-				ArrayList <AnagraficheModel> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(aselected);				
+				ArrayList <Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(aselected);				
 				
 				if (al_affitti.size() > 0 && al_anagrafiche.size() > 0){
 					AffittiRateVO arVO = new AffittiRateVO(affittirate);
@@ -645,7 +648,7 @@ public class CheckExists implements IRunnableWithProgress {
 			if (aselected != null && iselected != null){
 				
 				ArrayList <AffittiModel> al_affitti = this.affittiHelper.getAffittiByRifDate(iselected.getRif(), aXMLModel.getDataInizio(), aXMLModel.getDataFine());
-				ArrayList <AnagraficheModel> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(aselected);				
+				ArrayList <Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(aselected);				
 				
 				if (al_affitti.size() > 0 && al_anagrafiche.size() > 0){
 					AffittiSpeseVO arVO = new AffittiSpeseVO(affittiSpese);
@@ -747,7 +750,7 @@ public class CheckExists implements IRunnableWithProgress {
 				
 				if (em.getClassName().equalsIgnoreCase(ColloquiVO.class.getName())){
 					
-					ArrayList<ColloquiModel> al = new ArrayList<ColloquiModel>();
+					ArrayList<Colloqui> al = new ArrayList<Colloqui>();
 					
 					ColloquiXMLModel colloqui = importerVO.getColloquiSelected().get(attributeValue.getIdObject());
 					HashMap<Integer,AnagraficheXMLModel> anagraficheSelected = importerVO.getAnagraficheSelected();
@@ -757,7 +760,7 @@ public class CheckExists implements IRunnableWithProgress {
 					while (it.hasNext()) {
 						
 						Entry<Integer, AnagraficheXMLModel> anagrafica = it.next();
-						ArrayList<AnagraficheModel> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(anagrafica.getValue());
+						ArrayList<Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(anagrafica.getValue());
 						
 						for (AnagraficheModel anagraficaModel : al_anagrafiche) {
 							al.addAll(colloquiHelper.getColloquiExist(colloqui, anagraficaModel));

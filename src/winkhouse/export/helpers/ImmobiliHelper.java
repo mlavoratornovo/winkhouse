@@ -26,6 +26,7 @@ import winkhouse.vo.ImmagineVO;
 import winkhouse.vo.ImmobiliPropietariVO;
 import winkhouse.vo.ImmobiliVO;
 import winkhouse.vo.StanzeImmobiliVO;
+import winkhouse.xmldeser.models.xml.ImmobiliXMLModel;
 
 /**
  * Classe Helper di accesso ai dati relativi agli immobili
@@ -222,7 +223,7 @@ public class ImmobiliHelper {
 	 * @return ArrayList<ImmobiliModel> lista degli immobili corrispondenti all'immobile
 	 * passato in input
 	 */
-	public ArrayList<Immobili> getImmobiliExist(Immobili immobile){
+	public ArrayList<Immobili> getImmobiliExist(ImmobiliXMLModel immobile){
 		
 		ArrayList<Immobili> returnValue = new ArrayList<Immobili>();		
 		ArrayList<Colloquicriteriricerca> criteri = new ArrayList<Colloquicriteriricerca>();
