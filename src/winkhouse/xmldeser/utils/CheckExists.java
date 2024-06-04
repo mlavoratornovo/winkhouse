@@ -25,6 +25,7 @@ import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.EntityModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AffittiAnagraficheVO;
@@ -762,7 +763,7 @@ public class CheckExists implements IRunnableWithProgress {
 						Entry<Integer, AnagraficheXMLModel> anagrafica = it.next();
 						ArrayList<Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(anagrafica.getValue());
 						
-						for (AnagraficheModel anagraficaModel : al_anagrafiche) {
+						for (Anagrafiche anagraficaModel : al_anagrafiche) {
 							al.addAll(colloquiHelper.getColloquiExist(colloqui, anagraficaModel));
 						}
 							

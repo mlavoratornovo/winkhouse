@@ -43,7 +43,7 @@ public class ColloquiHelper {
 		ArrayList<ColloquiModel> returnValue = new ArrayList<ColloquiModel>();
 		ColloquiDAO cdao = new ColloquiDAO();
 		
-		ArrayList<ColloquiModel> tmp = cdao.getColloquiByAnagraficaRicerca(ColloquiModel.class.getName(), 
+		ArrayList<Colloqui> tmp = cdao.getColloquiByAnagraficaRicerca(ColloquiModel.class.getName(), 
 														  				   anagrafica.getCodAnagrafica());
 		
 
@@ -54,7 +54,7 @@ public class ColloquiHelper {
 		
 		while (it.hasNext()){
 			
-			ColloquiModel cm = it.next();
+			Colloqui cm = it.next();
 			
 			Calendar c1 = Calendar.getInstance(Locale.ITALIAN);
 			c1.setTime(cm.getDataColloquio());
@@ -71,8 +71,8 @@ public class ColloquiHelper {
 						(c1.get(Calendar.MINUTE) == c2.get(Calendar.MINUTE)) &&
 						(c1.get(Calendar.SECOND) == c2.get(Calendar.SECOND))						
 				) && 
-				(cm.getScadenziere() == colloquio.isScadenziere())) &&
-				(cm.getiCalUid().equalsIgnoreCase(colloquio.getiCalUid())) &&
+				(cm.getScadenziere() == colloquio.isScadenziere()) &&
+				(cm.getIcaluid().equalsIgnoreCase(colloquio.getIcaluid()) &&
 				(cm.getLuogoIncontro().equalsIgnoreCase(colloquio.getLuogoIncontro()))){
 				
 				returnValue.add(cm);
