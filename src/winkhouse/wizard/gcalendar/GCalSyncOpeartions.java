@@ -32,6 +32,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TreeItem;
 
+import com.google.api.services.calendar.model.CalendarListEntry;
+import com.google.gdata.data.calendar.CalendarEventEntry;
+
 import winkhouse.Activator;
 import winkhouse.engine.gcalendar.GoogleCalendarSyncEngine;
 import winkhouse.engine.gcalendar.GoogleCalendarSyncEngine.AgenteResult;
@@ -40,11 +43,9 @@ import winkhouse.model.AgentiModel;
 import winkhouse.model.AppuntamentiModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
 import winkhouse.wizard.GCalendarSyncWizard;
-
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.model.CalendarListEntry;
-import com.google.gdata.data.calendar.CalendarEventEntry;
 
 public class GCalSyncOpeartions extends WizardPage {
 
@@ -409,7 +410,7 @@ public class GCalSyncOpeartions extends WizardPage {
 		
 		case APPUNTAMENTIMODEL:
 			
-			key_value = ((AgenteResult)item.getParentItem().getParentItem().getData()).getCodAgente().toString() + "_" +
+			key_value = ((AgenteResult)item.getParentItem().getParentItem().getData()).getCodAgente() + "_" +
 						((CalendarListEntry)((Map.Entry)item.getParentItem().getData()).getKey()).getId() + "_" + 
 						item.getData().getClass().getName() + "_" + 
 						((AppuntamentiModel)item.getData()).getCodAppuntamento().toString(); 
@@ -417,7 +418,7 @@ public class GCalSyncOpeartions extends WizardPage {
 			
 		case COLLOQUIMODEL:
 			
-			key_value = ((AgenteResult)item.getParentItem().getParentItem().getData()).getCodAgente().toString() + "_" +
+			key_value = ((AgenteResult)item.getParentItem().getParentItem().getData()).getCodAgente() + "_" +
 						((CalendarListEntry)((Map.Entry)item.getParentItem().getData()).getKey()).getId() + "_" + 
 						item.getData().getClass().getName() + "_" + 
 						((ColloquiModel)item.getData()).getCodColloquio().toString(); 
@@ -425,12 +426,12 @@ public class GCalSyncOpeartions extends WizardPage {
 		
 		case AGENTERESULT:
 			
-			key_value = ((AgenteResult)item.getData()).getCodAgente().toString() + "_" + extraPath;
+			key_value = ((AgenteResult)item.getData()).getCodAgente() + "_" + extraPath;
 			break;
 			
 		case MAPENTRY:
 			
-			key_value = ((AgenteResult)item.getParentItem().getParentItem().getData()).getCodAgente().toString() + "_" +
+			key_value = ((AgenteResult)item.getParentItem().getParentItem().getData()).toString() + "_" +
 						((CalendarListEntry)((Map.Entry)item.getParentItem().getData()).getKey()).getId() + "_" + extraPath; 
 			
 			break;
@@ -873,7 +874,7 @@ public class GCalSyncOpeartions extends WizardPage {
 				CalendarListEntry cle = it.next();
 				if (((GCalendarSyncWizard)getWizard()).getGcalsyncVO().getFrom_appuntamento_detail() != null){
 					
-					ArrayList<AppuntamentiModel> items = new ArrayList<AppuntamentiModel>();
+					ArrayList<Appuntamenti> items = new ArrayList<Appuntamenti>();
 					items.add(((GCalendarSyncWizard)getWizard()).getGcalsyncVO().getFrom_appuntamento_detail());
 					
 					agente.getHmAppuntamenti().put(cle, items);					
@@ -881,7 +882,7 @@ public class GCalSyncOpeartions extends WizardPage {
 				}
 				if (((GCalendarSyncWizard)getWizard()).getGcalsyncVO().getFrom_colloqui_detail() != null){
 	
-					ArrayList<ColloquiModel> items = new ArrayList<ColloquiModel>();
+					ArrayList<Colloqui> items = new ArrayList<Colloqui>();
 					items.add(((GCalendarSyncWizard)getWizard()).getGcalsyncVO().getFrom_colloqui_detail());
 	
 					agente.getHmColloqui().put(cle, items);

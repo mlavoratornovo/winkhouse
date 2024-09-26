@@ -66,10 +66,7 @@ public class SelezioneTipoColloquio extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {								
 				((ColloquiWizard)getWizard()).getColloquio()
-											 .setTipologia(
-													 EnvSettingsFactory.getInstance()
-													 				   .getTipologieColloqui().get(0)
-													 	   );
+											 .setCodtipologiacolloquio(1);
 			}
 			
 		});
@@ -93,9 +90,7 @@ public class SelezioneTipoColloquio extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {								
 				((ColloquiWizard)getWizard()).getColloquio()
-											 .setTipologia(
-													 EnvSettingsFactory.getInstance()
-													 				   .getTipologieColloqui().get(1));
+											 .setCodtipologiacolloquio(2);
 				((ColloquiWizard)getWizard()).getColloquio()
 											 .setScadenziere(Boolean.TRUE);
 													 	   
@@ -123,21 +118,13 @@ public class SelezioneTipoColloquio extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {				
 				((ColloquiWizard)getWizard()).getColloquio()
-											 .setTipologia(
-													 EnvSettingsFactory.getInstance()
-													 				   .getTipologieColloqui().get(2)
-													 	  );
+											 .setCodtipologiacolloquio(1);			
 			}
 			
 		});
 
 
-		((ColloquiWizard)getWizard()).getColloquio()
-									 .setTipologia(
-											 EnvSettingsFactory.getInstance()
-											 				   .getTipologieColloqui().get(0)
-											 				);		
-		
+		((ColloquiWizard)getWizard()).getColloquio().setCodtipologiacolloquio(1);		
 		setControl(container);
 	}
 

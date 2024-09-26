@@ -30,6 +30,7 @@ import winkhouse.engine.search.SearchEngineImmobiliAffitti;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.ImmobiliAffittiMethodName;
 import winkhouse.util.WinkhouseUtils;
@@ -365,14 +366,14 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (((RicercaWizard)getWizard()).getRicerca().getRicerca() != null){
+				if (((RicercaWizard)getWizard()).getRicerca() != null){
 					RicercheHelper rh = new RicercheHelper();
-					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca().getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
+					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
 						MessageDialog.openError(PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getShell(), 
 												"Errore cancellazione ricerca", 
-												"Si � verificato un errore nella cancellazione della ricerca");		
+												"Si è verificato un errore nella cancellazione della ricerca");		
 					}else{
 						MessageDialog.openInformation(PlatformUI.getWorkbench()
 								  								.getActiveWorkbenchWindow()
@@ -381,7 +382,7 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 													  "cancellazione ricerca eseguita con successo");		
 
 						lRicercaSelectedName.setText("");
-						((RicercaWizard)getWizard()).getRicerca().setRicerca(null);
+						((RicercaWizard)getWizard()).setRicerca(null);
 						if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 							((RicercaWizard)getWizard()).getRicerca().setCriteriImmobiliAffitti(new ArrayList());
 						}
@@ -469,7 +470,7 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 		}
 	}
 
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		
 		if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 			if (rm.getTipo() == RicercheVO.PERMESSI_IMMOBILI){
@@ -484,23 +485,22 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 
 		}
 
-		((RicercaWizard)getWizard()).getRicerca().setRicerca(rm);
-		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getRicerca().getNome());
+		((RicercaWizard)getWizard()).setRicerca(rm);
+		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getNome());
 		lRicercaSelectedName.pack();
 		lRicercaSelectedName.redraw();		
 		((RicercaWizard)getWizard()).getRicerca()
 									.setCriteriImmobiliAffitti((ArrayList)((RicercaWizard)getWizard()).getRicerca()
-																									  .getRicerca()
-																									  .getCriteri().clone());
+																									  .getCriteriImmobiliAffitti().clone());
 		tvCriteri.setInput(((RicercaWizard)getWizard()).getRicerca()
 				   									   .getCriteriImmobiliAffitti());
 		((RicercaWizard)getWizard()).getContainer().updateButtons();
 	}
 
-	public RicercheModel getRicerca() {
-		if (((RicercaWizard)getWizard()).getRicerca().getRicerca() == null){
-			((RicercaWizard)getWizard()).getRicerca().setRicerca(new RicercheModel());
-			((RicercaWizard)getWizard()).getRicerca().getRicerca().setTipo(EnvSettingsFactory.getInstance()
+	public Ricerche getRicerca() {
+		if (((RicercaWizard)getWizard()).getRicerca() == null){
+			((RicercaWizard)getWizard()).setRicerca(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class));
+			((RicercaWizard)getWizard()).getRicerca().setTipo(EnvSettingsFactory.getInstance()
 	   				   						  												 .getTipologieColloqui()
 	   				   						  												 .get(0)
 	   				   						  												 .getCodTipologiaColloquio());
@@ -515,8 +515,8 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 			object.setCodColloquio(0);
 			alm.add(object);
 		}
-		((RicercaWizard)getWizard()).getRicerca().getRicerca().setCriteri(alm);			
+		((RicercaWizard)getWizard()).getRicerca().setCriteriImmobiliAffitti(alm);			
 		
-		return ((RicercaWizard)getWizard()).getRicerca().getRicerca();
+		return ((RicercaWizard)getWizard()).getRicerca();
 	}
 }

@@ -294,10 +294,10 @@ public class ListaRisultatiImmobili extends WizardPage {
 
 	public void setRisultati(ArrayList risultati) {
 		this.risultati = risultati;
-		if (((RicercaWizard)getWizard()).getRicerca().getType() == RicercaWizard.IMMOBILI){
+		if (((RicercaWizard)getWizard()).getRicerca().getTipo() == RicercaWizard.IMMOBILI){
 			ProfilerHelper.getInstance().filterImmobili(this.risultati, false);
 		}
-		if (((RicercaWizard)getWizard()).getRicerca().getType() == RicercaWizard.AFFITTI){
+		if (((RicercaWizard)getWizard()).getRicerca().getTipo() == RicercaWizard.AFFITTI){
 			ProfilerHelper.getInstance().filterAffitti(this.risultati, false);
 		}		
 		tvRisultatiRicerca.setInput(this.risultati);

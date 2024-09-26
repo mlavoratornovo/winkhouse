@@ -62,7 +62,7 @@ public class SelezioneTipologiaRicerca extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {								
 				((RicercaWizard)getWizard()).getRicerca()
-											.setType(RicercaWizard.IMMOBILI);
+											.setTipo(RicercaWizard.IMMOBILI);
 			}
 			
 		});
@@ -85,7 +85,7 @@ public class SelezioneTipologiaRicerca extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {								
 				((RicercaWizard)getWizard()).getRicerca()
-											.setType(RicercaWizard.ANAGRAFICHE);
+											.setTipo(RicercaWizard.ANAGRAFICHE);
 			}
 			
 		});
@@ -108,7 +108,7 @@ public class SelezioneTipologiaRicerca extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {								
 				((RicercaWizard)getWizard()).getRicerca()
-											.setType(RicercaWizard.AFFITTI);
+											.setTipo(RicercaWizard.AFFITTI);
 			}
 			
 		});
@@ -130,13 +130,13 @@ public class SelezioneTipologiaRicerca extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {								
 				((RicercaWizard)getWizard()).getRicerca()
-											.setType(RicercaWizard.COLLOQUI);
+											.setTipo(RicercaWizard.COLLOQUI);
 			}
 			
 		});
 		
 		((RicercaWizard)getWizard()).getRicerca()
-									.setType(RicercaWizard.IMMOBILI);		
+									.setTipo(RicercaWizard.IMMOBILI);		
 		
 		setControl(container);
 

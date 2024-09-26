@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import winkhouse.dao.RicercheDAO;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Ricerche;
 
 public class ExportedRicercheHelper {
 
@@ -34,7 +35,7 @@ public class ExportedRicercheHelper {
 	 * @param RicercheModel ricerca
 	 * @return Boolean 
 	 */
-	public Boolean deleteRicerca(RicercheModel ricerca){
+	public Boolean deleteRicerca(Ricerche ricerca){
 		
 		RicercheHelper rh = new RicercheHelper();
 		return rh.deleteRicerca(ricerca,0); 
@@ -45,7 +46,7 @@ public class ExportedRicercheHelper {
 	 * @param RicercheModel ricerca
 	 * @return Boolean 
 	 */	
-	public Boolean saveRicerca(RicercheModel ricerca){
+	public Boolean saveRicerca(Ricerche ricerca){
 		RicercheHelper rh = new RicercheHelper();
 		return rh.saveUpdateRicerca(ricerca);
 	}

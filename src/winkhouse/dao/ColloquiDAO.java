@@ -11,6 +11,9 @@ import java.util.Date;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.exp.ExpressionFactory;
+import org.apache.cayenne.query.ObjectSelect;
+import org.apache.cayenne.query.SelectQuery;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.orm.Anagrafiche;
@@ -398,11 +401,13 @@ public class ColloquiDAO extends BaseDAO{
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_ALLTYPES, codAnagrafica);
 	}
 
-	public <T> ArrayList<T> getColloquiByAnagraficaRicerca(String classType,Integer codAnagrafica){
-		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_RICERCA, codAnagrafica);
+	public ArrayList<Colloqui> getColloquiByAnagraficaRicerca(ObjectContext context, Anagrafiche anagrafica){
+		SelectQuery<Colloqui> query = new SelectQuery<Colloqui>(Colloqui.class);
+		query.andQualifier(ExpressionFactory.matchExp("colloquianagrafiches.anagrafiche", anagrafica));		
+		return new ArrayList<Colloqui>(context.performQuery(query));
 	}
 
-	public <T> ArrayList<T> getColloquiByAnagraficaRicerca(Integer codAnagrafica){
+	public <T> ArrayList<T> getColloquiByAnagraficaRicerca(String classType,Integer codAnagrafica){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_RICERCA, codAnagrafica);
 	}
 

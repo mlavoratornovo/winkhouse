@@ -28,6 +28,7 @@ import winkhouse.dao.AgentiDAO;
 import winkhouse.engine.gcalendar.GoogleCalendarSyncEngine;
 import winkhouse.helper.GoogleCalendarV3Helper;
 import winkhouse.model.AgentiModel;
+import winkhouse.orm.Agenti;
 import winkhouse.wizard.GCalendarSyncWizard;
 
 import com.google.api.services.calendar.model.CalendarListEntry;
@@ -222,7 +223,7 @@ public class SelezioneAgenti extends WizardPage {
 	    											  .getAlagentiResult()
 	    											  .containsKey(((AgentiModel)item.getParentItem().getData()).getCodAgente())){
 	    			
-	    			GoogleCalendarSyncEngine.AgenteResult ar = new GoogleCalendarSyncEngine().new AgenteResult(((AgentiModel)item.getParentItem().getData()));
+	    			GoogleCalendarSyncEngine.AgenteResult ar = new GoogleCalendarSyncEngine().new AgenteResult(((Agenti)item.getParentItem().getData()));
 	    			ar.getCleSelected().add((CalendarListEntry)item.getData());
 	    			((GCalendarSyncWizard)getWizard()).getGcalsyncVO()
 					  								  .getAlagentiResult()
@@ -265,7 +266,7 @@ public class SelezioneAgenti extends WizardPage {
 	    											  .getAlagentiResult()
 	    											  .containsKey(((AgentiModel)item.getParentItem().getData()).getCodAgente())){
 	    			
-	    			GoogleCalendarSyncEngine.AgenteResult ar = new GoogleCalendarSyncEngine().new AgenteResult(((AgentiModel)item.getParentItem().getData()));
+	    			GoogleCalendarSyncEngine.AgenteResult ar = new GoogleCalendarSyncEngine().new AgenteResult(((Agenti)item.getParentItem().getData()));
 	    			ar.getCleSelected().add((CalendarListEntry)item.getData());
 	    			
 	    			((GCalendarSyncWizard)getWizard()).getGcalsyncVO()

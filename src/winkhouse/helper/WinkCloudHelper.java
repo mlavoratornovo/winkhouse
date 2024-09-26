@@ -37,6 +37,7 @@ import winkhouse.model.winkcloud.CloudQueryTypes;
 import winkhouse.model.winkcloud.RicercaModel;
 import winkhouse.orm.Classicliente;
 import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.ImmagineVO;
 import winkhouse.vo.ImmobiliPropietariVO;
@@ -62,7 +63,7 @@ public class WinkCloudHelper {
 	
 	public final static String XML_TAG_MOBILE ="ricerca";
 	private ArrayList<RicercaModel> retval = null;
-	private ArrayList<CriteriRicercaModel> al = null;
+	private ArrayList<Colloquicriteriricerca> al = null;
 	
 	public WinkCloudHelper() {
 		
@@ -368,7 +369,7 @@ public class WinkCloudHelper {
 					 				   .getStateLocation()
 					 				   .toFile().toString() + File.separator+"cloudsearch" + File.separator + unzipdir);
 			File[]fs = f.listFiles();
-			al = new ArrayList<CriteriRicercaModel>();
+			al = new ArrayList<Colloquicriteriricerca>();
 			
 			for (int i = 0; i < fs.length; i++) {
 				if (fs[i].getName().endsWith(".xml")){
@@ -380,7 +381,7 @@ public class WinkCloudHelper {
 						al.add(type.toCriteriRicercaModel());
 					}
 					if (al.size()>0){
-						al.get(al.size()-1).setLogicalOperator("");
+						al.get(al.size()-1).setLogicaloperator("");
 					}
 					if (retval.size() > 0 && retval.get(0).getSearchType().equalsIgnoreCase("immobili")){
 						SearchEngineImmobili sei = new SearchEngineImmobili(al);
@@ -415,7 +416,7 @@ public class WinkCloudHelper {
 		return returnValue;
 	}
 	
-	public ArrayList<CriteriRicercaModel> getCriteri()throws Exception{
+	public ArrayList<Colloquicriteriricerca> getCriteri()throws Exception{
 		if (al == null){
 			Exception e = new Exception("parse non chiamato");
 			throw e;			

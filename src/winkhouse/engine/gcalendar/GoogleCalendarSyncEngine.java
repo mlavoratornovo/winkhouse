@@ -3,6 +3,7 @@ package winkhouse.engine.gcalendar;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.security.GeneralSecurityException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -10,7 +11,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
@@ -18,22 +18,23 @@ import java.util.TimeZone;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
-import winkhouse.dao.AppuntamentiDAO;
-import winkhouse.dao.ColloquiDAO;
-import winkhouse.helper.GCalendarHelper;
-import winkhouse.helper.GoogleCalendarV3Helper;
-import winkhouse.model.AgentiModel;
-import winkhouse.model.AppuntamentiModel;
-import winkhouse.model.ColloquiModel;
-import winkhouse.vo.AgentiVO;
-import winkhouse.wizard.GCalendarSyncWizard;
-
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 import com.google.gdata.data.calendar.CalendarEventEntry;
+
+import winkhouse.dao.AppuntamentiDAO;
+import winkhouse.dao.ColloquiDAO;
+import winkhouse.helper.GCalendarHelper;
+import winkhouse.helper.GoogleCalendarV3Helper;
+import winkhouse.model.AppuntamentiModel;
+import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
+import winkhouse.wizard.GCalendarSyncWizard;
 
 public class GoogleCalendarSyncEngine implements IRunnableWithProgress {
 
@@ -462,15 +463,16 @@ public class GoogleCalendarSyncEngine implements IRunnableWithProgress {
 
 	}
 	
-	public class AgenteResult extends AgentiModel{
+	public class AgenteResult extends Agenti{
 
 		private ArrayList<CalendarListEntry> cleSelected = null;
-		private HashMap<CalendarListEntry,ArrayList<AppuntamentiModel>> hmAppuntamenti = null;
-		private HashMap<CalendarListEntry,ArrayList<ColloquiModel>> hmColloqui = null;
+		private HashMap<CalendarListEntry,ArrayList<Appuntamenti>> hmAppuntamenti = null;
+		private HashMap<CalendarListEntry,ArrayList<Colloqui>> hmColloqui = null;
 		private HashMap<CalendarListEntry,ArrayList<Event>> hmEvents = null;
+		private Agenti agente = null;
 		
-		public AgenteResult(AgentiVO agentiVO) {
-			super(agentiVO);			
+		public AgenteResult(Agenti agentiVO) {
+			this.agente = agentiVO;			
 		}
 
 		public ArrayList<CalendarListEntry> getCleSelected() {
@@ -485,17 +487,17 @@ public class GoogleCalendarSyncEngine implements IRunnableWithProgress {
 		}
 
 		
-		public HashMap<CalendarListEntry, ArrayList<AppuntamentiModel>> getHmAppuntamenti() {
+		public HashMap<CalendarListEntry, ArrayList<Appuntamenti>> getHmAppuntamenti() {
 			if (hmAppuntamenti == null){
-				hmAppuntamenti = new HashMap<CalendarListEntry, ArrayList<AppuntamentiModel>>();
+				hmAppuntamenti = new HashMap<CalendarListEntry, ArrayList<Appuntamenti>>();
 			}
 			return hmAppuntamenti;
 		}
 
 		
-		public HashMap<CalendarListEntry, ArrayList<ColloquiModel>> getHmColloqui() {
+		public HashMap<CalendarListEntry, ArrayList<Colloqui>> getHmColloqui() {
 			if (hmColloqui == null){
-				hmColloqui = new HashMap<CalendarListEntry, ArrayList<ColloquiModel>>();
+				hmColloqui = new HashMap<CalendarListEntry, ArrayList<Colloqui>>();
 			}
 			return hmColloqui;
 		}
@@ -606,10 +608,10 @@ public class GoogleCalendarSyncEngine implements IRunnableWithProgress {
 			
 		}
 		
-		public int search(AppuntamentiModel am){
+		public int search(Appuntamenti am){
 			
 			Event cee = new Event();
-			cee.setICalUID(am.getiCalUID());			
+			cee.setICalUID(am.getIcaluid());			
 		    Date startDate = new Date();
 		    Date endDate = new Date(startDate.getTime() + 3600000);
 		    DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
@@ -620,12 +622,13 @@ public class GoogleCalendarSyncEngine implements IRunnableWithProgress {
 			return Collections.binarySearch(this.calendarEventEntries, cee, this.IcalUIDComparator);
 		}
 
-		public int search(ColloquiModel cm){
+		public int search(Colloqui cm){
 			
 			Event cee = new Event();
-			cee.setICalUID(cm.getiCalUid());			
-		    Date startDate = new Date(cm.getDataColloquio().getTime() + 3600000);
-		    Date endDate = new Date(cm.getDataColloquio().getTime() + 3600000);
+			cee.setICalUID(cm.getIcaluid());	
+			Date dataColloquio = Date.from(cm.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant());
+		    Date startDate = dataColloquio;
+		    Date endDate = new Date(dataColloquio.getTime() + 3600000);
 		    DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
 		    cee.setStart(new EventDateTime().setDateTime(start));
 		    DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
@@ -674,28 +677,28 @@ public class GoogleCalendarSyncEngine implements IRunnableWithProgress {
 							while (itwinkappuntamentimodel.hasNext()){
 								
 								Object o = itwinkappuntamentimodel.next();
-								if (o instanceof AppuntamentiModel){
+								if (o instanceof Appuntamenti){
 									
-									AppuntamentiModel amAgente = (AppuntamentiModel)o;
+									Appuntamenti amAgente = (Appuntamenti)o;
 									if (gees.search(amAgente) < 0){
 										if (aM.getHmAppuntamenti().get(cm) != null){
 											aM.getHmAppuntamenti().get(cm).add(amAgente);
 										}else{
-											ArrayList<AppuntamentiModel> al = new ArrayList<AppuntamentiModel>();
+											ArrayList<Appuntamenti> al = new ArrayList<Appuntamenti>();
 											al.add(amAgente);
 											aM.getHmAppuntamenti().put(cm, al);
 										}
 									}
 									
 								}
-								if (o instanceof ColloquiModel){
+								if (o instanceof Colloqui){
 									
-									ColloquiModel cmAgente = (ColloquiModel)o;
+									Colloqui cmAgente = (Colloqui)o;
 									if (gees.search(cmAgente) < 0){
 										if (aM.getHmColloqui().get(cm) != null){
 											aM.getHmColloqui().get(cm).add(cmAgente);
 										}else{
-											ArrayList<ColloquiModel> al = new ArrayList<ColloquiModel>();
+											ArrayList<Colloqui> al = new ArrayList<Colloqui>();
 											al.add(cmAgente);
 											aM.getHmColloqui().put(cm, al);
 										}

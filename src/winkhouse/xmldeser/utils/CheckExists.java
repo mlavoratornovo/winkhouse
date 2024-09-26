@@ -221,8 +221,9 @@ public class CheckExists implements IRunnableWithProgress {
 			// TO DO 
 			ArrayList<Anagrafiche> al_anagrafiche = new ArrayList<Anagrafiche>();
 			for (Anagrafiche am : al_anagrafiche) {
-				ArrayList<ColloquiModel> al = colloquiHelper.getColloquiExist(colloqui, am);
-				
+				// ArrayList<Colloqui> al = colloquiHelper.getColloquiExist(colloqui, am);
+				// TO DO
+				ArrayList<Colloqui> al = new ArrayList<Colloqui>();	
 				if (al.size() > 0){
 									
 					importerVO.getRisultati_merge().add(colloqui);
@@ -764,7 +765,8 @@ public class CheckExists implements IRunnableWithProgress {
 						ArrayList<Anagrafiche> al_anagrafiche = this.anagraficheHelper.getAnagraficheExist(anagrafica.getValue());
 						
 						for (Anagrafiche anagraficaModel : al_anagrafiche) {
-							al.addAll(colloquiHelper.getColloquiExist(colloqui, anagraficaModel));
+							// al.addAll(colloquiHelper.getColloquiExist(colloqui, anagraficaModel));
+							// TO DO
 						}
 							
 					}

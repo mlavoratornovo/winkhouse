@@ -32,6 +32,7 @@ import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Classicliente;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
@@ -347,9 +348,9 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (((RicercaWizard)getWizard()).getRicerca().getRicerca() != null){
+				if (((RicercaWizard)getWizard()).getRicerca() != null){
 					RicercheHelper rh = new RicercheHelper();
-					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca().getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
+					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
 						MessageDialog.openError(PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getShell(), 
@@ -363,7 +364,7 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 													  "cancellazione ricerca eseguita con successo");		
 
 						lRicercaSelectedName.setText("");
-						((RicercaWizard)getWizard()).getRicerca().setRicerca(null);
+						((RicercaWizard)getWizard()).setRicerca(null);
 						
 						if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 							((RicercaWizard)getWizard()).getRicerca().setCriteriAnagrafiche(new ArrayList());
@@ -492,7 +493,7 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 		}
 	}
 	
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 			if (rm.getTipo() == RicercheVO.PERMESSI_IMMOBILI){
 				rm.setTipo(RicercheVO.RICERCHE_IMMOBILI);
@@ -505,21 +506,21 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 			}
 
 		}		
-		((RicercaWizard)getWizard()).getRicerca().setRicerca(rm);
-		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getRicerca().getNome());
+		((RicercaWizard)getWizard()).setRicerca(rm);
+		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getNome());
 		lRicercaSelectedName.pack();
 		lRicercaSelectedName.redraw();		
 		((RicercaWizard)getWizard()).getRicerca()
-									.setCriteriAnagrafiche((ArrayList)((RicercaWizard)getWizard()).getRicerca().getRicerca().getCriteri().clone());
+									.setCriteriAnagrafiche((ArrayList)((RicercaWizard)getWizard()).getRicerca().getCriteriAnagrafiche().clone());
 		tvCriteri.setInput(((RicercaWizard)getWizard()).getRicerca()
 				   									   .getCriteriAnagrafiche());
 		((RicercaWizard)getWizard()).getContainer().updateButtons();
 	}
 
-	public RicercheModel getRicerca() {
-		if (((RicercaWizard)getWizard()).getRicerca().getRicerca() == null){
-			((RicercaWizard)getWizard()).getRicerca().setRicerca(new RicercheModel());
-			((RicercaWizard)getWizard()).getRicerca().getRicerca().setTipo(EnvSettingsFactory.getInstance()
+	public Ricerche getRicerca() {
+		if (((RicercaWizard)getWizard()).getRicerca() == null){
+			((RicercaWizard)getWizard()).setRicerca(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class));
+			((RicercaWizard)getWizard()).getRicerca().setTipo(EnvSettingsFactory.getInstance()
 	   				   						  					  .getTipologieColloqui()
 	   				   						  					  .get(0)
 	   				   						  					  .getCodTipologiaColloquio());
@@ -534,9 +535,9 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 			object.setCodColloquio(null);
 			alm.add(object);
 		}
-		((RicercaWizard)getWizard()).getRicerca().getRicerca().setCriteri(alm);			
+		((RicercaWizard)getWizard()).getRicerca().setCriteriAnagrafiche(alm);			
 		
-		return ((RicercaWizard)getWizard()).getRicerca().getRicerca();
+		return ((RicercaWizard)getWizard()).getRicerca();
 	}
 
 }

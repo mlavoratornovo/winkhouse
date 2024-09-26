@@ -1,8 +1,10 @@
 package winkhouse.export.helpers;
 
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -40,7 +42,7 @@ public class ColloquiHelper {
 	 */
 	public ArrayList<Colloqui> getColloquiExist(Colloqui colloquio,Anagrafiche anagrafica){
 		
-		ArrayList<ColloquiModel> returnValue = new ArrayList<ColloquiModel>();
+		ArrayList<Colloqui> returnValue = new ArrayList<Colloqui>();
 		ColloquiDAO cdao = new ColloquiDAO();
 		
 		ArrayList<Colloqui> tmp = cdao.getColloquiByAnagraficaRicerca(ColloquiModel.class.getName(), 
@@ -50,17 +52,17 @@ public class ColloquiHelper {
 		tmp.addAll(cdao.getColloquiByAnagrafica(ColloquiModel.class.getName(), 
 				  								anagrafica.getCodAnagrafica()));
 		
-		Iterator<ColloquiModel> it = tmp.iterator();
+		Iterator<Colloqui> it = tmp.iterator();
 		
 		while (it.hasNext()){
 			
 			Colloqui cm = it.next();
 			
 			Calendar c1 = Calendar.getInstance(Locale.ITALIAN);
-			c1.setTime(cm.getDataColloquio());
+			c1.setTime(Date.from(cm.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant()));
 			
 			Calendar c2 = Calendar.getInstance(Locale.ITALIAN);
-			c2.setTime(colloquio.getDataColloquio());
+			c2.setTime(Date.from(cm.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant()));
 			
 			if (
 				(
@@ -71,9 +73,9 @@ public class ColloquiHelper {
 						(c1.get(Calendar.MINUTE) == c2.get(Calendar.MINUTE)) &&
 						(c1.get(Calendar.SECOND) == c2.get(Calendar.SECOND))						
 				) && 
-				(cm.getScadenziere() == colloquio.isScadenziere()) &&
+				(cm.isScadenziere() == colloquio.isScadenziere()) &&
 				(cm.getIcaluid().equalsIgnoreCase(colloquio.getIcaluid()) &&
-				(cm.getLuogoIncontro().equalsIgnoreCase(colloquio.getLuogoIncontro()))){
+				(cm.getLuogo().equalsIgnoreCase(colloquio.getLuogo())))){
 				
 				returnValue.add(cm);
 				

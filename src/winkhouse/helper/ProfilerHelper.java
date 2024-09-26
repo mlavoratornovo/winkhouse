@@ -14,6 +14,7 @@ import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.PermessiModel;
 import winkhouse.model.PermessiUIModel;
+import winkhouse.orm.Immobili;
 import winkhouse.perspective.DesktopPerspective;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
@@ -112,8 +113,8 @@ public class ProfilerHelper {
 				while(it.hasNext()){
 					PermessiModel pm = it.next();
 					SearchEngineImmobili sei = new SearchEngineImmobili(pm.getRicercaModel().getCriteri());
-					ArrayList<ImmobiliModel> immobili = sei.find();
-					for (ImmobiliModel immobiliModel : immobili) {				
+					ArrayList<Immobili> immobili = sei.find();
+					for (Immobili immobiliModel : immobili) {				
 						permessiimmobili.put(immobiliModel.getCodImmobile(), new PermessoDetail(pm.getIsNot(),pm.getCanWrite()));
 					}
 				}
@@ -171,8 +172,8 @@ public class ProfilerHelper {
 				while(it.hasNext()){
 					PermessiModel pm = it.next();
 					SearchEngineImmobili sei = new SearchEngineImmobili(pm.getRicercaModel().getCriteri());
-					ArrayList<ImmobiliModel> immobili = sei.find();
-					for (ImmobiliModel immobiliModel : immobili) {				
+					ArrayList<Immobili> immobili = sei.find();
+					for (Immobili immobiliModel : immobili) {				
 						permessiaffitti.put(immobiliModel.getCodImmobile(), new PermessoDetail(pm.getIsNot(),pm.getCanWrite()));
 					}
 				}

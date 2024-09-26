@@ -27,6 +27,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.ImmobiliVO;
 import winkhouse.vo.TipologieImmobiliVO;
 import winkhouse.wizard.ColloquiWizard;
@@ -68,7 +69,7 @@ public class SelezioneImmobile extends WizardPage {
 
 		@Override
 		public Object[] getChildren(Object parentElement) {
-			if (parentElement instanceof TipologieImmobiliVO){
+			if (parentElement instanceof Tipologieimmobili){
 				return iDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), ((TipologieImmobiliVO)parentElement).getCodTipologiaImmobile()).toArray();
 			}else{
 				ArrayList tipologie = (ArrayList)tiDAO.list(TipologieImmobiliVO.class.getName());

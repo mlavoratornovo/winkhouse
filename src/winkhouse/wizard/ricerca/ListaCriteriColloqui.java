@@ -26,18 +26,16 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import winkhouse.Activator;
 import winkhouse.configuration.EnvSettingsFactory;
-import winkhouse.engine.search.SearchEngineAnagrafiche;
 import winkhouse.engine.search.SearchEngineColloqui;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
-import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.util.WinkhouseUtils.ObjectSearchGetters;
-import winkhouse.vo.AgentiVO;
-import winkhouse.vo.ClassiClientiVO;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.vo.RicercheVO;
 import winkhouse.wizard.PopUpEditRicerca;
@@ -347,9 +345,9 @@ public class ListaCriteriColloqui extends WizardPage{
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (((RicercaWizard)getWizard()).getRicerca().getRicerca() != null){
+				if (((RicercaWizard)getWizard()).getRicerca() != null){
 					RicercheHelper rh = new RicercheHelper();
-					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca().getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
+					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
 						MessageDialog.openError(PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getShell(), 
@@ -363,7 +361,7 @@ public class ListaCriteriColloqui extends WizardPage{
 													  "cancellazione ricerca eseguita con successo");		
 
 						lRicercaSelectedName.setText("");
-						((RicercaWizard)getWizard()).getRicerca().setRicerca(null);
+						((RicercaWizard)getWizard()).setRicerca(null);
 						
 						if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 							((RicercaWizard)getWizard()).getRicerca().setCriteriAnagrafiche(new ArrayList());
@@ -493,7 +491,7 @@ public class ListaCriteriColloqui extends WizardPage{
 		}
 	}
 	
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 			if (rm.getTipo() == RicercheVO.PERMESSI_IMMOBILI){
 				rm.setTipo(RicercheVO.RICERCHE_IMMOBILI);
@@ -509,21 +507,21 @@ public class ListaCriteriColloqui extends WizardPage{
 			}
 
 		}		
-		((RicercaWizard)getWizard()).getRicerca().setRicerca(rm);
-		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getRicerca().getNome());
+		((RicercaWizard)getWizard()).setRicerca(rm);
+		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getNome());
 		lRicercaSelectedName.pack();
 		lRicercaSelectedName.redraw();		
 		((RicercaWizard)getWizard()).getRicerca()
-									.setCriteriAnagrafiche((ArrayList)((RicercaWizard)getWizard()).getRicerca().getRicerca().getCriteri().clone());
+									.setCriteriAnagrafiche((ArrayList)((RicercaWizard)getWizard()).getRicerca().getCriteriColloqui().clone());
 		tvCriteri.setInput(((RicercaWizard)getWizard()).getRicerca()
 				   									   .getCriteriColloqui());
 		((RicercaWizard)getWizard()).getContainer().updateButtons();
 	}
 
-	public RicercheModel getRicerca() {
-		if (((RicercaWizard)getWizard()).getRicerca().getRicerca() == null){
-			((RicercaWizard)getWizard()).getRicerca().setRicerca(new RicercheModel());
-			((RicercaWizard)getWizard()).getRicerca().getRicerca().setTipo(EnvSettingsFactory.getInstance()
+	public Ricerche getRicerca() {
+		if (((RicercaWizard)getWizard()).getRicerca() == null){
+			((RicercaWizard)getWizard()).setRicerca(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class));
+			((RicercaWizard)getWizard()).getRicerca().setTipo(EnvSettingsFactory.getInstance()
 	   				   						  					  .getTipologieColloqui()
 	   				   						  					  .get(0)
 	   				   						  					  .getCodTipologiaColloquio());
@@ -531,16 +529,16 @@ public class ListaCriteriColloqui extends WizardPage{
 		ArrayList al = (ArrayList)((RicercaWizard)getWizard()).getRicerca()
         													  .getCriteriColloqui().clone();
 
-		ArrayList <ColloquiCriteriRicercaModel> alm = new ArrayList<ColloquiCriteriRicercaModel>();
-		Iterator it = al.iterator();
+		ArrayList <Colloquicriteriricerca> alm = new ArrayList<Colloquicriteriricerca>();
+		Iterator<Colloquicriteriricerca> it = al.iterator();
 		while (it.hasNext()) {
-			ColloquiCriteriRicercaModel object = (ColloquiCriteriRicercaModel) it.next();
-			object.setCodColloquio(null);
+			Colloquicriteriricerca object = it.next();
+			object.setColloqui(null);
 			alm.add(object);
 		}
-		((RicercaWizard)getWizard()).getRicerca().getRicerca().setCriteri(alm);			
+		((RicercaWizard)getWizard()).getRicerca().setCriteriColloqui(alm);			
 		
-		return ((RicercaWizard)getWizard()).getRicerca().getRicerca();
+		return ((RicercaWizard)getWizard()).getRicerca();
 	}
 
 }

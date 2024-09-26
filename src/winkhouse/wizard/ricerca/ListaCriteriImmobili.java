@@ -7,11 +7,8 @@ import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -31,7 +28,8 @@ import winkhouse.configuration.EnvSettingsFactory;
 import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.helper.RicercheHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
-import winkhouse.model.RicercheModel;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.orm.Ricerche;
 import winkhouse.util.CriteriaTableUtilsFactory;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
@@ -315,14 +313,14 @@ public class ListaCriteriImmobili extends WizardPage {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (((RicercaWizard)getWizard()).getRicerca().getRicerca() != null){
+				if (((RicercaWizard)getWizard()).getRicerca() != null){
 					RicercheHelper rh = new RicercheHelper();
-					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca().getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
+					if (!rh.deleteRicerca(((RicercaWizard)getWizard()).getRicerca(),((RicercaWizard)getWizard()).getWiztype())){
 						MessageDialog.openError(PlatformUI.getWorkbench()
 														  .getActiveWorkbenchWindow()
 														  .getShell(), 
 												"Errore cancellazione ricerca", 
-												"Si � verificato un errore nella cancellazione della ricerca");		
+												"Si è verificato un errore nella cancellazione della ricerca");		
 					}else{
 						MessageDialog.openInformation(PlatformUI.getWorkbench()
 								  								.getActiveWorkbenchWindow()
@@ -331,7 +329,7 @@ public class ListaCriteriImmobili extends WizardPage {
 													  "cancellazione ricerca eseguita con successo");		
 
 						lRicercaSelectedName.setText("");
-						((RicercaWizard)getWizard()).getRicerca().setRicerca(null);
+						((RicercaWizard)getWizard()).setRicerca(null);
 						
 						if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 							((RicercaWizard)getWizard()).getRicerca().setCriteriImmobili(new ArrayList());
@@ -408,7 +406,7 @@ public class ListaCriteriImmobili extends WizardPage {
 		}
 	}
 
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		if (((RicercaWizard)getWizard()).getWiztype() == RicercaWizard.PERMESSI){
 			if (rm.getTipo() == RicercheVO.PERMESSI_IMMOBILI){
 				rm.setTipo(RicercheVO.RICERCHE_IMMOBILI);
@@ -421,21 +419,21 @@ public class ListaCriteriImmobili extends WizardPage {
 			}
 
 		}
-		((RicercaWizard)getWizard()).getRicerca().setRicerca(rm);
-		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getRicerca().getNome());
+		((RicercaWizard)getWizard()).setRicerca(rm);
+		lRicercaSelectedName.setText(((RicercaWizard)getWizard()).getRicerca().getNome());
 		lRicercaSelectedName.pack();
 		lRicercaSelectedName.redraw();		
 		((RicercaWizard)getWizard()).getRicerca()
-									.setCriteriImmobili((ArrayList)((RicercaWizard)getWizard()).getRicerca().getRicerca().getCriteri().clone());
+									.setCriteriImmobili((ArrayList)((RicercaWizard)getWizard()).getRicerca().getCriteriImmobili().clone());
 		tvCriteri.setInput(((RicercaWizard)getWizard()).getRicerca()
 				   									   .getCriteriImmobili());
 		((RicercaWizard)getWizard()).getContainer().updateButtons();
 	}
 
-	public RicercheModel getRicerca() {
-		if (((RicercaWizard)getWizard()).getRicerca().getRicerca() == null){
-			((RicercaWizard)getWizard()).getRicerca().setRicerca(new RicercheModel());
-			((RicercaWizard)getWizard()).getRicerca().getRicerca().setTipo(EnvSettingsFactory.getInstance()
+	public Ricerche getRicerca() {
+		if (((RicercaWizard)getWizard()).getRicerca() == null){
+			((RicercaWizard)getWizard()).setRicerca(WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class));
+			((RicercaWizard)getWizard()).getRicerca().setTipo(EnvSettingsFactory.getInstance()
 	   				   						  					  .getTipologieColloqui()
 	   				   						  					  .get(0)
 	   				   						  					  .getCodTipologiaColloquio());
@@ -443,16 +441,16 @@ public class ListaCriteriImmobili extends WizardPage {
 		ArrayList al = (ArrayList)((RicercaWizard)getWizard()).getRicerca()
         													  .getCriteriImmobili().clone();
 
-		ArrayList <ColloquiCriteriRicercaModel> alm = new ArrayList<ColloquiCriteriRicercaModel>();
-		Iterator it = al.iterator();
+		ArrayList <Colloquicriteriricerca> alm = new ArrayList<Colloquicriteriricerca>();
+		Iterator<Colloquicriteriricerca> it = al.iterator();
 		while (it.hasNext()) {
-			ColloquiCriteriRicercaModel object = (ColloquiCriteriRicercaModel) it.next();
-			object.setCodColloquio(null);
+			Colloquicriteriricerca object = it.next();
+			object.setColloqui(null);
 			alm.add(object);
 		}
-		((RicercaWizard)getWizard()).getRicerca().getRicerca().setCriteri(alm);			
+		((RicercaWizard)getWizard()).getRicerca().setCriteriImmobili(alm);			
 		
-		return ((RicercaWizard)getWizard()).getRicerca().getRicerca();
+		return ((RicercaWizard)getWizard()).getRicerca();
 	}
 
 }

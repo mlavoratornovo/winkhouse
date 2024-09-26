@@ -2,6 +2,7 @@ package winkhouse.helper;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,11 +12,13 @@ import java.util.Iterator;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import winkhouse.Activator;
+import winkhouse.dao.AgentiDAO;
 import winkhouse.dao.ColloquiCriteriRicercaDAO;
 import winkhouse.dao.PermessiDAO;
 import winkhouse.dao.RicercheDAO;
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Immobili;
 import winkhouse.orm.Ricerche;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
@@ -171,13 +174,15 @@ public class RicercheHelper {
 
 	public Ricerche saveNewRicercaFromWizardRicerca(Ricerche ricercaObjWizard){
 		
-		RicercheModel rm = new RicercheModel();
+		Ricerche rm = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class);
 		
 		if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
-			rm.setCodUserUpdate(WinkhouseUtils.getInstance().getLoggedAgent().getCodAgente());	
+			rm.setAgenti(WinkhouseUtils.getInstance().getLoggedAgent());	
 		}
 		
-		rm.setDateUpdate(new Date());
+		rm.setDateupdate(new Date().toInstant()
+			      .atZone(ZoneId.systemDefault())
+			      .toLocalDateTime());
 		
 		String tipo = "";
 		
