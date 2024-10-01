@@ -10,6 +10,16 @@ import winkhouse.orm.auto._Ricerche;
 
 public class Ricerche extends _Ricerche {
 
+	final public static int RICERCHE_IMMOBILI = 1;
+	final public static int RICERCHE_IMMOBILI_AFFITTI = 2;
+	final public static int RICERCHE_ANAGRAFICHE = 3;
+	final public static int RICERCHE_COLLOQUI = 7;
+
+	final public static int PERMESSI_IMMOBILI = 4;
+	final public static int PERMESSI_IMMOBILI_AFFITTI = 5;
+	final public static int PERMESSI_ANAGRAFICHE = 6;
+	final public static int PERMESSI_COLLOQUI = 8;
+
     private static final long serialVersionUID = 1L; 
     private ObjectContext editObjectContext = null;
     private ArrayList risultati = null;

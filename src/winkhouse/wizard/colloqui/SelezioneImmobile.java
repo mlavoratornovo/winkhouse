@@ -27,6 +27,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.ImmobiliVO;
 import winkhouse.vo.TipologieImmobiliVO;
@@ -231,14 +232,14 @@ public class SelezioneImmobile extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				
-				ImmobiliVO iVO = (tvImmobili.getSelection()!= null)
+				Immobili iVO = (tvImmobili.getSelection()!= null)
 								 ? (((StructuredSelection)tvImmobili.getSelection()).getFirstElement() != null)
-								   ? (ImmobiliVO)((StructuredSelection)tvImmobili.getSelection()).getFirstElement()
+								   ? (Immobili)((StructuredSelection)tvImmobili.getSelection()).getFirstElement()
 								   : null
 								 : null;
 				
 				if (iVO != null){
-					((ColloquiWizard)getWizard()).getColloquio().setCodImmobileAbbinato(iVO.getCodImmobile());
+					((ColloquiWizard)getWizard()).getColloquio().setImmobili(iVO);
 					timmobile.setText(iVO.getCodImmobile() + " - " +iVO.getIndirizzo());
 				}
 				

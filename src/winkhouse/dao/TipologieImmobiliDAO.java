@@ -7,8 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.TipologieImmobiliModel;
+import winkhouse.orm.Immobili;
+import winkhouse.orm.Tipologieimmobili;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipologieImmobiliVO;
 
 
@@ -263,6 +269,11 @@ public class TipologieImmobiliDAO extends BaseDAO{
 		return super.getObjectById(classType, TIPOLOGIEIMMOBILI_BY_ID, codTipologiaImmobile);
 	}	
 
+	public Tipologieimmobili getTipologieImmobiliById(Integer codImmobile){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Tipologieimmobili.class,codImmobile);
+	}
+	
 	public <T> ArrayList<T> getTipologieImmobiliByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, TIPOLOGIEIMMOBILI_BY_NAME, descrizione);
 	}	

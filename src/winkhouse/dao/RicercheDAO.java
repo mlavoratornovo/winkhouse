@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.orm.Anagrafiche;
@@ -42,7 +43,13 @@ public class RicercheDAO extends BaseDAO {
 	public <T> ArrayList<T> getRichercheByTipo(String classType, Integer codTipo){
 		return super.getObjectsByIntFieldValue(classType, RICERCHE_BY_TIPO, codTipo);
 	}
-	
+
+	public ArrayList<Ricerche> getRichercheByTipo(ObjectContext context, Integer codTipo){
+		return new ArrayList<Ricerche>(ObjectSelect.query(Ricerche.class)
+				  .where(Ricerche.TIPO.eq(codTipo))				  
+				  .select(context));			
+	}
+
 	public boolean delete(Integer codRicerca, Connection con, Boolean doCommit){
 		return super.deleteObjectById(DELETE_RICERCHE, codRicerca, con, doCommit);
 	}

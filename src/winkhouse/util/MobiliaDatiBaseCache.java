@@ -379,19 +379,6 @@ public class MobiliaDatiBaseCache {
 			return null;
 		}
 	}
-
-	public TipologieImmobiliVO findTipologiaByCod(Integer codice){
-		ArrayList<TipologieImmobiliVO> work = (ArrayList<TipologieImmobiliVO>)getTipologieImmobili().clone();
-		Collections.sort(work, comparatorCodTipologieImmobili);
-		TipologieImmobiliVO tiVO = new TipologieImmobiliVO();
-		tiVO.setCodTipologiaImmobile(codice);
-		int index = Collections.binarySearch(work, tiVO, comparatorCodTipologieImmobili);
-		if (index > -1){
-			return work.get(index);
-		}else{
-			return null;
-		}
-	}
 	
 	public StatoConservativoVO findStatoConservativoByCod(Integer codice){
 		ArrayList<StatoConservativoVO> work = (ArrayList<StatoConservativoVO>)getStatiConservativi().clone();

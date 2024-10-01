@@ -509,8 +509,8 @@ public class UtilsHelper {
 		return returnValue;
 	}
 	
-	public TipologieImmobiliVO findTipologiaByCod(Integer codice){
-		return MobiliaDatiBaseCache.getInstance().findTipologiaByCod(codice);
+	public Tipologieimmobili findTipologiaByCod(Integer codice){
+		return new TipologieImmobiliDAO().getTipologieImmobiliById(codice);
 	}
 
 	/**

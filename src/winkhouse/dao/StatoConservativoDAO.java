@@ -7,8 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.StatoConservativoModel;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologieimmobili;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.StatoConservativoVO;
 
 
@@ -253,6 +259,12 @@ public class StatoConservativoDAO extends BaseDAO{
 		
 	public Object getStatoConservativoById(String classType, Integer codStatoConservativo){
 		return super.getObjectById(classType, STATOCONSERVATIVO_BY_ID, codStatoConservativo);
+	}	
+
+	public Statoconservativo getStatoConservativoById(Integer codStatoConservativo){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Statoconservativo.class,codStatoConservativo);
+
 	}	
 
 	public <T> ArrayList<T> getStatoConservativoByDescrizione(String classType, String descrizione){

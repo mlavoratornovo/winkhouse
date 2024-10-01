@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import winkhouse.Activator;
@@ -56,17 +57,21 @@ import winkhouse.dao.AnagraficheDAO;
 import winkhouse.db.ConnectionManager;
 import winkhouse.helper.AnagraficheHelper;
 import winkhouse.helper.ContattiHelper;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ColloquiAnagraficheModel_Ang;
-import winkhouse.model.ContattiModel;
+//import winkhouse.model.Anagrafiche;
+//import winkhouse.model.Colloquianagrafiche;
+//import winkhouse.model.Contatti;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Colloquianagrafiche;
 import winkhouse.orm.Contatti;
+import winkhouse.orm.Immobili;
 import winkhouse.orm.Tipologiecontatti;
 import winkhouse.util.MobiliaDatiBaseCache;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.PopUpRicercaAnagrafica;
-import winkhouse.vo.AnagraficheVO;
-import winkhouse.vo.ColloquiAnagraficheVO;
-import winkhouse.vo.ContattiVO;
-import winkhouse.vo.TipologiaContattiVO;
+//import winkhouse.vo.AnagraficheVO;
+//import winkhouse.vo.ColloquiAnagraficheVO;
+//import winkhouse.vo.ContattiVO;
+//import winkhouse.vo.TipologiaContattiVO;
 import winkhouse.wizard.ColloquiWizard;
 
 
@@ -82,28 +87,28 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 	private Text tNome = null;	
 	private Text tIndirizzo = null;
 	Button filtraAnagrafiche = null;
-	private Image anagraficaImg = Activator.getDefault().getImageDescriptor("icons/anagrafica.png").createImage();
-	private Image anagraficaImmobileImg = Activator.getDefault().getImageDescriptor("icons/anagraficaImmobile.png").createImage();
+	private Image anagraficaImg = Activator.getImageDescriptor("icons/anagrafica.png").createImage();
+	private Image anagraficaImmobileImg = Activator.getImageDescriptor("icons/anagraficaImmobile.png").createImage();
 	
 
-	private ArrayList<AnagraficheModel> anagrafiche = new ArrayList<AnagraficheModel>();
+	private ArrayList<Anagrafiche> anagrafiche = new ArrayList<Anagrafiche>();
 	
-	private Comparator<AnagraficheVO> cAnagrafiche = new Comparator<AnagraficheVO>(){
+	private Comparator<Anagrafiche> cAnagrafiche = new Comparator<Anagrafiche>(){
 
 		@Override
-		public int compare(AnagraficheVO arg0, AnagraficheVO arg1) {
+		public int compare(Anagrafiche arg0, Anagrafiche arg1) {
 			int returnValue = 0;
-			if ((arg0.getCodAnagrafica()!=null) && (arg0.getCodAnagrafica()!=null)){				
-				if ((arg0.getCodAnagrafica().intValue() == arg0.getCodAnagrafica().intValue())){
+			if (arg0.getCodAnagrafica()!=0){				
+				if ((arg0.getCodAnagrafica() == arg0.getCodAnagrafica())){
 					returnValue = 0;
 				}
-				if ((arg0.getCodAnagrafica().intValue() < arg0.getCodAnagrafica().intValue())){
+				if ((arg0.getCodAnagrafica() < arg0.getCodAnagrafica())){
 					returnValue = -1;
 				}				
-				if ((arg0.getCodAnagrafica().intValue() > arg0.getCodAnagrafica().intValue())){
+				if ((arg0.getCodAnagrafica() > arg0.getCodAnagrafica())){
 					returnValue = 1;
 				}								
-			}else if ((arg0.getCodAnagrafica()!=null) && (arg0.getCodAnagrafica()==null)){
+			}else if (arg0.getCodAnagrafica()!=0){
 				returnValue = 1;
 			}else{
 				returnValue = -1;
@@ -219,9 +224,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText((((AnagraficheVO)cell.getElement()).getCognome() == null)
+				cell.setText((((Anagrafiche)cell.getElement()).getCognome() == null)
 							 ? ""
-							 : ((AnagraficheVO)cell.getElement()).getCognome());				
+							 : ((Anagrafiche)cell.getElement()).getCognome());				
 			}
 			
 		});
@@ -229,7 +234,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected boolean canEdit(Object element) {
-				return (((AnagraficheVO)element).getCodAnagrafica() == null);
+				return (((Anagrafiche)element).getCodAnagrafica() == 0);
 			}
 
 			@Override
@@ -240,14 +245,14 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((AnagraficheVO)element).getCognome() == null)
+				return (((Anagrafiche)element).getCognome() == null)
 						? ""
-						:((AnagraficheVO)element).getCognome();
+						:((Anagrafiche)element).getCognome();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AnagraficheVO)element).setCognome((String)value);
+				((Anagrafiche)element).setCognome((String)value);
 				tvanagrafica.refresh();
 			}
 			
@@ -263,9 +268,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText((((AnagraficheVO)cell.getElement()).getNome() == null)
+				cell.setText((((Anagrafiche)cell.getElement()).getNome() == null)
 							 ? ""
-							 : ((AnagraficheVO)cell.getElement()).getNome());				
+							 : ((Anagrafiche)cell.getElement()).getNome());				
 			}
 			
 		});
@@ -273,7 +278,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected boolean canEdit(Object element) {
-				return (((AnagraficheVO)element).getCodAnagrafica() == null);
+				return (((Anagrafiche)element).getCodAnagrafica() == 0);
 			}
 
 			@Override
@@ -284,14 +289,14 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((AnagraficheVO)element).getNome() == null)
+				return (((Anagrafiche)element).getNome() == null)
 						? ""
-						: ((AnagraficheVO)element).getNome();
+						: ((Anagrafiche)element).getNome();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AnagraficheVO)element).setNome((String)value);
+				((Anagrafiche)element).setNome((String)value);
 				tvanagrafica.refresh();
 			}
 			
@@ -306,9 +311,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText((((AnagraficheVO)cell.getElement()).getIndirizzo() == null)
+				cell.setText((((Anagrafiche)cell.getElement()).getIndirizzo() == null)
 							 ? ""
-							 : ((AnagraficheVO)cell.getElement()).getIndirizzo());				
+							 : ((Anagrafiche)cell.getElement()).getIndirizzo());				
 			}
 			
 		});
@@ -316,7 +321,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected boolean canEdit(Object element) {
-				return (((AnagraficheVO)element).getCodAnagrafica() == null);
+				return (((Anagrafiche)element).getCodAnagrafica() == 0);
 			}
 
 			@Override
@@ -327,14 +332,14 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((AnagraficheVO)element).getIndirizzo() == null)
+				return (((Anagrafiche)element).getIndirizzo() == null)
 						? ""
-						: ((AnagraficheVO)element).getIndirizzo();
+						: ((Anagrafiche)element).getIndirizzo();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AnagraficheVO)element).setIndirizzo((String)value);
+				((Anagrafiche)element).setIndirizzo((String)value);
 				tvanagrafica.refresh();
 			}
 			
@@ -346,7 +351,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			public Object[] getElements(Object inputElement) {
 				
 				if (anagrafiche == null){
-					anagrafiche = new ArrayList<AnagraficheModel>();
+					anagrafiche = new ArrayList<Anagrafiche>();
 				}
 				return anagrafiche.toArray();
 			}
@@ -366,7 +371,7 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			@Override
 			public Image getColumnImage(Object element, int columnIndex) {
 				if (columnIndex == 1){
-					if(((AnagraficheModel)element).getImmobili().size() > 0){
+					if(((Anagrafiche)element).getImmobilis().size() > 0){
 						return anagraficaImmobileImg;
 					}else{
 						return anagraficaImg;
@@ -379,17 +384,17 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
 				switch (columnIndex){
-				case 2: return (((AnagraficheVO)element).getCognome() == null)
+				case 2: return (((Anagrafiche)element).getCognome() == null)
 							   ? ""
-							   : ((AnagraficheVO)element).getCognome();
+							   : ((Anagrafiche)element).getCognome();
 				
-				case 3: return (((AnagraficheVO)element).getNome() == null)
+				case 3: return (((Anagrafiche)element).getNome() == null)
 				   			   ? ""
-				   			   : ((AnagraficheVO)element).getNome();
+				   			   : ((Anagrafiche)element).getNome();
 							   
-				case 4: return (((AnagraficheVO)element).getIndirizzo() == null)
+				case 4: return (((Anagrafiche)element).getIndirizzo() == null)
 	   			   			   ? ""
-			   			       : ((AnagraficheVO)element).getIndirizzo();
+			   			       : ((Anagrafiche)element).getIndirizzo();
 				
 				default : return "";
 			}
@@ -419,28 +424,28 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				Object[] selezioni = tvanagrafica.getCheckedElements();
-				ArrayList<ColloquiAnagraficheModel_Ang> colloquiAngrafiche = new ArrayList<ColloquiAnagraficheModel_Ang>();
+				Object[] selezioni = tvanagrafica.getCheckedElements();				
 				
-				AnagraficheModel aVO = (AnagraficheModel)((StructuredSelection)event.getSelection()).getFirstElement();
+				Anagrafiche aVO = (Anagrafiche)((StructuredSelection)event.getSelection()).getFirstElement();
 				
 				if (aVO == null){
 					if (selezioni.length > 0){
-						aVO = (AnagraficheModel)selezioni[selezioni.length - 1];
+						aVO = (Anagrafiche)selezioni[selezioni.length - 1];
 					}
 				}
 				
 				for (int i = 0; i < selezioni.length; i++) {					
 										
-					ColloquiAnagraficheModel_Ang caM_A = new ColloquiAnagraficheModel_Ang();
-					caM_A.setCodColloquio(((ColloquiWizard)getWizard()).getColloquio().getCodColloquio());
-					caM_A.setAnagrafica((AnagraficheModel)selezioni[i]);					
-					colloquiAngrafiche.add(caM_A);
+					Colloquianagrafiche caM_A = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquianagrafiche.class);
+					caM_A.setColloqui(((ColloquiWizard)getWizard()).getColloquio());
+					caM_A.setAnagrafiche((Anagrafiche)selezioni[i]);					
 					
+					((ColloquiWizard)getWizard()).getColloquio().addToColloquianagrafiches(caM_A);	
 				}
-				((ColloquiWizard)getWizard()).getColloquio().setAnagrafiche(colloquiAngrafiche);
+				
+				
 				if (aVO != null){
-					tvcontatti.setInput(aVO.getContatti());
+					tvcontatti.setInput(aVO.getContattis());
 				}else{
 					tvcontatti.setInput(new ArrayList());
 				}
@@ -465,15 +470,12 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (((StructuredSelection)tvanagrafica.getSelection()).getFirstElement() != null){
-					AnagraficheModel aVO = (AnagraficheModel)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
-					if (aVO.getCodAnagrafica() != null && aVO.getCodAnagrafica() != 0){
-						ContattiModel cVO = new ContattiModel();
-						cVO.setCodAnagrafica(aVO.getCodAnagrafica());	
-						if (aVO.getContatti() == null){
-							aVO.setContatti(new ArrayList());
-						}
-						aVO.getContatti().add(cVO);
-						tvcontatti.setInput(aVO.getContatti());
+					Anagrafiche aVO = (Anagrafiche)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
+					if (aVO.getCodAnagrafica() != 0){
+						Contatti cVO = new Contatti();
+						cVO.setAnagrafiche(aVO);	
+						aVO.addToContattis(cVO);
+						tvcontatti.setInput(aVO.getContattis());
 						tvcontatti.refresh();
 						TableItem ti = tvcontatti.getTable().getItem(tvcontatti.getTable().getItemCount()-1);
 						Object[] sel = new Object[1];
@@ -491,9 +493,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 						
 						getWizard().getContainer().updateButtons();
 					}else{
-						MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+						MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 								  				  "Attenzione", 
-												  "L'anagrafica selezionata non � stato ancora salvato nel database \n " +
+												  "L'anagrafica selezionata non è stato ancora salvato nel database \n " +
 												  "eseguirne il salvataggio prima di aggiungere i recapiti");						
 
 					}
@@ -523,11 +525,11 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (((StructuredSelection)tvanagrafica.getSelection()).getFirstElement() != null){
-					AnagraficheModel aVO = (AnagraficheModel)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
-					if ((aVO != null) && (aVO.getCodAnagrafica() != null && aVO.getCodAnagrafica() != 0)){
+					Anagrafiche aVO = (Anagrafiche)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
+					if ((aVO != null) && aVO.getCodAnagrafica() != 0){
 						ContattiHelper ch = new ContattiHelper();						
-						ch.updateListaContatti(aVO,null,true);
-						//aVO.setContatti(contatti);
+// TODO convertire in cayenne						ch.updateListaContatti(aVO,null,true);
+
 						getWizard().getContainer().updateButtons();
 					}else{
 						MessageDialog md = new MessageDialog(
@@ -562,8 +564,8 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			@Override
 			public void mouseUp(MouseEvent e) {	
 				if (tvanagrafica.getSelection() != null){
-					AnagraficheModel aVO = (AnagraficheModel)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
-					aVO.setContatti(null);
+					Anagrafiche aVO = (Anagrafiche)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
+					//aVO.setContatti(null);
 					tvcontatti.refresh();
 				}
 			}
@@ -587,10 +589,10 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			public void mouseUp(MouseEvent e) {
 				if (((StructuredSelection)tvanagrafica.getSelection()).getFirstElement() != null){
 					Iterator it = ((StructuredSelection)tvcontatti.getSelection()).iterator();
-					AnagraficheModel aVO = (AnagraficheModel)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
+					Anagrafiche aVO = (Anagrafiche)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
 					while (it.hasNext()) {
-						ContattiModel cModel = (ContattiModel)it.next();
-						aVO.getContatti().remove(cModel);
+						Contatti cModel = (Contatti)it.next();
+						aVO.removeFromContattis(cModel);
 					}
 					tvcontatti.refresh();
 				}
@@ -616,9 +618,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			@Override
 			public Object[] getElements(Object inputElement) {
 				if (((StructuredSelection)tvanagrafica.getSelection()).getFirstElement() != null){
-					AnagraficheModel aVO = (AnagraficheModel)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
+					Anagrafiche aVO = (Anagrafiche)((StructuredSelection)tvanagrafica.getSelection()).getFirstElement();
 					if (aVO != null){
-						return aVO.getContatti().toArray();
+						return aVO.getContattis().toArray();
 					}else{
 						return null;
 					}
@@ -650,12 +652,12 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			public void update(ViewerCell cell) {
-				ContattiModel cModel = ((ContattiModel)cell.getElement());
-				cell.setText((cModel.getTipologia() == null)
+				Contatti cModel = ((Contatti)cell.getElement());
+				cell.setText((cModel.getTipologiecontatti() == null)
 							 ? ""
-							 : (cModel.getTipologia().getDescrizione() == null)
+							 : (cModel.getTipologiecontatti().getDescrizione() == null)
 							 	? ""
-							 	: cModel.getTipologia().getDescrizione());
+							 	: cModel.getTipologiecontatti().getDescrizione());
 				
 			}
 			
@@ -715,9 +717,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 			public void update(ViewerCell cell) {
 				
 				cell.setText(
-						(((ContattiModel)cell.getElement()).getContatto()==null)
+						(((Contatti)cell.getElement()).getContatto()==null)
 						? "nuovo recapito"
-						: String.valueOf(((ContattiModel)cell.getElement()).getContatto())
+						: String.valueOf(((Contatti)cell.getElement()).getContatto())
 							);
 				
 			}
@@ -738,14 +740,14 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((ContattiVO)element).getContatto() == null)
+				return (((Contatti)element).getContatto() == null)
 	   			   	   ? "nuovo recapito"
-			   		   : String.valueOf(((ContattiVO)element).getContatto());
+			   		   : String.valueOf(((Contatti)element).getContatto());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((ContattiVO)element).setContatto(String.valueOf(value));
+				((Contatti)element).setContatto(String.valueOf(value));
 				tvcontatti.refresh();
 			}
 			
@@ -756,20 +758,20 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 	@Override
 	public boolean canFlipToNextPage() {
 		
-		ArrayList<ColloquiAnagraficheModel_Ang> al = ((ColloquiWizard)getWizard()).getColloquio().getAnagrafiche();
+		ArrayList<Colloquianagrafiche> al = new ArrayList(((ColloquiWizard)getWizard()).getColloquio().getColloquianagrafiches());
 		if ((al == null) || (al.size() == 0)){
 			return false;
 		}
-		Iterator<ColloquiAnagraficheModel_Ang> it = al.iterator();
+		Iterator<Colloquianagrafiche> it = al.iterator();
 		while (it.hasNext()){
-			ColloquiAnagraficheModel_Ang caM_Ang = it.next();
-			if ((caM_Ang == null) || (caM_Ang.getCodAnagrafica() == null)){
+			Colloquianagrafiche caM_Ang = it.next();
+			if ((caM_Ang == null) || (caM_Ang.getAnagrafiche() == null)){
 				return false;
 			}else{
-				if (caM_Ang.getAnagrafica().getContatti() != null){
-					Iterator<ContattiVO> ite = caM_Ang.getAnagrafica().getContatti().iterator();
+				if (caM_Ang.getAnagrafiche().getContattis() != null){
+					Iterator<Contatti> ite = caM_Ang.getAnagrafiche().getContattis().iterator();
 					while (ite.hasNext()){
-						if (ite.next().getCodContatto() == null){
+						if (ite.next().getCodContatto() == 0){
 							return false;
 						}
 					}
@@ -782,18 +784,18 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 
 	public void recheckAnagrafiche(){
 		
-		List<ColloquiAnagraficheModel_Ang> al = ((ColloquiWizard)getWizard()).getColloquio().getAnagrafiche();
+		List<Colloquianagrafiche> al = ((ColloquiWizard)getWizard()).getColloquio().getColloquianagrafiches();
 		
 		if (al != null){
 			
-			Iterator<ColloquiAnagraficheModel_Ang> it = al.iterator();
+			Iterator<Colloquianagrafiche> it = al.iterator();
 			ArrayList alchecks = new ArrayList();
 			
 			while (it.hasNext()){
 				
-				ColloquiAnagraficheModel_Ang caM_Ang = it.next();
+				Colloquianagrafiche caM_Ang = it.next();
 				
-				int index = Collections.binarySearch(anagrafiche, caM_Ang.getAnagrafica(), cAnagrafiche);
+				int index = Collections.binarySearch(anagrafiche, caM_Ang.getAnagrafiche(), cAnagrafiche);
 				
 				if (index > -1){
 					alchecks.add(anagrafiche.get(index));
@@ -804,9 +806,9 @@ public class InserimentoAggiornamentoAnagrafica extends WizardPage {
 		}
 	}
 
-	public void addAnagrafica(AnagraficheModel anagrafica){
+	public void addAnagrafica(Anagrafiche anagrafica){
 		if (this.anagrafiche == null){
-			this.anagrafiche = new ArrayList<AnagraficheModel>();
+			this.anagrafiche = new ArrayList<Anagrafiche>();
 		}
 		//inserire controllo se gi� presente
 		this.anagrafiche.add(anagrafica);

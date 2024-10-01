@@ -41,7 +41,7 @@ import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ColloquiAgentiVO;
 import winkhouse.wizard.ColloquiWizard;
 
-
+// Pagina da eliminare
 
 public class InserimentoAgenti extends WizardPage {
 
@@ -102,7 +102,7 @@ public class InserimentoAgenti extends WizardPage {
 				((ColloquiWizard)getWizard()).getColloquio()
 											 .setScadenziere(((Button)e.getSource()).getSelection());
 				System.out.println(((ColloquiWizard)getWizard()).getColloquio()
-						 										.getScadenziere());
+						 										.isScadenziere());
 			}
 			
 			@Override
@@ -396,7 +396,7 @@ public class InserimentoAgenti extends WizardPage {
 		});
 		
 		tvAgenti.setInput(colloquiAgenti);
-		((ColloquiWizard)getWizard()).getColloquio().setAgenti(colloquiAgenti);
+		//((ColloquiWizard)getWizard()).getColloquio().setAgenti(colloquiAgenti);
 		setControl(container);
 		
 	}

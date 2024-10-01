@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -90,6 +92,30 @@ public class EnvSettingsFactory {
 		}
 		
 		return tipologieColloqui;
+	}
+	
+	public TipologieColloquiVO getTipologiaColloquioById(Integer idTipoColloquio) {
+		
+		Comparator<TipologieColloquiVO> c = new Comparator<TipologieColloquiVO>() {
+
+			@Override
+			public int compare(TipologieColloquiVO o1, TipologieColloquiVO o2) {
+				if (o1.getCodTipologiaColloquio() == o2.getCodTipologiaColloquio()) {
+					return 0;
+				}else if (o1.getCodTipologiaColloquio() > o2.getCodTipologiaColloquio()) {
+					return 1;
+				}else {
+					return -1;
+				}
+				
+			}
+			
+		};
+		TipologieColloquiVO tcVO = new TipologieColloquiVO();
+		tcVO.setCodTipologiaColloquio(idTipoColloquio);
+		Collections.sort(getTipologieColloqui(), c);
+		return getTipologieColloqui().get(Collections.binarySearch(getTipologieColloqui(),tcVO, c));
+		
 	}
 	
 	public ResourceBundle getDefaultMesiDescription(){

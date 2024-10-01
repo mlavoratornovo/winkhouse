@@ -2,6 +2,8 @@ package winkhouse.wizard.colloqui;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,7 +38,7 @@ import org.eclipse.swt.widgets.Text;
 
 import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
-import winkhouse.vo.AgentiVO;
+//import winkhouse.vo.AgentiVO;
 import winkhouse.wizard.ColloquiWizard;
 
 
@@ -124,9 +126,10 @@ public class DatiComuniColloquio extends WizardPage {
 			public void dateChanged(Calendar arg0) {
 				try {
 					Date tmp = formatterDateTime.parse(formatter.format(arg0.getTime()) + " " + oraincontro.getText());
-					((ColloquiWizard)getWizard()).getColloquio().setDataColloquio(tmp);					
+					
+					((ColloquiWizard)getWizard()).getColloquio().setDatacolloquio(LocalDateTime.ofInstant(tmp.toInstant(), ZoneId.systemDefault()));					
 				} catch (ParseException e) {
-					((ColloquiWizard)getWizard()).getColloquio().setDataColloquio(new Date());
+					((ColloquiWizard)getWizard()).getColloquio().setDatacolloquio(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 				}
 				
 			}
@@ -145,9 +148,9 @@ public class DatiComuniColloquio extends WizardPage {
 //					System.out.println(formatterDateTime.parse(dcdataincontro.getDateAsString() + " " + oraincontro.getText()));
 					Date tmp = formatterDateTime.parse(dcdataincontro.getDateAsString() + " " + oraincontro.getText());
 	//				System.out.println(tmp.toString());
-					((ColloquiWizard)getWizard()).getColloquio().setDataColloquio(tmp);
+					((ColloquiWizard)getWizard()).getColloquio().setDatacolloquio(LocalDateTime.ofInstant(tmp.toInstant(), ZoneId.systemDefault()));
 				} catch (ParseException e1) {					
-					((ColloquiWizard)getWizard()).getColloquio().setDataColloquio(new Date());
+					((ColloquiWizard)getWizard()).getColloquio().setDatacolloquio(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 				}
 				
 			}
@@ -227,19 +230,19 @@ public class DatiComuniColloquio extends WizardPage {
 				
 		});
 		
-		if (((ColloquiWizard)getWizard()).getColloquio().getDataColloquio() == null){
-			((ColloquiWizard)getWizard()).getColloquio().setDataColloquio(new Date());
+		if (((ColloquiWizard)getWizard()).getColloquio().getDatacolloquio() == null){
+			((ColloquiWizard)getWizard()).getColloquio().setDatacolloquio(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 		}
 		
 		dcdataincontro.setText(formatter.format(
-				((ColloquiWizard)getWizard()).getColloquio().getDataColloquio()
+				((ColloquiWizard)getWizard()).getColloquio().getDatacolloquio()
 												)
 							   );
 
 
-		if (((ColloquiWizard)getWizard()).getColloquio().getDataColloquio() != null){
+		if (((ColloquiWizard)getWizard()).getColloquio().getDatacolloquio() != null){
 			oraincontro.setText(formatterTime.format(
-					((ColloquiWizard)getWizard()).getColloquio().getDataColloquio()
+					((ColloquiWizard)getWizard()).getColloquio().getDatacolloquio()
 													)
 								   );
 		}
@@ -274,7 +277,7 @@ public class DatiComuniColloquio extends WizardPage {
 
 			@Override
 			public String getText(Object element) {
-				return ((AgentiVO)element).getCognome() + " " + ((AgentiVO)element).getNome();
+				return ((Agenti)element).getCognome() + " " + ((Agenti)element).getNome();
 			}
 			
 		});
@@ -283,7 +286,7 @@ public class DatiComuniColloquio extends WizardPage {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				((ColloquiWizard)getWizard()).getColloquio().setAgenteInseritore((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());
+				((ColloquiWizard)getWizard()).getColloquio().setAgenti((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());
 				((ColloquiWizard)getWizard()).getContainer().updateButtons();
 			}
 			
@@ -291,8 +294,8 @@ public class DatiComuniColloquio extends WizardPage {
 						
 		cvagenteinseritore.setInput(new Object());
 		
-		if (((ColloquiWizard)getWizard()).getColloquio().getAgenteInseritore() != null){
-			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), ((ColloquiWizard)getWizard()).getColloquio().getAgenteInseritore(), comparatorAgenti);
+		if (((ColloquiWizard)getWizard()).getColloquio().getAgenti() != null){
+			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getAgenti(), ((ColloquiWizard)getWizard()).getColloquio().getAgenti(), comparatorAgenti);
 			Object[] sel = new Object[1];
 			sel[0] = MobiliaDatiBaseCache.getInstance().getAgenti().get(index);
 			StructuredSelection ss = new StructuredSelection(sel);

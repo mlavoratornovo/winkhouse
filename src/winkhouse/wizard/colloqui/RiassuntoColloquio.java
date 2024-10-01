@@ -14,22 +14,37 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import winkhouse.configuration.EnvSettingsFactory;
+import winkhouse.dao.AgentiDAO;
+import winkhouse.dao.RiscaldamentiDAO;
+import winkhouse.dao.StatoConservativoDAO;
+import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.model.ColloquiAgentiModel_Age;
 import winkhouse.model.ColloquiAnagraficheModel_Ang;
-import winkhouse.model.ColloquiModel;
-import winkhouse.model.ContattiModel;
+import winkhouse.orm.Agenti;
+import winkhouse.orm.Allegaticolloquio;
+import winkhouse.orm.Colloqui;
+import winkhouse.orm.Colloquianagrafiche;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.orm.Contatti;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiecontatti;
+import winkhouse.orm.Tipologieimmobili;
+//import winkhouse.model.ColloquiModel;
+//import winkhouse.model.ContattiModel;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.util.WinkhouseUtils.ObjectSearchGetters;
-import winkhouse.vo.AgentiVO;
-import winkhouse.vo.AllegatiColloquiVO;
-import winkhouse.vo.ColloquiAgentiVO;
-import winkhouse.vo.ColloquiCriteriRicercaVO;
-import winkhouse.vo.ContattiVO;
-import winkhouse.vo.RiscaldamentiVO;
-import winkhouse.vo.StatoConservativoVO;
-import winkhouse.vo.TipologiaContattiVO;
-import winkhouse.vo.TipologieImmobiliVO;
+//import winkhouse.vo.AgentiVO;
+//import winkhouse.vo.AllegatiColloquiVO;
+//import winkhouse.vo.ColloquiAgentiVO;
+//import winkhouse.vo.ColloquiCriteriRicercaVO;
+//import winkhouse.vo.ContattiVO;
+//import winkhouse.vo.RiscaldamentiVO;
+//import winkhouse.vo.StatoConservativoVO;
+//import winkhouse.vo.TipologiaContattiVO;
+//import winkhouse.vo.TipologieImmobiliVO;
 import winkhouse.wizard.ColloquiWizard;
 
 
@@ -86,12 +101,15 @@ public class RiassuntoColloquio extends WizardPage {
 	
 	public void showRiassunto(){
 
-		ColloquiModel cVO = ((ColloquiWizard)getWizard()).getColloquio();
+		Colloqui cVO = ((ColloquiWizard)getWizard()).getColloquio();
 		riassunto.setText("");
 		String riassuntoContent = "";
 		ArrayList<StyleRange> stili = new ArrayList<StyleRange>();
+		String destipocolloquio = cVO.getCodtipologiacolloquio() != 0 
+				? EnvSettingsFactory.getInstance().getTipologiaColloquioById(cVO.getCodtipologiacolloquio()).getDescrizione() 
+				: "";
 		
-		if (cVO.getTipologia().getCodTipologiaColloquio() == 1){
+		if (cVO.getCodtipologiacolloquio() == 1){
 			
 			int cursorPosition = 0;
 			
@@ -106,9 +124,9 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			stili.add(labelTipologia);
 			
-			riassunto.setText(riassunto.getText() + cVO.getTipologia().getDescrizione() + "\n");
+			riassunto.setText(riassunto.getText() + " " + destipocolloquio + "\n");
 			
-			cursorPosition += (cVO.getTipologia().getDescrizione() + "\n").length();
+			cursorPosition += (destipocolloquio + "\n").length();
 				
 			riassunto.setText(riassunto.getText() + AGENTE_INSERITORE);
 			
@@ -121,9 +139,9 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			cursorPosition += AGENTE_INSERITORE.length();
 						
-			riassunto.setText(riassunto.getText() + cVO.getAgenteInseritore().getCognome() + "  " + cVO.getAgenteInseritore().getNome() + "\n");
+			riassunto.setText(riassunto.getText() + cVO.getAgenti().getCognome() + "  " + cVO.getAgenti().getNome() + "\n");
 			
-			cursorPosition += (cVO.getAgenteInseritore().getCognome() + "  " + cVO.getAgenteInseritore().getNome() + "\n").length();
+			cursorPosition += (cVO.getAgenti().getCognome() + "  " + cVO.getAgenti().getNome() + "\n").length();
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			
@@ -138,9 +156,9 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			cursorPosition += DATAORA_COLLOQUIO.length();
 			
-			riassunto.setText(riassunto.getText() + formatter.format(cVO.getDataColloquio()) + "\n");
+			riassunto.setText(riassunto.getText() + formatter.format(cVO.getDatacolloquio()) + "\n");
 			
-			cursorPosition += (formatter.format(cVO.getDataColloquio()) + "\n").length();
+			cursorPosition += (formatter.format(cVO.getDatacolloquio()) + "\n").length();
 			
 			riassunto.setText(riassunto.getText() + DESCRIZIONE_COLLOQUIO);
 
@@ -168,9 +186,9 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			cursorPosition += LUOGO_INCONTRO.length();
 			
-			riassunto.setText(riassunto.getText() + cVO.getLuogoIncontro() + "\n");
+			riassunto.setText(riassunto.getText() + cVO.getLuogo() + "\n");
 			
-			cursorPosition += (cVO.getLuogoIncontro() + "\n").length();
+			cursorPosition += (cVO.getLuogo() + "\n").length();
 			
 			riassunto.setText(riassunto.getText() + ANAGRAFICHE + "\n");
 			
@@ -183,17 +201,17 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			cursorPosition += ANAGRAFICHE.length();
 			
-			Iterator it = cVO.getAnagrafiche().iterator();
+			Iterator<Colloquianagrafiche> it = cVO.getColloquianagrafiches().iterator();
 			
 			while (it.hasNext()){
-				ColloquiAnagraficheModel_Ang caVO = (ColloquiAnagraficheModel_Ang)it.next();
-				riassunto.setText(riassunto.getText() + "     " + caVO.getAnagrafica().getCognome() + "  " + 
-						  		  caVO.getAnagrafica().getNome() + "\n");
+				Colloquianagrafiche caVO = it.next();
+				riassunto.setText(riassunto.getText() + "     " + caVO.getAnagrafiche().getCognome() + "  " + 
+						  		  caVO.getAnagrafiche().getNome() + "\n");
 				
-				cursorPosition += ("     " + caVO.getAnagrafica().getCognome() + "  " + 
-						  caVO.getAnagrafica().getNome() + "\n").length();
+				cursorPosition += ("     " + caVO.getAnagrafiche().getCognome() + "  " + 
+						  caVO.getAnagrafiche().getNome() + "\n").length();
 				
-				if (caVO.getAnagrafica().getContatti().size() > 0){
+				if (caVO.getAnagrafiche().getContattis().size() > 0){
 				
 					riassunto.setText(riassunto.getText() + "          " + RECAPITI + "\n");
 	
@@ -206,16 +224,16 @@ public class RiassuntoColloquio extends WizardPage {
 					
 					cursorPosition += labelRecapiti.length;
 					
-					Iterator recapiti = caVO.getAnagrafica().getContatti().iterator();
+					Iterator<Contatti> recapiti = caVO.getAnagrafiche().getContattis().iterator();
 					while (recapiti.hasNext()){
-						ContattiModel contattiVO = (ContattiModel)recapiti.next();
-						TipologiaContattiVO tcVO =  contattiVO.getTipologia();
+						Contatti contattiVO = (Contatti)recapiti.next();
+						Tipologiecontatti tcVO =  contattiVO.getTipologiecontatti();
 						riassunto.setText(riassunto.getText() + "               " + contattiVO.getContatto() + "  " + 
-								  		  ((tcVO != null)?contattiVO.getTipologia().getDescrizione():"") + "\n");
+								  		  ((tcVO != null)?tcVO.getDescrizione():"") + "\n");
 	
 						
 						cursorPosition += ("               " + contattiVO.getContatto() + "  " + 
-								          ((tcVO != null)?contattiVO.getTipologia().getDescrizione():"") + "\n").length();
+								          ((tcVO != null)?tcVO.getDescrizione():"") + "\n").length();
 					}
 				}
 			}
@@ -229,70 +247,75 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			stili.add(labelCriteriRicerca);
 			
-			cursorPosition += labelCriteriRicerca.length;			
+			cursorPosition += labelCriteriRicerca.length;
 			
-			if (cVO.getCriteriRicerca() != null){
-				Iterator itcrVO = cVO.getCriteriRicerca().iterator();
+			TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
+			StatoConservativoDAO scDAO = new StatoConservativoDAO();
+			RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
+			AgentiDAO aDAO = new AgentiDAO();
+			
+			if (cVO.getColloquicriteriricercas() != null){
+				Iterator<Colloquicriteriricerca> itcrVO = cVO.getColloquicriteriricercas().iterator();
 				
 				while (itcrVO.hasNext()) {
 					String fromValue = "";
-					ColloquiCriteriRicercaVO colloquiCriteriRicercaVO = (ColloquiCriteriRicercaVO)itcrVO.next();
+					Colloquicriteriricerca colloquiCriteriRicercaVO = itcrVO.next();
 					ObjectSearchGetters isg = WinkhouseUtils.getInstance()
-															  .findObjectSearchGettersByMethodName(colloquiCriteriRicercaVO.getGetterMethodName(), 
+															  .findObjectSearchGettersByMethodName(colloquiCriteriRicercaVO.getGettermethodname(), 
 																								   WinkhouseUtils.IMMOBILI, 
 																								   WinkhouseUtils.FUNCTION_SEARCH);
-					if (colloquiCriteriRicercaVO.getGetterMethodName().equalsIgnoreCase("getCodTipologia")){
+					if (colloquiCriteriRicercaVO.getGettermethodname().equalsIgnoreCase("getCodTipologia")){
 						Integer cod = 0;
 						try {
-							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromValue());							
+							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromvalue());							
 						} catch (NumberFormatException e) {
 							cod = 0;
 						}
-						TipologieImmobiliVO tiVO = MobiliaDatiBaseCache.getInstance().findTipologiaByCod(cod);
+						Tipologieimmobili tiVO = tiDAO.getTipologieImmobiliById(cod);
 						fromValue = (tiVO != null)?tiVO.getDescrizione(): "";
-					}else if (colloquiCriteriRicercaVO.getGetterMethodName().equalsIgnoreCase("getCodStato")){
+					}else if (colloquiCriteriRicercaVO.getGettermethodname().equalsIgnoreCase("getCodStato")){
 						Integer cod = 0;
 						try {
-							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromValue());
+							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromvalue());
 						} catch (NumberFormatException e) {
 							cod = 0;
 						}						
-						StatoConservativoVO scVO = MobiliaDatiBaseCache.getInstance().findStatoConservativoByCod(cod);
+						Statoconservativo scVO = scDAO.getStatoConservativoById(cod);
 						fromValue = (scVO != null)?scVO.getDescrizione(): "";
-					}else if (colloquiCriteriRicercaVO.getGetterMethodName().equalsIgnoreCase("getCodRiscaldamento")){
+					}else if (colloquiCriteriRicercaVO.getGettermethodname().equalsIgnoreCase("getCodRiscaldamento")){
 						Integer cod = 0;
 						try {
-							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromValue());
+							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromvalue());
 						} catch (NumberFormatException e) {
 							cod = 0;
 						}						
-						RiscaldamentiVO rVO = MobiliaDatiBaseCache.getInstance().findRiscaldamentiByCod(cod);
+						Riscaldamenti rVO = rDAO.getRiscaldamentoById(cod);
 						fromValue = (rVO != null)?rVO.getDescrizione(): "";
-					}else if (colloquiCriteriRicercaVO.getGetterMethodName().equalsIgnoreCase("getCodAgenteInseritore")){
+					}else if (colloquiCriteriRicercaVO.getGettermethodname().equalsIgnoreCase("getCodAgenteInseritore")){
 						Integer cod = 0;
 						try {
-							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromValue());
+							cod = Integer.valueOf(colloquiCriteriRicercaVO.getFromvalue());
 						} catch (NumberFormatException e) {
 							cod = 0;
 						}
 						
-						AgentiVO aVO = MobiliaDatiBaseCache.getInstance().findAgentiByCod(cod);
+						Agenti aVO = aDAO.getAgenteById(cod);
 						fromValue = (aVO != null)?aVO.getCognome() + " " + aVO.getNome(): "";					
 					}else{
-						fromValue = colloquiCriteriRicercaVO.getFromValue();
+						fromValue = colloquiCriteriRicercaVO.getFromvalue();
 					}
 					if (isg != null){
 						riassunto.setText(riassunto.getText() + "     " + isg.getDescrizione() + 
 										    DA + 
 										    fromValue + 
 											A + 
-											((colloquiCriteriRicercaVO.getToValue() == null)? "" : colloquiCriteriRicercaVO.getToValue().toString()) + "\n");
+											((colloquiCriteriRicercaVO.getTovalue() == null)? "" : colloquiCriteriRicercaVO.getTovalue().toString()) + "\n");
 						
-						cursorPosition += ("     " + colloquiCriteriRicercaVO.getGetterMethodName() + 
+						cursorPosition += ("     " + colloquiCriteriRicercaVO.getGettermethodname() + 
 							    DA + 
 							    fromValue + 
 								A + 
-								((colloquiCriteriRicercaVO.getToValue() == null)? "" : colloquiCriteriRicercaVO.getToValue().toString()) + "\n").length();
+								((colloquiCriteriRicercaVO.getTovalue() == null)? "" : colloquiCriteriRicercaVO.getTovalue().toString()) + "\n").length();
 					}
 				}
 			}
@@ -308,9 +331,9 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			cursorPosition += labelVarieAgenzia.length;			
 			
-			riassunto.setText(riassunto.getText() + cVO.getCommentoAgenzia() + "\n");
+			riassunto.setText(riassunto.getText() + cVO.getCommentoagenzia() + "\n");
 			
-			cursorPosition += (cVO.getCommentoAgenzia() + "\n").length();
+			cursorPosition += (cVO.getCommentoagenzia() + "\n").length();
 			
 			riassunto.setText(riassunto.getText() + VARIE_CLIENTI + "\n");
 			
@@ -323,10 +346,10 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			cursorPosition += labelVarieCliente.length;			
 			
-			riassunto.setText(riassunto.getText() + cVO.getCommentoCliente() + "\n");
+			riassunto.setText(riassunto.getText() + cVO.getCommentocliente() + "\n");
 			
-			cursorPosition += (cVO.getCommentoCliente() + "\n").length();
-			if ((cVO.getAllegati() != null) && (cVO.getAllegati().size() > 0)){
+			cursorPosition += (cVO.getCommentocliente() + "\n").length();
+			if ((cVO.getAllegaticolloquios() != null) && (cVO.getAllegaticolloquios().size() > 0)){
 				riassunto.setText(riassunto.getText() + ALLEGATI + "\n");
 				
 				StyleRange labelAllegati = new StyleRange();
@@ -338,40 +361,40 @@ public class RiassuntoColloquio extends WizardPage {
 				
 				cursorPosition += labelAllegati.length;			
 			
-				Iterator<AllegatiColloquiVO> itAllegati = cVO.getAllegati().iterator();
+				Iterator<Allegaticolloquio> itAllegati = cVO.getAllegaticolloquios().iterator();
 				while (itAllegati.hasNext()) {
-					AllegatiColloquiVO allegatiColloquiVO = itAllegati.next();
-					riassunto.setText(riassunto.getText() + "     " + allegatiColloquiVO.getDescrizione() + "  " + allegatiColloquiVO.getFromPath() + "\n");
+					Allegaticolloquio allegatiColloquiVO = itAllegati.next();
+					riassunto.setText(riassunto.getText() + "     " + allegatiColloquiVO.getNome() + "  " + allegatiColloquiVO.getFromPath() + "\n");
 				}				
 			}
 		}
 		
-		if (cVO.getCodTipologiaColloquio() == 2){
+		if (cVO.getCodtipologiacolloquio() == 2){
 			
-			riassuntoContent += TIPOLOGIA_COLLOQUIO + cVO.getTipologia().getDescrizione() + "\n";
-			riassuntoContent += AGENTE_INSERITORE + cVO.getAgenteInseritore().getCognome() + "  " + cVO.getAgenteInseritore().getNome() + "\n"; 
+			riassuntoContent += TIPOLOGIA_COLLOQUIO + destipocolloquio + "\n";
+			riassuntoContent += AGENTE_INSERITORE + cVO.getAgenti().getCognome() + "  " + cVO.getAgenti().getNome() + "\n"; 
 			//riassuntoContent += "Agente inseritore : " + cVO.getTipologia().getDescrizione() + "\n";
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			riassuntoContent += DATAORA_COLLOQUIO + formatter.format(cVO.getDataColloquio()) + "\n";
+			riassuntoContent += DATAORA_COLLOQUIO + formatter.format(cVO.getDatacolloquio()) + "\n";
 			riassuntoContent += DESCRIZIONE_COLLOQUIO + cVO.getDescrizione() + "\n";
-			riassuntoContent += IMMOBILE_ABBINATO + cVO.getImmobileAbbinato().getCitta() +" "+ cVO.getImmobileAbbinato().getIndirizzo() + "\n";
-			riassuntoContent += LUOGO_INCONTRO + cVO.getLuogoIncontro() + "\n";
+			riassuntoContent += IMMOBILE_ABBINATO + cVO.getImmobili().getCitta() +" "+ cVO.getImmobili().getIndirizzo() + "\n";
+			riassuntoContent += LUOGO_INCONTRO + cVO.getLuogo() + "\n";
 			riassuntoContent += ANAGRAFICHE + "\n";
 			
-			Iterator<ColloquiAnagraficheModel_Ang> it = cVO.getAnagrafiche().iterator();
+			Iterator<Colloquianagrafiche> it = cVO.getColloquianagrafiches().iterator();
 			
 			while (it.hasNext()){
-				ColloquiAnagraficheModel_Ang caVO = (ColloquiAnagraficheModel_Ang)it.next();
-				riassuntoContent += "     " + caVO.getAnagrafica().getCognome() + "  " + 
-											  caVO.getAnagrafica().getNome() + "\n";
+				Colloquianagrafiche caVO = it.next();
+				riassuntoContent += "     " + caVO.getAnagrafiche().getCognome() + "  " + 
+											  caVO.getAnagrafiche().getNome() + "\n";
 				riassuntoContent += "          " + RECAPITI + "\n";
 				
-				Iterator <ContattiVO> recapiti = caVO.getAnagrafica().getContatti().iterator();
+				Iterator <Contatti> recapiti = caVO.getAnagrafiche().getContattis().iterator();
 				while (recapiti.hasNext()){
-					ContattiModel contattiVO = (ContattiModel)recapiti.next();
+					Contatti contattiVO = (Contatti)recapiti.next();
 					riassuntoContent += "     " + contattiVO.getContatto() + "  " + 
-												  ((contattiVO.getTipologia() != null)
-												  ?contattiVO.getTipologia().getDescrizione() + "\n"
+												  ((contattiVO.getContatto() != null)
+												  ?contattiVO.getTipologiecontatti().getDescrizione() + "\n"
 												  :"");
 				}
 				
@@ -379,55 +402,58 @@ public class RiassuntoColloquio extends WizardPage {
 			//debuggare agenti
 			riassuntoContent += AGENTI + "\n";
 			
-			Iterator<ColloquiAgentiModel_Age> itcrVO = cVO.getAgenti().iterator();
+//			Iterator<ColloquiAgentiModel_Age> itcrVO = cVO.getAgenti().iterator();
+//			
+//			while (itcrVO.hasNext()) {
+//				ColloquiAgentiModel_Age colloquioAgentiVO = new ColloquiAgentiModel_Age((ColloquiAgentiVO)itcrVO.next());
+//				riassuntoContent += "     " + colloquioAgentiVO.getAgente().getCognome() + "  " + 
+//									colloquioAgentiVO.getAgente().getNome() + "\n";
+//			}
 			
-			while (itcrVO.hasNext()) {
-				ColloquiAgentiModel_Age colloquioAgentiVO = new ColloquiAgentiModel_Age((ColloquiAgentiVO)itcrVO.next());
-				riassuntoContent += "     " + colloquioAgentiVO.getAgente().getCognome() + "  " + 
-									colloquioAgentiVO.getAgente().getNome() + "\n";
-			}
+			riassuntoContent += "     " + cVO.getAgenti().getCognome() + "  " + 
+					cVO.getAgenti().getNome() + "\n";
 			
 			riassuntoContent += VARIE_AGENZIA + "\n";
-			riassuntoContent += "     " + cVO.getCommentoAgenzia() + "\n";
+			riassuntoContent += "     " + cVO.getCommentoagenzia() + "\n";
 			riassuntoContent += VARIE_CLIENTI + "\n";
-			riassuntoContent += "     " + cVO.getCommentoCliente() + "\n";; 
-			if ((cVO.getAllegati() != null) && (cVO.getAllegati().size() > 0)){			
+			riassuntoContent += "     " + cVO.getCommentocliente() + "\n";; 
+			if ((cVO.getAllegaticolloquios() != null) && (cVO.getAllegaticolloquios().size() > 0)){			
 				riassuntoContent += ALLEGATI + "\n";
 				
-				Iterator<AllegatiColloquiVO> itAllegati = cVO.getAllegati().iterator();
+				Iterator<Allegaticolloquio> itAllegati = cVO.getAllegaticolloquios().iterator();
 				while (itAllegati.hasNext()) {
-					AllegatiColloquiVO allegatiColloquiVO = itAllegati.next();
-					riassuntoContent += "     " + allegatiColloquiVO.getDescrizione() + "  " + allegatiColloquiVO.getFromPath() + "\n";
+					Allegaticolloquio allegatiColloquiVO = itAllegati.next();
+					riassuntoContent += "     " + allegatiColloquiVO.getNome() + "  " + allegatiColloquiVO.getFromPath() + "\n";
 				}
 			}
 			riassunto.setText(riassuntoContent);
 			
 		}
 		
-		if (cVO.getTipologia().getCodTipologiaColloquio() == 3){
+		if (cVO.getCodtipologiacolloquio() == 3){
 			
-			riassuntoContent += TIPOLOGIA_COLLOQUIO + cVO.getTipologia().getDescrizione() + "\n";
-			riassuntoContent += AGENTE_INSERITORE + cVO.getAgenteInseritore().getCognome() + "  " + cVO.getAgenteInseritore().getNome() + "\n"; 
+			riassuntoContent += TIPOLOGIA_COLLOQUIO + destipocolloquio + "\n";
+			riassuntoContent += AGENTE_INSERITORE + cVO.getAgenti().getCognome() + "  " + cVO.getAgenti().getNome() + "\n"; 
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			riassuntoContent += DATAORA_COLLOQUIO + formatter.format(cVO.getDataColloquio()) + "\n";
+			riassuntoContent += DATAORA_COLLOQUIO + formatter.format(cVO.getDatacolloquio()) + "\n";
 			riassuntoContent += DESCRIZIONE_COLLOQUIO + cVO.getDescrizione() + "\n";			
-			riassuntoContent += LUOGO_INCONTRO + cVO.getLuogoIncontro() + "\n";
+			riassuntoContent += LUOGO_INCONTRO + cVO.getLuogo() + "\n";
 			riassuntoContent += ANAGRAFICHE + "\n";
 			
-			Iterator<ColloquiAnagraficheModel_Ang> it = cVO.getAnagrafiche().iterator();
+			Iterator<Colloquianagrafiche> it = cVO.getColloquianagrafiches().iterator();
 			
 			while (it.hasNext()){
-				ColloquiAnagraficheModel_Ang caVO = it.next();
-				riassuntoContent += "     " + caVO.getAnagrafica().getCognome() + "  " + 
-											  caVO.getAnagrafica().getNome() + "\n";
+				Colloquianagrafiche caVO = it.next();
+				riassuntoContent += "     " + caVO.getAnagrafiche().getCognome() + "  " + 
+											  caVO.getAnagrafiche().getNome() + "\n";
 				riassuntoContent += "          " + RECAPITI + "\n";
 				
-				Iterator recapiti = caVO.getAnagrafica().getContatti().iterator();
+				Iterator<Contatti> recapiti = caVO.getAnagrafiche().getContattis().iterator();
 				while (recapiti.hasNext()){
-					ContattiModel contattiVO = (ContattiModel)recapiti.next();
+					Contatti contattiVO = recapiti.next();
 					riassuntoContent += "     " + contattiVO.getContatto() + "  " + 
-										((contattiVO.getTipologia() != null)
-										 ?contattiVO.getTipologia().getDescrizione() + "\n"
+										((contattiVO.getTipologiecontatti() != null)
+										 ?contattiVO.getTipologiecontatti().getDescrizione() + "\n"
 										 :"");
 				}
 				
@@ -435,25 +461,27 @@ public class RiassuntoColloquio extends WizardPage {
 			
 			riassuntoContent += AGENTI + "\n";
 			
-			Iterator itcrVO = cVO.getAgenti().iterator();
-			
-			while (itcrVO.hasNext()) {
-				ColloquiAgentiModel_Age colloquioAgentiVO = new ColloquiAgentiModel_Age((ColloquiAgentiVO)itcrVO.next());
-				riassuntoContent += "     " + colloquioAgentiVO.getAgente().getCognome() + "  " + 
-									colloquioAgentiVO.getAgente().getNome() + "\n";
-			}
+//			Iterator itcrVO = cVO.getAgenti().iterator();
+//			
+//			while (itcrVO.hasNext()) {
+//				ColloquiAgentiModel_Age colloquioAgentiVO = new ColloquiAgentiModel_Age((ColloquiAgentiVO)itcrVO.next());
+//				riassuntoContent += "     " + colloquioAgentiVO.getAgente().getCognome() + "  " + 
+//									colloquioAgentiVO.getAgente().getNome() + "\n";
+//			}
+			riassuntoContent += "     " + cVO.getAgenti().getCognome() + "  " + 
+					cVO.getAgenti().getNome() + "\n";
 			
 			riassuntoContent += VARIE_AGENZIA + "\n";
-			riassuntoContent += "     " + cVO.getCommentoAgenzia() + "\n";
+			riassuntoContent += "     " + cVO.getCommentoagenzia() + "\n";
 			riassuntoContent += VARIE_CLIENTI + "\n";
-			riassuntoContent += "     " + cVO.getCommentoCliente() + "\n";
-			if ((cVO.getAllegati() != null) && (cVO.getAllegati().size() > 0)){
+			riassuntoContent += "     " + cVO.getCommentocliente() + "\n";
+			if ((cVO.getAllegaticolloquios() != null) && (cVO.getAllegaticolloquios().size() > 0)){
 				riassuntoContent += ALLEGATI + "\n";
 				
-				Iterator<AllegatiColloquiVO> itAllegati = cVO.getAllegati().iterator();
+				Iterator<Allegaticolloquio> itAllegati = cVO.getAllegaticolloquios().iterator();
 				while (itAllegati.hasNext()) {
-					AllegatiColloquiVO allegatiColloquiVO = itAllegati.next();
-					riassuntoContent += "     " + allegatiColloquiVO.getDescrizione() + "  " + allegatiColloquiVO.getFromPath() + "\n";
+					Allegaticolloquio allegatiColloquiVO = itAllegati.next();
+					riassuntoContent += "     " + allegatiColloquiVO.getNome() + "  " + allegatiColloquiVO.getFromPath() + "\n";
 				}
 			}
 			riassunto.setText(riassuntoContent);

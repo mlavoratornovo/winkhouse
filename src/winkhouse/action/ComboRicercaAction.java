@@ -19,14 +19,12 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.dao.RicercheDAO;
 import winkhouse.helper.ProfilerHelper;
-import winkhouse.model.ReportModel;
-import winkhouse.model.RicercheModel;
+import winkhouse.orm.Ricerche;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.perspective.AnagrafichePerspective;
 import winkhouse.perspective.ColloquiPerspective;
 import winkhouse.perspective.ImmobiliPerspective;
 import winkhouse.util.WinkhouseUtils;
-import winkhouse.vo.RicercheVO;
 import winkhouse.wizard.RicercaWizard;
 
 public class ComboRicercaAction extends Action implements IAction, IMenuCreator {
@@ -58,9 +56,9 @@ public class ComboRicercaAction extends Action implements IAction, IMenuCreator 
 	
 	private class RicercaAction extends Action{
 		
-		private RicercheModel ricerca = null;
+		private Ricerche ricerca = null;
 		
-		public RicercaAction(String label, RicercheModel ricerca){
+		public RicercaAction(String label, Ricerche ricerca){
 			super(label);
 			this.ricerca = ricerca;
 		}
@@ -94,7 +92,7 @@ public class ComboRicercaAction extends Action implements IAction, IMenuCreator 
 					dialog.setPageSize(400, 300);
 					WinkhouseUtils.getInstance()
 								  .setRicercaWiz(wizard);
-					wizard.getRicerca().setRicerca(ricerca);
+					wizard.setRicerca(ricerca);
 					dialog.open();
 				}else{
 					MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
@@ -133,22 +131,22 @@ public class ComboRicercaAction extends Action implements IAction, IMenuCreator 
 				.getPerspective().getId();
 
 		if (currentPerspectiveId.equalsIgnoreCase(ImmobiliPerspective.ID)){
-			tipoRicerca = RicercheVO.RICERCHE_IMMOBILI;					
+			tipoRicerca = Ricerche.RICERCHE_IMMOBILI;					
 		}else if (currentPerspectiveId.equalsIgnoreCase(AffittiPerspective.ID)){
-			tipoRicerca = RicercheVO.RICERCHE_IMMOBILI_AFFITTI;
+			tipoRicerca = Ricerche.RICERCHE_IMMOBILI_AFFITTI;
 		}else if (currentPerspectiveId.equalsIgnoreCase(AnagrafichePerspective.ID)){
-			tipoRicerca = RicercheVO.RICERCHE_ANAGRAFICHE;
+			tipoRicerca = Ricerche.RICERCHE_ANAGRAFICHE;
 		}else if (currentPerspectiveId.equalsIgnoreCase(ColloquiPerspective.ID)){
-			tipoRicerca = RicercheVO.RICERCHE_COLLOQUI;
+			tipoRicerca = Ricerche.RICERCHE_COLLOQUI;
 		}
 		
         if (tipoRicerca != null){
         	
-    		ArrayList al = rDAO.getRichercheByTipo(RicercheModel.class.getName(), tipoRicerca);
+    		ArrayList<Ricerche> al = rDAO.getRichercheByTipo(WinkhouseUtils.getInstance().getCayenneObjectContext(), tipoRicerca);
 			
-    		Iterator it = al.iterator();
+    		Iterator<Ricerche> it = al.iterator();
     		while (it.hasNext()){
-    			RicercheModel rm = (RicercheModel)it.next();
+    			Ricerche rm = it.next();
     			addActionToMenu(fMenu, new RicercaAction(rm.getNome(), rm));
     		}
         	

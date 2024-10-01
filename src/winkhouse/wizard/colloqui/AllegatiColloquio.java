@@ -2,6 +2,7 @@ package winkhouse.wizard.colloqui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
@@ -32,8 +33,10 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import winkhouse.Activator;
 import winkhouse.dialogs.custom.FileDialogCellEditor;
-import winkhouse.vo.AllegatiColloquiVO;
-import winkhouse.vo.ColloquiCriteriRicercaVO;
+import winkhouse.orm.Allegaticolloquio;
+import winkhouse.orm.Colloquicriteriricerca;
+//import winkhouse.vo.Allegaticolloquio;
+//import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.wizard.ColloquiWizard;
 
 
@@ -41,7 +44,7 @@ import winkhouse.wizard.ColloquiWizard;
 public class AllegatiColloquio extends WizardPage {
 
 	private Composite container = null;
-	private ArrayList<AllegatiColloquiVO> allegati = null;
+	private ArrayList<Allegaticolloquio> allegati = null;
 	private TableViewer tvAllegati = null;
 	
 	public AllegatiColloquio(String pageName) {
@@ -56,7 +59,7 @@ public class AllegatiColloquio extends WizardPage {
 	@Override
 	public void createControl(Composite parent) {
 		setTitle(getName());
-		allegati = new ArrayList<AllegatiColloquiVO>();
+		allegati = new ArrayList<Allegaticolloquio>();
 		GridData gdFillHV = new GridData();
 		gdFillHV.grabExcessHorizontalSpace = true;
 		gdFillHV.grabExcessVerticalSpace = true;
@@ -77,7 +80,7 @@ public class AllegatiColloquio extends WizardPage {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				AllegatiColloquiVO acVO = new AllegatiColloquiVO();
+				Allegaticolloquio acVO = new Allegaticolloquio();
 				allegati.add(acVO);
 				tvAllegati.refresh();
 				
@@ -116,7 +119,7 @@ public class AllegatiColloquio extends WizardPage {
 			public void mouseUp(MouseEvent e) {
 				StructuredSelection ss = (StructuredSelection)tvAllegati.getSelection();
 				if ((ss != null) && (ss.getFirstElement() != null)){
-					allegati.remove((ColloquiCriteriRicercaVO)ss.getFirstElement());
+					allegati.remove((Colloquicriteriricerca)ss.getFirstElement());
 					tvAllegati.refresh();
 				}
 			}
@@ -198,8 +201,8 @@ public class AllegatiColloquio extends WizardPage {
 
 			@Override
 			public void update(ViewerCell cell) {
-				if (((AllegatiColloquiVO)cell.getElement()).getDescrizione() != null){
-					cell.setText(((AllegatiColloquiVO)cell.getElement()).getDescrizione());
+				if (((Allegaticolloquio)cell.getElement()).getNome() != null){
+					cell.setText(((Allegaticolloquio)cell.getElement()).getNome());
 				}else{
 					cell.setText("");
 				}
@@ -220,8 +223,8 @@ public class AllegatiColloquio extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {
-				if (((AllegatiColloquiVO)element).getDescrizione() != null){
-					return ((AllegatiColloquiVO)element).getDescrizione();
+				if (((Allegaticolloquio)element).getNome() != null){
+					return ((Allegaticolloquio)element).getNome();
 				}else{
 					return "";
 				}
@@ -229,7 +232,7 @@ public class AllegatiColloquio extends WizardPage {
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AllegatiColloquiVO)element).setDescrizione(String.valueOf(value));
+			//	((Allegaticolloquio)element).setDescrizione(String.valueOf(value));
 				tvAllegati.refresh();
 			}
 			
@@ -245,8 +248,8 @@ public class AllegatiColloquio extends WizardPage {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AllegatiColloquiVO)cell.getElement()).getFromPath() != null){
-					cell.setText(((AllegatiColloquiVO)cell.getElement()).getFromPath());
+				if (((Allegaticolloquio)cell.getElement()).getFromPath() != null){
+					cell.setText(((Allegaticolloquio)cell.getElement()).getFromPath());
 				}else{
 					cell.setText("");
 				}
@@ -270,8 +273,8 @@ public class AllegatiColloquio extends WizardPage {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AllegatiColloquiVO)element).getFromPath() != null){
-					return ((AllegatiColloquiVO)element).getFromPath();
+				if (((Allegaticolloquio)element).getFromPath() != null){
+					return ((Allegaticolloquio)element).getFromPath();
 				}else{
 					return "";
 				}
@@ -279,9 +282,9 @@ public class AllegatiColloquio extends WizardPage {
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AllegatiColloquiVO)element).setFromPath(String.valueOf(value));
-				((AllegatiColloquiVO)element).setNome(((AllegatiColloquiVO)element).getFromPath()
-																				   .substring(((AllegatiColloquiVO)element).getFromPath()
+				((Allegaticolloquio)element).setFromPath(String.valueOf(value));
+				((Allegaticolloquio)element).setNome(((Allegaticolloquio)element).getFromPath()
+																				   .substring(((Allegaticolloquio)element).getFromPath()
 																						   								   .lastIndexOf(File.separator)+1)
 												      );
 				tvAllegati.refresh();
@@ -290,7 +293,10 @@ public class AllegatiColloquio extends WizardPage {
 		});
 				
 		tvAllegati.setInput(allegati);
-		((ColloquiWizard)getWizard()).getColloquio().setAllegati(allegati);
+		for (Iterator iterator = allegati.iterator(); iterator.hasNext();) {
+			((ColloquiWizard)getWizard()).getColloquio().addToAllegaticolloquios((Allegaticolloquio) iterator.next());			
+		}
+		
 		
 		setControl(container);
 	}

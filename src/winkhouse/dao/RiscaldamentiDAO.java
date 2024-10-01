@@ -7,8 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.Cayenne;
+import org.apache.cayenne.ObjectContext;
+
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.RiscaldamentiModel;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.RiscaldamentiVO;
 
 
@@ -259,6 +264,11 @@ public class RiscaldamentiDAO extends BaseDAO{
 	public Object getRiscaldamentiById(String classType, Integer codRiscaldamento){
 		return super.getObjectById(classType, RISCALDAMENTI_BY_ID, codRiscaldamento);
 	}	
+
+	public Riscaldamenti getRiscaldamentoById(Integer codRiscaldamento){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return Cayenne.objectForPK(context,Riscaldamenti.class,codRiscaldamento);
+	}
 
 	public <T> ArrayList<T> getRiscaldamentoByDescrizione(String classType, String descrizione){
 		return super.getObjectsByStringFieldValue(classType, RISCALDAMENTI_BY_NAME, descrizione);
