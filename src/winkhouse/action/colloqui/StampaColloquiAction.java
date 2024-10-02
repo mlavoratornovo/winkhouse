@@ -15,9 +15,10 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.Activator;
 import winkhouse.dao.ReportDAO;
 import winkhouse.helper.ReportHelper;
-import winkhouse.model.ImmobiliModel;
-import winkhouse.model.ReportModel;
+//import winkhouse.model.ImmobiliModel;
+//import winkhouse.model.ReportModel;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Report;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.DettaglioImmobileView;
 
@@ -45,9 +46,9 @@ public class StampaColloquiAction extends Action implements IAction,
 	
 	private class ReportAction extends Action{
 		
-		private ReportModel report = null;
+		private Report report = null;
 		
-		public ReportAction(String label, ReportModel report){
+		public ReportAction(String label, Report report){
 			super(label);
 			this.report = report;
 		}
@@ -80,12 +81,11 @@ public class StampaColloquiAction extends Action implements IAction,
 		fMenu = new Menu(parent);		
 				
 		ReportDAO rDAO = new ReportDAO();
-		ArrayList al = rDAO.getReportByTipologia(ReportModel.class.getName(),
-								  				 WinkhouseUtils.COLLOQUI);
+		ArrayList<Report> al = rDAO.getReportByTipologia(WinkhouseUtils.COLLOQUI);
 			
-		Iterator it = al.iterator();
+		Iterator<Report> it = al.iterator();
 		while (it.hasNext()){
-			ReportModel rm = (ReportModel)it.next();
+			Report rm = it.next();
 			addActionToMenu(fMenu, new ReportAction(rm.getNome(), rm));
 		}
 		

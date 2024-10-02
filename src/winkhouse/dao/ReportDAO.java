@@ -35,7 +35,7 @@ public class ReportDAO extends BaseDAO {
 	
 	public <T> ArrayList<T> getReportByTipologia(String classType, String tipologia){
 		return super.getObjectsByStringFieldValue(classType, REPORT_BY_TIPOLOGIA,tipologia);
-	}
+	}	
 
 	public ArrayList<Report> getReportByTipologia(String tipologia){
 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();

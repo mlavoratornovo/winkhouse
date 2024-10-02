@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.dao.AgentiAppuntamentiDAO;
@@ -17,6 +18,7 @@ import winkhouse.db.ConnectionManager;
 import winkhouse.model.AgentiAppuntamentiModel;
 import winkhouse.model.AnagraficheAppuntamentiModel;
 import winkhouse.model.AppuntamentiModel;
+import winkhouse.orm.Appuntamenti;
 import winkhouse.vo.AgentiAppuntamentiVO;
 import winkhouse.vo.AnagraficheAppuntamentiVO;
 
@@ -229,7 +231,7 @@ public class AppuntamentiHelper {
 		return returnValue;
 	}
 	
-	public boolean deleteAppuntamento(AppuntamentiModel appuntamento,Connection connection){
+	public boolean deleteAppuntamento(Appuntamenti appuntamento,Connection connection){
 		
 		boolean returnValue = true;
 		Connection con = (connection == null)
@@ -271,9 +273,10 @@ public class AppuntamentiHelper {
 		}else{
 			returnValue = false;
 			if (connection == null){
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+				MessageDialog.openError(PlatformUI.getWorkbench()
+						 						  .getActiveWorkbenchWindow().getShell(),
 										"Errore cancellazione appuntamento", 
-										"Si � verificato un errore nella cancellazione dell'appuntamento ");
+										"Si è verificato un errore nella cancellazione dell'appuntamento ");
 			}
 			try {
 				if (connection == null){

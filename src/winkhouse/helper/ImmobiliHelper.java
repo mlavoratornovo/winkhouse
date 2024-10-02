@@ -29,6 +29,7 @@ import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.model.StanzeImmobiliModel;
+import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AffittiAllegatiVO;
@@ -438,14 +439,14 @@ public class ImmobiliHelper {
 //						}
 						
 						if (okDeleteAttribute){
-							ArrayList colloqui = cDAO.getColloquiByImmobile(ColloquiModel.class.getName(), immobile.getCodImmobile());
-							Iterator itColloqui = colloqui.iterator();
-							while(itColloqui.hasNext()){
-								((ColloquiModel)itColloqui.next()).getAllegati();
-							}
+							ArrayList<Colloqui> colloqui = cDAO.getColloquiByImmobile(immobile.getEditObjectContext(), immobile);
+							Iterator<Colloqui> itColloqui = colloqui.iterator();
+//							while(itColloqui.hasNext()){
+//								((ColloquiModel)itColloqui.next()).getAllegati();
+//							}
 							itColloqui = colloqui.iterator();
 							while(itColloqui.hasNext()){
-								ColloquiModel cm = (ColloquiModel)itColloqui.next();
+								Colloqui cm = itColloqui.next();
 								HashMap ah = ch.deleteColloquio(cm, con, false);
 								if (((Boolean)ah.get(ColloquiHelper.RESULT_DELETE_COLLOQUIO_DB))){
 									if (((Boolean)ah.get(ColloquiHelper.RESULT_DELETE_ALLEGATI_DB))){

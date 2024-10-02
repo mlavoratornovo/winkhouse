@@ -65,9 +65,8 @@ public class CancellaImmaginiAction extends Action {
 			
 			if (f.exists()){
 				if (!f.delete()){
-					MessageBox mb = new MessageBox(Activator.getDefault()
-															.getWorkbench()
-															.getActiveWorkbenchWindow().getShell(),
+					MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
+															 .getActiveWorkbenchWindow().getShell(),
 												   SWT.ICON_WARNING);
 					mb.setMessage("Riferimenti dell'immagine in banca dati eliminati. \n Errore nella cancellazione del file immagine su disco");
 					mb.open();
@@ -75,23 +74,21 @@ public class CancellaImmaginiAction extends Action {
 					
 				}
 			}else{
-				MessageBox mb = new MessageBox(Activator.getDefault()
-														.getWorkbench()
-														.getActiveWorkbenchWindow().getShell(),
+				MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
+						 								 .getActiveWorkbenchWindow().getShell(),
 											   SWT.ICON_WARNING);
 				
 				mb.setMessage("Riferimenti dell'immagine in banca dati eliminati. \n Il file di immagine non � presente su disco");
 				mb.open();
 				
 			}
-			iiv.getImmobile().setImmagini(null);
+			// iiv.getImmobile().setImmagini(null);
 			iiv.showImages();
 
 			
 		}else{
-			MessageBox mb = new MessageBox(Activator.getDefault()
-													.getWorkbench()
-													.getActiveWorkbenchWindow().getShell(),
+			MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
+					 								.getActiveWorkbenchWindow().getShell(),
 										   SWT.ERROR);
 			mb.setMessage("Errore cancellazione immagine");
 			mb.open();	

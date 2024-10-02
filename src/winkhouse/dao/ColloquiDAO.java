@@ -18,6 +18,7 @@ import org.apache.cayenne.query.SelectQuery;
 import winkhouse.db.ConnectionManager;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiVO;
 
@@ -383,6 +384,12 @@ public class ColloquiDAO extends BaseDAO{
 
 	public <T> ArrayList<T> getColloquiByImmobile(String classType,Integer codClasse){
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_IMMOBILE, codClasse);
+	}
+	
+	public ArrayList<Colloqui> getColloquiByImmobile(ObjectContext context,Immobili immobile){
+		return new ArrayList<Colloqui>(ObjectSelect.query(Colloqui.class)
+				  .where(Colloqui.IMMOBILI.eq(immobile))														  				  
+				  .select(context));										
 	}
 
 	public <T> ArrayList<T> getColloquiByAgenteInseritore(String classType,Integer codAgenteInseritore){

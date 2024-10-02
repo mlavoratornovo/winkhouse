@@ -13,6 +13,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
+import winkhouse.configuration.EnvSettingsFactory;
 import winkhouse.dao.AllegatiColloquiDAO;
 import winkhouse.dao.AttributeValueDAO;
 import winkhouse.dao.ColloquiAgentiDAO;
@@ -27,12 +28,14 @@ import winkhouse.model.ColloquiAnagraficheModel_Ang;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ColloquiModelVisiteCollection;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Colloqui;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AllegatiColloquiVO;
 import winkhouse.vo.ColloquiAgentiVO;
 import winkhouse.vo.ColloquiAnagraficheVO;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.vo.ColloquiVO;
+import winkhouse.vo.TipologieColloquiVO;
 
 
 
@@ -53,22 +56,22 @@ public class ColloquiHelper {
 	public ColloquiHelper() {
 	}
 	
-	private Comparator<ColloquiVO> comparer = new Comparator<ColloquiVO>(){
+	private Comparator<Colloqui> comparer = new Comparator<Colloqui>(){
 
 		@Override
-		public int compare(ColloquiVO arg0, ColloquiVO arg1) {
+		public int compare(Colloqui arg0, Colloqui arg1) {
 			int returnValue = 0;
-			if ((arg0.getCodColloquio()!=null) && (arg1.getCodColloquio()!=null)){				
-				if ((arg0.getCodColloquio().intValue() == arg1.getCodColloquio().intValue())){
+			if ((arg0.getCodColloquio()!=0) && (arg1.getCodColloquio()!=0)){				
+				if ((arg0.getCodColloquio() == arg1.getCodColloquio())){
 					returnValue = 0;
 				}
-				if ((arg0.getCodColloquio().intValue() < arg1.getCodColloquio().intValue())){
+				if ((arg0.getCodColloquio() < arg1.getCodColloquio())){
 					returnValue = -1;
 				}				
-				if ((arg0.getCodColloquio().intValue() > arg1.getCodColloquio().intValue())){
+				if ((arg0.getCodColloquio() > arg1.getCodColloquio())){
 					returnValue = 1;
 				}								
-			}else if ((arg0.getCodColloquio()!=null) && (arg1.getCodColloquio()==null)){
+			}else if ((arg0.getCodColloquio()!=0) && (arg1.getCodColloquio()==0)){
 				returnValue = 1;
 			}else{
 				returnValue = -1;
@@ -204,7 +207,7 @@ public class ColloquiHelper {
 																					.iterator();
 				
 				while (it.hasNext()){
-					ColloquiVO colloquio = (ColloquiVO)it.next();
+					Colloqui colloquio = (Colloqui)it.next();
 					int index = Collections.binarySearch(colloquiDB, colloquio,comparer);
 					if (index >= 0){
 						colloquiDB.remove(index);
@@ -215,18 +218,22 @@ public class ColloquiHelper {
 				
 				Iterator ite = colloquiDB.iterator();
 				while (ite.hasNext()){
-					ColloquiModel cModel = (ColloquiModel)ite.next();
+					Colloqui cModel = (Colloqui)ite.next();
 					HashMap colloquioDelResult = deleteColloquio(cModel, con, doCommit);
 					
 					returnValue.put(this.LIST_DELETE_ALLEGATI_FILE, 
 									((ArrayList)returnValue.get(this.LIST_DELETE_ALLEGATI_FILE))
 														   .addAll((ArrayList)colloquioDelResult.get(this.LIST_DELETE_ALLEGATI_FILE)));
 					
-					if (!(Boolean)colloquioDelResult.get(this.RESULT_DELETE_COLLOQUIO_DB)){					
-						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+					if (!(Boolean)colloquioDelResult.get(this.RESULT_DELETE_COLLOQUIO_DB)){
+						TipologieColloquiVO tcVO = (cModel.getCodtipologiacolloquio()!= 0)
+						? EnvSettingsFactory.getInstance().getTipologiaColloquioById(cModel.getCodtipologiacolloquio())
+						: null;
+						MessageDialog.openError(PlatformUI.getWorkbench()
+								 						  .getActiveWorkbenchWindow().getShell(),
 												"Errore cancellazione colloquio", 
-												"Si � verificato un errore nella cancellazione del colloquio : " +							
-												((cModel.getTipologia()!= null)?"":cModel.getTipologia().getDescrizione()) + "\n" +
+												"Si è verificato un errore nella cancellazione del colloquio : " +							
+												((tcVO == null)?"":tcVO.getDescrizione()) + "\n" +
 												"descrizione : " + cModel.getDescrizione());
 				
 						numerror++;
@@ -246,7 +253,7 @@ public class ColloquiHelper {
 		
 	}
 	
-	public HashMap deleteColloquio(ColloquiModel cModel, Connection con , Boolean doCommit){
+	public HashMap deleteColloquio(Colloqui cModel, Connection con , Boolean doCommit){
 		HashMap returnValue = new HashMap();
 		boolean dbdelresult = true;
 		HashMap resultAllegati = null;
@@ -265,13 +272,14 @@ public class ColloquiHelper {
 						
 						boolean okDeleteAttribute = true;
 						AttributeValueDAO avDAO = new AttributeValueDAO();
-						for (Iterator<AttributeModel> iterator = cModel.getEntity().getAttributes().iterator(); iterator.hasNext();) {
-							AttributeModel attribute = iterator.next();
-							if (!avDAO.deleteByAttributeIdObjectId(attribute.getIdAttribute(), cModel.getCodColloquio(), con, false)){
-								okDeleteAttribute = false;
-								break;
-							}
-						}
+// TODO cayenne						
+//						for (Iterator<AttributeModel> iterator = cModel.getEntity().getAttributes().iterator(); iterator.hasNext();) {
+//							AttributeModel attribute = iterator.next();
+//							if (!avDAO.deleteByAttributeIdObjectId(attribute.getIdAttribute(), cModel.getCodColloquio(), con, false)){
+//								okDeleteAttribute = false;
+//								break;
+//							}
+//						}
 
 						if (okDeleteAttribute){
 							ColloquiDAO cDAO = new ColloquiDAO();
@@ -292,11 +300,11 @@ public class ColloquiHelper {
 		return returnValue;
 	}
 	
-	public HashMap deleteAllegatiColloquio(ColloquiModel cModel, Connection con , Boolean doCommit){
+	public HashMap deleteAllegatiColloquio(Colloqui cModel, Connection con , Boolean doCommit){
 		HashMap returnValue = new HashMap();
 		AllegatiColloquiDAO acDAO = new AllegatiColloquiDAO();
 		
-		returnValue.put(this.LIST_DELETE_ALLEGATI_FILE, cModel.getAllegati());
+		returnValue.put(this.LIST_DELETE_ALLEGATI_FILE, cModel.getAllegaticolloquios());
 		if (!acDAO.deleteByColloquio(cModel.getCodColloquio(), con, doCommit)){
 			returnValue.put(this.RESULT_DELETE_ALLEGATI_DB, false);
 		}else{

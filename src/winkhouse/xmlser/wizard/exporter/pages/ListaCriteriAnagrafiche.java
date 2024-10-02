@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
+import winkhouse.Activator;
 import winkhouse.configuration.EnvSettingsFactory;
 import winkhouse.export.WrongCriteriaSequenceException;
 import winkhouse.export.helpers.AnagraficheHelper;
@@ -31,10 +32,12 @@ import winkhouse.export.models.ObjectSearchGetters;
 import winkhouse.export.utils.CriteriaTablesHelper;
 import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.orm.Ricerche;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.vo.RicercheVO;
 import winkhouse.wizard.RicercaWizard;
-import winkhouse.Activator;
 import winkhouse.xmlser.wizard.exporter.ExporterWizard;
 import winkhouse.xmlser.wizard.exporter.PopUpEditRicerca;
 import winkhouse.xmlser.wizard.exporter.PopUpRicercaRicerche;
@@ -52,7 +55,7 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 	private String[] desAgenti = null;
 	private Integer[] codAgenti = null;
 	private Label lRicercaSelectedName = null;
-	private RicercheModel ricerca = null;
+	private Ricerche ricerca = null;
 
 //	private ArrayList<ColloquiCriteriRicercaVO> criteri = null;
 
@@ -85,10 +88,10 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 		
 	};
 
-	private Comparator<ColloquiCriteriRicercaVO> comparatorLineNumber = new Comparator<ColloquiCriteriRicercaVO>(){
+	private Comparator<Colloquicriteriricerca> comparatorLineNumber = new Comparator<Colloquicriteriricerca>(){
 
 		@Override
-		public int compare(ColloquiCriteriRicercaVO o1, ColloquiCriteriRicercaVO o2) {
+		public int compare(Colloquicriteriricerca o1, Colloquicriteriricerca o2) {
 			int returnValue=0;
 			if (o1.getLineNumber().intValue() > o2.getLineNumber().intValue()){
 				return 1;
@@ -136,13 +139,11 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 				if ((((ExporterWizard)getWizard()).getExporterVO()
 												  .getCriteriRicerca()
 												  .size() == 0) ||
-					(((ColloquiCriteriRicercaVO)((ExporterWizard)getWizard()).getExporterVO()
+					(((Colloquicriteriricerca)((ExporterWizard)getWizard()).getExporterVO()
 																			 .getCriteriRicerca()
 																			 .get(((ExporterWizard)getWizard()).getExporterVO()
-																			 .getCriteriRicerca().size() - 1)).getGetterMethodName() != null)){
-					
-					ColloquiCriteriRicercaVO crVO = new ColloquiCriteriRicercaVO();
-					ColloquiCriteriRicercaModel crModel = new ColloquiCriteriRicercaModel(crVO);
+																			 .getCriteriRicerca().size() - 1)).getGettermethodname() != null)){
+					Colloquicriteriricerca crModel = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);
 					((ExporterWizard)getWizard()).getExporterVO()
 											.getCriteriRicerca()
 											.add(crModel);					
@@ -386,10 +387,10 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 		if (((ExporterWizard)getWizard()).getExporterVO()
 				 						 .getCriteriRicerca() != null){
 			int count = 0;
-			for (Iterator<ColloquiCriteriRicercaModel> iterator = ((ExporterWizard)getWizard()).getExporterVO()
+			for (Iterator<Colloquicriteriricerca> iterator = ((ExporterWizard)getWizard()).getExporterVO()
 					 																	       .getCriteriRicerca()
 					 																	       .iterator(); iterator.hasNext();) {
-				ColloquiCriteriRicercaVO ccrVO = iterator.next(); 
+				Colloquicriteriricerca ccrVO = iterator.next(); 
 				ccrVO.setLineNumber(count);
 				count++;
 			}
@@ -397,7 +398,7 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 	}
 	
 	private ColloquiCriteriRicercaVO getPrevCriterioByLineNumber(Integer lineNumber){
-		ColloquiCriteriRicercaVO ccrVO = new ColloquiCriteriRicercaVO();
+		Colloquicriteriricerca ccrVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquicriteriricerca.class);
 		ccrVO.setLineNumber(lineNumber);
 		Collections.sort(((RicercaWizard)getWizard()).getRicerca()
 				 .getCriteriAnagrafiche(), comparatorLineNumber);
@@ -416,20 +417,20 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 		}
 	}
 	
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		ricerca = rm;
 		lRicercaSelectedName.setText(ricerca.getNome());
 		lRicercaSelectedName.pack();
 		lRicercaSelectedName.redraw();		
 		((ExporterWizard)getWizard()).getExporterVO()
-									 .setCriteriRicerca((ArrayList)ricerca.getCriteri().clone());
+									 .setCriteriRicerca(new ArrayList<Colloquicriteriricerca>(ricerca.getColloquicriteriricercas()));
 		tvCriteri.setInput(((ExporterWizard)getWizard()).getExporterVO()
 				   									    .getCriteriRicerca());
 	}
 
-	public RicercheModel getRicerca() {
+	public Ricerche getRicerca() {
 		if (ricerca == null){
-			ricerca = new RicercheModel();
+			ricerca = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Ricerche.class);
 			ricerca.setTipo(EnvSettingsFactory.getInstance()
 	   				   						  .getTipologieColloqui()
 	   				   						  .get(0)
@@ -438,14 +439,14 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 		ArrayList al = (ArrayList)((ExporterWizard)getWizard()).getExporterVO()
         													   .getCriteriRicerca().clone();
 
-		ArrayList <ColloquiCriteriRicercaModel> alm = new ArrayList<ColloquiCriteriRicercaModel>();
-		Iterator it = al.iterator();
+		ArrayList <Colloquicriteriricerca> alm = new ArrayList<Colloquicriteriricerca>();
+		Iterator<Colloquicriteriricerca> it = al.iterator();
 		while (it.hasNext()) {
-			ColloquiCriteriRicercaModel object = new ColloquiCriteriRicercaModel((ColloquiCriteriRicercaVO) it.next());
-			object.setCodColloquio(0);
-			alm.add(object);
+			Colloquicriteriricerca object = it.next();
+			
+			ricerca.addToColloquicriteriricercas(object);
 		}
-		ricerca.setCriteri(alm);			
+					
 		
 		return ricerca;
 	}

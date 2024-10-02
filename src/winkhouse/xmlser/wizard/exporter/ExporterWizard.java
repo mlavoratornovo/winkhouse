@@ -22,6 +22,7 @@ import winkhouse.model.ColloquiCriteriRicercaModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.EntityModel;
 import winkhouse.orm.Classienergetiche;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.vo.AbbinamentiVO;
 import winkhouse.vo.AffittiAllegatiVO;
@@ -119,7 +120,7 @@ public class ExporterWizard extends Wizard {
 	public class ExporterVO{
 		
 		private int type = IMMOBILI;
-		private ArrayList<ColloquiCriteriRicercaModel> criteriRicerca = null;
+		private ArrayList<Colloquicriteriricerca> criteriRicerca = null;
 		private ArrayList risultati = null;
 		private ArrayList risultati_selected = null;
 		
@@ -874,11 +875,11 @@ public class ExporterWizard extends Wizard {
 
 		}
 
-		public ArrayList<ColloquiCriteriRicercaModel> getCriteriRicerca() {
+		public ArrayList<Colloquicriteriricerca> getCriteriRicerca() {
 			return criteriRicerca;
 		}
 
-		public void setCriteriRicerca(ArrayList<ColloquiCriteriRicercaModel> criteriRicerca) {
+		public void setCriteriRicerca(ArrayList<Colloquicriteriricerca> criteriRicerca) {
 			this.criteriRicerca = criteriRicerca;
 		}
 
@@ -1229,14 +1230,13 @@ public class ExporterWizard extends Wizard {
 			if (getExporterVO().getCriteriRicerca() != null){
 				if (getExporterVO().getCriteriRicerca().size() > 0){
 					if (getExporterVO().getCriteriRicerca().size() == 1){
-						if (((ColloquiCriteriRicercaVO)getExporterVO().getCriteriRicerca()
-																	  .get(0)).getGetterMethodName()
+						if (((Colloquicriteriricerca)getExporterVO().getCriteriRicerca().get(0)).getGettermethodname()
 																	  .equalsIgnoreCase("(") ||
-							((ColloquiCriteriRicercaVO)getExporterVO().getCriteriRicerca()
-																	  .get(0)).getGetterMethodName()
+							((Colloquicriteriricerca)getExporterVO().getCriteriRicerca()
+																	  .get(0)).getGettermethodname()
 																	   .equalsIgnoreCase(")") ||
-							((ColloquiCriteriRicercaVO)getExporterVO().getCriteriRicerca()
-																	  .get(0)).getGetterMethodName()
+							((Colloquicriteriricerca)getExporterVO().getCriteriRicerca()
+																	  .get(0)).getGettermethodname()
 																	  .equalsIgnoreCase("")																		
 						   ){
 							
@@ -1282,14 +1282,14 @@ public class ExporterWizard extends Wizard {
 			if (getExporterVO().getCriteriRicerca() != null){
 				if (getExporterVO().getCriteriRicerca().size() > 0){
 					if (getExporterVO().getCriteriRicerca().size() == 1){
-						if (((ColloquiCriteriRicercaVO)getExporterVO().getCriteriRicerca()
-																	  .get(0)).getGetterMethodName()
+						if (((Colloquicriteriricerca)getExporterVO().getCriteriRicerca()
+																	  .get(0)).getGettermethodname()
 																	  .equalsIgnoreCase("(") ||
-							((ColloquiCriteriRicercaVO)getExporterVO().getCriteriRicerca()
-																	  .get(0)).getGetterMethodName()
+							((Colloquicriteriricerca)getExporterVO().getCriteriRicerca()
+																	  .get(0)).getGettermethodname()
 																	   .equalsIgnoreCase(")") ||
-							((ColloquiCriteriRicercaVO)getExporterVO().getCriteriRicerca()
-																	  .get(0)).getGetterMethodName()
+							((Colloquicriteriricerca)getExporterVO().getCriteriRicerca()
+																	  .get(0)).getGettermethodname()
 																	  .equalsIgnoreCase("")																		
 						   ){
 							

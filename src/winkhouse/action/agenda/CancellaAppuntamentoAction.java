@@ -17,8 +17,10 @@ import winkhouse.Activator;
 import winkhouse.db.ConnectionManager;
 import winkhouse.helper.AppuntamentiHelper;
 import winkhouse.helper.ColloquiHelper;
-import winkhouse.model.AppuntamentiModel;
-import winkhouse.model.ColloquiModel;
+import winkhouse.orm.Appuntamenti;
+import winkhouse.orm.Colloqui;
+//import winkhouse.model.AppuntamentiModel;
+//import winkhouse.model.ColloquiModel;
 import winkhouse.view.agenda.CalendarioView;
 import winkhouse.view.agenda.DettaglioAppuntamentoView;
 import winkhouse.view.agenda.ListaAppuntamentiView;
@@ -56,7 +58,7 @@ public class CancellaAppuntamentoAction extends Action {
 		
 		if (wp instanceof DettaglioAppuntamentoView){
 			
-			AppuntamentiModel am = ((DettaglioAppuntamentoView)wp).getAppuntamento();
+			Appuntamenti am = ((DettaglioAppuntamentoView)wp).getAppuntamento();
 			if (ah.deleteAppuntamento(am,null)){
 
 				DettaglioAppuntamentoView dav = (DettaglioAppuntamentoView)wp;
@@ -87,14 +89,14 @@ public class CancellaAppuntamentoAction extends Action {
 				Iterator it = ss.iterator();
 				while (it.hasNext()){
 					Object o = it.next();
-					if (o instanceof AppuntamentiModel){
-						if (!ah.deleteAppuntamento((AppuntamentiModel)o,con)){
+					if (o instanceof Appuntamenti){
+						if (!ah.deleteAppuntamento((Appuntamenti)o,con)){
 							okdel = false;
 							break;
 						}
 					}
-					if (o instanceof ColloquiModel){
-						hmResultdelColloquio = ch.deleteColloquio((ColloquiModel)o, con, false);
+					if (o instanceof Colloqui){
+						hmResultdelColloquio = ch.deleteColloquio((Colloqui)o, con, false);
 						if (!(Boolean)hmResultdelColloquio.get(ColloquiHelper.RESULT_DELETE_COLLOQUIO_DB)){
 							okdel = false;
 							break;

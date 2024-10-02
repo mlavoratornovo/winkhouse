@@ -23,6 +23,7 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import winkhouse.export.helpers.ExportedRicercheHelper;
 import winkhouse.model.RicercheModel;
+import winkhouse.orm.Ricerche;
 import winkhouse.Activator;
 
 
@@ -32,7 +33,7 @@ public class PopUpEditRicerca {
 	private Shell popup = null;
 	private Text nome = null;
 	private Text descrizione = null;
-	private RicercheModel ricerche = null;
+	private Ricerche ricerche = null;
 	
 	public PopUpEditRicerca() {
 		createContent();
@@ -40,10 +41,8 @@ public class PopUpEditRicerca {
 	
 	private void createContent(){
 		
-		popup = new Shell(Activator.getDefault().getWorkbench()
-												.getActiveWorkbenchWindow()
-												.getShell(),
-												
+		popup = new Shell(PlatformUI.getWorkbench()
+				 					.getActiveWorkbenchWindow().getShell(),												
 				  		  SWT.APPLICATION_MODAL|SWT.SHELL_TRIM);
 		popup.setText("Salvataggio ricerca");
 		popup.setImage(Activator.getDefault()
@@ -166,7 +165,7 @@ public class PopUpEditRicerca {
 		
 	}
 	
-	public void setRicerca(RicercheModel rm){
+	public void setRicerca(Ricerche rm){
 		this.ricerche = rm;
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindRicerca(bindingContext);
