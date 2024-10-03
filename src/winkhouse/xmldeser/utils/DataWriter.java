@@ -26,6 +26,8 @@ import winkhouse.model.AttributeValueModel;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.CriteriRicercaModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Immobili;
 import winkhouse.vo.AbbinamentiVO;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AffittiAnagraficheVO;
@@ -295,8 +297,8 @@ public class DataWriter implements IRunnableWithProgress {
 		
 		if ((anagrafica != null) && (immobile != null)){
 			
-			ArrayList<AnagraficheModel> al_anagrafiche = anagrafiche_helper.getAnagraficheExist(anagrafica);
-			ArrayList<ImmobiliModel> al_immobili = immobili_helper.getImmobiliExist(immobile);
+			ArrayList<Anagrafiche> al_anagrafiche = anagrafiche_helper.getAnagraficheExist(anagrafica);
+			ArrayList<Immobili> al_immobili = immobili_helper.getImmobiliExist(immobile);
 			
 			if ((al_anagrafiche.size() > 0) && (al_immobili.size() > 0)){
 				
@@ -353,9 +355,9 @@ public class DataWriter implements IRunnableWithProgress {
 		if (anagrafica == null){
 			immobile.setCodAnagrafica(null);
 		}else{
-			ArrayList<AnagraficheModel> al_anagrafica = anagrafiche_helper.getAnagraficheExist((AnagraficheModel)anagrafica);
+			ArrayList<Anagrafiche> al_anagrafica = anagrafiche_helper.getAnagraficheExist((AnagraficheXMLModel)anagrafica);
 			if (al_anagrafica.size() > 0){
-				immobile.setCodAnagrafica(((AnagraficheVO)al_anagrafica.get(0)).getCodAnagrafica());
+				immobile.setCodAnagrafica((al_anagrafica.get(0)).getCodAnagrafica());
 			}
 		}
 								
@@ -467,7 +469,7 @@ public class DataWriter implements IRunnableWithProgress {
 			anagrafica.setImportOperation(ObjectTypeCompare.NUOVO_INSERIMENTO);
 		}else{
 			anagrafica.setImportOperation(ObjectTypeCompare.AGGIORNAMENTO);
-			ArrayList<AnagraficheModel> amlist = anagrafiche_helper.getAnagraficheExist(anagrafica);
+			ArrayList<Anagrafiche> amlist = anagrafiche_helper.getAnagraficheExist(anagrafica);
 			if (amlist.size() > 0){
 				anagrafica.setCodAnagrafica(amlist.get(0).getCodAnagrafica());
 			}
@@ -541,7 +543,7 @@ public class DataWriter implements IRunnableWithProgress {
 					
 					AnagraficheXMLModel anagrafica = importer.getAnagraficheSelected().get(affittiRate.getCodAnagrafica());
 					if (anagrafica != null){
-						ArrayList<AnagraficheModel> ala_model = anagrafiche_helper.getAnagraficheExist(anagrafica);
+						ArrayList<Anagrafiche> ala_model = anagrafiche_helper.getAnagraficheExist(anagrafica);
 						if (ala_model.size() > 0){
 							affittiRate.setCodAnagrafica(ala_model.get(0).getCodAnagrafica());
 						}
@@ -583,7 +585,7 @@ public class DataWriter implements IRunnableWithProgress {
 					
 					AnagraficheXMLModel anagrafica = importer.getAnagraficheSelected().get(affittiSpese.getCodAnagrafica());
 					if (anagrafica != null){
-						ArrayList<AnagraficheModel> ala_model = anagrafiche_helper.getAnagraficheExist(anagrafica);
+						ArrayList<Anagrafiche> ala_model = anagrafiche_helper.getAnagraficheExist(anagrafica);
 						if (ala_model.size() > 0){
 							affittiSpese.setCodAnagrafica(ala_model.get(0).getCodAnagrafica());
 						}
@@ -823,9 +825,9 @@ public class DataWriter implements IRunnableWithProgress {
 		
 		AnagraficheXMLModel anagrafica = importer.getAnagraficheSelected().get(contatto.getCodAnagrafica());
 		if (anagrafica != null){
-			ArrayList<AnagraficheModel> al = anagrafiche_helper.getAnagraficheExist((AnagraficheXMLModel)anagrafica);
+			ArrayList<Anagrafiche> al = anagrafiche_helper.getAnagraficheExist((AnagraficheXMLModel)anagrafica);
 			if (al.size() > 0){
-				contatto.setCodAnagrafica(((AnagraficheModel)al.get(0)).getCodAnagrafica());
+				contatto.setCodAnagrafica((al.get(0)).getCodAnagrafica());
 			}
 		}
 		AgentiXMLModel agente = importer.getAgentiSelected().get(contatto.getCodAgente());
@@ -909,21 +911,21 @@ public class DataWriter implements IRunnableWithProgress {
 				
 				while (it.hasNext()) {
 					
-					AnagraficheModel anagrafica = it.next();
-					ArrayList<AnagraficheModel> al_anag_db = anagrafiche_helper.getAnagraficheExist(anagrafica);
+					AnagraficheXMLModel anagrafica = it.next();
+					ArrayList<Anagrafiche> al_anag_db = anagrafiche_helper.getAnagraficheExist(anagrafica);
 					
 					boolean find_it = false;
 					
-					Iterator<AnagraficheModel>it_anag_db = al_anag_db.iterator();
+					Iterator<Anagrafiche>it_anag_db = al_anag_db.iterator();
 					while (it_anag_db.hasNext()) {
-						AnagraficheModel anag_db = it_anag_db.next();
-						ArrayList<ColloquiModel> al_colloqui = colloqui_helper.getColloquiExist((ColloquiVO)colloquio, (AnagraficheVO)anag_db);
+						Anagrafiche anag_db = it_anag_db.next();
+// TODO cayenne						ArrayList<ColloquiModel> al_colloqui = colloqui_helper.getColloquiExist(colloquio, anag_db);
 						
-						if (al_colloqui.size() > 0){
-							colloquio.setCodColloquio(((ColloquiModel)al_colloqui.get(0)).getCodColloquio());
-							find_it = true;
-							break;
-						}
+//						if (al_colloqui.size() > 0){
+//							colloquio.setCodColloquio(((ColloquiModel)al_colloqui.get(0)).getCodColloquio());
+//							find_it = true;
+//							break;
+//						}
 						
 					}
 					
@@ -1002,43 +1004,44 @@ public class DataWriter implements IRunnableWithProgress {
 		AnagraficheXMLModel axml = importer.getAnagraficheSelected().get(colloquioAnagrafiche.getCodAnagrafica());
 		
 		if (axml != null){
-			ArrayList<AnagraficheModel> al = anagrafiche_helper.getAnagraficheExist(axml);
-			if (al.size() > 0){
-				AnagraficheModel anagrafica = ((AnagraficheModel)al.get(0));
-				colloquioAnagrafiche.setCodAnagrafica(anagrafica.getCodAnagrafica());
-				
-				if (anagrafica != null){ 
-					ColloquiXMLModel colloquio = importer.getColloquiSelected().get(colloquioAnagrafiche.getCodColloquio());
-					ArrayList al_colloqui = colloqui_helper.getColloquiExist(colloquio);
-						
-					if (al_colloqui.size() > 0){
-						ColloquiModel colloquiodb = ((ColloquiModel)al_colloqui.get(0));
-						colloquioAnagrafiche.setCodColloquio(colloquiodb.getCodColloquio());
-						if (!this.isInMergeList(colloquioAnagrafiche)){
-							colloquioAnagrafiche.setCodColloquioAnagrafiche(null);
-							colloquioAnagrafiche.setImportOperation(ObjectTypeCompare.NUOVO_INSERIMENTO);
-
-						}else{
-							colloquioAnagrafiche.setImportOperation(ObjectTypeCompare.AGGIORNAMENTO);
-							if (axml != null){
-								ArrayList<ColloquiAnagraficheVO> alca = this.colloqui_helper.getColloquioAnagraficheExist(colloquio, axml);
-								if (alca.size() > 0){
-									colloquioAnagrafiche.setCodColloquioAnagrafiche(((ColloquiAnagraficheVO)alca.get(0)).getCodColloquioAnagrafiche());
-								}
-							}					
-						}
-						
-						try {
-							colloqui_helper.saveUpdateColloquiAnagrafiche(colloquioAnagrafiche);
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-
-					}						
-						
-				}				
-				
-			}	
+// TODO cayenne			
+//			ArrayList<AnagraficheModel> al = anagrafiche_helper.getAnagraficheExist(axml);
+//			if (al.size() > 0){
+//				AnagraficheModel anagrafica = ((AnagraficheModel)al.get(0));
+//				colloquioAnagrafiche.setCodAnagrafica(anagrafica.getCodAnagrafica());
+//				
+//				if (anagrafica != null){ 
+//					ColloquiXMLModel colloquio = importer.getColloquiSelected().get(colloquioAnagrafiche.getCodColloquio());
+//					ArrayList al_colloqui = colloqui_helper.getColloquiExist(colloquio);
+//						
+//					if (al_colloqui.size() > 0){
+//						ColloquiModel colloquiodb = ((ColloquiModel)al_colloqui.get(0));
+//						colloquioAnagrafiche.setCodColloquio(colloquiodb.getCodColloquio());
+//						if (!this.isInMergeList(colloquioAnagrafiche)){
+//							colloquioAnagrafiche.setCodColloquioAnagrafiche(null);
+//							colloquioAnagrafiche.setImportOperation(ObjectTypeCompare.NUOVO_INSERIMENTO);
+//
+//						}else{
+//							colloquioAnagrafiche.setImportOperation(ObjectTypeCompare.AGGIORNAMENTO);
+//							if (axml != null){
+//								ArrayList<ColloquiAnagraficheVO> alca = this.colloqui_helper.getColloquioAnagraficheExist(colloquio, axml);
+//								if (alca.size() > 0){
+//									colloquioAnagrafiche.setCodColloquioAnagrafiche(((ColloquiAnagraficheVO)alca.get(0)).getCodColloquioAnagrafiche());
+//								}
+//							}					
+//						}
+//						
+//						try {
+//							colloqui_helper.saveUpdateColloquiAnagrafiche(colloquioAnagrafiche);
+//						} catch (SQLException e) {
+//							e.printStackTrace();
+//						}
+//
+//					}						
+//						
+//				}				
+//				
+//			}	
 			
 		}		
 		
@@ -1049,52 +1052,53 @@ public class DataWriter implements IRunnableWithProgress {
 		ColloquiXMLModel c = this.importer.getColloquiSelected().get(criterioRicerca.getCodColloquio());
 		
 		if (c != null){
-			Collection<AnagraficheXMLModel> c_anag = importer.getAnagraficheSelected().values();
-			Iterator<AnagraficheXMLModel> it = c_anag.iterator();
-			
-			while (it.hasNext()) {
-				
-				AnagraficheModel anagrafica = it.next();
-				ArrayList<AnagraficheModel> al_anag_db = anagrafiche_helper.getAnagraficheExist(anagrafica);
-				
-				boolean find_it = false;
-				
-				Iterator<AnagraficheModel>it_anag_db = al_anag_db.iterator();
-				while (it_anag_db.hasNext()) {
-					AnagraficheModel anag_db = it_anag_db.next();
-					ArrayList<ColloquiModel> al_colloqui = colloqui_helper.getColloquiExist((ColloquiVO)c, (AnagraficheVO)anag_db);
-					
-					if (al_colloqui.size() > 0){
-						criterioRicerca.setCodColloquio(al_colloqui.get(0).getCodColloquio());
-						find_it = true;
-						break;
-					}
-				}
-				
-				if (find_it){
-					break;
-				}
-				
-			}			
-			
-			if (!this.isInMergeList(criterioRicerca)){
-				criterioRicerca.setCodCriterioRicerca(null);
-				criterioRicerca.setImportOperation(ObjectTypeCompare.NUOVO_INSERIMENTO);
-
-			}else{
-				criterioRicerca.setImportOperation(ObjectTypeCompare.AGGIORNAMENTO);
-				CriteriRicercaModel crm = new CriteriRicercaModel(criterioRicerca);
-				ArrayList<CriteriRicercaModel> al_cr = UtilsHelper.getInstance().findCriteriRicercaByDescription(crm, c);				
-				if (al_cr.size() > 0){					
-					criterioRicerca.setCodCriterioRicerca(((CriteriRicercaModel)al_cr.get(0)).getCodCriterioRicerca());					
-				}					
-			}
-			
-			try {
-				colloqui_helper.saveUpdateColloquiCriteriRicerca(criterioRicerca);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
+// TODO cayenne			
+//			Collection<AnagraficheXMLModel> c_anag = importer.getAnagraficheSelected().values();
+//			Iterator<AnagraficheXMLModel> it = c_anag.iterator();
+//			
+//			while (it.hasNext()) {
+//				
+//				AnagraficheModel anagrafica = it.next();
+//				ArrayList<AnagraficheModel> al_anag_db = anagrafiche_helper.getAnagraficheExist(anagrafica);
+//				
+//				boolean find_it = false;
+//				
+//				Iterator<AnagraficheModel>it_anag_db = al_anag_db.iterator();
+//				while (it_anag_db.hasNext()) {
+//					AnagraficheModel anag_db = it_anag_db.next();
+//					ArrayList<ColloquiModel> al_colloqui = colloqui_helper.getColloquiExist((ColloquiVO)c, (AnagraficheVO)anag_db);
+//					
+//					if (al_colloqui.size() > 0){
+//						criterioRicerca.setCodColloquio(al_colloqui.get(0).getCodColloquio());
+//						find_it = true;
+//						break;
+//					}
+//				}
+//				
+//				if (find_it){
+//					break;
+//				}
+//				
+//			}			
+//			
+//			if (!this.isInMergeList(criterioRicerca)){
+//				criterioRicerca.setCodCriterioRicerca(null);
+//				criterioRicerca.setImportOperation(ObjectTypeCompare.NUOVO_INSERIMENTO);
+//
+//			}else{
+//				criterioRicerca.setImportOperation(ObjectTypeCompare.AGGIORNAMENTO);
+//				CriteriRicercaModel crm = new CriteriRicercaModel(criterioRicerca);
+//				ArrayList<CriteriRicercaModel> al_cr = UtilsHelper.getInstance().findCriteriRicercaByDescription(crm, c);				
+//				if (al_cr.size() > 0){					
+//					criterioRicerca.setCodCriterioRicerca(((CriteriRicercaModel)al_cr.get(0)).getCodCriterioRicerca());					
+//				}					
+//			}
+//			
+//			try {
+//				colloqui_helper.saveUpdateColloquiCriteriRicerca(criterioRicerca);
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}			
 			
 		}
 		
@@ -1150,7 +1154,7 @@ public class DataWriter implements IRunnableWithProgress {
 			AnagraficheXMLModel anag = this.importer.getAnagraficheSelected().get(((ImmobiliPropietariVO)object).getCodAnagrafica());
 			if ((imm != null) && (anag != null)){
 				ImmobiliModel im = immobili_helper.getImmobileByRif(imm.getRif());
-				ArrayList<AnagraficheModel> al_am = anagrafiche_helper.getAnagraficheExist(anag);
+				ArrayList<Anagrafiche> al_am = anagrafiche_helper.getAnagraficheExist(anag);
 				if ((im != null) && (al_am.size() > 0)){
 					((ImmobiliPropietariVO)object).setCodImmobile(im.getCodImmobile());
 					((ImmobiliPropietariVO)object).setCodAnagrafica(al_am.get(0).getCodAnagrafica());
@@ -1401,7 +1405,7 @@ public class DataWriter implements IRunnableWithProgress {
 					AnagraficheXMLModel anagrafica = importer.getAnagraficheSelected().get(affittiAnagrafiche.getCodAnagrafica());
 					if (anagrafica != null){
 						
-						ArrayList<AnagraficheModel> al_am = anagrafiche_helper.getAnagraficheExist(anagrafica);			
+						ArrayList<Anagrafiche> al_am = anagrafiche_helper.getAnagraficheExist(anagrafica);			
 						if (al_am.size() > 0){							
 							affittiAnagrafiche.setCodAnagrafica(al_am.get(0).getCodAnagrafica());
 							
@@ -1477,7 +1481,7 @@ public class DataWriter implements IRunnableWithProgress {
 				
 				if (em.getClassName().equalsIgnoreCase(AnagraficheVO.class.getName())){
 					AnagraficheXMLModel anagrafica = this.importer.getAnagraficheSelected().get(attributeValue.getIdObject());
-					ArrayList<AnagraficheModel> al = anagrafiche_helper.getAnagraficheExist(anagrafica);
+					ArrayList<Anagrafiche> al = anagrafiche_helper.getAnagraficheExist(anagrafica);
 					if (al.size() > 0){
 						idObject = al.get(0).getCodAnagrafica();
 					}
@@ -1495,10 +1499,10 @@ public class DataWriter implements IRunnableWithProgress {
 					while (it.hasNext()) {
 						
 						Entry<Integer, AnagraficheXMLModel> anagrafica = it.next();
-						ArrayList<AnagraficheModel> al_anagrafiche = this.anagrafiche_helper.getAnagraficheExist(anagrafica.getValue());
+						ArrayList<Anagrafiche> al_anagrafiche = this.anagrafiche_helper.getAnagraficheExist(anagrafica.getValue());
 						
-						for (AnagraficheModel anagraficaModel : al_anagrafiche) {
-							al.addAll(colloqui_helper.getColloquiExist(colloqui, anagraficaModel));
+						for (Anagrafiche anagraficaModel : al_anagrafiche) {
+// TODO cayenne							al.addAll(colloqui_helper.getColloquiExist(colloqui, anagraficaModel));
 						}
 							
 					}
