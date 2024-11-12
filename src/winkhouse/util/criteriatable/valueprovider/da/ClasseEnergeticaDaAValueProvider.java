@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.ClassiEnergeticheDAO;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.widgets.data.ICriteriaOwners;
@@ -16,9 +17,9 @@ public class ClasseEnergeticaDaAValueProvider extends BaseDaValueProvider {
 	
 	public class ClasseEnergeticaDAaValue implements IDaAValueObject{
 		
-		private ClasseEnergeticaVO classeEnergetica = null;
+		private Classienergetiche classeEnergetica = null;
 		
-		public ClasseEnergeticaDAaValue(ClasseEnergeticaVO classeEnergetica){
+		public ClasseEnergeticaDAaValue(Classienergetiche classeEnergetica){
 			this.classeEnergetica = classeEnergetica; 
 		}
 		
@@ -62,11 +63,11 @@ public class ClasseEnergeticaDaAValueProvider extends BaseDaValueProvider {
 			
 			classiEnergetiche = new ArrayList<IDaAValueObject>();
 			ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-			ArrayList al = ceDAO.listClassiEnergetiche(ClasseEnergeticaVO.class.getName());
+			ArrayList<Classienergetiche> al = ceDAO.listClassiEnergetiche();
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				ClasseEnergeticaVO cevo = (ClasseEnergeticaVO) iterator.next();
+				Classienergetiche cevo = (Classienergetiche) iterator.next();
 				classiEnergetiche.add(new ClasseEnergeticaDAaValue(cevo));
 				
 			}

@@ -17,6 +17,7 @@ import winkhouse.dao.ClassiEnergeticheDAO;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.ClasseEnergeticaVO;
 
@@ -28,11 +29,11 @@ public class ClassiEnergeticheHelper {
 
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	ClasseEnergeticaVO classeenergetica = null;
+		private	Classienergetiche classeenergetica = null;
 		private	int classienergetiche = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   ClasseEnergeticaVO classeenergetica,
+										   Classienergetiche classeenergetica,
 										   int classienergetiche){
 			this.classeenergetica = classeenergetica;
 			this.classienergetiche = classienergetiche;
@@ -120,7 +121,7 @@ public class ClassiEnergeticheHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteClasseEnergetica(ClasseEnergeticaVO classeEnergeticaVO){
+	public Boolean deleteClasseEnergetica(Classienergetiche classeEnergeticaVO){
 		Boolean result = true;
 		
 		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
@@ -166,7 +167,7 @@ public class ClassiEnergeticheHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(ClasseEnergeticaVO classe, int immobiliSize){
+	private String buildDeleteMessage(Classienergetiche classe, int immobiliSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione classe energetica : " + classe.getNome();

@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.AnagraficheDAO;
 import winkhouse.dao.ClassiClientiDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Classicliente;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AnagraficheVO;
 import winkhouse.vo.ClassiClientiVO;
@@ -29,11 +30,11 @@ public class ClassiClientiHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	ClassiClientiVO classeCliente = null;
+		private	Classicliente classeCliente = null;
 		private	int anagrafiche = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   ClassiClientiVO classeCliente,
+										   Classicliente classeCliente,
 										   int anagrafiche){
 			this.classeCliente = classeCliente;
 			this.anagrafiche = anagrafiche;
@@ -121,7 +122,7 @@ public class ClassiClientiHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteClasseCliente(ClassiClientiVO classiClientiVO){
+	public Boolean deleteClasseCliente(Classicliente classiClientiVO){
 		Boolean result = true;
 		
 		ClassiClientiDAO ccDAO = new ClassiClientiDAO();
@@ -166,7 +167,7 @@ public class ClassiClientiHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(ClassiClientiVO classe, int anagraficheSize){
+	private String buildDeleteMessage(Classicliente classe, int anagraficheSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione classe cliente : " + classe.getDescrizione();

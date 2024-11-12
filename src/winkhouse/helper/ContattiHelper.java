@@ -13,6 +13,7 @@ import winkhouse.dao.ContattiDAO;
 import winkhouse.model.AgentiModel;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ContattiModel;
+import winkhouse.orm.Agenti;
 import winkhouse.vo.ContattiVO;
 
 
@@ -107,7 +108,7 @@ public class ContattiHelper {
 	
 	
 	
-	public Boolean updateListaContatti(AgentiModel agente,
+	public Boolean updateListaContatti(Agenti agente,
 									   Connection con,
 									   Boolean doCommit){
 		
@@ -119,7 +120,7 @@ public class ContattiHelper {
 															  agente.getCodAgente());
 		
 		Collections.sort(contattiDB,comparer);
-		ArrayList listaContatti = agente.getContatti();
+		ArrayList listaContatti = new ArrayList(agente.getContattis());
 		if (listaContatti != null){
 			
 			ContattiDAO cDAO = new ContattiDAO();	

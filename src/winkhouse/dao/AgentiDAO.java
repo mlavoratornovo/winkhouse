@@ -51,9 +51,8 @@ public class AgentiDAO extends BaseDAO{
 		return super.list(classType, LISTA_AGENTI);
 	}
 	
-	public ArrayList<Agenti> list(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
-		return new ArrayList(ObjectSelect.query(Agenti.class).select(context));
+	public ArrayList<Agenti> list(ObjectContext context){		
+		return new ArrayList<Agenti>(ObjectSelect.query(Agenti.class).select(context));
 	}
 
 	public <T> ArrayList<T> listAgentiColloquiPartecipanti(String classType){

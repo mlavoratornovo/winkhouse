@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.StatoConservativoDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Statoconservativo;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.ImmobiliVO;
 import winkhouse.vo.StatoConservativoVO;
@@ -30,11 +31,11 @@ public class StatoConservativoHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	StatoConservativoVO statoConservativo = null;
+		private	Statoconservativo statoConservativo = null;
 		private	int immobili = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   StatoConservativoVO statoConservativo,
+										   Statoconservativo statoConservativo,
 										   int immobili){
 			this.statoConservativo = statoConservativo;
 			this.immobili = immobili;
@@ -120,7 +121,7 @@ public class StatoConservativoHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteStatoConservativo(StatoConservativoVO statoConservativoVO){
+	public Boolean deleteStatoConservativo(Statoconservativo statoConservativoVO){
 		Boolean result = true;
 		
 		StatoConservativoDAO scDAO = new StatoConservativoDAO();
@@ -164,7 +165,7 @@ public class StatoConservativoHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(StatoConservativoVO statoConservativoVO, int immobiliSize){
+	private String buildDeleteMessage(Statoconservativo statoConservativoVO, int immobiliSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione stato conservativo : " + statoConservativoVO.getDescrizione()+"\n";

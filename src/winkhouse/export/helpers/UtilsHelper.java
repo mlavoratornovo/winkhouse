@@ -424,7 +424,7 @@ public class UtilsHelper {
 		ArrayList<Classienergetiche> returnValue = new ArrayList<Classienergetiche>();
 		
 		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-		returnValue = ceDAO.listClassiEnergetiche(null);
+		returnValue = ceDAO.listClassiEnergetiche();
 		
 		return returnValue;
 	}	
@@ -434,7 +434,7 @@ public class UtilsHelper {
 	}
 
 	/**
-	 * Ritorna una lista di oggetti RiscaldamentiVO, con propriet� descrizione uguale a quella  
+	 * Ritorna una lista di oggetti RiscaldamentiVO, con proprietà descrizione uguale a quella  
 	 * dell'oggetto passato in input.
 	 * 
 	 * @param classeCliente

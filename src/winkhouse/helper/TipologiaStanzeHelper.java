@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.StanzeDAO;
 import winkhouse.dao.TipologiaStanzeDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.StanzeImmobiliVO;
 import winkhouse.vo.TipologiaStanzeVO;
@@ -31,11 +32,11 @@ public class TipologiaStanzeHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	TipologiaStanzeVO tipologiaStanze = null;
+		private	Tipologiastanze tipologiaStanze = null;
 		private	int stanze = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   TipologiaStanzeVO tipologiaStanze,
+										   Tipologiastanze tipologiaStanze,
 										   int stanze){
 			this.tipologiaStanze = tipologiaStanze;
 			this.stanze = stanze;
@@ -121,7 +122,7 @@ public class TipologiaStanzeHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteTipologiaStanze(TipologiaStanzeVO tipologiaStanzeVO){
+	public Boolean deleteTipologiaStanze(Tipologiastanze tipologiaStanzeVO){
 		Boolean result = true;
 		
 		TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
@@ -167,7 +168,7 @@ public class TipologiaStanzeHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(TipologiaStanzeVO tipologiaStanzeVO, int stanzeSize){
+	private String buildDeleteMessage(Tipologiastanze tipologiaStanzeVO, int stanzeSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione stato tipologia stanze : " + tipologiaStanzeVO.getDescrizione() + "\n";

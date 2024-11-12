@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.ImmobiliVO;
 import winkhouse.vo.TipologieImmobiliVO;
@@ -31,11 +32,11 @@ public class TipologieImmobiliHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	TipologieImmobiliVO tipologiaImmobili = null;
+		private	Tipologieimmobili tipologiaImmobili = null;
 		private	int immobili = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   TipologieImmobiliVO tipologiaImmobili,
+										   Tipologieimmobili tipologiaImmobili,
 										   int immobili){
 			this.tipologiaImmobili = tipologiaImmobili;
 			this.immobili = immobili;
@@ -121,7 +122,7 @@ public class TipologieImmobiliHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteTipologiaImmobili(TipologieImmobiliVO tipologieImmobiliVO){
+	public Boolean deleteTipologiaImmobili(Tipologieimmobili tipologieImmobiliVO){
 		Boolean result = true;
 		
 		TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
@@ -167,7 +168,7 @@ public class TipologieImmobiliHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(TipologieImmobiliVO tipologieImmobiliVO, int immobiliSize){
+	private String buildDeleteMessage(Tipologieimmobili tipologieImmobiliVO, int immobiliSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione stato tipologia immobili : " + tipologieImmobiliVO.getDescrizione()  + "\n";

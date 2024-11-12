@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.RiscaldamentiDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.ImmobiliVO;
 import winkhouse.vo.RiscaldamentiVO;
@@ -30,11 +31,11 @@ public class RiscaldamentiHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	RiscaldamentiVO riscaldamento = null;
+		private	Riscaldamenti riscaldamento = null;
 		private	int immobili = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   RiscaldamentiVO riscaldamento,
+										   Riscaldamenti riscaldamento,
 										   int immobili){
 			this.riscaldamento = riscaldamento;
 			this.immobili = immobili;
@@ -122,7 +123,7 @@ public class RiscaldamentiHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteRiscaldamento(RiscaldamentiVO riscaldamentiVO){
+	public Boolean deleteRiscaldamento(Riscaldamenti riscaldamentiVO){
 		Boolean result = true;
 		
 		RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
@@ -168,7 +169,7 @@ public class RiscaldamentiHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(RiscaldamentiVO riscaldamento, int immobiliSize){
+	private String buildDeleteMessage(Riscaldamenti riscaldamento, int immobiliSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione riscaldamento : " + riscaldamento.getDescrizione() + "\n";

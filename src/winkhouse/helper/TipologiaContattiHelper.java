@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.ContattiDAO;
 import winkhouse.dao.TipologiaContattiDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.ContattiVO;
 import winkhouse.vo.TipologiaContattiVO;
@@ -31,11 +32,11 @@ public class TipologiaContattiHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	TipologiaContattiVO tipologiaContatti = null;
+		private	Tipologiecontatti tipologiaContatti = null;
 		private	int contatti = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   TipologiaContattiVO tipologiaContatti,
+										   Tipologiecontatti tipologiaContatti,
 										   int contatti){
 			this.tipologiaContatti = tipologiaContatti;
 			this.contatti = contatti;
@@ -120,7 +121,7 @@ public class TipologiaContattiHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteTipologiaContatti(TipologiaContattiVO tipologiaContattiVO){
+	public Boolean deleteTipologiaContatti(Tipologiecontatti tipologiaContattiVO){
 		Boolean result = true;
 		
 		TipologiaContattiDAO tcDAO = new TipologiaContattiDAO();
@@ -169,7 +170,7 @@ public class TipologiaContattiHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(TipologiaContattiVO tipologiaContattiVO, int contattiSize){
+	private String buildDeleteMessage(Tipologiecontatti tipologiaContattiVO, int contattiSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione stato tipologia contatto : " + tipologiaContattiVO.getDescrizione();

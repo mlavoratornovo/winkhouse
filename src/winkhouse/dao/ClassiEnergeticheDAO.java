@@ -38,7 +38,7 @@ public class ClassiEnergeticheDAO extends BaseDAO {
 		return super.list(classType, GET_CLASSI_ENERGETICHE_AFFITTI);
 	}	
 	
-	public <T> ArrayList<Classienergetiche> listClassiEnergetiche(String className){
+	public ArrayList<Classienergetiche> listClassiEnergetiche(){
 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return new ArrayList<Classienergetiche>(ObjectSelect.query(Classienergetiche.class).select(context));
 	};

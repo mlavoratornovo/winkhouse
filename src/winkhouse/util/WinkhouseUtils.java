@@ -316,8 +316,8 @@ public class WinkhouseUtils {
 	}
 
 	public ObjectContext getNewCayenneObjectContext() {
-		
-		return CayenneContextManager.getInstance().getContext();
+		ObjectContext context = CayenneContextManager.getInstance().getContext(); 
+		return context;
 				
 	}
 

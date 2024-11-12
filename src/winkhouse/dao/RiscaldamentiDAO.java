@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.RiscaldamentiModel;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.RiscaldamentiVO;
@@ -37,6 +39,11 @@ public class RiscaldamentiDAO extends BaseDAO{
 	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_RISCALDAMENTI);
 	}
+
+	public ArrayList<Riscaldamenti> list(){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Riscaldamenti>(ObjectSelect.query(Riscaldamenti.class).select(context));
+	};
 
 	public ArrayList<RiscaldamentiModel> listByComune(String comune){
 		

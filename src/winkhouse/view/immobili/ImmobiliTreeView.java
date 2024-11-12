@@ -398,7 +398,7 @@ public class ImmobiliTreeView extends ViewPart {
 							gruppo_list = (ArrayList)ceDAO.listByAffitti(ClasseEnergeticaVO.class.getName());
 							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaIsAffitti(ImmobiliModel.class.getName(), null));
 						}else{
-							gruppo_list = (ArrayList)ceDAO.listClassiEnergetiche(ClasseEnergeticaVO.class.getName());
+							gruppo_list = (ArrayList)ceDAO.listClassiEnergetiche();
 							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergetica(ImmobiliModel.class.getName(), null));					
 						}
 					}

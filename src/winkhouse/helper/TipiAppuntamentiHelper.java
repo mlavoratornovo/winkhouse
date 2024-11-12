@@ -16,6 +16,7 @@ import winkhouse.Activator;
 import winkhouse.dao.AppuntamentiDAO;
 import winkhouse.dao.TipiAppuntamentiDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Tipiappuntamenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AppuntamentiVO;
 import winkhouse.vo.TipiAppuntamentiVO;
@@ -29,11 +30,11 @@ public class TipiAppuntamentiHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	TipiAppuntamentiVO tipoAppuntamento = null;
+		private	Tipiappuntamenti tipoAppuntamento = null;
 		private	int appuntamenti = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   TipiAppuntamentiVO tipoAppuntamento,
+										   Tipiappuntamenti tipoAppuntamento,
 										   int appuntamenti){
 			this.tipoAppuntamento = tipoAppuntamento;
 			this.appuntamenti = appuntamenti;
@@ -121,7 +122,7 @@ public class TipiAppuntamentiHelper {
 		return returnValue;
 	}
 	
-	public Boolean deleteTipiAppuntamenti(TipiAppuntamentiVO tipiAppuntamentiVO){
+	public Boolean deleteTipiAppuntamenti(Tipiappuntamenti tipiAppuntamentiVO){
 		Boolean result = true;
 		
 		TipiAppuntamentiDAO taDAO = new TipiAppuntamentiDAO();
@@ -168,7 +169,7 @@ public class TipiAppuntamentiHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(TipiAppuntamentiVO tipo, int appuntamentiSize){
+	private String buildDeleteMessage(Tipiappuntamenti tipo, int appuntamentiSize){
 		String returnValue = "";
 		
 		returnValue += "Cancellazione tipo appuntametno : " + tipo.getDescrizione();

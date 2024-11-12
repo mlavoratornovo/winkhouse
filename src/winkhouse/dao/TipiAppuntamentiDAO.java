@@ -7,7 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Tipiappuntamenti;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipiAppuntamentiVO;
 
 public class TipiAppuntamentiDAO extends BaseDAO {
@@ -26,6 +31,11 @@ public class TipiAppuntamentiDAO extends BaseDAO {
 	
 	public <T> ArrayList<T> listTipiAppuntamenti(String className){
 		return super.list(className, LISTA_TIPI_APPUNTAMENTI);
+	};
+
+	public ArrayList<Tipiappuntamenti> listTipiAppuntamenti(){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Tipiappuntamenti>(ObjectSelect.query(Tipiappuntamenti.class).select(context));
 	};
 	
 	public Object getTipiAppuntamentiByID(String className,Integer codTipiAppuntamenti){

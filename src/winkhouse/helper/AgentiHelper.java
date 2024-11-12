@@ -56,6 +56,7 @@ import winkhouse.dao.TipologiaContattiDAO;
 import winkhouse.dao.TipologiaStanzeDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Agenti;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AffittiVO;
 import winkhouse.vo.AgentiAppuntamentiVO;
@@ -75,7 +76,7 @@ public class AgentiHelper {
 	
 	private class DeleteUpdaterProgressDialog implements IRunnableWithProgress{
 		
-		private	AgentiVO agente = null;
+		private	Agenti agente = null;
 		private	int anagrafiche = 0;
 		private	int colloqui = 0;
 		private	int commentiColloqui = 0;
@@ -84,7 +85,7 @@ public class AgentiHelper {
 		private	int agentiappuntamenti = 0;
 		
 		public DeleteUpdaterProgressDialog(Shell parent,
-										   AgentiVO agente,
+										   Agenti agente,
 										   int anagrafiche,
 										   int colloqui,
 										   int commentiColloqui,
@@ -367,7 +368,7 @@ public class AgentiHelper {
 		
 	}
 	
-	public Boolean deleteAgente(AgentiVO agentiVO){
+	public Boolean deleteAgente(Agenti agentiVO){
 		Boolean result = true;
 		
 		AgentiDAO aDAO = new AgentiDAO();
@@ -441,7 +442,7 @@ public class AgentiHelper {
 		return result;
 	}
 	
-	private String buildDeleteMessage(AgentiVO agente, int anagraficheSize,int collquiSize, 
+	private String buildDeleteMessage(Agenti agente, int anagraficheSize,int collquiSize, 
 									  int commentiColloquiSize, int immobiliSize, int affittiSize,
 									  int agentiappuntamentiSize){
 		String returnValue = "";
@@ -471,7 +472,7 @@ public class AgentiHelper {
 		return returnValue;
 	}
 	
-	public boolean updateDatiBase(ArrayList agenti){
+	public boolean updateDatiBase(ArrayList<Agenti> agenti){
 		
 		boolean returnValue = true;
 			

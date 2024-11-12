@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.StatoConservativoModel;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.WinkhouseUtils;
@@ -38,6 +40,11 @@ public class StatoConservativoDAO extends BaseDAO{
 	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_STATOCONSERVATIVO);
 	}	
+	
+	public ArrayList<Statoconservativo> list(){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Statoconservativo>(ObjectSelect.query(Statoconservativo.class).select(context));
+	};
 
 	public ArrayList<StatoConservativoModel> listByComune(String comune){
 		

@@ -122,7 +122,7 @@ public class WinkCloudHelper {
 
 		classiEnergetiche.clear();
 		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-		ArrayList<Classienergetiche> al_ce = ceDAO.listClassiEnergetiche(ClasseEnergeticaXMLModel.class.getName());
+		ArrayList<Classienergetiche> al_ce = ceDAO.listClassiEnergetiche();
 		for (Classienergetiche classeEnergeticaXMLModel : al_ce) {
 			classiEnergetiche.put(classeEnergeticaXMLModel.getCodClasseEnergetica(), classeEnergeticaXMLModel);
 		}

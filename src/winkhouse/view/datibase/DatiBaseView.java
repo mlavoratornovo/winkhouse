@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import org.apache.cayenne.ObjectContext;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -57,7 +58,6 @@ import winkhouse.dao.TipiAppuntamentiDAO;
 import winkhouse.dao.TipologiaContattiDAO;
 import winkhouse.dao.TipologiaStanzeDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
-import winkhouse.dialogs.custom.GoogleConfDialog;
 import winkhouse.helper.AgentiHelper;
 import winkhouse.helper.ClassiClientiHelper;
 import winkhouse.helper.ClassiEnergeticheHelper;
@@ -68,25 +68,18 @@ import winkhouse.helper.TipiAppuntamentiHelper;
 import winkhouse.helper.TipologiaContattiHelper;
 import winkhouse.helper.TipologiaStanzeHelper;
 import winkhouse.helper.TipologieImmobiliHelper;
-import winkhouse.model.AgentiModel;
-import winkhouse.model.ContattiModel;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Classicliente;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Contatti;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipiappuntamenti;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.orm.Tipologiecontatti;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
-import winkhouse.vo.AgentiVO;
-import winkhouse.vo.ClasseEnergeticaVO;
-import winkhouse.vo.ClassiClientiVO;
-import winkhouse.vo.ContattiVO;
-import winkhouse.vo.RiscaldamentiVO;
-import winkhouse.vo.StatoConservativoVO;
-import winkhouse.vo.TipiAppuntamentiVO;
-import winkhouse.vo.TipologiaContattiVO;
-import winkhouse.vo.TipologiaStanzeVO;
-import winkhouse.vo.TipologieImmobiliVO;
-
 
 
 public class DatiBaseView extends ViewPart {
@@ -97,7 +90,7 @@ public class DatiBaseView extends ViewPart {
 	private FormToolkit tool = null;
 	//--- riscaldamenti
 	private TableViewer tvRiscaldamenti = null;
-	private ArrayList<RiscaldamentiVO> riscaldamenti = null;
+	private ArrayList<Riscaldamenti> riscaldamenti = null;
 	//--- causecolloqui
 //	private TableViewer tvCausaliColloqui = null;
 //	private ArrayList<CauseColloquiVO> causecolloqui = null;
@@ -106,27 +99,27 @@ public class DatiBaseView extends ViewPart {
 	private ArrayList<Classicliente> classiclienti = null;
 	//--- statoconservativo
 	private TableViewer tvStatoConservativo = null;
-	private ArrayList<StatoConservativoVO> statoconservativo = null;
+	private ArrayList<Statoconservativo> statoconservativo = null;
 	//--- tipologiastanze
 	private TableViewer tvTipologiaStanze = null;
-	private ArrayList<TipologiaStanzeVO> tipologiastanze = null;
+	private ArrayList<Tipologiastanze> tipologiastanze = null;
 	//--- tipologiecolloqui
 //	private TableViewer tvTipologieColloqui = null;
 //	private ArrayList<TipologieColloquiVO> tipologiecolloqui = null;
 	//--- tipologieimmobili
 	private TableViewer tvTipologieImmobili = null;
-	private ArrayList<TipologieImmobiliVO> tipologieimmobili = null;
+	private ArrayList<Tipologieimmobili> tipologieimmobili = null;
 	//--- tipologiecontatti
 	private TableViewer tvTipologieContatti = null;
-	private ArrayList<TipologiaContattiVO> tipologiecontatti = null;
+	private ArrayList<Tipologiecontatti> tipologiecontatti = null;
 	//--- agenti
 	private TableViewer tvAgenti = null;
-	private ArrayList<AgentiModel> agenti = null;
+	private ArrayList<Agenti> agenti = null;
 	//-- recapiti
 	private TableViewer tvRecapiti = null;
 	
 	private TableViewer tvTipiAppuntamenti = null;
-	private ArrayList<TipiAppuntamentiVO> tipiappuntamenti = null;
+	private ArrayList<Tipiappuntamenti> tipiappuntamenti = null;
 
 	private TableViewer tvClassiEnergetiche = null;
 	private ArrayList<Classienergetiche> classienergetiche = null;
@@ -152,18 +145,21 @@ public class DatiBaseView extends ViewPart {
 	private String[] descTableArray = {"Descrizione"};
 	private GridData tabella = null;
 	
+	private ObjectContext oc = null;
+	
 	public DatiBaseView() {
 		
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
+		oc = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		tabella = new GridData();
 		tabella.grabExcessHorizontalSpace = true;
 		tabella.horizontalAlignment = SWT.FILL;
 		tabella.heightHint = 200;
 
-		tool = new FormToolkit(Activator.getDefault().getWorkbench().getDisplay());
+		tool = new FormToolkit(PlatformUI.getWorkbench().getDisplay());
 		form = tool.createScrolledForm(parent);
 		form.setText("Dati di base");
 		form.getBody().setLayout(new GridLayout());
@@ -235,7 +231,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				AgentiModel aModel = new AgentiModel();				
+				Agenti aModel = oc.newObject(Agenti.class);				
 				agenti.add(aModel);
 				tvAgenti.setInput(agenti);
 				tvAgenti.refresh();
@@ -336,7 +332,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvAgenti.getSelection()).iterator();
 					AgentiHelper ah = new AgentiHelper();					
 					while (it.hasNext()) {
-						AgentiVO aVO = (AgentiVO)it.next();
+						Agenti aVO = (Agenti)it.next();
 						if (ah.deleteAgente(aVO)){
 							agenti.remove(aVO);							
 						}						
@@ -384,7 +380,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getNome());
+				cell.setText(((Agenti)cell.getElement()).getNome());
 			}
 		}
 		);
@@ -404,13 +400,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((AgentiVO)element).getNome();
+				return ((Agenti)element).getNome();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof AgentiVO){
-					((AgentiVO)(element)).setNome((String)value);
+				if (element instanceof Agenti){
+					((Agenti)(element)).setNome((String)value);
 					tvAgenti.refresh();
 				}
 			}
@@ -426,7 +422,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getCognome());
+				cell.setText(((Agenti)cell.getElement()).getCognome());
 			}
 		}
 		);
@@ -445,13 +441,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((AgentiVO)element).getCognome();
+				return ((Agenti)element).getCognome();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof AgentiVO){
-					((AgentiVO)(element)).setCognome((String)value);
+				if (element instanceof Agenti){
+					((Agenti)(element)).setCognome((String)value);
 					tvAgenti.refresh();
 				}
 			}
@@ -467,7 +463,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getCap());
+				cell.setText(((Agenti)cell.getElement()).getCap());
 			}
 		}
 		);
@@ -487,13 +483,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((AgentiVO)element).getCap();
+				return ((Agenti)element).getCap();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof AgentiVO){
-					((AgentiVO)(element)).setCap((String)value);
+				if (element instanceof Agenti){
+					((Agenti)(element)).setCap((String)value);
 					tvAgenti.refresh();
 				}
 			}
@@ -509,7 +505,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getProvincia());
+				cell.setText(((Agenti)cell.getElement()).getProvincia());
 			}
 		}
 		);
@@ -529,13 +525,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((AgentiVO)element).getProvincia();
+				return ((Agenti)element).getProvincia();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof AgentiVO){
-					((AgentiVO)(element)).setProvincia((String)value);
+				if (element instanceof Agenti){
+					((Agenti)(element)).setProvincia((String)value);
 					tvAgenti.refresh();
 				}
 			}
@@ -551,7 +547,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getCitta());
+				cell.setText(((Agenti)cell.getElement()).getCitta());
 			}
 		}
 		);
@@ -571,13 +567,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((AgentiVO)element).getCitta();
+				return ((Agenti)element).getCitta();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof AgentiVO){
-					((AgentiVO)(element)).setCitta((String)value);
+				if (element instanceof Agenti){
+					((Agenti)(element)).setCitta((String)value);
 					tvAgenti.refresh();
 				}
 			}
@@ -593,7 +589,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getIndirizzo());
+				cell.setText(((Agenti)cell.getElement()).getIndirizzo());
 			}
 		}
 		);
@@ -613,13 +609,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((AgentiVO)element).getIndirizzo();
+				return ((Agenti)element).getIndirizzo();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof AgentiVO){
-					((AgentiVO)(element)).setIndirizzo((String)value);
+				if (element instanceof Agenti){
+					((Agenti)(element)).setIndirizzo((String)value);
 					tvAgenti.refresh();
 				}
 			}
@@ -635,7 +631,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				cell.setText(((AgentiVO)cell.getElement()).getUsername());
+				cell.setText(((Agenti)cell.getElement()).getUsername());
 			}
 		}
 		);
@@ -655,8 +651,8 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {		
-				if (element != null && ((AgentiVO)element).getUsername() != null){
-					return ((AgentiVO)element).getUsername();
+				if (element != null && ((Agenti)element).getUsername() != null){
+					return ((Agenti)element).getUsername();
 				}else{
 					return "";
 				}
@@ -666,9 +662,9 @@ public class DatiBaseView extends ViewPart {
 			protected void setValue(Object element, Object value) {
 				
 				
-				if (element instanceof AgentiVO){
+				if (element instanceof Agenti){
 					if (element != null){
-						((AgentiVO)(element)).setUsername((String)value);
+						((Agenti)(element)).setUsername((String)value);
 						tvAgenti.refresh();
 					}
 				}
@@ -686,8 +682,8 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				if (cell.getElement() != null && ((AgentiVO)cell.getElement()).getPassword() != null){
-					int len = ((AgentiVO)cell.getElement()).getPassword().length();
+				if (cell.getElement() != null && ((Agenti)cell.getElement()).getPassword() != null){
+					int len = ((Agenti)cell.getElement()).getPassword().length();
 					String hiddenpws = "";
 					for (int i = 0; i < len; i++) {
 						hiddenpws += "*";
@@ -713,8 +709,8 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {	
-				if (element != null && ((AgentiVO)element).getPassword() != null){
-					return ((AgentiVO)element).getPassword();
+				if (element != null && ((Agenti)element).getPassword() != null){
+					return ((Agenti)element).getPassword();
 				}else{
 					return "";
 				}
@@ -723,8 +719,8 @@ public class DatiBaseView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				if (element != null){
-					if (element instanceof AgentiVO){
- 					    ((AgentiVO)(element)).setPassword((String)value);
+					if (element instanceof Agenti){
+ 					    ((Agenti)(element)).setPassword((String)value);
 						tvAgenti.refresh();
 					}
 				}
@@ -755,12 +751,12 @@ public class DatiBaseView extends ViewPart {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null){
-					AgentiModel agenteModel = (AgentiModel)((StructuredSelection)tvAgenti.getSelection()).getFirstElement();
+					Agenti agenteModel = (Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement();
 					if (agenteModel.getCodAgente() != 0){
-						ContattiModel cModel = new ContattiModel();
-						cModel.setCodAgente(agenteModel.getCodAgente());
-						agenteModel.getContatti().add(cModel);
-						tvRecapiti.setInput(agenteModel.getContatti());
+						Contatti cModel = oc.newObject(Contatti.class);
+						//cModel.set(agenteModel.getCodAgente());
+						agenteModel.getContattis().add(cModel);
+						tvRecapiti.setInput(agenteModel.getContattis());
 						tvRecapiti.refresh();
 						TableItem ti = tvRecapiti.getTable().getItem(tvRecapiti.getTable().getItemCount()-1);
 						Object[] sel = new Object[1];
@@ -777,12 +773,12 @@ public class DatiBaseView extends ViewPart {
 						tvRecapiti.getTable().notifyListeners(SWT.Selection, ev);
 						
 					}else{
-						MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+						MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 												  "Attenzione", 
-								"L'agente selezionato non � stato ancora salvato nel database \n eseguirne il salvataggio prima di aggiungere i recapiti");						
+								"L'agente selezionato non è stato ancora salvato nel database \n eseguirne il salvataggio prima di aggiungere i recapiti");						
 					}
 				}else{
-					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+					MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 							"Errore creazione contatto", 
 							"Creare una nuovo agente o visionare il dettaglio di una esistente");
 				}
@@ -808,10 +804,10 @@ public class DatiBaseView extends ViewPart {
 			public void mouseUp(MouseEvent e) {
 				if (
 					(((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null) &&
-					((AgentiModel)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getCodAgente() != 0)
+					((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getCodAgente() != 0)
 				{
 					ContattiHelper ch = new ContattiHelper();
-					ch.updateListaContatti((AgentiModel)((StructuredSelection)tvAgenti.getSelection()).getFirstElement(),
+					ch.updateListaContatti((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement(),
 										   null,
 										   true);					
 				}else{
@@ -848,8 +844,8 @@ public class DatiBaseView extends ViewPart {
 				if (tvRecapiti.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvRecapiti.getSelection()).iterator();
 					while (it.hasNext()) {
-						ContattiModel cModel = (ContattiModel)it.next();
-						((AgentiModel)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContatti()
+						Contatti cModel = (Contatti)it.next();
+						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis()
 																									   .remove(cModel);
 					}
 					tvRecapiti.refresh();
@@ -913,8 +909,8 @@ public class DatiBaseView extends ViewPart {
 			public Object[] getElements(Object inputElement) {
 				return (((StructuredSelection)tvAgenti.getSelection()).getFirstElement() == null)
 						? new ArrayList().toArray()
-						: (((AgentiModel)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContatti() != null)
-						   ? ((AgentiModel)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContatti().toArray()
+						: (((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis() != null)
+						   ? ((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis().toArray()
 						   : new ArrayList().toArray();
 			}
 
@@ -936,13 +932,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				ContattiModel cModel = ((ContattiModel)element);
+				Contatti cModel = ((Contatti)element);
 				switch (columnIndex){
-				case 0: return ((cModel.getTipologia() == null)
+				case 0: return ((cModel.getTipologiecontatti() == null)
 							   ? ""
-							   : (cModel.getTipologia().getDescrizione() == null)
+							   : (cModel.getTipologiecontatti().getDescrizione() == null)
 							     ? ""
-							     : cModel.getTipologia().getDescrizione());					        
+							     : cModel.getTipologiecontatti().getDescrizione());					        
 				
 				case 1: return ((cModel.getContatto() == null) || 
 								(cModel.getContatto().equalsIgnoreCase(""))
@@ -982,12 +978,12 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void update(ViewerCell cell) {
-				ContattiModel cModel = ((ContattiModel)cell.getElement());
-				cell.setText((cModel.getTipologia() == null)
+				Contatti cModel = ((Contatti)cell.getElement());
+				cell.setText((cModel.getTipologiecontatti() == null)
 							 ? ""
-							 : (cModel.getTipologia().getDescrizione() == null)
+							 : (cModel.getTipologiecontatti().getDescrizione() == null)
 							 	? ""
-							 	: cModel.getTipologia().getDescrizione());
+							 	: cModel.getTipologiecontatti().getDescrizione());
 				
 			}
 			
@@ -1045,9 +1041,9 @@ public class DatiBaseView extends ViewPart {
 			public void update(ViewerCell cell) {
 				
 				cell.setText(
-						(((ContattiModel)cell.getElement()).getContatto()==null)
+						(((Contatti)cell.getElement()).getContatto()==null)
 						? "nuovo recapito"
-						: String.valueOf(((ContattiVO)cell.getElement()).getContatto())
+						: String.valueOf(((Contatti)cell.getElement()).getContatto())
 							);
 				
 			}
@@ -1068,14 +1064,14 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((ContattiModel)element).getContatto() == null)
+				return (((Contatti)element).getContatto() == null)
 	   			   	   ? "nuovo recapito"
-			   		   : String.valueOf(((ContattiVO)element).getContatto());
+			   		   : String.valueOf(((Contatti)element).getContatto());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((ContattiModel)element).setContatto(String.valueOf(value));
+				((Contatti)element).setContatto(String.valueOf(value));
 				tvRecapiti.refresh();
 			}
 			
@@ -1095,9 +1091,9 @@ public class DatiBaseView extends ViewPart {
 			public void update(ViewerCell cell) {
 				
 				cell.setText(
-						(((ContattiModel)cell.getElement()).getDescrizione()==null)
+						(((Contatti)cell.getElement()).getDescrizione()==null)
 						? ""
-						: String.valueOf(((ContattiVO)cell.getElement()).getDescrizione())
+						: String.valueOf(((Contatti)cell.getElement()).getDescrizione())
 							);
 				
 			}
@@ -1118,14 +1114,14 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {
-				return (((ContattiModel)element).getDescrizione() == null)
+				return (((Contatti)element).getDescrizione() == null)
 	   			   	   ? ""
-			   		   : String.valueOf(((ContattiVO)element).getDescrizione());
+			   		   : String.valueOf(((Contatti)element).getDescrizione());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((ContattiModel)element).setContatto(String.valueOf(value));
+				((Contatti)element).setContatto(String.valueOf(value));
 				tvRecapiti.refresh();
 			}
 			
@@ -1143,8 +1139,8 @@ public class DatiBaseView extends ViewPart {
 		@Override
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
-			if (agenti == null){
-				agenti = new ArrayList<AgentiModel>(new AgentiDAO().list(AgentiModel.class.getName()));				
+			if (agenti == null){				
+				agenti = new AgentiDAO().list(oc);				
 			}
 			returnValue = agenti.toArray();
 			return returnValue;
@@ -1175,21 +1171,21 @@ public class DatiBaseView extends ViewPart {
 		public String getColumnText(Object element, int columnIndex) {
 			String label = "";
 			switch(columnIndex){
-				case 0 : label= ((AgentiVO)element).getNome();
+				case 0 : label= ((Agenti)element).getNome();
 						 break;
-				case 1 : label= ((AgentiVO)element).getCognome();
+				case 1 : label= ((Agenti)element).getCognome();
 						 break;
-				case 2 : label= ((AgentiVO)element).getCap();
+				case 2 : label= ((Agenti)element).getCap();
 				 		 break;
-				case 3 : label= ((AgentiVO)element).getProvincia();
+				case 3 : label= ((Agenti)element).getProvincia();
 						 break;
-				case 4 : label= ((AgentiVO)element).getCitta();
+				case 4 : label= ((Agenti)element).getCitta();
 		 		 		 break;
-				case 5 : label= ((AgentiVO)element).getIndirizzo();
+				case 5 : label= ((Agenti)element).getIndirizzo();
 		 		 		 break;
-				case 6 : label= ((AgentiVO)element).getUsername();
+				case 6 : label= ((Agenti)element).getUsername();
 		 		 		 break;		 		 		 
-				case 7 : int len = (((AgentiVO)element).getPassword() != null)?((AgentiVO)element).getPassword().length():0;
+				case 7 : int len = (((Agenti)element).getPassword() != null)?((Agenti)element).getPassword().length():0;
 						 String hiddenpws = "";
 						 for (int i = 0; i < len; i++) {
 							 hiddenpws += "*";
@@ -1611,7 +1607,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvClassiClienti.getSelection()).iterator();
 					ClassiClientiHelper cch = new ClassiClientiHelper();					
 					while (it.hasNext()) {
-						ClassiClientiVO ccVO = (ClassiClientiVO)it.next();
+						Classicliente ccVO = (Classicliente)it.next();
 						if (cch.deleteClasseCliente(ccVO)){
 							classiclienti.remove(ccVO);							
 						}						
@@ -1659,13 +1655,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((ClassiClientiVO)element).getDescrizione();
+				return ((Classicliente)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof ClassiClientiVO){
-					((ClassiClientiVO)(element)).setDescrizione((String)value);
+				if (element instanceof Classicliente){
+					((Classicliente)(element)).setDescrizione((String)value);
 					tvClassiClienti.refresh();
 				}
 			}
@@ -1676,7 +1672,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((ClassiClientiVO)element).getDescrizione();
+				return ((Classicliente)element).getDescrizione();
 			}
 			
 		});
@@ -1701,17 +1697,17 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return String.valueOf(((ClassiClientiVO)element).getOrdine());
+				return String.valueOf(((Classicliente)element).getOrdine());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof ClassiClientiVO){
+				if (element instanceof Classicliente){
 					try{
-						((ClassiClientiVO)(element)).setOrdine(Integer.valueOf((String)value));
+						((Classicliente)(element)).setOrdine(Integer.valueOf((String)value));
 						tvClassiClienti.refresh();						
 					}catch(Exception cce){
-						((ClassiClientiVO)(element)).setOrdine(1);
+						((Classicliente)(element)).setOrdine(1);
 						cce.printStackTrace();
 					}
 				}
@@ -1724,9 +1720,9 @@ public class DatiBaseView extends ViewPart {
 			@Override
 			public String getText(Object element) {				
 				return String.valueOf(
-										(((ClassiClientiVO)element).getOrdine() == null)
-										? 0
-										: ((ClassiClientiVO)element).getOrdine()
+										(((Classicliente)element).getOrdine() == 0)
+										? 1
+										: ((Classicliente)element).getOrdine()
 									 );
 			}
 			
@@ -1779,8 +1775,8 @@ public class DatiBaseView extends ViewPart {
 		@Override
 		public String getColumnText(Object element, int columnIndex) {
 			switch(columnIndex){
-				case 0: return ((ClassiClientiVO)element).getDescrizione();		
-				case 1: return String.valueOf(((ClassiClientiVO)element).getOrdine());
+				case 0: return ((Classicliente)element).getDescrizione();		
+				case 1: return String.valueOf(((Classicliente)element).getOrdine());
 				default : return "";
 			}
 		}
@@ -1821,7 +1817,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipiappuntamenti == null){
-				tipiappuntamenti = new ArrayList<TipiAppuntamentiVO>(new TipiAppuntamentiDAO().listTipiAppuntamenti(TipiAppuntamentiVO.class.getName()));				
+				tipiappuntamenti = new ArrayList<Tipiappuntamenti>(new TipiAppuntamentiDAO().listTipiAppuntamenti());				
 			}
 			returnValue = tipiappuntamenti.toArray();
 			return returnValue;
@@ -1850,8 +1846,8 @@ public class DatiBaseView extends ViewPart {
 		@Override
 		public String getColumnText(Object element, int columnIndex) {
 			switch(columnIndex){
-				case 0: return ((TipiAppuntamentiVO)element).getDescrizione();
-				case 1: return String.valueOf(((TipiAppuntamentiVO)element).getOrdine());
+				case 0: return ((Tipiappuntamenti)element).getDescrizione();
+				case 1: return String.valueOf(((Tipiappuntamenti)element).getOrdine());
 				default : return "";
 			}
 		}
@@ -1892,7 +1888,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (classienergetiche == null){
-				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche(ClasseEnergeticaVO.class.getName()));				
+				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche());				
 			}
 			returnValue = classienergetiche.toArray();
 			return returnValue;
@@ -1921,9 +1917,9 @@ public class DatiBaseView extends ViewPart {
 		@Override
 		public String getColumnText(Object element, int columnIndex) {
 			switch(columnIndex){
-				case 0: return ((ClasseEnergeticaVO)element).getNome();
-				case 1: return ((ClasseEnergeticaVO)element).getDescrizione();
-				case 2: return String.valueOf(((ClasseEnergeticaVO)element).getOrdine());
+				case 0: return ((Classienergetiche)element).getNome();
+				case 1: return ((Classienergetiche)element).getDescrizione();
+				case 2: return String.valueOf(((Classienergetiche)element).getOrdine());
 				default : return "";
 			}
 		}
@@ -1996,7 +1992,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				RiscaldamentiVO rVO = new RiscaldamentiVO();
+				Riscaldamenti rVO = oc.newObject(Riscaldamenti.class);
 				rVO.setDescrizione("Nuovo Riscaldamento");
 				riscaldamenti.add(rVO);
 				tvRiscaldamenti.setInput(riscaldamenti);
@@ -2061,7 +2057,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				riscaldamenti = new ArrayList<RiscaldamentiVO>(new RiscaldamentiDAO().list(RiscaldamentiVO.class.getName()));
+				riscaldamenti = new ArrayList<Riscaldamenti>(new RiscaldamentiDAO().list());
 				tvRiscaldamenti.refresh();
 			}
 
@@ -2090,7 +2086,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvRiscaldamenti.getSelection()).iterator();
 					RiscaldamentiHelper rh = new RiscaldamentiHelper();					
 					while (it.hasNext()) {
-						RiscaldamentiVO rVO = (RiscaldamentiVO)it.next();
+						Riscaldamenti rVO = (Riscaldamenti)it.next();
 						if (rh.deleteRiscaldamento(rVO)){
 							riscaldamenti.remove(rVO);							
 						}						
@@ -2137,13 +2133,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((RiscaldamentiVO)element).getDescrizione();
+				return ((Riscaldamenti)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof RiscaldamentiVO){
-					((RiscaldamentiVO)(element)).setDescrizione((String)value);
+				if (element instanceof Riscaldamenti){
+					((Riscaldamenti)(element)).setDescrizione((String)value);
 					tvRiscaldamenti.refresh();
 				}
 			}
@@ -2154,7 +2150,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((RiscaldamentiVO)element).getDescrizione();
+				return ((Riscaldamenti)element).getDescrizione();
 			}
 			
 		});
@@ -2178,7 +2174,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (riscaldamenti == null){
-				riscaldamenti = new ArrayList<RiscaldamentiVO>(new RiscaldamentiDAO().list(RiscaldamentiVO.class.getName()));				
+				riscaldamenti = new ArrayList<Riscaldamenti>(new RiscaldamentiDAO().list());				
 			}
 			returnValue = riscaldamenti.toArray();
 			return returnValue;
@@ -2201,7 +2197,7 @@ public class DatiBaseView extends ViewPart {
 
 		@Override
 		public String getText(Object element) {			
-			return ((RiscaldamentiVO)element).getDescrizione();
+			return ((Riscaldamenti)element).getDescrizione();
 		}
 		
 		
@@ -2250,7 +2246,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				StatoConservativoVO scVO = new StatoConservativoVO();
+				Statoconservativo scVO = oc.newObject(Statoconservativo.class);;
 				scVO.setDescrizione("Nuovo stato conservativo");
 				statoconservativo.add(scVO);
 				tvStatoConservativo.setInput(statoconservativo);
@@ -2315,7 +2311,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				statoconservativo = new ArrayList<StatoConservativoVO>(new StatoConservativoDAO().list(StatoConservativoVO.class.getName()));
+				statoconservativo = new ArrayList<Statoconservativo>(new StatoConservativoDAO().list());
 				tvStatoConservativo.refresh();
 			}
 
@@ -2344,7 +2340,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvStatoConservativo.getSelection()).iterator();
 					StatoConservativoHelper sch = new StatoConservativoHelper();					
 					while (it.hasNext()) {
-						StatoConservativoVO scVO = (StatoConservativoVO)it.next();
+						Statoconservativo scVO = (Statoconservativo)it.next();
 						if (sch.deleteStatoConservativo(scVO)){
 							statoconservativo.remove(scVO);							
 						}						
@@ -2391,13 +2387,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((StatoConservativoVO)element).getDescrizione();
+				return ((Statoconservativo)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof StatoConservativoVO){
-					((StatoConservativoVO)(element)).setDescrizione((String)value);
+				if (element instanceof Statoconservativo){
+					((Statoconservativo)(element)).setDescrizione((String)value);
 					tvStatoConservativo.refresh();
 				}
 			}
@@ -2408,7 +2404,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((StatoConservativoVO)element).getDescrizione();
+				return ((Statoconservativo)element).getDescrizione();
 			}
 			
 		});
@@ -2432,7 +2428,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (statoconservativo == null){
-				statoconservativo = new ArrayList<StatoConservativoVO>(new StatoConservativoDAO().list(StatoConservativoVO.class.getName()));				
+				statoconservativo = new ArrayList<Statoconservativo>(new StatoConservativoDAO().list());				
 			}
 			returnValue = statoconservativo.toArray();
 			return returnValue;
@@ -2455,7 +2451,7 @@ public class DatiBaseView extends ViewPart {
 
 		@Override
 		public String getText(Object element) {			
-			return ((StatoConservativoVO)element).getDescrizione();
+			return ((Statoconservativo)element).getDescrizione();
 		}
 		
 		
@@ -2505,7 +2501,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipologiaStanzeVO scVO = new TipologiaStanzeVO();
+				Tipologiastanze scVO = oc.newObject(Tipologiastanze.class);
 				scVO.setDescrizione("Nuovo tipologia stanze");
 				tipologiastanze.add(scVO);
 				tvTipologiaStanze.setInput(tipologiastanze);
@@ -2573,7 +2569,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipologiastanze = new ArrayList<TipologiaStanzeVO>(new TipologiaStanzeDAO().list(TipologiaStanzeVO.class.getName()));
+				tipologiastanze = new TipologiaStanzeDAO().list();
 				tvTipologiaStanze.refresh();
 			}
 
@@ -2601,7 +2597,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvTipologiaStanze.getSelection()).iterator();
 					TipologiaStanzeHelper tsh = new TipologiaStanzeHelper();					
 					while (it.hasNext()) {
-						TipologiaStanzeVO tsVO = (TipologiaStanzeVO)it.next();
+						Tipologiastanze tsVO = (Tipologiastanze)it.next();
 						if (tsh.deleteTipologiaStanze(tsVO)){
 							tipologiastanze.remove(tsVO);							
 						}						
@@ -2648,13 +2644,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((TipologiaStanzeVO)element).getDescrizione();
+				return ((Tipologiastanze)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof TipologiaStanzeVO){
-					((TipologiaStanzeVO)(element)).setDescrizione((String)value);
+				if (element instanceof Tipologiastanze){
+					((Tipologiastanze)(element)).setDescrizione((String)value);
 					tvTipologiaStanze.refresh();
 				}
 			}
@@ -2665,7 +2661,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((TipologiaStanzeVO)element).getDescrizione();
+				return ((Tipologiastanze)element).getDescrizione();
 			}
 			
 		});
@@ -2689,7 +2685,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipologiastanze == null){
-				tipologiastanze = new ArrayList<TipologiaStanzeVO>(new TipologiaStanzeDAO().list(TipologiaStanzeVO.class.getName()));				
+				tipologiastanze = new TipologiaStanzeDAO().list();				
 			}
 			returnValue = tipologiastanze.toArray();
 			return returnValue;
@@ -2712,7 +2708,7 @@ public class DatiBaseView extends ViewPart {
 
 		@Override
 		public String getText(Object element) {			
-			return ((TipologiaStanzeVO)element).getDescrizione();
+			return ((Tipologiastanze)element).getDescrizione();
 		}
 		
 		
@@ -2975,7 +2971,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipologiaContattiVO scVO = new TipologiaContattiVO();
+				Tipologiecontatti scVO = oc.newObject(Tipologiecontatti.class);
 				scVO.setDescrizione("Nuovo tipologia contatto");
 				tipologiecontatti.add(scVO);
 				tvTipologieContatti.setInput(tipologiecontatti);
@@ -3041,7 +3037,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipologiecontatti = new ArrayList<TipologiaContattiVO>(new TipologiaContattiDAO().list(TipologiaContattiVO.class.getName()));
+				tipologiecontatti = new TipologiaContattiDAO().list();
 				tvTipologieContatti.refresh();
 			}
 
@@ -3069,7 +3065,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvTipologieContatti.getSelection()).iterator();
 					TipologiaContattiHelper tch = new TipologiaContattiHelper();					
 					while (it.hasNext()) {
-						TipologiaContattiVO tcVO = (TipologiaContattiVO)it.next();
+						Tipologiecontatti tcVO = (Tipologiecontatti)it.next();
 						if (tch.deleteTipologiaContatti(tcVO)){
 							tipologiecontatti.remove(tcVO);							
 						}						
@@ -3116,13 +3112,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((TipologiaContattiVO)element).getDescrizione();
+				return ((Tipologiecontatti)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof TipologiaContattiVO){
-					((TipologiaContattiVO)(element)).setDescrizione((String)value);
+				if (element instanceof Tipologiecontatti){
+					((Tipologiecontatti)(element)).setDescrizione((String)value);
 					tvTipologieContatti.refresh();
 				}
 			}
@@ -3133,7 +3129,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((TipologiaContattiVO)element).getDescrizione();
+				return ((Tipologiecontatti)element).getDescrizione();
 			}
 			
 		});
@@ -3157,7 +3153,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipologiecontatti == null){
-				tipologiecontatti = new ArrayList<TipologiaContattiVO>(new TipologiaContattiDAO().list(TipologiaContattiVO.class.getName()));				
+				tipologiecontatti = new TipologiaContattiDAO().list();				
 			}
 			returnValue = tipologiecontatti.toArray();
 			return returnValue;
@@ -3180,7 +3176,7 @@ public class DatiBaseView extends ViewPart {
 
 		@Override
 		public String getText(Object element) {			
-			return ((TipologiaContattiVO)element).getDescrizione();
+			return ((Tipologiecontatti)element).getDescrizione();
 		}
 		
 		
@@ -3229,7 +3225,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipologieImmobiliVO scVO = new TipologieImmobiliVO();
+				Tipologieimmobili scVO = oc.newObject(Tipologieimmobili.class);
 				scVO.setDescrizione("Nuovo tipologia immobile");
 				tipologieimmobili.add(scVO);
 				tvTipologieImmobili.setInput(tipologieimmobili);
@@ -3295,7 +3291,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipologieimmobili = new ArrayList<TipologieImmobiliVO>(new TipologieImmobiliDAO().list(TipologieImmobiliVO.class.getName()));
+				tipologieimmobili = new TipologieImmobiliDAO().list();
 				tvTipologieImmobili.refresh();
 			}
 
@@ -3323,7 +3319,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvTipologieImmobili.getSelection()).iterator();
 					TipologieImmobiliHelper tih = new TipologieImmobiliHelper();					
 					while (it.hasNext()) {
-						TipologieImmobiliVO tiVO = (TipologieImmobiliVO)it.next();
+						Tipologieimmobili tiVO = (Tipologieimmobili)it.next();
 						if (tih.deleteTipologiaImmobili(tiVO)){
 							tipologieimmobili.remove(tiVO);							
 						}						
@@ -3372,13 +3368,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((TipologieImmobiliVO)element).getDescrizione();
+				return ((Tipologieimmobili)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof TipologieImmobiliVO){
-					((TipologieImmobiliVO)(element)).setDescrizione((String)value);
+				if (element instanceof Tipologieimmobili){
+					((Tipologieimmobili)(element)).setDescrizione((String)value);
 					tvTipologieImmobili.refresh();
 				}
 			}
@@ -3389,7 +3385,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((TipologieImmobiliVO)element).getDescrizione();
+				return ((Tipologieimmobili)element).getDescrizione();
 			}
 			
 		});
@@ -3413,7 +3409,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipologieimmobili == null){
-				tipologieimmobili = new ArrayList<TipologieImmobiliVO>(new TipologieImmobiliDAO().list(TipologieImmobiliVO.class.getName()));				
+				tipologieimmobili = new TipologieImmobiliDAO().list();				
 			}
 			returnValue = tipologieimmobili.toArray();
 			return returnValue;
@@ -3436,7 +3432,7 @@ public class DatiBaseView extends ViewPart {
 
 		@Override
 		public String getText(Object element) {			
-			return ((TipologieImmobiliVO)element).getDescrizione();
+			return ((Tipologieimmobili)element).getDescrizione();
 		}
 		
 		
@@ -3492,7 +3488,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipiAppuntamentiVO taVO = new TipiAppuntamentiVO();
+				Tipiappuntamenti taVO = oc.newObject(Tipiappuntamenti.class);
 				taVO.setOrdine(1);
 				taVO.setDescrizione("Nuovo tipo appuntamento");
 				tipiappuntamenti.add(taVO);
@@ -3558,7 +3554,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipiappuntamenti = new ArrayList<TipiAppuntamentiVO>(new TipiAppuntamentiDAO().listTipiAppuntamenti(TipiAppuntamentiVO.class.getName()));
+				tipiappuntamenti = new TipiAppuntamentiDAO().listTipiAppuntamenti();
 				tvTipiAppuntamenti.refresh();
 			}
 
@@ -3587,7 +3583,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvTipiAppuntamenti.getSelection()).iterator();
 					TipiAppuntamentiHelper tah = new TipiAppuntamentiHelper();					
 					while (it.hasNext()) {
-						TipiAppuntamentiVO taVO = (TipiAppuntamentiVO)it.next();
+						Tipiappuntamenti taVO = (Tipiappuntamenti)it.next();
 						if (tah.deleteTipiAppuntamenti(taVO)){
 							tipiappuntamenti.remove(taVO);							
 						}						
@@ -3635,13 +3631,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((TipiAppuntamentiVO)element).getDescrizione();
+				return ((Tipiappuntamenti)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof TipiAppuntamentiVO){
-					((TipiAppuntamentiVO)(element)).setDescrizione((String)value);
+				if (element instanceof Tipiappuntamenti){
+					((Tipiappuntamenti)(element)).setDescrizione((String)value);
 					tvTipiAppuntamenti.refresh();
 				}
 			}
@@ -3652,7 +3648,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((TipiAppuntamentiVO)element).getDescrizione();
+				return ((Tipiappuntamenti)element).getDescrizione();
 			}
 			
 		});
@@ -3677,17 +3673,17 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return String.valueOf(((TipiAppuntamentiVO)element).getOrdine());
+				return String.valueOf(((Tipiappuntamenti)element).getOrdine());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof TipiAppuntamentiVO){
+				if (element instanceof Tipiappuntamenti){
 					try{
-						((TipiAppuntamentiVO)(element)).setOrdine(Integer.valueOf((String)value));
+						((Tipiappuntamenti)(element)).setOrdine(Integer.valueOf((String)value));
 						tvTipiAppuntamenti.refresh();						
 					}catch(Exception cce){
-						((TipiAppuntamentiVO)(element)).setOrdine(0);
+						((Tipiappuntamenti)(element)).setOrdine(0);
 						cce.printStackTrace();
 					}
 				}
@@ -3700,9 +3696,9 @@ public class DatiBaseView extends ViewPart {
 			@Override
 			public String getText(Object element) {				
 				return String.valueOf(
-										(((TipiAppuntamentiVO)element).getOrdine() == null)
-										? 0
-										: ((TipiAppuntamentiVO)element).getOrdine()
+										(((Tipiappuntamenti)element).getOrdine() == 0)
+										? 1
+										: ((Tipiappuntamenti)element).getOrdine()
 									 );
 			}
 			
@@ -3757,7 +3753,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Classienergetiche ceVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Classienergetiche.class);				
+				Classienergetiche ceVO = oc.newObject(Classienergetiche.class);				
 				ceVO.setOrdine(1);
 				ceVO.setDescrizione("Nuova classe energetica");
 				classienergetiche.add(ceVO);
@@ -3823,7 +3819,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche(ClasseEnergeticaVO.class.getName()));
+				classienergetiche = new ClassiEnergeticheDAO().listClassiEnergetiche();
 				tvClassiEnergetiche.refresh();
 			}
 
@@ -3852,7 +3848,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvClassiEnergetiche.getSelection()).iterator();
 					ClassiEnergeticheHelper ceh = new ClassiEnergeticheHelper();					
 					while (it.hasNext()) {
-						ClasseEnergeticaVO ceVO = (ClasseEnergeticaVO)it.next();
+						Classienergetiche ceVO = (Classienergetiche)it.next();
 						if (ceh.deleteClasseEnergetica(ceVO)){
 							classienergetiche.remove(ceVO);							
 						}						
@@ -3900,13 +3896,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((ClasseEnergeticaVO)element).getNome();
+				return ((Classienergetiche)element).getNome();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof ClasseEnergeticaVO){
-					((ClasseEnergeticaVO)(element)).setNome((String)value);
+				if (element instanceof Classienergetiche){
+					((Classienergetiche)(element)).setNome((String)value);
 					tvClassiEnergetiche.refresh();
 				}
 			}
@@ -3917,7 +3913,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((ClasseEnergeticaVO)element).getNome();
+				return ((Classienergetiche)element).getNome();
 			}
 			
 		});
@@ -3942,13 +3938,13 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return ((ClasseEnergeticaVO)element).getDescrizione();
+				return ((Classienergetiche)element).getDescrizione();
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof ClasseEnergeticaVO){
-					((ClasseEnergeticaVO)(element)).setDescrizione((String)value);
+				if (element instanceof Classienergetiche){
+					((Classienergetiche)(element)).setDescrizione((String)value);
 					tvClassiEnergetiche.refresh();
 				}
 			}
@@ -3959,7 +3955,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {				
-				return ((ClasseEnergeticaVO)element).getDescrizione();
+				return ((Classienergetiche)element).getDescrizione();
 			}
 			
 		});
@@ -3984,17 +3980,17 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				return String.valueOf(((ClasseEnergeticaVO)element).getOrdine());
+				return String.valueOf(((Classienergetiche)element).getOrdine());
 			}
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				if (element instanceof ClasseEnergeticaVO){
+				if (element instanceof Classienergetiche){
 					try{
-						((ClasseEnergeticaVO)(element)).setOrdine(Integer.valueOf((String)value));
+						((Classienergetiche)(element)).setOrdine(Integer.valueOf((String)value));
 						tvClassiEnergetiche.refresh();						
 					}catch(Exception cce){
-						((ClasseEnergeticaVO)(element)).setOrdine(0);
+						((Classienergetiche)(element)).setOrdine(0);
 						cce.printStackTrace();
 					}
 				}
@@ -4007,9 +4003,9 @@ public class DatiBaseView extends ViewPart {
 			@Override
 			public String getText(Object element) {				
 				return String.valueOf(
-										(((ClasseEnergeticaVO)element).getOrdine() == null)
-										? 0
-										: ((ClasseEnergeticaVO)element).getOrdine()
+										(((Classienergetiche)element).getOrdine() == 0)
+										? 1
+										: ((Classienergetiche)element).getOrdine()
 									 );
 			}
 			

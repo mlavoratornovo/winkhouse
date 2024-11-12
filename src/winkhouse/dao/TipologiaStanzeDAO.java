@@ -7,7 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiastanze;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipologiaStanzeVO;
 
 
@@ -28,6 +34,11 @@ public class TipologiaStanzeDAO extends BaseDAO{
 	public <T> ArrayList<T> list(String classType){
 		return super.list(classType, LISTA_TIPOLOGIESTANZE);
 	}
+	
+	public ArrayList<Tipologiastanze> list(){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Tipologiastanze>(ObjectSelect.query(Tipologiastanze.class).select(context));
+	};
 	
 	public Object getTipologiaStanzaById (String classType, Integer codTipologiaStanza){
 		return super.getObjectById(classType, TIPOLOGIESTANZE_BY_ID, codTipologiaStanza);

@@ -221,7 +221,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Classienergetiche> getClassiEnergetiche() {
 		if (classiEnergetiche == null){
 			ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-			classiEnergetiche = ceDAO.listClassiEnergetiche(Classienergetiche.class.getName());
+			classiEnergetiche = ceDAO.listClassiEnergetiche();
 		}
 		return classiEnergetiche;
 	}
@@ -273,7 +273,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Agenti> getAgenti() {
 		if (agenti == null){
 			AgentiDAO aDAO = new AgentiDAO();
-			agenti = aDAO.list();
+			agenti = aDAO.list(WinkhouseUtils.getInstance().getCayenneObjectContext());
 		}
 		return agenti;
 	}
