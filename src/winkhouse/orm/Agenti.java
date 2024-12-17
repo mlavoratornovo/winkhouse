@@ -27,5 +27,16 @@ public class Agenti extends _Agenti {
 		return getNome() + " " + getCognome() + " - " + getCitta();
 	}
     
+    public void initData() {
+    	this.nome = "";
+    	this.cognome = "";
+    	this.cap = "";
+    	this.citta = "";
+    	this.indirizzo = "";
+    	this.provincia = "";
+    	this.username = "";
+    	this.password = "";
+    }
+    
     
 }

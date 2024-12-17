@@ -21,6 +21,8 @@ public class Riscaldamenti extends _Riscaldamenti {
 		this.codRiscaldamento = codRiscaldamento;
 	}
 	
-	
+	public void initData() {
+		this.descrizione = "";
+	}
 
 }

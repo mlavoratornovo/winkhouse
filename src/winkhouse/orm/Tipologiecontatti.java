@@ -25,4 +25,9 @@ public class Tipologiecontatti extends _Tipologiecontatti {
        		return 0;
        	}
    	}
+   	
+	public void initData() {
+		this.descrizione = "";
+	}
+
 }

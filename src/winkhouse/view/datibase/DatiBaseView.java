@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -146,6 +147,8 @@ public class DatiBaseView extends ViewPart {
 	private GridData tabella = null;
 	
 	private ObjectContext oc = null;
+	private ObjectContext ocAgenti = null;
+	private ObjectContext ocContatti = null;
 	
 	public DatiBaseView() {
 		
@@ -154,6 +157,9 @@ public class DatiBaseView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		oc = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		ocAgenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocContatti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		
 		tabella = new GridData();
 		tabella.grabExcessHorizontalSpace = true;
 		tabella.horizontalAlignment = SWT.FILL;
@@ -180,7 +186,7 @@ public class DatiBaseView extends ViewPart {
 	}
 	
 	private void createAgentiSection(){
-
+				
 		Section section = tool.createSection(
 				   				form.getBody(), 
 				   				Section.DESCRIPTION|Section.TITLE_BAR|
@@ -231,7 +237,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Agenti aModel = oc.newObject(Agenti.class);				
+				Agenti aModel = ocAgenti.newObject(Agenti.class);
+				aModel.initData();
+				
 				agenti.add(aModel);
 				tvAgenti.setInput(agenti);
 				tvAgenti.refresh();
@@ -273,8 +281,9 @@ public class DatiBaseView extends ViewPart {
 			public void mouseUp(MouseEvent e) {
 				AgentiHelper ah = new AgentiHelper();
 				//if (ah.checkPws(agenti)){
-					ah.updateDatiBase(agenti);
-					agenti = null;
+					ah.updateDatiBase(agenti, ocAgenti);
+					
+					//agenti = null;
 					tvAgenti.setInput(new Object());
 					tvAgenti.refresh();
 //				}else{
@@ -333,7 +342,7 @@ public class DatiBaseView extends ViewPart {
 					AgentiHelper ah = new AgentiHelper();					
 					while (it.hasNext()) {
 						Agenti aVO = (Agenti)it.next();
-						if (ah.deleteAgente(aVO)){
+						if (ah.deleteAgente(aVO, ocAgenti)){
 							agenti.remove(aVO);							
 						}						
 						
@@ -357,6 +366,29 @@ public class DatiBaseView extends ViewPart {
 		
 		//--				
 		tvAgenti = new TableViewer(sectionClient,SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
+//		tvAgenti.setCellModifier(new ICellModifier() {
+//			
+//			@Override
+//			public void modify(Object element, String property, Object value) {
+//				// TODO Auto-generated method stub				
+//			}
+//			
+//			@Override
+//			public Object getValue(Object element, String property) {
+//				switch (property) {
+//				case "nome":
+//					return ((Agenti)element).getNome();					
+//				default:
+//					break;
+//				}
+//				return null;
+//			}
+//			
+//			@Override
+//			public boolean canModify(Object element, String property) {
+//				return true;
+//			}
+//		});
 		TableViewerEditor.create(tvAgenti,
 								 new ColumnViewerEditorActivationStrategy(tvAgenti),
 								 ColumnViewerEditor.TABBING_HORIZONTAL|ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR|ColumnViewerEditor.TABBING_VERTICAL);
@@ -395,6 +427,7 @@ public class DatiBaseView extends ViewPart {
 			@Override
 			protected CellEditor getCellEditor(Object element) {
 				TextCellEditor tce = new TextCellEditor(tvAgenti.getTable());
+				tce.setValue("");
 				return tce; 
 			}
 
@@ -1139,9 +1172,9 @@ public class DatiBaseView extends ViewPart {
 		@Override
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
-			if (agenti == null){				
-				agenti = new AgentiDAO().list(oc);				
-			}
+			if (agenti == null) {
+				agenti = new AgentiDAO().list(ocAgenti);
+			}			
 			returnValue = agenti.toArray();
 			return returnValue;
 		}

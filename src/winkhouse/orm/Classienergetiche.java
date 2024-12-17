@@ -20,5 +20,9 @@ public class Classienergetiche extends _Classienergetiche {
     		return 0;
     	}
     }
+	
+	public void initData() {
+		this.descrizione = "";
+	}
 
 }

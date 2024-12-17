@@ -11,4 +11,8 @@ public class Classicliente extends _Classicliente {
     public int getCodClasseCliente() {
         return Cayenne.intPKForObject(this);
     }
+    
+    public void initData() {
+    	this.descrizione = "";    	
+    }
 }

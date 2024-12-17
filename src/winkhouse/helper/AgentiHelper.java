@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
+import org.apache.cayenne.ObjectContext;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.dao.AbbinamentiDAO;
@@ -368,77 +371,86 @@ public class AgentiHelper {
 		
 	}
 	
-	public Boolean deleteAgente(Agenti agentiVO){
+	public Boolean deleteAgente(Agenti agentiVO, ObjectContext oc){
+		
 		Boolean result = true;
 		
-		AgentiDAO aDAO = new AgentiDAO();
-				
-		AnagraficheDAO anagraficheDAO = new AnagraficheDAO();
-		ArrayList anagrafiche = anagraficheDAO.getAnagraficheByAgenteInseritore(AnagraficheVO.class.getName(), agentiVO.getCodAgente());
-		
-		ColloquiDAO colloquiDAO = new ColloquiDAO();
-		ArrayList colloqui = colloquiDAO.getColloquiByAgenteInseritore(ColloquiVO.class.getName(), agentiVO.getCodAgente());
-		
-		ColloquiAgentiDAO colloquiAgentiDAO = new ColloquiAgentiDAO();
-		ArrayList commentiColloqui = colloquiAgentiDAO.getColloquiAgentiByAgente(ColloquiAgentiVO.class.getName(), agentiVO.getCodAgente());
-
-		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
-		ArrayList immobili = immobiliDAO.getImmobiliByAgente(ImmobiliVO.class.getName(), agentiVO.getCodAgente());
-		
-		AffittiDAO affittiDAO = new AffittiDAO();
-		ArrayList affitti = affittiDAO.getAffittiByCodAgente(AffittiVO.class.getName(), agentiVO.getCodAgente());
-		
-		AgentiAppuntamentiDAO aaDAO = new AgentiAppuntamentiDAO();
-		ArrayList agentiappuntamenti = aaDAO.listAgentiAppuntamentiByAgente(AgentiAppuntamentiVO.class.getName(), agentiVO.getCodAgente());
-		
-		if ((anagrafiche.size() != 0) || (colloqui.size() != 0) || 
-			(commentiColloqui.size() != 0) || (immobili.size() != 0) ||
-			(affitti.size() != 0) || (agentiappuntamenti.size() != 0)
-			){			
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione agente",
-														  buildDeleteMessage(agentiVO,
-																  			anagrafiche.size(),
-																  			colloqui.size(),
-																  			commentiColloqui.size(),
-																  			immobili.size(),
-																  			affitti.size(),
-																  			agentiappuntamenti.size()));  
-			
-			try {
-			       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-			    		   													  agentiVO,
-			    		   													  anagrafiche.size(),
-																	  		  colloqui.size(),
-																	  		  commentiColloqui.size(),
-																	  		  immobili.size(),
-																	  		  affitti.size(),
-																	  		  agentiappuntamenti.size());
-			       
-			       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-			       
-			    } catch (InvocationTargetException e) {
-			       // handle exception
-			    } catch (InterruptedException e) {
-			       // handle cancelation
-			    }
-			
-		}else{
-			result = aDAO.delete(agentiVO.getCodAgente(), null, true);
-			if (result){
-				MobiliaDatiBaseCache.getInstance().setAgenti(null);
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione agente", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione agente", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			oc.deleteObject(agentiVO);
+			oc.commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
-		
-		
-		
+//		
+//		AgentiDAO aDAO = new AgentiDAO();
+//				
+//		AnagraficheDAO anagraficheDAO = new AnagraficheDAO();
+//		ArrayList anagrafiche = anagraficheDAO.getAnagraficheByAgenteInseritore(AnagraficheVO.class.getName(), agentiVO.getCodAgente());
+//		
+//		ColloquiDAO colloquiDAO = new ColloquiDAO();
+//		ArrayList colloqui = colloquiDAO.getColloquiByAgenteInseritore(ColloquiVO.class.getName(), agentiVO.getCodAgente());
+//		
+//		ColloquiAgentiDAO colloquiAgentiDAO = new ColloquiAgentiDAO();
+//		ArrayList commentiColloqui = colloquiAgentiDAO.getColloquiAgentiByAgente(ColloquiAgentiVO.class.getName(), agentiVO.getCodAgente());
+//
+//		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
+//		ArrayList immobili = immobiliDAO.getImmobiliByAgente(ImmobiliVO.class.getName(), agentiVO.getCodAgente());
+//		
+//		AffittiDAO affittiDAO = new AffittiDAO();
+//		ArrayList affitti = affittiDAO.getAffittiByCodAgente(AffittiVO.class.getName(), agentiVO.getCodAgente());
+//		
+//		AgentiAppuntamentiDAO aaDAO = new AgentiAppuntamentiDAO();
+//		ArrayList agentiappuntamenti = aaDAO.listAgentiAppuntamentiByAgente(AgentiAppuntamentiVO.class.getName(), agentiVO.getCodAgente());
+//		
+//		if ((anagrafiche.size() != 0) || (colloqui.size() != 0) || 
+//			(commentiColloqui.size() != 0) || (immobili.size() != 0) ||
+//			(affitti.size() != 0) || (agentiappuntamenti.size() != 0)
+//			){			
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione agente",
+//														  buildDeleteMessage(agentiVO,
+//																  			anagrafiche.size(),
+//																  			colloqui.size(),
+//																  			commentiColloqui.size(),
+//																  			immobili.size(),
+//																  			affitti.size(),
+//																  			agentiappuntamenti.size()));  
+//			
+//			try {
+//			       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//			    		   													  agentiVO,
+//			    		   													  anagrafiche.size(),
+//																	  		  colloqui.size(),
+//																	  		  commentiColloqui.size(),
+//																	  		  immobili.size(),
+//																	  		  affitti.size(),
+//																	  		  agentiappuntamenti.size());
+//			       
+//			       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//			       
+//			    } catch (InvocationTargetException e) {
+//			       // handle exception
+//			    } catch (InterruptedException e) {
+//			       // handle cancelation
+//			    }
+//			
+//		}else{
+//			result = aDAO.delete(agentiVO.getCodAgente(), null, true);
+//			if (result){
+//				MobiliaDatiBaseCache.getInstance().setAgenti(null);
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione agente", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione agente", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
+//		
+//		
+//		
 		return result;
 	}
 	
@@ -472,28 +484,33 @@ public class AgentiHelper {
 		return returnValue;
 	}
 	
-	public boolean updateDatiBase(ArrayList<Agenti> agenti){
-		
+	public boolean updateDatiBase(ArrayList<Agenti> agenti, ObjectContext oc){
+				
 		boolean returnValue = true;
-			
-		if (agenti != null){
-			
-			AgentiDAO agentiDAO = new AgentiDAO();			
-			Iterator it  = agenti.iterator();
-			
-			while (it.hasNext()){
-				AgentiVO agente = (AgentiVO)it.next();
-				if (!agentiDAO.saveUpdate(agente, null, true)){
-					returnValue = false;
-					MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											"Errore salvataggio agente", 
-											"Si � verificato un errore nel salvataggio dell'agente : " + 
-											agente.getCognome() + " " + agente.getNome());					
-				}
-			}
-			MobiliaDatiBaseCache.getInstance().setAgenti(null);
-			
+		try {
+			oc.commitChanges();
+		} catch (Exception e) {
+			returnValue = false;
 		}
+//			
+//		if (agenti != null){
+//			
+//			AgentiDAO agentiDAO = new AgentiDAO();			
+//			Iterator<Agenti> it  = agenti.iterator();
+//			
+//			while (it.hasNext()){
+//				Agenti agente = it.next();
+//				if (!agentiDAO.saveUpdate(agente, null, true)){
+//					returnValue = false;
+//					MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											"Errore salvataggio agente", 
+//											"Si è verificato un errore nel salvataggio dell'agente : " + 
+//											agente.getCognome() + " " + agente.getNome());					
+//				}
+//			}
+//			MobiliaDatiBaseCache.getInstance().setAgenti(null);
+//			
+//		}
 		
 		return returnValue;
 	}

@@ -15,5 +15,9 @@ public class Tipologiastanze extends _Tipologiastanze {
     		return 0;
     	}
     }
+	
+	public void initData() {
+		this.descrizione = "";
+	}
 
 }

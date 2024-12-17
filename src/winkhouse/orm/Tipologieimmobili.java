@@ -15,5 +15,10 @@ public class Tipologieimmobili extends _Tipologieimmobili {
     		return 0;
     	}
     }
+	
+	public void initData() {
+		this.descrizione = "";
+	}
+
 
 }

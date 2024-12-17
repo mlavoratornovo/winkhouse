@@ -16,4 +16,8 @@ public class Statoconservativo extends _Statoconservativo {
     	}
     }
 
+	public void initData() {
+		this.descrizione = "";
+	}
+
 }

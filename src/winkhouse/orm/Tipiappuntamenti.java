@@ -11,4 +11,9 @@ public class Tipiappuntamenti extends _Tipiappuntamenti {
     public int getCodTipoAppuntamento() {
         return Cayenne.intPKForObject(this);
     }
+    
+	public void initData() {
+		this.descrizione = "";
+	}
+
 }
