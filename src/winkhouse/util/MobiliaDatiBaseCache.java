@@ -235,7 +235,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Tipologieimmobili> getTipologieImmobili() {
 		if (tipologieImmobili == null){
 			TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-			tipologieImmobili = tiDAO.list(TipologieImmobiliVO.class.getName());
+			tipologieImmobili = tiDAO.list();
 		}
 		return tipologieImmobili;
 	}
@@ -248,7 +248,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Statoconservativo> getStatiConservativi() {
 		if (statiConservativi == null){
 			StatoConservativoDAO scDAO = new StatoConservativoDAO();
-			statiConservativi = scDAO.list(Statoconservativo.class.getName());
+			statiConservativi = scDAO.list();
 		}
 		return statiConservativi;
 	}
@@ -261,7 +261,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Riscaldamenti> getRiscaldamenti() {
 		if (riscaldamenti == null){
 			RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-			riscaldamenti = rDAO.list(Riscaldamenti.class.getName());
+			riscaldamenti = rDAO.list();
 		}
 		return riscaldamenti;
 	}
@@ -332,7 +332,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Tipologiastanze> getTipologieStanze() {
 		if (tipologieStanze == null){
 			TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-			tipologieStanze = tsDAO.list(Tipologiastanze.class.getName());
+			tipologieStanze = tsDAO.list();
 		}
 		return tipologieStanze;
 	}

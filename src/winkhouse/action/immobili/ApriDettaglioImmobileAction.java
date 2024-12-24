@@ -9,6 +9,7 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
+import winkhouse.dao.ImmobiliDAO;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.ProfilerHelper.PermessoDetail;
 import winkhouse.model.ImmobiliModel;

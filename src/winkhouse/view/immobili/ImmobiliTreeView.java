@@ -46,22 +46,15 @@ import winkhouse.dao.RiscaldamentiDAO;
 import winkhouse.dao.StatoConservativoDAO;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.helper.ProfilerHelper;
-import winkhouse.model.ClasseEnergeticaModel;
-import winkhouse.model.ImmobiliModel;
-import winkhouse.model.RiscaldamentiModel;
-import winkhouse.model.StatoConservativoModel;
-import winkhouse.model.TipologieImmobiliModel;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.perspective.AffittiPerspective;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.immobili.handler.DettaglioImmobiliHandler;
-import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.vo.ComuniVO;
-import winkhouse.vo.ImmobiliVO;
-import winkhouse.vo.RiscaldamentiVO;
-import winkhouse.vo.StatoConservativoVO;
-import winkhouse.vo.TipologieImmobiliVO;
 
 
 
@@ -112,114 +105,110 @@ public class ImmobiliTreeView extends ViewPart {
 		@Override
 		public Object[] getChildren(Object parentElement) {
 			
-			if (parentElement instanceof TipologieImmobiliVO){
+			if (parentElement instanceof Tipologieimmobili){
 				if(PlatformUI.getWorkbench()
 							 .getActiveWorkbenchWindow()
 							 .getActivePage()
 							 .getPerspective()
 							 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 					
-					ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
+					ArrayList<Immobili> immobili = new ArrayList<Immobili>();
 					
-					if (parentElement instanceof TipologieImmobiliModel){
-						immobili = iDAO.getImmobiliByTipologiaIsAffittiComune(ImmobiliModel.class.getName(),
-																			  ((TipologieImmobiliModel)parentElement).getCodTipologiaImmobile(),
-																			  ((TipologieImmobiliModel)parentElement).getComune());
+					if (parentElement instanceof Tipologieimmobili){
+						immobili = iDAO.getImmobiliByTipologiaIsAffittiComune(((Tipologieimmobili)parentElement),
+																			  ((Tipologieimmobili)parentElement).getComune());
 					}else{		
-						immobili = iDAO.getImmobiliByTipologiaIsAffitti(ImmobiliModel.class.getName(), 
-																		((TipologieImmobiliVO)parentElement).getCodTipologiaImmobile());
+						immobili = iDAO.getImmobiliByTipologiaIsAffitti(((Tipologieimmobili)parentElement));
 					}
 					ProfilerHelper.getInstance().filterAffitti(immobili, false);
 					return immobili.toArray();
 				}else{
 					
-					ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
+					ArrayList<Immobili> immobili = new ArrayList<Immobili>();
 					
-					if (parentElement instanceof TipologieImmobiliModel){
-						immobili = iDAO.getImmobiliByTipologiaComune(ImmobiliModel.class.getName(), 
-								   							  	     ((TipologieImmobiliModel)parentElement).getCodTipologiaImmobile(),
-								   							  	     ((TipologieImmobiliModel)parentElement).getComune());											
+					if (parentElement instanceof Tipologieimmobili){
+						immobili = iDAO.getImmobiliByTipologiaComune(((Tipologieimmobili)parentElement),
+								   							  	     ((Tipologieimmobili)parentElement).getComune());											
 					}else{						
-						immobili = iDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), 
-															   ((TipologieImmobiliVO)parentElement).getCodTipologiaImmobile());					
+						immobili = iDAO.getImmobiliByTipologia(((Tipologieimmobili)parentElement));					
 						
 					}
 					immobili = ProfilerHelper.getInstance().filterImmobili(immobili, false);
 					return immobili.toArray();
 					
 				}
-			}else if (parentElement instanceof RiscaldamentiVO){
+			}else if (parentElement instanceof Riscaldamenti){
 				if(PlatformUI.getWorkbench()
 							 .getActiveWorkbenchWindow()
 							 .getActivePage()
 							 .getPerspective()
 							 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 					
-					ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
+					ArrayList<Immobili> immobili = new ArrayList<Immobili>();
 					
-					if (parentElement instanceof RiscaldamentiModel){
-						immobili = iDAO.getImmobiliByRiscaldamentoIsAffittiComune(ImmobiliModel.class.getName(), 
-						    													  ((RiscaldamentiModel)parentElement).getCodRiscaldamento(),
-						    													  ((RiscaldamentiModel)parentElement).getComune());
+					if (parentElement instanceof Riscaldamenti){
+						immobili = iDAO.getImmobiliByRiscaldamentoIsAffittiComune(Immobili.class.getName(), 
+						    													  ((Riscaldamenti)parentElement).getCodRiscaldamento(),
+						    													  ((Riscaldamenti)parentElement).getComune());
 					}else{
-						immobili = iDAO.getImmobiliByRiscaldamentoIsAffitti(ImmobiliModel.class.getName(), 
-								 											((RiscaldamentiVO)parentElement).getCodRiscaldamento());
+						immobili = iDAO.getImmobiliByRiscaldamentoIsAffitti(Immobili.class.getName(), 
+								 											((Riscaldamenti)parentElement).getCodRiscaldamento());
 						
 					}
 					ProfilerHelper.getInstance().filterAffitti(immobili, false);
 					return immobili.toArray();
 					
 				}else{
-					ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>(); 
+					ArrayList<Immobili> immobili = new ArrayList<Immobili>(); 
 				
-					if (parentElement instanceof RiscaldamentiModel){
-						immobili = iDAO.getImmobiliByRiscaldamentoComune(ImmobiliModel.class.getName(),
-								   								   		 ((RiscaldamentiModel)parentElement).getCodRiscaldamento(),
-								   								   		 ((RiscaldamentiModel)parentElement).getComune());						
+					if (parentElement instanceof Riscaldamenti){
+						immobili = iDAO.getImmobiliByRiscaldamentoComune(Immobili.class.getName(),
+								   								   		 ((Riscaldamenti)parentElement).getCodRiscaldamento(),
+								   								   		 ((Riscaldamenti)parentElement).getComune());						
 					}else{
-						immobili = iDAO.getImmobiliByRiscaldamento(ImmobiliModel.class.getName(),
-																   ((RiscaldamentiVO)parentElement).getCodRiscaldamento());
+						immobili = iDAO.getImmobiliByRiscaldamento(Immobili.class.getName(),
+																   ((Riscaldamenti)parentElement).getCodRiscaldamento());
 					}
 						       															 
 					immobili = ProfilerHelper.getInstance().filterImmobili(immobili, false);
 					return immobili.toArray();
 				}
 				
-			}else if (parentElement instanceof StatoConservativoVO){
+			}else if (parentElement instanceof Statoconservativo){
 				if(PlatformUI.getWorkbench()
 						 .getActiveWorkbenchWindow()
 						 .getActivePage()
 						 .getPerspective()
 						 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 					
-					ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
-					if (parentElement instanceof StatoConservativoModel){
-						immobili = iDAO.getImmobiliByStatoConservativoIsAffittiComune(ImmobiliModel.class.getName(), 
-																			          ((StatoConservativoModel)parentElement).getCodStatoConservativo(),
-																			          ((StatoConservativoModel)parentElement).getComune());
+					ArrayList<Immobili> immobili = new ArrayList<Immobili>();
+					if (parentElement instanceof Statoconservativo){
+						immobili = iDAO.getImmobiliByStatoConservativoIsAffittiComune(Immobili.class.getName(), 
+																			          ((Statoconservativo)parentElement).getCodStatoConservativo(),
+																			          ((Statoconservativo)parentElement).getComune());
 						
 					}else{
-						immobili = iDAO.getImmobiliByStatoConservativoIsAffitti(ImmobiliModel.class.getName(), 
-																				((StatoConservativoVO)parentElement).getCodStatoConservativo());
+						immobili = iDAO.getImmobiliByStatoConservativoIsAffitti(Immobili.class.getName(), 
+																				((Statoconservativo)parentElement).getCodStatoConservativo());
 					}
 					ProfilerHelper.getInstance().filterAffitti(immobili, false);
 					return immobili.toArray();
 				}else{
-					ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
-					if (parentElement instanceof StatoConservativoModel){
-						immobili = iDAO.getImmobiliByStatoConservativoComune(ImmobiliModel.class.getName(), 
-																	   		 ((StatoConservativoModel)parentElement).getCodStatoConservativo(),
-																	   		 ((StatoConservativoModel)parentElement).getComune());
+					ArrayList<Immobili> immobili = new ArrayList<Immobili>();
+					if (parentElement instanceof Statoconservativo){
+						immobili = iDAO.getImmobiliByStatoConservativoComune(Immobili.class.getName(), 
+																	   		 ((Statoconservativo)parentElement).getCodStatoConservativo(),
+																	   		 ((Statoconservativo)parentElement).getComune());
 					}else{
-						immobili = iDAO.getImmobiliByStatoConservativo(ImmobiliModel.class.getName(), 
-								   									   ((StatoConservativoVO)parentElement).getCodStatoConservativo());
+						immobili = iDAO.getImmobiliByStatoConservativo(Immobili.class.getName(), 
+								   									   ((Statoconservativo)parentElement).getCodStatoConservativo());
 
 					}
 					immobili = ProfilerHelper.getInstance().filterImmobili(immobili, false);
 					return immobili.toArray();
 										
 				}
-			}else if (parentElement instanceof ClasseEnergeticaVO){
+			}else if (parentElement instanceof Classienergetiche){
 					if(PlatformUI.getWorkbench()
 							 .getActiveWorkbenchWindow()
 							 .getActivePage()
@@ -227,28 +216,28 @@ public class ImmobiliTreeView extends ViewPart {
 							 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 						
 					
-						ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
+						ArrayList<Immobili> immobili = new ArrayList<Immobili>();
 						
-						if (parentElement instanceof ClasseEnergeticaModel){
-							immobili = iDAO.listImmobiliByCodClasseEnergeticaIsAffittiComune(ImmobiliModel.class.getName(),
-																						  	 ((ClasseEnergeticaModel)parentElement).getCodClasseEnergetica(),
-																						  	 ((ClasseEnergeticaModel)parentElement).getComune());							
+						if (parentElement instanceof Classienergetiche){
+							immobili = iDAO.listImmobiliByCodClasseEnergeticaIsAffittiComune(Immobili.class.getName(),
+																						  	 ((Classienergetiche)parentElement).getCodClasseEnergetica(),
+																						  	 ((Classienergetiche)parentElement).getComune());							
 						}else{
-							immobili = iDAO.listImmobiliByCodClasseEnergeticaIsAffitti(ImmobiliModel.class.getName(),
-																					   ((ClasseEnergeticaVO)parentElement).getCodClasseEnergetica());
+							immobili = iDAO.listImmobiliByCodClasseEnergeticaIsAffitti(Immobili.class.getName(),
+																					   ((Classienergetiche)parentElement).getCodClasseEnergetica());
 						}
 																										  
 						ProfilerHelper.getInstance().filterAffitti(immobili, false);
 						return immobili.toArray();
 					}else{
-						ArrayList<ImmobiliModel> immobili = new ArrayList<ImmobiliModel>();
-						if (parentElement instanceof ClasseEnergeticaModel){
-							immobili = iDAO.listImmobiliByCodClasseEnergeticaComune(ImmobiliModel.class.getName(), 
-																			  ((ClasseEnergeticaModel)parentElement).getCodClasseEnergetica(),
-																			  ((ClasseEnergeticaModel)parentElement).getComune());
+						ArrayList<Immobili> immobili = new ArrayList<Immobili>();
+						if (parentElement instanceof Classienergetiche){
+							immobili = iDAO.listImmobiliByCodClasseEnergeticaComune(Immobili.class.getName(), 
+																			  ((Classienergetiche)parentElement).getCodClasseEnergetica(),
+																			  ((Classienergetiche)parentElement).getComune());
 						}else{
-							immobili = iDAO.listImmobiliByCodClasseEnergetica(ImmobiliModel.class.getName(), 
-									  										  ((ClasseEnergeticaVO)parentElement).getCodClasseEnergetica());							
+							immobili = iDAO.listImmobiliByCodClasseEnergetica(Immobili.class.getName(), 
+									  										  ((Classienergetiche)parentElement).getCodClasseEnergetica());							
 						}
 						immobili = ProfilerHelper.getInstance().filterImmobili(immobili, false);
 						return immobili.toArray();
@@ -256,7 +245,7 @@ public class ImmobiliTreeView extends ViewPart {
 					}				
 			}else if (parentElement instanceof ComuniVO){
 				
-				ArrayList<ImmobiliModel> gruppo_list = new ArrayList<ImmobiliModel>();
+				ArrayList<Immobili> gruppo_list = new ArrayList<Immobili>();
 				
 				if (!((ComuniVO)parentElement).getProvincia().equalsIgnoreCase("")){
 //					return comuniDAO.getComuniByProvincia(((ComuniVO)parentElement).getProvincia()).toArray();
@@ -273,10 +262,10 @@ public class ImmobiliTreeView extends ViewPart {
 								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 							
 							gruppo_list = (ArrayList)tiDAO.listByAffittiComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByTipologiaIsAffittiComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));
+							gruppo_list.addAll(iDAO.getImmobiliByTipologiaIsAffittiComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));
 						}else{
 							gruppo_list = (ArrayList)tiDAO.listByComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByTipologiaComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
+							gruppo_list.addAll(iDAO.getImmobiliByTipologiaComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
 						}
 					}
 					if (grouping.equalsIgnoreCase(IMPIANTI_RISCALDAMENTO)){
@@ -288,10 +277,10 @@ public class ImmobiliTreeView extends ViewPart {
 								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 							
 							gruppo_list = (ArrayList)rDAO.listByAffittiComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoIsAffittiComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));
+							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoIsAffittiComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));
 						}else{
 							gruppo_list = (ArrayList)rDAO.listByComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
+							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
 						}
 					}
 					if (grouping.equalsIgnoreCase(STATO_CONSERVATIVO)){
@@ -303,10 +292,10 @@ public class ImmobiliTreeView extends ViewPart {
 								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 						
 							gruppo_list = (ArrayList)scDAO.listByAffittiComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoIsAffittiComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));
+							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoIsAffittiComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));
 						}else{
 							gruppo_list = (ArrayList)scDAO.listByComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
+							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
 						}
 					}
 					if (grouping.equalsIgnoreCase(CLASSE_ENERGETICA)){
@@ -318,10 +307,10 @@ public class ImmobiliTreeView extends ViewPart {
 								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
 						
 							gruppo_list = (ArrayList)ceDAO.listByAffittiComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaIsAffittiComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));
+							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaIsAffittiComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));
 						}else{
 							gruppo_list = (ArrayList)ceDAO.listByComune(((ComuniVO)parentElement).getComune());
-							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaComune(ImmobiliModel.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
+							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaComune(Immobili.class.getName(), null, ((ComuniVO)parentElement).getComune()));					
 						}
 					}
 					
@@ -341,66 +330,66 @@ public class ImmobiliTreeView extends ViewPart {
 				if (isGeogrouping()){
 					return comuniDAO.getProvincieImmobili().toArray();
 				}else{
-					ArrayList<ImmobiliModel> gruppo_list = new ArrayList<ImmobiliModel>();
+					ArrayList<Immobili> gruppo_list = new ArrayList<Immobili>();
 					if (grouping.equalsIgnoreCase(TIPI_IMMOBILI)){
 						
-						if(PlatformUI.getWorkbench()
-								 .getActiveWorkbenchWindow()
-								 .getActivePage()
-								 .getPerspective()
-								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
-							
-							gruppo_list = (ArrayList)tiDAO.listByAffitti(TipologieImmobiliVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByTipologiaIsAffitti(ImmobiliModel.class.getName(), null));
-						}else{
-							gruppo_list = (ArrayList)tiDAO.list(TipologieImmobiliVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), null));					
-						}
+//						if(PlatformUI.getWorkbench()
+//								 .getActiveWorkbenchWindow()
+//								 .getActivePage()
+//								 .getPerspective()
+//								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
+//							
+//							gruppo_list = (ArrayList)tiDAO.listByAffitti(TipologieImmobiliVO.class.getName());
+//							gruppo_list.addAll(iDAO.getImmobiliByTipologiaIsAffitti(Immobili.class.getName(), null));
+//						}else{
+						gruppo_list = (ArrayList)tiDAO.list();
+						gruppo_list.addAll(iDAO.getImmobiliByTipologia(null));					
+//						}
 					}
 					if (grouping.equalsIgnoreCase(IMPIANTI_RISCALDAMENTO)){
 						
-						if(PlatformUI.getWorkbench()
-								 .getActiveWorkbenchWindow()
-								 .getActivePage()
-								 .getPerspective()
-								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
-							
-							gruppo_list = (ArrayList)rDAO.listByAffitti(RiscaldamentiVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoIsAffitti(ImmobiliModel.class.getName(), null));
-						}else{
-							gruppo_list = (ArrayList)rDAO.list(RiscaldamentiVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamento(ImmobiliModel.class.getName(), null));					
-						}
+//						if(PlatformUI.getWorkbench()
+//								 .getActiveWorkbenchWindow()
+//								 .getActivePage()
+//								 .getPerspective()
+//								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
+//							
+//							gruppo_list = (ArrayList)rDAO.listByAffitti(RiscaldamentiVO.class.getName());
+//							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoIsAffitti(Immobili.class.getName(), null));
+//						}else{
+						gruppo_list = (ArrayList)rDAO.list();
+						gruppo_list.addAll(iDAO.getImmobiliByRiscaldamento(null));					
+//						}
 					}
 					if (grouping.equalsIgnoreCase(STATO_CONSERVATIVO)){
 						
-						if(PlatformUI.getWorkbench()
-								 .getActiveWorkbenchWindow()
-								 .getActivePage()
-								 .getPerspective()
-								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
-						
-							gruppo_list = (ArrayList)scDAO.listByAffitti(StatoConservativoVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoIsAffitti(ImmobiliModel.class.getName(), null));
-						}else{
-							gruppo_list = (ArrayList)scDAO.list(StatoConservativoVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativo(ImmobiliModel.class.getName(), null));					
-						}
+//						if(PlatformUI.getWorkbench()
+//								 .getActiveWorkbenchWindow()
+//								 .getActivePage()
+//								 .getPerspective()
+//								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
+//						
+//							gruppo_list = (ArrayList)scDAO.listByAffitti(StatoConservativoVO.class.getName());
+//							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoIsAffitti(Immobili.class.getName(), null));
+//						}else{
+						gruppo_list = (ArrayList)scDAO.list();
+						gruppo_list.addAll(iDAO.getImmobiliByStatoConservativo(null));					
+//						}
 					}
 					if (grouping.equalsIgnoreCase(CLASSE_ENERGETICA)){
 						
-						if(PlatformUI.getWorkbench()
-								 .getActiveWorkbenchWindow()
-								 .getActivePage()
-								 .getPerspective()
-								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
-						
-							gruppo_list = (ArrayList)ceDAO.listByAffitti(ClasseEnergeticaVO.class.getName());
-							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaIsAffitti(ImmobiliModel.class.getName(), null));
-						}else{
-							gruppo_list = (ArrayList)ceDAO.listClassiEnergetiche();
-							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergetica(ImmobiliModel.class.getName(), null));					
-						}
+//						if(PlatformUI.getWorkbench()
+//								 .getActiveWorkbenchWindow()
+//								 .getActivePage()
+//								 .getPerspective()
+//								 .getId().equalsIgnoreCase(AffittiPerspective.ID)){
+//						
+//							gruppo_list = (ArrayList)ceDAO.listByAffitti(ClasseEnergeticaVO.class.getName());
+//							gruppo_list.addAll(iDAO.getImmobiliByClasseEnergeticaIsAffitti(Immobili.class.getName(), null));
+//						}else{
+						gruppo_list = (ArrayList)ceDAO.listClassiEnergetiche();
+						gruppo_list.addAll(iDAO.getImmobiliByClasseEnergetica(null));					
+//						}
 					}
 					
 					if(PlatformUI.getWorkbench()
@@ -426,11 +415,11 @@ public class ImmobiliTreeView extends ViewPart {
 
 		@Override
 		public boolean hasChildren(Object element) {			
-			if ((element instanceof TipologieImmobiliVO) || 
-				(element instanceof RiscaldamentiVO) ||
-				(element instanceof StatoConservativoVO) ||
+			if ((element instanceof Tipologieimmobili) || 
+				(element instanceof Riscaldamenti) ||
+				(element instanceof Statoconservativo) ||
 				(element instanceof ComuniVO) ||
-				(element instanceof ClasseEnergeticaVO)){
+				(element instanceof Classienergetiche)){
 				return true;
 			}else{
 				return false;
@@ -449,20 +438,20 @@ public class ImmobiliTreeView extends ViewPart {
 						:((ComuniVO)obj).getComune();
 			}
 
-			if (obj instanceof TipologieImmobiliVO){
-				returnValue = ((TipologieImmobiliVO)obj).getDescrizione();
+			if (obj instanceof Tipologieimmobili){
+				returnValue = ((Tipologieimmobili)obj).getDescrizione();
 			}
-			if (obj instanceof RiscaldamentiVO){
-				returnValue = ((RiscaldamentiVO)obj).getDescrizione();
+			if (obj instanceof Riscaldamenti){
+				returnValue = ((Riscaldamenti)obj).getDescrizione();
 			}
-			if (obj instanceof StatoConservativoVO){
-				returnValue = ((StatoConservativoVO)obj).getDescrizione();
+			if (obj instanceof Statoconservativo){
+				returnValue = ((Statoconservativo)obj).getDescrizione();
 			}			
-			if (obj instanceof ImmobiliModel){
-				returnValue = ((ImmobiliModel)obj).toString();
+			if (obj instanceof Immobili){
+				returnValue = ((Immobili)obj).toString();
 			}
-			if (obj instanceof ClasseEnergeticaVO){
-				returnValue = ((ClasseEnergeticaVO)obj).toString();
+			if (obj instanceof Classienergetiche){
+				returnValue = ((Classienergetiche)obj).toString();
 			}			
 			
 			return returnValue;
@@ -472,7 +461,7 @@ public class ImmobiliTreeView extends ViewPart {
 			if (obj instanceof ComuniVO){
 				return geoImg;
 			}
-			if (obj instanceof ImmobiliVO){
+			if (obj instanceof Immobili){
 				return homeImg;
 			}else{			
 				return homeFolderImg;
@@ -540,14 +529,14 @@ public class ImmobiliTreeView extends ViewPart {
 			TreeItem ti = null;
 			//ImmobileVO returnValue = null;
 			for (int i = 0; i < lista.length; i++) {
-				if (lista[i].getData() instanceof TipologieImmobiliVO){
+				if (lista[i].getData() instanceof Tipologieimmobili){
 					ti = searchTreeItem(lista[i].getItems(),cod);
 					if (ti != null){
 						break;
 					}
 					
 				}else{
-					if(((ImmobiliVO)lista[i].getData()).getRif().equalsIgnoreCase(cod)){
+					if(((Immobili)lista[i].getData()).getRif().equalsIgnoreCase(cod)){
 						
 						ti = lista[i];
 						break;
@@ -693,7 +682,7 @@ public class ImmobiliTreeView extends ViewPart {
 					Object o = ((StructuredSelection)viewer.getSelection()).getFirstElement();
 					Menu m = new Menu(viewer.getTree());
 					
-					if (o instanceof TipologieImmobiliVO){
+					if (o instanceof Tipologieimmobili){
 					
 						MenuItem miNuovo = new MenuItem(m,SWT.PUSH);
 						miNuovo.setImage(Activator.getImageDescriptor("/icons/filenew.png").createImage());
@@ -722,7 +711,7 @@ public class ImmobiliTreeView extends ViewPart {
 						});
 						
 					}
-					if (o instanceof ImmobiliVO){
+					if (o instanceof Immobili){
 						
 						MenuItem miCancella = new MenuItem(m,SWT.PUSH);
 						miCancella.setImage(Activator.getImageDescriptor("/icons/edittrash.png").createImage());
@@ -762,7 +751,7 @@ public class ImmobiliTreeView extends ViewPart {
 				
 				Object o = ((StructuredSelection)event.getSelection()).getFirstElement();
 				
-				if (o instanceof ImmobiliVO){
+				if (o instanceof Immobili){
 					ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction((Immobili)o,null);
 					adia.run();
 				}

@@ -8,6 +8,7 @@ public class Riscaldamenti extends _Riscaldamenti {
 
     private static final long serialVersionUID = 1L; 
     private int codRiscaldamento;
+    private String comune = null;
     
 	public int getCodRiscaldamento() {
     	try {
@@ -23,6 +24,14 @@ public class Riscaldamenti extends _Riscaldamenti {
 	
 	public void initData() {
 		this.descrizione = "";
+	}
+
+	public String getComune() {
+		return comune;
+	}
+
+	public void setComune(String comune) {
+		this.comune = comune;
 	}
 
 }

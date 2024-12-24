@@ -6,7 +6,8 @@ import winkhouse.orm.auto._Statoconservativo;
 
 public class Statoconservativo extends _Statoconservativo {
 
-    private static final long serialVersionUID = 1L; 
+    private static final long serialVersionUID = 1L;
+    private String comune = null;
 
 	public int getCodStatoConservativo() {
     	try {
@@ -18,6 +19,14 @@ public class Statoconservativo extends _Statoconservativo {
 
 	public void initData() {
 		this.descrizione = "";
+	}
+
+	public String getComune() {
+		return comune;
+	}
+
+	public void setComune(String comune) {
+		this.comune = comune;
 	}
 
 }

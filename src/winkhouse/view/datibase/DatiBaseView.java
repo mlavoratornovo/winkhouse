@@ -788,8 +788,8 @@ public class DatiBaseView extends ViewPart {
 					if (agenteModel.getCodAgente() != 0){
 						Contatti cModel = oc.newObject(Contatti.class);
 						//cModel.set(agenteModel.getCodAgente());
-						agenteModel.getContattis().add(cModel);
-						tvRecapiti.setInput(agenteModel.getContattis());
+						agenteModel.getContattis1().add(cModel);
+						tvRecapiti.setInput(agenteModel.getContattis1());
 						tvRecapiti.refresh();
 						TableItem ti = tvRecapiti.getTable().getItem(tvRecapiti.getTable().getItemCount()-1);
 						Object[] sel = new Object[1];
@@ -878,7 +878,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvRecapiti.getSelection()).iterator();
 					while (it.hasNext()) {
 						Contatti cModel = (Contatti)it.next();
-						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis()
+						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis1()
 																									   .remove(cModel);
 					}
 					tvRecapiti.refresh();
@@ -942,8 +942,8 @@ public class DatiBaseView extends ViewPart {
 			public Object[] getElements(Object inputElement) {
 				return (((StructuredSelection)tvAgenti.getSelection()).getFirstElement() == null)
 						? new ArrayList().toArray()
-						: (((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis() != null)
-						   ? ((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis().toArray()
+						: (((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis1() != null)
+						   ? ((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis1().toArray()
 						   : new ArrayList().toArray();
 			}
 

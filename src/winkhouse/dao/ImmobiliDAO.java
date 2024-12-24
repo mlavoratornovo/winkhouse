@@ -19,7 +19,11 @@ import org.apache.cayenne.query.SortOrder;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ImmobiliVO;
 
@@ -178,7 +182,20 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   codClasseEnergetica,
 				   							   comune);
 	}		
-	
+
+	public ArrayList<Immobili> getImmobiliByTipologia(Tipologieimmobili ti){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		if (ti != null) {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.TIPOLOGIEIMMOBILI.eq(ti))														  
+					  .select(context));													
+		}else {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.TIPOLOGIEIMMOBILI.isNull())														  
+					  .select(context));										
+		}
+	}
+
 	public <T> ArrayList<T> getImmobiliByTipologia(String classType, Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
@@ -199,6 +216,25 @@ public class ImmobiliDAO extends BaseDAO{
 											   codTipologia);
 	}
 
+	public ArrayList<Immobili> getImmobiliByTipologiaComune(Tipologieimmobili ti, String comune){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ObjectSelect<Immobili> os = ObjectSelect.query(Immobili.class);
+		if (ti != null) {
+			os.where(Immobili.TIPOLOGIEIMMOBILI.eq(ti));					  				  					  
+		}else {
+			os.where(Immobili.TIPOLOGIEIMMOBILI.isNull());					  				  					  
+		}
+		if (comune != null) {
+			if (ti == null) {
+				os.where(Immobili.CITTA.containsIgnoreCase(comune));
+			}else {
+				os.and(Immobili.CITTA.containsIgnoreCase(comune));
+			}
+		}			
+		return new ArrayList<Immobili>(os.select(context));
+		
+	}
+	
 	public <T> ArrayList<T> getImmobiliByTipologiaComune(String classType, Integer codTipologia, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
@@ -211,7 +247,23 @@ public class ImmobiliDAO extends BaseDAO{
 											   codTipologia,
 											   comune);
 	}
+	
 
+	public ArrayList<Immobili> getImmobiliByTipologiaIsAffitti(Tipologieimmobili ti){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		if (ti != null) {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.TIPOLOGIEIMMOBILI.eq(ti))
+					  .and(Immobili.AFFITTO.eq(true))				  
+					  .select(context));													
+		}else{
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.TIPOLOGIEIMMOBILI.isNull())
+					  .and(Immobili.AFFITTO.eq(true))				  
+					  .select(context));																
+		}
+	}
+	
 	public <T> ArrayList<T> getImmobiliByTipologiaIsAffitti(String classType, Integer codTipologia){
 		return super.getObjectsByIntFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
@@ -224,6 +276,26 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   codTipologia);
 	}
 
+	public ArrayList<Immobili> getImmobiliByTipologiaIsAffittiComune(Tipologieimmobili ti, String comune){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		if (ti != null) {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.TIPOLOGIEIMMOBILI.eq(ti))
+					  .and(Immobili.AFFITTO.eq(true))
+					  .and(Immobili.CITTA.containsIgnoreCase(comune))
+					  .select(context));													
+		}else {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.TIPOLOGIEIMMOBILI.isNull())
+					  .and(Immobili.AFFITTO.eq(true))
+					  .and(Immobili.CITTA.containsIgnoreCase(comune))
+					  .select(context));													
+		}
+	}
+	public ArrayList<Immobili> getImmobiliByTipologiaIsAffittiComune(Integer codTipologia, String comune){
+		return null;
+	}
+	
 	public <T> ArrayList<T> getImmobiliByTipologiaIsAffittiComune(String classType, Integer codTipologia, String comune){
 		return super.getObjectsByIntStrFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
@@ -249,6 +321,18 @@ public class ImmobiliDAO extends BaseDAO{
 				   							   	codAgenteInseritore);
 	}
 	
+	public ArrayList<Immobili> getImmobiliByRiscaldamento(Riscaldamenti r){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		if (r != null) {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.RISCALDAMENTI.eq(r))														  
+					  .select(context));													
+		}else {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.RISCALDAMENTI.isNull())														  
+					  .select(context));										
+		}
+	}
 	public <T> ArrayList<T> getImmobiliByRiscaldamento(String classType, Integer codRiscaldamento){
 		return super.getObjectsByIntFieldValue(classType, 
 				   							   (WinkhouseUtils.getInstance().getTipoArchivio())
@@ -296,7 +380,20 @@ public class ImmobiliDAO extends BaseDAO{
 				   							      : IMMOBILI_BY_RISCALDAMENTONULL_ISAFFITTI_COMUNE, 
 					   						   codRiscaldamento, comune);
 	}
-
+	
+	public ArrayList<Immobili> getImmobiliByStatoConservativo(Statoconservativo sc){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		if (sc != null) {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.STATOCONSERVATIVO.eq(sc))														  
+					  .select(context));													
+		}else {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.STATOCONSERVATIVO.isNull())														  
+					  .select(context));										
+		}
+	}
+	
 	public <T> ArrayList<T> getImmobiliByStatoConservativo(String classType, Integer codStatoConservativo){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())
@@ -333,6 +430,18 @@ public class ImmobiliDAO extends BaseDAO{
 											   	codClasseEnergetica);
 	}
 
+	public ArrayList<Immobili> getImmobiliByClasseEnergetica(Classienergetiche ce){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		if (ce != null) {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.CLASSIENERGETICHE.eq(ce))														  
+					  .select(context));													
+		}else {
+			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+					  .where(Immobili.CLASSIENERGETICHE.isNull())														  
+					  .select(context));										
+		}
+	}
 	public <T> ArrayList<T> getImmobiliByClasseEnergetica(String classType, Integer codClasseEnergetica){
 		return super.getObjectsByIntFieldValue(classType, 
 											   (WinkhouseUtils.getInstance().getTipoArchivio())

@@ -39,4 +39,11 @@ public class Immobili extends _Immobili {
 		return returnValue;
     }
 
+	@Override
+	public String toString() {
+		return getRif() + " - " + getCitta() + " " + getIndirizzo();
+	}
+    
+    
+
 }

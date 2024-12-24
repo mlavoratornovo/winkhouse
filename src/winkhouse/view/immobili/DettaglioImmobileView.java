@@ -921,8 +921,8 @@ public class DettaglioImmobileView extends ViewPart
 			cvtipologia.addSelectionChangedListener(new ISelectionChangedListener(){
 	
 				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setTipologieimmobili((Tipologieimmobili)((StructuredSelection)event.getSelection()).getFirstElement());
+				public void selectionChanged(SelectionChangedEvent event) {								
+					immobile.setTipologieimmobili(immobile.getObjectContext().localObject((Tipologieimmobili)((StructuredSelection)event.getSelection()).getFirstElement()));
 				}
 				
 			});
@@ -965,7 +965,7 @@ public class DettaglioImmobileView extends ViewPart
 	                 null);
 						
 			if (immobile.getDatalibero() != null){
-				tliberoda.setText(formatter.format(immobile.getDatalibero()));
+				tliberoda.setText(formatter.format(Date.from(immobile.getDatalibero().atStartOfDay(ZoneId.systemDefault()).toInstant())));
 			}
 			
 			cvstato.setContentProvider(new IStructuredContentProvider(){
@@ -998,7 +998,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setStatoconservativo((Statoconservativo)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setStatoconservativo(immobile.getObjectContext().localObject((Statoconservativo)((StructuredSelection)event.getSelection()).getFirstElement()));				
 				}
 				
 			});
@@ -1068,7 +1068,7 @@ public class DettaglioImmobileView extends ViewPart
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setRiscaldamenti((Riscaldamenti)((StructuredSelection)event.getSelection()).getFirstElement());				
+					immobile.setRiscaldamenti(immobile.getObjectContext().localObject((Riscaldamenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 				}
 				
 			});
@@ -1113,8 +1113,8 @@ public class DettaglioImmobileView extends ViewPart
 			cvclasseenergetica.addSelectionChangedListener(new ISelectionChangedListener(){
 	
 				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setClassienergetiche(((Classienergetiche)((StructuredSelection)event.getSelection()).getFirstElement()));
+				public void selectionChanged(SelectionChangedEvent event) {					
+					immobile.setClassienergetiche(immobile.getObjectContext().localObject((Classienergetiche)((StructuredSelection)event.getSelection()).getFirstElement()));
 				}
 				
 			});
@@ -2559,8 +2559,8 @@ public class DettaglioImmobileView extends ViewPart
 	
 	private void bindAgenzia(DataBindingContext bindingContext){
 		if (immobile != null){
-			if (immobile.getDatainserimento() != null){
-				dcdatainserimento.setText(formatter.format(immobile.getDatainserimento()));
+			if (immobile.getDatainserimento() != null){				
+				dcdatainserimento.setText(formatter.format(Date.from(immobile.getDatainserimento().atStartOfDay(ZoneId.systemDefault()).toInstant())));
 			}
 			
 //			bindingContext.bindValue(SWTObservables.observeText(

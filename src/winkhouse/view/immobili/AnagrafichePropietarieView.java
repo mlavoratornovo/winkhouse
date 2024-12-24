@@ -1,6 +1,7 @@
 package winkhouse.view.immobili;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -110,7 +111,7 @@ public class AnagrafichePropietarieView extends ViewPart {
 
 			@Override
 			public Object[] getElements(Object inputElement) {
-				return ((ArrayList)inputElement).toArray();
+				return ((List)inputElement).toArray();
 			}
 
 			@Override
@@ -135,11 +136,11 @@ public class AnagrafichePropietarieView extends ViewPart {
 			public String getColumnText(Object element, int columnIndex) {
 				
 				switch(columnIndex){
-				case 0 : return ((AnagraficheModel)element).getNome();
-				case 1 : return ((AnagraficheModel)element).getCognome();
-				case 2 : return ((AnagraficheModel)element).getRagioneSociale();
-				case 3 : return ((AnagraficheModel)element).getCitta();
-				case 4 : return String.valueOf(((AnagraficheModel)element).getIndirizzo());
+				case 0 : return ((Immobilipropietari)element).getAnagrafiche().getNome();
+				case 1 : return ((Immobilipropietari)element).getAnagrafiche().getCognome();
+				case 2 : return ((Immobilipropietari)element).getAnagrafiche().getRagsoc();
+				case 3 : return ((Immobilipropietari)element).getAnagrafiche().getCitta();
+				case 4 : return String.valueOf(((Immobilipropietari)element).getAnagrafiche().getIndirizzo());
 				
 				default : return "";
 				}

@@ -1436,7 +1436,7 @@
 	<obj-relationship name="colloquicriteriricercas" source="Agenti" target="Colloquicriteriricerca" deleteRule="Nullify" db-relationship-path="colloquicriteriricercas"/>
 	<obj-relationship name="colloquis" source="Agenti" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloquis"/>
 	<obj-relationship name="colloquis1" source="Agenti" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloquis1"/>
-	<obj-relationship name="contattis" source="Agenti" target="Contatti" deleteRule="Cascade" db-relationship-path="contattis"/>
+	<obj-relationship name="contattis" source="Agenti" target="Contatti" deleteRule="Nullify" db-relationship-path="contattis"/>
 	<obj-relationship name="contattis1" source="Agenti" target="Contatti" deleteRule="Nullify" db-relationship-path="contattis1"/>
 	<obj-relationship name="daticatastalis" source="Agenti" target="Daticatastali" deleteRule="Nullify" db-relationship-path="daticatastalis"/>
 	<obj-relationship name="entities" source="Agenti" target="Entity" deleteRule="Nullify" db-relationship-path="entities"/>

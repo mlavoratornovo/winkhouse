@@ -8,6 +8,7 @@ public class Classienergetiche extends _Classienergetiche {
 
     private static final long serialVersionUID = 1L; 
     private int codClasseEnergetica;
+    private String comune = null;
     
 	public void setCodClasseEnergetica(int codClasseEnergetica) {
 		this.codClasseEnergetica = codClasseEnergetica;
@@ -23,6 +24,14 @@ public class Classienergetiche extends _Classienergetiche {
 	
 	public void initData() {
 		this.descrizione = "";
+	}
+
+	public String getComune() {
+		return comune;
+	}
+
+	public void setComune(String comune) {
+		this.comune = comune;
 	}
 
 }
