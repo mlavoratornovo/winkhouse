@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -123,45 +124,56 @@ public class TipologieImmobiliHelper {
 	}
 	
 	public Boolean deleteTipologiaImmobili(Tipologieimmobili tipologieImmobiliVO){
+		
 		Boolean result = true;
 		
-		TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-				
-		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
-		ArrayList immobili = immobiliDAO.getImmobiliByTipologia(ImmobiliVO.class.getName(), tipologieImmobiliVO.getCodTipologiaImmobile());
-				
-		if ((immobili.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione tipologia immobile",
-														  buildDeleteMessage(tipologieImmobiliVO,
-																  			 immobili.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  tipologieImmobiliVO,
-				    		   													  immobili.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-		}else{
-			result = tiDAO.delete(tipologieImmobiliVO.getCodTipologiaImmobile(), null, true);
-			if (result){
-				MobiliaDatiBaseCache.getInstance().setTipologieImmobili(null);
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione tipologia immobili", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione tipologia immobili", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			tipologieImmobiliVO.getObjectContext().deleteObject(tipologieImmobiliVO);
+			tipologieImmobiliVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
+
+//		Boolean result = true;
+//		
+//		TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
+//				
+//		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
+//		ArrayList immobili = immobiliDAO.getImmobiliByTipologia(ImmobiliVO.class.getName(), tipologieImmobiliVO.getCodTipologiaImmobile());
+//				
+//		if ((immobili.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione tipologia immobile",
+//														  buildDeleteMessage(tipologieImmobiliVO,
+//																  			 immobili.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  tipologieImmobiliVO,
+//				    		   													  immobili.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//		}else{
+//			result = tiDAO.delete(tipologieImmobiliVO.getCodTipologiaImmobile(), null, true);
+//			if (result){
+//				MobiliaDatiBaseCache.getInstance().setTipologieImmobili(null);
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione tipologia immobili", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione tipologia immobili", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
 		
 		MobiliaDatiBaseCache.getInstance().setTipologieImmobili(null);
 		

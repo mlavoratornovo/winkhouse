@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -123,45 +124,56 @@ public class TipologiaStanzeHelper {
 	}
 	
 	public Boolean deleteTipologiaStanze(Tipologiastanze tipologiaStanzeVO){
+		
 		Boolean result = true;
 		
-		TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-				
-		StanzeDAO stanzeDAO = new StanzeDAO();
-		ArrayList stanze = stanzeDAO.listByTipologia(StanzeImmobiliVO.class.getName(), tipologiaStanzeVO.getCodTipologiaStanza());
-				
-		if ((stanze.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione tipologia stanze",
-														  buildDeleteMessage(tipologiaStanzeVO,
-																  			 stanze.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  tipologiaStanzeVO,
-				    		   													  stanze.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-			
-		}else{
-			result = tsDAO.delete(tipologiaStanzeVO.getCodTipologiaStanza(), null, true);			
-			if (result){
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione tipologia stanze", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione tipologia stanze", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			tipologiaStanzeVO.getObjectContext().deleteObject(tipologiaStanzeVO);
+			tipologiaStanzeVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
+		
+//		Boolean result = true;
+//		
+//		TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
+//				
+//		StanzeDAO stanzeDAO = new StanzeDAO();
+//		ArrayList stanze = stanzeDAO.listByTipologia(StanzeImmobiliVO.class.getName(), tipologiaStanzeVO.getCodTipologiaStanza());
+//				
+//		if ((stanze.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione tipologia stanze",
+//														  buildDeleteMessage(tipologiaStanzeVO,
+//																  			 stanze.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  tipologiaStanzeVO,
+//				    		   													  stanze.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//			
+//		}else{
+//			result = tsDAO.delete(tipologiaStanzeVO.getCodTipologiaStanza(), null, true);			
+//			if (result){
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione tipologia stanze", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione tipologia stanze", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
 		
 		MobiliaDatiBaseCache.getInstance().setTipologieStanze(null);
 		

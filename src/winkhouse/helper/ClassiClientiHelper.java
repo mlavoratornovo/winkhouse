@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -125,43 +126,52 @@ public class ClassiClientiHelper {
 	public Boolean deleteClasseCliente(Classicliente classiClientiVO){
 		Boolean result = true;
 		
-		ClassiClientiDAO ccDAO = new ClassiClientiDAO();
-				
-		AnagraficheDAO anagraficheDAO = new AnagraficheDAO();
-		ArrayList anagrafiche = anagraficheDAO.getAnagraficheByClasse(AnagraficheVO.class.getName(), classiClientiVO.getCodClasseCliente());
-				
-		if ((anagrafiche.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione classe cliente",
-														  buildDeleteMessage(classiClientiVO,
-																  			 anagrafiche.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  classiClientiVO,
-				    		   													  anagrafiche.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-		}else{
-			result = ccDAO.delete(classiClientiVO.getCodClasseCliente(), null, true);
-			if (result){
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione agente", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione agente", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			classiClientiVO.getObjectContext().deleteObject(classiClientiVO);
+			classiClientiVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
-		
+//		Boolean result = true;
+//		
+//		ClassiClientiDAO ccDAO = new ClassiClientiDAO();
+//				
+//		AnagraficheDAO anagraficheDAO = new AnagraficheDAO();
+//		ArrayList anagrafiche = anagraficheDAO.getAnagraficheByClasse(AnagraficheVO.class.getName(), classiClientiVO.getCodClasseCliente());
+//				
+//		if ((anagrafiche.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione classe cliente",
+//														  buildDeleteMessage(classiClientiVO,
+//																  			 anagrafiche.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  classiClientiVO,
+//				    		   													  anagrafiche.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//		}else{
+//			result = ccDAO.delete(classiClientiVO.getCodClasseCliente(), null, true);
+//			if (result){
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione agente", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione agente", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
+//		
 		MobiliaDatiBaseCache.getInstance().setClassiClienti(null);
 		
 		return result;

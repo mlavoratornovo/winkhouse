@@ -28,14 +28,12 @@ public class Agenti extends _Agenti {
 	}
     
     public void initData() {
-    	this.nome = "";
+//    	this.nome = "";
     	this.cognome = "";
     	this.cap = "";
     	this.citta = "";
     	this.indirizzo = "";
     	this.provincia = "";
-    	this.username = "";
-    	this.password = "";
     }
     
     

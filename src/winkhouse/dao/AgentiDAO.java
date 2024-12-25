@@ -274,8 +274,13 @@ public class AgentiDAO extends BaseDAO{
 		return returnValue;
 	}
 	
-	public <T> ArrayList<T> checkSetPassword(String classType){
-		return super.list(classType, CHK_SET_PASSWORDS);
+	public ArrayList<Agenti> checkSetPassword(){
+		
+		return new ArrayList<Agenti>(ObjectSelect.query(Agenti.class)
+									.where(Agenti.USERNAME.isNotNull())
+									.and(Agenti.PASSWORD.isNotNull())
+									.select(WinkhouseUtils.getInstance().getNewCayenneObjectContext()));
+		
 	}
 	
 	public Agenti loginAgente(Agenti aVO){

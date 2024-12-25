@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -124,45 +125,56 @@ public class RiscaldamentiHelper {
 	}
 	
 	public Boolean deleteRiscaldamento(Riscaldamenti riscaldamentiVO){
+		
 		Boolean result = true;
 		
-		RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-				
-		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
-		ArrayList immobili = immobiliDAO.getImmobiliByRiscaldamento(ImmobiliVO.class.getName(), riscaldamentiVO.getCodRiscaldamento());
-				
-		if ((immobili.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione riscaldamento",
-														  buildDeleteMessage(riscaldamentiVO,
-																  			 immobili.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  riscaldamentiVO,
-				    		   													  immobili.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-		}else{
-			result = rDAO.delete(riscaldamentiVO.getCodRiscaldamento(), null, true);
-			if (result){
-				MobiliaDatiBaseCache.getInstance().setRiscaldamenti(null);
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione riscaldamento", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione riscaldamento", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			riscaldamentiVO.getObjectContext().deleteObject(riscaldamentiVO);
+			riscaldamentiVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
+		
+//		Boolean result = true;
+//		
+//		RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
+//				
+//		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
+//		ArrayList immobili = immobiliDAO.getImmobiliByRiscaldamento(ImmobiliVO.class.getName(), riscaldamentiVO.getCodRiscaldamento());
+//				
+//		if ((immobili.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione riscaldamento",
+//														  buildDeleteMessage(riscaldamentiVO,
+//																  			 immobili.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  riscaldamentiVO,
+//				    		   													  immobili.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//		}else{
+//			result = rDAO.delete(riscaldamentiVO.getCodRiscaldamento(), null, true);
+//			if (result){
+//				MobiliaDatiBaseCache.getInstance().setRiscaldamenti(null);
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione riscaldamento", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione riscaldamento", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
 		
 		MobiliaDatiBaseCache.getInstance().setRiscaldamenti(null);
 		

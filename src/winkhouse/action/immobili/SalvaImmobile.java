@@ -82,7 +82,7 @@ public class SalvaImmobile extends Action {
 				
 				if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
 					boolean isnew = (immobile.getCodImmobile() == 0)?true:false;
-					WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
+					immobile.getObjectContext().commitChanges();
 					WinkhouseUtils.getInstance().setCodiciImmobili(null);
 					MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 												  "Salvataggio immobile",

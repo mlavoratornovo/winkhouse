@@ -145,10 +145,16 @@ public class DatiBaseView extends ViewPart {
 	
 	private String[] descTableArray = {"Descrizione"};
 	private GridData tabella = null;
-	
-	private ObjectContext oc = null;
-	private ObjectContext ocAgenti = null;
-	private ObjectContext ocContatti = null;
+		
+	private ObjectContext ocAgenti = null;	
+	private ObjectContext ocRiscaldamenti = null;
+	private ObjectContext ocClassiClienti = null;
+	private ObjectContext ocClassiEnergetiche = null;
+	private ObjectContext ocStatoConservativo = null;
+	private ObjectContext ocTipiAppuntamenti = null;
+	private ObjectContext ocTipiContatti = null;
+	private ObjectContext ocTipiImmobili = null;
+	private ObjectContext ocTipiStanze = null;
 	
 	public DatiBaseView() {
 		
@@ -156,9 +162,16 @@ public class DatiBaseView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		oc = WinkhouseUtils.getInstance().getCayenneObjectContext();
-		ocAgenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
-		ocContatti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		
+		ocAgenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();		
+		ocRiscaldamenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocClassiClienti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocClassiEnergetiche = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocStatoConservativo = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocTipiAppuntamenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocTipiContatti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocTipiImmobili = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocTipiStanze = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		
 		tabella = new GridData();
 		tabella.grabExcessHorizontalSpace = true;
@@ -426,6 +439,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			protected CellEditor getCellEditor(Object element) {
+				if (((Agenti)element).getNome() == null) {
+					((Agenti)element).setNome("");
+				}
 				TextCellEditor tce = new TextCellEditor(tvAgenti.getTable());
 				tce.setValue("");
 				return tce; 
@@ -786,7 +802,7 @@ public class DatiBaseView extends ViewPart {
 				if (((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null){
 					Agenti agenteModel = (Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement();
 					if (agenteModel.getCodAgente() != 0){
-						Contatti cModel = oc.newObject(Contatti.class);
+						Contatti cModel = ocAgenti.newObject(Contatti.class);
 						//cModel.set(agenteModel.getCodAgente());
 						agenteModel.getContattis1().add(cModel);
 						tvRecapiti.setInput(agenteModel.getContattis1());
@@ -839,10 +855,11 @@ public class DatiBaseView extends ViewPart {
 					(((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null) &&
 					((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getCodAgente() != 0)
 				{
-					ContattiHelper ch = new ContattiHelper();
-					ch.updateListaContatti((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement(),
-										   null,
-										   true);					
+//					ContattiHelper ch = new ContattiHelper();
+					ocAgenti.commitChanges();
+//					ch.updateListaContatti((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement(),
+//										   null,
+//										   true);					
 				}else{
 					MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
 															 .getActiveWorkbenchWindow()
@@ -877,10 +894,11 @@ public class DatiBaseView extends ViewPart {
 				if (tvRecapiti.getSelection() != null){
 					Iterator it = ((StructuredSelection)tvRecapiti.getSelection()).iterator();
 					while (it.hasNext()) {
-						Contatti cModel = (Contatti)it.next();
+						Contatti cModel = (Contatti)it.next();						
 						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis1()
-																									   .remove(cModel);
+																								  .remove(cModel);
 					}
+					ocAgenti.commitChanges();
 					tvRecapiti.refresh();
 				}
 			}
@@ -1053,7 +1071,7 @@ public class DatiBaseView extends ViewPart {
 			protected void setValue(Object element, Object value) {		
 				if (((Integer)value).intValue() > -1){
 					Contatti cModel = ((Contatti)element);
-					cModel.setTipologiecontatti(MobiliaDatiBaseCache.getInstance().getTipologieContatti().get((Integer)value));
+					cModel.setTipologiecontatti(cModel.getObjectContext().localObject(MobiliaDatiBaseCache.getInstance().getTipologieContatti().get((Integer)value)));
 					tvRecapiti.refresh();
 				}
 			}
@@ -1586,8 +1604,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				ClassiClientiHelper cch = new ClassiClientiHelper();				
-				cch.updateDatiBase(classiclienti);
+//				ClassiClientiHelper cch = new ClassiClientiHelper();				
+//				cch.updateDatiBase(classiclienti);
+				ocClassiClienti.commitChanges();
 				classiclienti = null;
 				tvClassiClienti.setInput(new Object());
 				tvClassiClienti.refresh();
@@ -2025,7 +2044,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Riscaldamenti rVO = oc.newObject(Riscaldamenti.class);
+				Riscaldamenti rVO = ocRiscaldamenti.newObject(Riscaldamenti.class);
 				rVO.setDescrizione("Nuovo Riscaldamento");
 				riscaldamenti.add(rVO);
 				tvRiscaldamenti.setInput(riscaldamenti);
@@ -2065,8 +2084,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				RiscaldamentiHelper rh = new RiscaldamentiHelper();				
-				rh.updateDatiBase(riscaldamenti);
+//				RiscaldamentiHelper rh = new RiscaldamentiHelper();				
+//				rh.updateDatiBase(riscaldamenti);
+				ocRiscaldamenti.commitChanges();
 				riscaldamenti = null;
 				tvRiscaldamenti.setInput(new Object());
 				tvRiscaldamenti.refresh();
@@ -2279,7 +2299,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Statoconservativo scVO = oc.newObject(Statoconservativo.class);;
+				Statoconservativo scVO = ocStatoConservativo.newObject(Statoconservativo.class);;
 				scVO.setDescrizione("Nuovo stato conservativo");
 				statoconservativo.add(scVO);
 				tvStatoConservativo.setInput(statoconservativo);
@@ -2319,8 +2339,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				StatoConservativoHelper sch = new StatoConservativoHelper();		
-				sch.updateDatiBase(statoconservativo);
+//				StatoConservativoHelper sch = new StatoConservativoHelper();		
+//				sch.updateDatiBase(statoconservativo);
+				ocStatoConservativo.commitChanges();
 				statoconservativo = null;
 				tvStatoConservativo.setInput(new Object());
 				tvStatoConservativo.refresh();
@@ -2534,7 +2555,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Tipologiastanze scVO = oc.newObject(Tipologiastanze.class);
+				Tipologiastanze scVO = ocTipiStanze.newObject(Tipologiastanze.class);
 				scVO.setDescrizione("Nuovo tipologia stanze");
 				tipologiastanze.add(scVO);
 				tvTipologiaStanze.setInput(tipologiastanze);
@@ -2574,8 +2595,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipologiaStanzeHelper tsh = new TipologiaStanzeHelper();		
-				tsh.updateDatiBase(tipologiastanze);
+//				TipologiaStanzeHelper tsh = new TipologiaStanzeHelper();		
+//				tsh.updateDatiBase(tipologiastanze);
+				ocTipiStanze.commitChanges();
 				tipologiastanze = null;
 				tvTipologiaStanze.setInput(new Object());
 				tvTipologiaStanze.refresh();
@@ -3004,7 +3026,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Tipologiecontatti scVO = oc.newObject(Tipologiecontatti.class);
+				Tipologiecontatti scVO = ocTipiContatti.newObject(Tipologiecontatti.class);
 				scVO.setDescrizione("Nuovo tipologia contatto");
 				tipologiecontatti.add(scVO);
 				tvTipologieContatti.setInput(tipologiecontatti);
@@ -3044,8 +3066,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipologiaContattiHelper tch = new TipologiaContattiHelper();		
-				tch.updateDatiBase(tipologiecontatti);
+//				TipologiaContattiHelper tch = new TipologiaContattiHelper();		
+//				tch.updateDatiBase(tipologiecontatti);
+				ocTipiContatti.commitChanges();
 				tipologiecontatti = null;
 				tvTipologieContatti.setInput(new Object());
 				tvTipologieContatti.refresh();
@@ -3258,7 +3281,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Tipologieimmobili scVO = oc.newObject(Tipologieimmobili.class);
+				Tipologieimmobili scVO = ocTipiImmobili.newObject(Tipologieimmobili.class);
 				scVO.setDescrizione("Nuovo tipologia immobile");
 				tipologieimmobili.add(scVO);
 				tvTipologieImmobili.setInput(tipologieimmobili);
@@ -3299,8 +3322,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipologieImmobiliHelper tih = new TipologieImmobiliHelper();		
-				tih.updateDatiBase(tipologieimmobili);
+//				TipologieImmobiliHelper tih = new TipologieImmobiliHelper();		
+//				tih.updateDatiBase(tipologieimmobili);
+				ocTipiImmobili.commitChanges();
 				tipologieimmobili = null;
 				tvTipologieImmobili.setInput(new Object());
 				tvTipologieImmobili.refresh();
@@ -3521,7 +3545,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Tipiappuntamenti taVO = oc.newObject(Tipiappuntamenti.class);
+				Tipiappuntamenti taVO = ocTipiAppuntamenti.newObject(Tipiappuntamenti.class);
 				taVO.setOrdine(1);
 				taVO.setDescrizione("Nuovo tipo appuntamento");
 				tipiappuntamenti.add(taVO);
@@ -3562,8 +3586,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				TipiAppuntamentiHelper tah = new TipiAppuntamentiHelper();				
-				tah.updateDatiBase(tipiappuntamenti);
+//				TipiAppuntamentiHelper tah = new TipiAppuntamentiHelper();				
+//				tah.updateDatiBase(tipiappuntamenti);
+				ocTipiAppuntamenti.commitChanges();
 				tipiappuntamenti = null;
 				tvTipiAppuntamenti.setInput(new Object());
 				tvTipiAppuntamenti.refresh();
@@ -3786,7 +3811,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Classienergetiche ceVO = oc.newObject(Classienergetiche.class);				
+				Classienergetiche ceVO = ocClassiEnergetiche.newObject(Classienergetiche.class);				
 				ceVO.setOrdine(1);
 				ceVO.setDescrizione("Nuova classe energetica");
 				classienergetiche.add(ceVO);
@@ -3827,8 +3852,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				ClassiEnergeticheHelper ceh = new ClassiEnergeticheHelper();							
-				ceh.updateDatiBase(classienergetiche);
+//				ClassiEnergeticheHelper ceh = new ClassiEnergeticheHelper();							
+//				ceh.updateDatiBase(classienergetiche);
+				ocClassiEnergetiche.commitChanges();
 				classienergetiche = null;
 				tvClassiEnergetiche.setInput(new Object());
 				tvClassiEnergetiche.refresh();

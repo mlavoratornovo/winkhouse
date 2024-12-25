@@ -2646,8 +2646,8 @@ public class DettaglioImmobileView extends ViewPart
 			cvagenteinseritore.addSelectionChangedListener(new ISelectionChangedListener(){
 	
 				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					immobile.setAgenti((Agenti)((StructuredSelection)event.getSelection()).getFirstElement());				
+				public void selectionChanged(SelectionChangedEvent event) {					
+					immobile.setAgenti(immobile.getObjectContext().localObject((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
 				}
 				
 			});

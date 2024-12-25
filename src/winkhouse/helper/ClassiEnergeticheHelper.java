@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -122,45 +123,55 @@ public class ClassiEnergeticheHelper {
 	}
 	
 	public Boolean deleteClasseEnergetica(Classienergetiche classeEnergeticaVO){
+		
 		Boolean result = true;
 		
-		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-				
-		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
-		ArrayList immobili = immobiliDAO.listImmobiliByCodClasseEnergetica(ImmobiliModel.class.getName(), classeEnergeticaVO.getCodClasseEnergetica());
-				
-		if ((immobili.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione classe energetica",
-														  buildDeleteMessage(classeEnergeticaVO,
-																  			 immobili.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  classeEnergeticaVO,
-				    		   													  immobili.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-			
-		}else{
-			result = ceDAO.delete(classeEnergeticaVO.getCodClasseEnergetica(), null, true);
-			if (result){
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione classe energetica", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - classe energetica", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			classeEnergeticaVO.getObjectContext().deleteObject(classeEnergeticaVO);
+			classeEnergeticaVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
+//		Boolean result = true;
+//		
+//		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
+//				
+//		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
+//		ArrayList immobili = immobiliDAO.listImmobiliByCodClasseEnergetica(ImmobiliModel.class.getName(), classeEnergeticaVO.getCodClasseEnergetica());
+//				
+//		if ((immobili.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione classe energetica",
+//														  buildDeleteMessage(classeEnergeticaVO,
+//																  			 immobili.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  classeEnergeticaVO,
+//				    		   													  immobili.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//			
+//		}else{
+//			result = ceDAO.delete(classeEnergeticaVO.getCodClasseEnergetica(), null, true);
+//			if (result){
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione classe energetica", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - classe energetica", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
 		
 		MobiliaDatiBaseCache.getInstance().setClassiEnergetiche(null);
 		

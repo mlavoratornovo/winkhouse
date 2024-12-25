@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -123,47 +124,58 @@ public class TipiAppuntamentiHelper {
 	}
 	
 	public Boolean deleteTipiAppuntamenti(Tipiappuntamenti tipiAppuntamentiVO){
+		
 		Boolean result = true;
 		
-		TipiAppuntamentiDAO taDAO = new TipiAppuntamentiDAO();
-				
-		AppuntamentiDAO appuntamentiDAO = new AppuntamentiDAO();
-		ArrayList appuntamenti = appuntamentiDAO.listAppuntamentiByCodTipoAppuntamento(AppuntamentiVO.class.getName(), 
-																					   tipiAppuntamentiVO.getCodTipoAppuntamento());
-				
-		if ((appuntamenti.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione tipo appuntamento",
-														  buildDeleteMessage(tipiAppuntamentiVO,
-																  			 appuntamenti.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  tipiAppuntamentiVO,
-				    		   													  appuntamenti.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-			
-		}else{
-			result = taDAO.delete(tipiAppuntamentiVO.getCodTipoAppuntamento(), null, true);
-			if (result){
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione tipo appuntamento", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - tipo appuntamento", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			tipiAppuntamentiVO.getObjectContext().deleteObject(tipiAppuntamentiVO);
+			tipiAppuntamentiVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
-		
+
+//		Boolean result = true;
+//		
+//		TipiAppuntamentiDAO taDAO = new TipiAppuntamentiDAO();
+//				
+//		AppuntamentiDAO appuntamentiDAO = new AppuntamentiDAO();
+//		ArrayList appuntamenti = appuntamentiDAO.listAppuntamentiByCodTipoAppuntamento(AppuntamentiVO.class.getName(), 
+//																					   tipiAppuntamentiVO.getCodTipoAppuntamento());
+//				
+//		if ((appuntamenti.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione tipo appuntamento",
+//														  buildDeleteMessage(tipiAppuntamentiVO,
+//																  			 appuntamenti.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  tipiAppuntamentiVO,
+//				    		   													  appuntamenti.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//			
+//		}else{
+//			result = taDAO.delete(tipiAppuntamentiVO.getCodTipoAppuntamento(), null, true);
+//			if (result){
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione tipo appuntamento", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - tipo appuntamento", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
+//		
 		MobiliaDatiBaseCache.getInstance().setTipiAppuntamenti(null);
 		
 		return result;

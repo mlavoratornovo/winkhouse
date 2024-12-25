@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -122,46 +123,57 @@ public class StatoConservativoHelper {
 	}
 	
 	public Boolean deleteStatoConservativo(Statoconservativo statoConservativoVO){
-		Boolean result = true;
 		
-		StatoConservativoDAO scDAO = new StatoConservativoDAO();
-				
-		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
-		ArrayList immobili = immobiliDAO.getImmobiliByStatoConservativo(ImmobiliVO.class.getName(), statoConservativoVO.getCodStatoConservativo());
-				
-		if ((immobili.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione stato conservativo",
-														  buildDeleteMessage(statoConservativoVO,
-																  			 immobili.size()));  
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  statoConservativoVO,
-				    		   													  immobili.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-		}else{
-			result = scDAO.delete(statoConservativoVO.getCodStatoConservativo(), null, true);
-			if (result){
-				MobiliaDatiBaseCache.getInstance().setStatiConservativi(null);
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione stato conservativo", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione stato conservativo", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
-		}		
+Boolean result = true;
 		
+		try {
+			statoConservativoVO.getObjectContext().deleteObject(statoConservativoVO);
+			statoConservativoVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
+		}
+		
+//		Boolean result = true;
+//		
+//		StatoConservativoDAO scDAO = new StatoConservativoDAO();
+//				
+//		ImmobiliDAO immobiliDAO = new ImmobiliDAO();
+//		ArrayList immobili = immobiliDAO.getImmobiliByStatoConservativo(ImmobiliVO.class.getName(), statoConservativoVO.getCodStatoConservativo());
+//				
+//		if ((immobili.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione stato conservativo",
+//														  buildDeleteMessage(statoConservativoVO,
+//																  			 immobili.size()));  
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  statoConservativoVO,
+//				    		   													  immobili.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//		}else{
+//			result = scDAO.delete(statoConservativoVO.getCodStatoConservativo(), null, true);
+//			if (result){
+//				MobiliaDatiBaseCache.getInstance().setStatiConservativi(null);
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione stato conservativo", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione stato conservativo", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}		
+		MobiliaDatiBaseCache.getInstance().setStatiConservativi(null);
 		return result;
 	}
 	

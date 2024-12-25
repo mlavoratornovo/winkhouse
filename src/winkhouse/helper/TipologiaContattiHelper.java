@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.cayenne.DeleteDenyException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -122,48 +123,59 @@ public class TipologiaContattiHelper {
 	}
 	
 	public Boolean deleteTipologiaContatti(Tipologiecontatti tipologiaContattiVO){
+		
 		Boolean result = true;
 		
-		TipologiaContattiDAO tcDAO = new TipologiaContattiDAO();
-				
-		ContattiDAO contattiDAO = new ContattiDAO();
-		ArrayList contatti = contattiDAO.listByTipologia(ContattiVO.class.getName(), tipologiaContattiVO.getCodTipologiaContatto());
-				
-		if ((contatti.size() != 0)){
-			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-														  "Informazioni - cancellazione tipologia contatto",
-														  buildDeleteMessage(tipologiaContattiVO,
-																  			 contatti.size()));  
-			
-			if (risposta){
-				try {
-				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-				    		   													  tipologiaContattiVO,
-				    		   													  contatti.size());
-				       
-				       new ProgressMonitorDialog(Activator.getDefault()
-				    		   							  .getWorkbench()
-				    		   							  .getActiveWorkbenchWindow()
-				    		   							  .getShell()).run(false, false, op);
-				       
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-			}
-		}else{
-			result = tcDAO.delete(tipologiaContattiVO.getCodTipologiaContatto(), null, true);
-			if (result){
-				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-											  "Informazioni - cancellazione tipologia contatto", 
-											  "Cancellazione eseguita con successo");
-			}else{
-				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-						  				"Errore - cancellazione tipologia contatto", 
-						  				"Errore durante la cancellazione operazione annullata");				
-			}
+		try {
+			tipologiaContattiVO.getObjectContext().deleteObject(tipologiaContattiVO);
+			tipologiaContattiVO.getObjectContext().commitChanges();
+		} catch (DeleteDenyException e) {
+			// TODO Auto-generated catch block
+			result = false;
 		}
+
+//		Boolean result = true;
+//		
+//		TipologiaContattiDAO tcDAO = new TipologiaContattiDAO();
+//				
+//		ContattiDAO contattiDAO = new ContattiDAO();
+//		ArrayList contatti = contattiDAO.listByTipologia(ContattiVO.class.getName(), tipologiaContattiVO.getCodTipologiaContatto());
+//				
+//		if ((contatti.size() != 0)){
+//			boolean risposta = MessageDialog.openQuestion(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//														  "Informazioni - cancellazione tipologia contatto",
+//														  buildDeleteMessage(tipologiaContattiVO,
+//																  			 contatti.size()));  
+//			
+//			if (risposta){
+//				try {
+//				       IRunnableWithProgress op = new DeleteUpdaterProgressDialog(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//				    		   													  tipologiaContattiVO,
+//				    		   													  contatti.size());
+//				       
+//				       new ProgressMonitorDialog(Activator.getDefault()
+//				    		   							  .getWorkbench()
+//				    		   							  .getActiveWorkbenchWindow()
+//				    		   							  .getShell()).run(false, false, op);
+//				       
+//				    } catch (InvocationTargetException e) {
+//				       // handle exception
+//				    } catch (InterruptedException e) {
+//				       // handle cancelation
+//				    }
+//			}
+//		}else{
+//			result = tcDAO.delete(tipologiaContattiVO.getCodTipologiaContatto(), null, true);
+//			if (result){
+//				MessageDialog.openInformation(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//											  "Informazioni - cancellazione tipologia contatto", 
+//											  "Cancellazione eseguita con successo");
+//			}else{
+//				MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+//						  				"Errore - cancellazione tipologia contatto", 
+//						  				"Errore durante la cancellazione operazione annullata");				
+//			}
+//		}
 		
 		MobiliaDatiBaseCache.getInstance().setTipologieContatti(null);
 		
