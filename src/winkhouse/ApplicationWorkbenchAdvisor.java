@@ -44,7 +44,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		
 		if (ConnectionManager.getInstance().getConnectionSelectConnection() != null){
 	        AgentiDAO aDAO = new AgentiDAO();
-	        ArrayList al = aDAO.checkSetPassword(AgentiVO.class.getName());
+	        ArrayList al = aDAO.checkSetPassword();
 	        
 	        if ((al.size() > 0) && 
 	            (((WinkhouseUtils.getInstance().getHm_winkSys().get(IWinkSysProperties.LOGIN) != null)

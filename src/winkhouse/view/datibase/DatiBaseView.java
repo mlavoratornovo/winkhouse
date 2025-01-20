@@ -804,7 +804,7 @@ public class DatiBaseView extends ViewPart {
 					if (agenteModel.getCodAgente() != 0){
 						Contatti cModel = ocAgenti.newObject(Contatti.class);
 						//cModel.set(agenteModel.getCodAgente());
-						agenteModel.getContattis1().add(cModel);
+						agenteModel.addToContattis1(cModel);
 						tvRecapiti.setInput(agenteModel.getContattis1());
 						tvRecapiti.refresh();
 						TableItem ti = tvRecapiti.getTable().getItem(tvRecapiti.getTable().getItemCount()-1);
@@ -895,8 +895,7 @@ public class DatiBaseView extends ViewPart {
 					Iterator it = ((StructuredSelection)tvRecapiti.getSelection()).iterator();
 					while (it.hasNext()) {
 						Contatti cModel = (Contatti)it.next();						
-						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getContattis1()
-																								  .remove(cModel);
+						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).removeFromContattis1(cModel);
 					}
 					ocAgenti.commitChanges();
 					tvRecapiti.refresh();
