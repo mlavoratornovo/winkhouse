@@ -146,7 +146,8 @@ public class DatiBaseView extends ViewPart {
 	private String[] descTableArray = {"Descrizione"};
 	private GridData tabella = null;
 		
-	private ObjectContext ocAgenti = null;	
+	private ObjectContext ocAgenti = null;
+	private ObjectContext ocContatti = null;
 	private ObjectContext ocRiscaldamenti = null;
 	private ObjectContext ocClassiClienti = null;
 	private ObjectContext ocClassiEnergetiche = null;
@@ -163,7 +164,8 @@ public class DatiBaseView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		
-		ocAgenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();		
+		ocAgenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		ocContatti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		ocRiscaldamenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		ocClassiClienti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		ocClassiEnergetiche = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
@@ -896,8 +898,10 @@ public class DatiBaseView extends ViewPart {
 					while (it.hasNext()) {
 						Contatti cModel = (Contatti)it.next();						
 						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).removeFromContattis1(cModel);
-					}
+						ocContatti.deleteObject(ocContatti.localObject(cModel));
+					}									
 					ocAgenti.commitChanges();
+					ocContatti.commitChanges();
 					tvRecapiti.refresh();
 				}
 			}
