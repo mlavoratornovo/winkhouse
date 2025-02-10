@@ -221,7 +221,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Classienergetiche> getClassiEnergetiche() {
 		if (classiEnergetiche == null){
 			ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-			classiEnergetiche = ceDAO.listClassiEnergetiche();
+			classiEnergetiche = ceDAO.listClassiEnergetiche(null);
 		}
 		return classiEnergetiche;
 	}
@@ -235,7 +235,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Tipologieimmobili> getTipologieImmobili() {
 		if (tipologieImmobili == null){
 			TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-			tipologieImmobili = tiDAO.list();
+			tipologieImmobili = tiDAO.list(null);
 		}
 		return tipologieImmobili;
 	}

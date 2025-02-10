@@ -244,7 +244,7 @@ public class AnagraficaTreeView extends ViewPart
 				if (parentElement instanceof Classicliente){
 					return ((Classicliente)parentElement).getAnagrafiches().toArray();
 				}else{
-						ArrayList alClassi = classiDAO.list(ClassiClientiVO.class.getName());
+						ArrayList alClassi = classiDAO.list(null);
 						ArrayList anagrafiche = anagraficheDAO.getAnagraficheByNullClasse(); 
 						alClassi.addAll(anagrafiche);
 						return alClassi.toArray();

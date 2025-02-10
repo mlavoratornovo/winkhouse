@@ -73,7 +73,7 @@ public class SelezioneImmobile extends WizardPage {
 			if (parentElement instanceof Tipologieimmobili){
 				return iDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), ((TipologieImmobiliVO)parentElement).getCodTipologiaImmobile()).toArray();
 			}else{
-				ArrayList tipologie = (ArrayList)tiDAO.list(TipologieImmobiliVO.class.getName());
+				ArrayList tipologie = (ArrayList)tiDAO.list(null);
 				tipologie.addAll(iDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), 0));
 				return tipologie.toArray();
 			}

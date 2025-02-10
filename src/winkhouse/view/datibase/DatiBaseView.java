@@ -147,7 +147,7 @@ public class DatiBaseView extends ViewPart {
 	private GridData tabella = null;
 		
 	private ObjectContext ocAgenti = null;
-	private ObjectContext ocContatti = null;
+	//private ObjectContext ocContatti = null;
 	private ObjectContext ocRiscaldamenti = null;
 	private ObjectContext ocClassiClienti = null;
 	private ObjectContext ocClassiEnergetiche = null;
@@ -165,7 +165,7 @@ public class DatiBaseView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		
 		ocAgenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
-		ocContatti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		//ocContatti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		ocRiscaldamenti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		ocClassiClienti = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		ocClassiEnergetiche = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
@@ -351,12 +351,11 @@ public class DatiBaseView extends ViewPart {
 			public void mouseUp(MouseEvent e) {
 				
 				if (tvAgenti.getSelection() != null){
-					int count = 0;
-					boolean result = true;
-					Iterator it = ((StructuredSelection)tvAgenti.getSelection()).iterator();
+										
+					Iterator<Agenti> it = ((StructuredSelection)tvAgenti.getSelection()).iterator();
 					AgentiHelper ah = new AgentiHelper();					
 					while (it.hasNext()) {
-						Agenti aVO = (Agenti)it.next();
+						Agenti aVO = it.next();
 						if (ah.deleteAgente(aVO, ocAgenti)){
 							agenti.remove(aVO);							
 						}						
@@ -381,29 +380,6 @@ public class DatiBaseView extends ViewPart {
 		
 		//--				
 		tvAgenti = new TableViewer(sectionClient,SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
-//		tvAgenti.setCellModifier(new ICellModifier() {
-//			
-//			@Override
-//			public void modify(Object element, String property, Object value) {
-//				// TODO Auto-generated method stub				
-//			}
-//			
-//			@Override
-//			public Object getValue(Object element, String property) {
-//				switch (property) {
-//				case "nome":
-//					return ((Agenti)element).getNome();					
-//				default:
-//					break;
-//				}
-//				return null;
-//			}
-//			
-//			@Override
-//			public boolean canModify(Object element, String property) {
-//				return true;
-//			}
-//		});
 		TableViewerEditor.create(tvAgenti,
 								 new ColumnViewerEditorActivationStrategy(tvAgenti),
 								 ColumnViewerEditor.TABBING_HORIZONTAL|ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR|ColumnViewerEditor.TABBING_VERTICAL);
@@ -803,31 +779,26 @@ public class DatiBaseView extends ViewPart {
 			public void mouseUp(MouseEvent e) {
 				if (((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null){
 					Agenti agenteModel = (Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement();
-					if (agenteModel.getCodAgente() != 0){
-						Contatti cModel = ocAgenti.newObject(Contatti.class);
-						//cModel.set(agenteModel.getCodAgente());
-						agenteModel.addToContattis1(cModel);
-						tvRecapiti.setInput(agenteModel.getContattis1());
-						tvRecapiti.refresh();
-						TableItem ti = tvRecapiti.getTable().getItem(tvRecapiti.getTable().getItemCount()-1);
-						Object[] sel = new Object[1];
-						sel[0] = ti.getData();
 
-						StructuredSelection ss = new StructuredSelection(sel);
-						
-						tvRecapiti.setSelection(ss, true);
+					Contatti cModel = ocAgenti.newObject(Contatti.class);
+					//cModel.set(agenteModel.getCodAgente());
+					agenteModel.addToContattis1(cModel);
+					tvRecapiti.setInput(agenteModel.getContattis1());
+					tvRecapiti.refresh();
+					TableItem ti = tvRecapiti.getTable().getItem(tvRecapiti.getTable().getItemCount()-1);
+					Object[] sel = new Object[1];
+					sel[0] = ti.getData();
 
-						Event ev = new Event();
-						ev.item = ti;
-						ev.data = ti.getData();
-						ev.widget = tvRecapiti.getTable();
-						tvRecapiti.getTable().notifyListeners(SWT.Selection, ev);
+					StructuredSelection ss = new StructuredSelection(sel);
+					
+					tvRecapiti.setSelection(ss, true);
+
+					Event ev = new Event();
+					ev.item = ti;
+					ev.data = ti.getData();
+					ev.widget = tvRecapiti.getTable();
+					tvRecapiti.getTable().notifyListeners(SWT.Selection, ev);
 						
-					}else{
-						MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-												  "Attenzione", 
-								"L'agente selezionato non è stato ancora salvato nel database \n eseguirne il salvataggio prima di aggiungere i recapiti");						
-					}
 				}else{
 					MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 							"Errore creazione contatto", 
@@ -853,15 +824,9 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				if (
-					(((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null) &&
-					((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).getCodAgente() != 0)
+				if (((StructuredSelection)tvAgenti.getSelection()).getFirstElement() != null)
 				{
-//					ContattiHelper ch = new ContattiHelper();
 					ocAgenti.commitChanges();
-//					ch.updateListaContatti((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement(),
-//										   null,
-//										   true);					
 				}else{
 					MessageBox mb = new MessageBox(PlatformUI.getWorkbench()
 															 .getActiveWorkbenchWindow()
@@ -898,10 +863,9 @@ public class DatiBaseView extends ViewPart {
 					while (it.hasNext()) {
 						Contatti cModel = (Contatti)it.next();						
 						((Agenti)((StructuredSelection)tvAgenti.getSelection()).getFirstElement()).removeFromContattis1(cModel);
-						ocContatti.deleteObject(ocContatti.localObject(cModel));
+						ocAgenti.deleteObject(cModel);
 					}									
-					ocAgenti.commitChanges();
-					ocContatti.commitChanges();
+					ocAgenti.commitChanges();					
 					tvRecapiti.refresh();
 				}
 			}
@@ -916,41 +880,6 @@ public class DatiBaseView extends ViewPart {
 			
 		});	
 		
-//		ImageHyperlink ihGoogleConf = tool.createImageHyperlink(toolbarRecapiti, SWT.WRAP);		
-//		ihGoogleConf.setImage(Activator.getImageDescriptor("/icons/googleconf.png").createImage());
-//		ihGoogleConf.setHoverImage(Activator.getImageDescriptor("/icons/googleconf_hover.png").createImage());
-//		ihGoogleConf.setToolTipText("Configurazioni Google");
-//		ihGoogleConf.addMouseListener(new MouseListener(){
-//
-//			@Override
-//			public void mouseUp(MouseEvent e) {
-//				
-//				if (!tvRecapiti.getSelection().isEmpty()){
-//					ContattiModel cM = (ContattiModel)((StructuredSelection)tvRecapiti.getSelection()).getFirstElement();
-//					if (WinkhouseUtils.getInstance().isGMailAccount(cM.getContatto())){
-//						GoogleConfDialog gcd = new GoogleConfDialog(cM);
-//					}else{
-//						MessageDialog.openError(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-//				  				  				"Errore", 
-//								  				"Selezionare un contatto di tipo GMail \n Esempio : xxx@gmail.com");												
-//					}
-//				}else{
-//					MessageDialog.openWarning(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
-//							  				  "Attenzione", 
-//											  "Selezionare un contatto");						
-//
-//				}
-//			}
-//
-//			@Override
-//			public void mouseDoubleClick(MouseEvent e) {
-//			}
-//
-//			@Override
-//			public void mouseDown(MouseEvent e) {
-//			}
-//			
-//		});
 
 		tvRecapiti = new TableViewer(cRecapiti,SWT.HORIZONTAL|SWT.VERTICAL|SWT.FULL_SELECTION);
 		tvRecapiti.getTable().setLayoutData(gdTableRecapiti);
@@ -1566,8 +1495,8 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				Classicliente cVO = new Classicliente();
-				cVO.setOrdine(1);
+				Classicliente cVO = ocClassiClienti.newObject(Classicliente.class);
+				//cVO.setOrdine(1);
 				cVO.setDescrizione("Nuova categoria cliente");
 				classiclienti.add(cVO);
 				tvClassiClienti.setInput(classiclienti);
@@ -1801,7 +1730,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (classiclienti == null){
-				classiclienti = new ArrayList<Classicliente>(new ClassiClientiDAO().list(null));				
+				classiclienti = new ArrayList<Classicliente>(new ClassiClientiDAO().list(ocClassiClienti));				
 			}
 			returnValue = classiclienti.toArray();
 			return returnValue;
@@ -1943,7 +1872,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (classienergetiche == null){
-				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche());				
+				classienergetiche = new ArrayList<Classienergetiche>(new ClassiEnergeticheDAO().listClassiEnergetiche(ocClassiEnergetiche));				
 			}
 			returnValue = classienergetiche.toArray();
 			return returnValue;
@@ -3351,7 +3280,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipologieimmobili = new TipologieImmobiliDAO().list();
+				tipologieimmobili = new TipologieImmobiliDAO().list(ocTipiImmobili);
 				tvTipologieImmobili.refresh();
 			}
 
@@ -3469,7 +3398,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipologieimmobili == null){
-				tipologieimmobili = new TipologieImmobiliDAO().list();				
+				tipologieimmobili = new TipologieImmobiliDAO().list(ocTipiImmobili);				
 			}
 			returnValue = tipologieimmobili.toArray();
 			return returnValue;
@@ -3881,7 +3810,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				classienergetiche = new ClassiEnergeticheDAO().listClassiEnergetiche();
+				classienergetiche = new ClassiEnergeticheDAO().listClassiEnergetiche(ocClassiEnergetiche);
 				tvClassiEnergetiche.refresh();
 			}
 

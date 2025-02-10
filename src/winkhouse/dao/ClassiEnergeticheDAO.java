@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.exp.Property;
 import org.apache.cayenne.query.ObjectSelect;
 
 import winkhouse.db.ConnectionManager;
@@ -38,9 +39,10 @@ public class ClassiEnergeticheDAO extends BaseDAO {
 		return super.list(classType, GET_CLASSI_ENERGETICHE_AFFITTI);
 	}	
 	
-	public ArrayList<Classienergetiche> listClassiEnergetiche(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
-		return new ArrayList<Classienergetiche>(ObjectSelect.query(Classienergetiche.class).select(context));
+	public ArrayList<Classienergetiche> listClassiEnergetiche(ObjectContext context){
+		context = (context != null)?context:WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		Property<String> propertyName = Property.create("ordine", String.class);		
+		return new ArrayList<Classienergetiche>(ObjectSelect.query(Classienergetiche.class).orderBy(propertyName.asc()).select(context));
 	};
 	
 	public ArrayList<ClasseEnergeticaModel> listByComune(String comune){

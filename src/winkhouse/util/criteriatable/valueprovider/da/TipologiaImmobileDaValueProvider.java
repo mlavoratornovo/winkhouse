@@ -63,7 +63,7 @@ public class TipologiaImmobileDaValueProvider extends BaseDaValueProvider {
 			
 			tipologieImmobili = new ArrayList<IDaAValueObject>();
 			TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-			ArrayList al = tiDAO.list(TipologieImmobiliVO.class.getName());
+			ArrayList al = tiDAO.list(null);
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				

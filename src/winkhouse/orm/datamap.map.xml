@@ -1499,9 +1499,9 @@
 	<obj-relationship name="agenti" source="Attributevalue" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
 	<obj-relationship name="attribute" source="Attributevalue" target="Attribute" deleteRule="Nullify" db-relationship-path="attribute"/>
 	<obj-relationship name="agenti" source="Classicliente" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="anagrafiches" source="Classicliente" target="Anagrafiche" deleteRule="Deny" db-relationship-path="anagrafiches"/>
+	<obj-relationship name="anagrafiches" source="Classicliente" target="Anagrafiche" deleteRule="Nullify" db-relationship-path="anagrafiches"/>
 	<obj-relationship name="agenti" source="Classienergetiche" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="immobilis" source="Classienergetiche" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="immobilis" source="Classienergetiche" target="Immobili" deleteRule="Nullify" db-relationship-path="immobilis"/>
 	<obj-relationship name="agenti" source="Colloqui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
 	<obj-relationship name="agenti1" source="Colloqui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti1"/>
 	<obj-relationship name="allegaticolloquios" source="Colloqui" target="Allegaticolloquio" deleteRule="Deny" db-relationship-path="allegaticolloquios"/>
@@ -1570,21 +1570,21 @@
 	<obj-relationship name="colloquicriteriricercas" source="Ricerche" target="Colloquicriteriricerca" deleteRule="Deny" db-relationship-path="colloquicriteriricercas"/>
 	<obj-relationship name="permessis" source="Ricerche" target="Permessi" deleteRule="Deny" db-relationship-path="permessis"/>
 	<obj-relationship name="agenti" source="Riscaldamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="immobilis" source="Riscaldamenti" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="immobilis" source="Riscaldamenti" target="Immobili" deleteRule="Nullify" db-relationship-path="immobilis"/>
 	<obj-relationship name="agenti" source="Stanzeimmobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
 	<obj-relationship name="immobili" source="Stanzeimmobili" target="Immobili" deleteRule="Nullify" db-relationship-path="immobili"/>
 	<obj-relationship name="tipologiastanze" source="Stanzeimmobili" target="Tipologiastanze" deleteRule="Nullify" db-relationship-path="tipologiastanze"/>
 	<obj-relationship name="agenti" source="Statoconservativo" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="immobilis" source="Statoconservativo" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="immobilis" source="Statoconservativo" target="Immobili" deleteRule="Nullify" db-relationship-path="immobilis"/>
 	<obj-relationship name="agenti" source="Tipiappuntamenti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
 	<obj-relationship name="appuntamentis" source="Tipiappuntamenti" target="Appuntamenti" deleteRule="Deny" db-relationship-path="appuntamentis"/>
 	<obj-relationship name="agenti" source="Tipologiastanze" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="stanzeimmobilis" source="Tipologiastanze" target="Stanzeimmobili" deleteRule="Deny" db-relationship-path="stanzeimmobilis"/>
+	<obj-relationship name="stanzeimmobilis" source="Tipologiastanze" target="Stanzeimmobili" deleteRule="Nullify" db-relationship-path="stanzeimmobilis"/>
 	<obj-relationship name="agenti" source="Tipologiecolloqui" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
 	<obj-relationship name="agenti" source="Tipologiecontatti" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="contattis" source="Tipologiecontatti" target="Contatti" deleteRule="Deny" db-relationship-path="contattis"/>
+	<obj-relationship name="contattis" source="Tipologiecontatti" target="Contatti" deleteRule="Nullify" db-relationship-path="contattis"/>
 	<obj-relationship name="agenti" source="Tipologieimmobili" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
-	<obj-relationship name="immobilis" source="Tipologieimmobili" target="Immobili" deleteRule="Deny" db-relationship-path="immobilis"/>
+	<obj-relationship name="immobilis" source="Tipologieimmobili" target="Immobili" deleteRule="Nullify" db-relationship-path="immobilis"/>
 	<obj-relationship name="agenti" source="Winkgcalendar" target="Agenti" deleteRule="Nullify" db-relationship-path="agenti"/>
 	<obj-relationship name="appuntamenti" source="Winkgcalendar" target="Appuntamenti" deleteRule="Nullify" db-relationship-path="appuntamenti"/>
 	<obj-relationship name="colloqui" source="Winkgcalendar" target="Colloqui" deleteRule="Nullify" db-relationship-path="colloqui"/>

@@ -36,15 +36,9 @@ public class TipologieImmobiliDAO extends BaseDAO{
 	public TipologieImmobiliDAO() {
 
 	}
-
-	public <T> ArrayList<T> list(String classType){
-		
-		return super.list(classType, LISTA_TIPOLOGIEIMMOBILI);
-		
-	}
 	
-	public ArrayList<Tipologieimmobili> list(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+	public ArrayList<Tipologieimmobili> list(ObjectContext context){
+		context = (context != null)?context : WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		return new ArrayList<Tipologieimmobili>(ObjectSelect.query(Tipologieimmobili.class).select(context));
 	};	
 	

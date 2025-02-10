@@ -202,11 +202,11 @@ public class ColloquiTreeView extends ViewPart {
 				}
 				if (grouping.equalsIgnoreCase(IMMOBILE)){
 					TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-					return tiDAO.list(TipologieImmobiliVO.class.getName()).toArray();
+					return tiDAO.list(null).toArray();
 				}
 				if (grouping.equalsIgnoreCase(ANAGRAFICA)){
 					ClassiClientiDAO ccDAO = new ClassiClientiDAO();
-					return ccDAO.list(ClassiClientiVO.class.getName()).toArray();
+					return ccDAO.list(null).toArray();
 				}
 				if (grouping.equalsIgnoreCase(DATACOLLOQUIO)){
 					ColloquiDAO cDAO = new ColloquiDAO();

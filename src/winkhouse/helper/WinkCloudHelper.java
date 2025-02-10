@@ -38,6 +38,7 @@ import winkhouse.model.winkcloud.RicercaModel;
 import winkhouse.orm.Classicliente;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.ImmagineVO;
 import winkhouse.vo.ImmobiliPropietariVO;
@@ -79,8 +80,8 @@ public class WinkCloudHelper {
 		
 		tipologieImmobili.clear();
 		TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-		ArrayList<TipologieImmobiliXMLModel> al = tiDAO.list(TipologieImmobiliXMLModel.class.getName());
-		for (TipologieImmobiliXMLModel tipologieImmobiliXMLModel : al) {
+		ArrayList<Tipologieimmobili> al = tiDAO.list(null);
+		for (Tipologieimmobili tipologieImmobiliXMLModel : al) {
 			tipologieImmobili.put(tipologieImmobiliXMLModel.getCodTipologiaImmobile(), tipologieImmobiliXMLModel);
 		}
 		
@@ -114,7 +115,7 @@ public class WinkCloudHelper {
 
 		classiClienti.clear();
 		ClassiClientiDAO ccDAO = new ClassiClientiDAO();
-		ArrayList<Classicliente> al_cc = ccDAO.list(ClassiClientiXMLModel.class.getName());
+		ArrayList<Classicliente> al_cc = ccDAO.list(null);
 		
 		for (Classicliente classiClientiXMLModel : al_cc) {
 			classiClienti.put(classiClientiXMLModel.getCodClasseCliente(), classiClientiXMLModel);
@@ -122,7 +123,7 @@ public class WinkCloudHelper {
 
 		classiEnergetiche.clear();
 		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-		ArrayList<Classienergetiche> al_ce = ceDAO.listClassiEnergetiche();
+		ArrayList<Classienergetiche> al_ce = ceDAO.listClassiEnergetiche(null);
 		for (Classienergetiche classeEnergeticaXMLModel : al_ce) {
 			classiEnergetiche.put(classeEnergeticaXMLModel.getCodClasseEnergetica(), classeEnergeticaXMLModel);
 		}

@@ -218,7 +218,7 @@ public class PopUpRicercaImmobile extends Dialog {
 			if (parentElement instanceof TipologieImmobiliVO){
 				return immobiliDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), ((TipologieImmobiliVO)parentElement).getCodTipologiaImmobile()).toArray();
 			}else{
-				ArrayList alTipologie = tipologieImmobiliDAO.list(TipologieImmobiliVO.class.getName());
+				ArrayList alTipologie = tipologieImmobiliDAO.list(null);
 
 				alTipologie.addAll(immobiliDAO.getImmobiliByTipologia(ImmobiliModel.class.getName(), 0));					
 				

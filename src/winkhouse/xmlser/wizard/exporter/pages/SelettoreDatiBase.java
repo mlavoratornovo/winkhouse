@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import winkhouse.export.helpers.UtilsHelper;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ClasseEnergeticaVO;
 import winkhouse.vo.ClassiClientiVO;
@@ -174,9 +175,9 @@ public class SelettoreDatiBase extends WizardPage {
 			if (codType == XMLExportHelper.TIPOLOGIA_IMMOBILE_COD){
 				
 				((ExporterWizard)getWizard()).getExporterVO().setHmTipiImmobili(new HashMap());
-				ArrayList<TipologieImmobiliVO> al_tipologieimmobili = UtilsHelper.getInstance().getAllTipologieImmobili();
-				for (TipologieImmobiliVO tipologieImmobiliVO : al_tipologieimmobili) {
-					((ExporterWizard)getWizard()).getExporterVO().getHmTipiImmobili().put(tipologieImmobiliVO.getCodTipologiaImmobile(), new TipologieImmobiliXMLModel(tipologieImmobiliVO));
+				ArrayList<Tipologieimmobili> al_tipologieimmobili = UtilsHelper.getInstance().getAllTipologieImmobili();
+				for (Tipologieimmobili tipologieImmobiliVO : al_tipologieimmobili) {
+// TODO					((ExporterWizard)getWizard()).getExporterVO().getHmTipiImmobili().put(tipologieImmobiliVO.getCodTipologiaImmobile(), new TipologieImmobiliXMLModel(tipologieImmobiliVO));
 				}												
 				
 			}

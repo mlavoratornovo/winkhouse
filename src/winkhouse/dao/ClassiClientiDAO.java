@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.exp.Property;
 import org.apache.cayenne.query.ObjectSelect;
 
 import winkhouse.db.ConnectionManager;
@@ -34,9 +35,10 @@ public class ClassiClientiDAO extends BaseDAO{
 	public final static String DELETE_CLASSICLIENTI = "DELETE_CLASSI_CLIENTI";
 	public final static String UPDATE_CLASSICLIENTI_AGENTEUPDATE = "UPDATE_CLASSICLIENTI_AGENTE_UPDATE";
 	
-	public ArrayList<Classicliente> list(String classType){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
-		return new ArrayList<Classicliente>(ObjectSelect.query(Classicliente.class).select(context));
+	public ArrayList<Classicliente> list(ObjectContext context){
+		context = (context != null)?context:WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		Property<String> propertyName = Property.create("ordine", String.class);
+		return new ArrayList<Classicliente>(ObjectSelect.query(Classicliente.class).orderBy(propertyName.asc()).select(context));		
 	}
 
 	public ArrayList<ClassiClientiModel> listByComune(String comune){

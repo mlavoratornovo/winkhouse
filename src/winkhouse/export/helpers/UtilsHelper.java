@@ -424,7 +424,7 @@ public class UtilsHelper {
 		ArrayList<Classienergetiche> returnValue = new ArrayList<Classienergetiche>();
 		
 		ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-		returnValue = ceDAO.listClassiEnergetiche();
+		returnValue = ceDAO.listClassiEnergetiche(null);
 		
 		return returnValue;
 	}	
@@ -539,12 +539,12 @@ public class UtilsHelper {
 	 * @return ArrayList<TipologieImmobiliVO>
 	 */
 
-	public ArrayList<TipologieImmobiliVO> getAllTipologieImmobili(){
+	public ArrayList<Tipologieimmobili> getAllTipologieImmobili(){
 		
-		ArrayList<TipologieImmobiliVO> returnValue = new ArrayList<TipologieImmobiliVO>();
+		ArrayList<Tipologieimmobili> returnValue = new ArrayList<Tipologieimmobili>();
 		
 		TipologieImmobiliDAO tiDAO = new TipologieImmobiliDAO();
-		returnValue = tiDAO.list(TipologieImmobiliVO.class.getName());
+		returnValue = tiDAO.list(null);
 		
 		return returnValue;
 	}

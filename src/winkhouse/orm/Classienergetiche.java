@@ -24,6 +24,7 @@ public class Classienergetiche extends _Classienergetiche {
 	
 	public void initData() {
 		this.descrizione = "";
+		this.ordine = 1;
 	}
 
 	public String getComune() {

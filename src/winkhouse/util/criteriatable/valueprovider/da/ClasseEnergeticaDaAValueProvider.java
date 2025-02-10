@@ -63,7 +63,7 @@ public class ClasseEnergeticaDaAValueProvider extends BaseDaValueProvider {
 			
 			classiEnergetiche = new ArrayList<IDaAValueObject>();
 			ClassiEnergeticheDAO ceDAO = new ClassiEnergeticheDAO();
-			ArrayList<Classienergetiche> al = ceDAO.listClassiEnergetiche();
+			ArrayList<Classienergetiche> al = ceDAO.listClassiEnergetiche(null);
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				

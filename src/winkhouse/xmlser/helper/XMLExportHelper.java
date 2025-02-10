@@ -24,6 +24,7 @@ import winkhouse.export.helpers.SystemPreferenceHelper;
 import winkhouse.export.helpers.UtilsHelper;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.AffittiAllegatiVO;
 import winkhouse.vo.AgentiVO;
@@ -291,9 +292,9 @@ public class XMLExportHelper {
 			
 			HashMap hm = new HashMap();
 			
-			ArrayList<TipologieImmobiliVO> al_ti = UtilsHelper.getInstance().getAllTipologieImmobili();
-			for (TipologieImmobiliVO tipologieImmobiliVO : al_ti) {
-				hm.put(tipologieImmobiliVO.getCodTipologiaImmobile(),new TipologieImmobiliXMLModel(tipologieImmobiliVO));
+			ArrayList<Tipologieimmobili> al_ti = UtilsHelper.getInstance().getAllTipologieImmobili();
+			for (Tipologieimmobili tipologieImmobiliVO : al_ti) {
+// TODO				hm.put(tipologieImmobiliVO.getCodTipologiaImmobile(),new TipologieImmobiliXMLModel(tipologieImmobiliVO));
 			}
 			exportSelection(hm,base_path + "tipologiaimmobili.xml");
 		}else{		

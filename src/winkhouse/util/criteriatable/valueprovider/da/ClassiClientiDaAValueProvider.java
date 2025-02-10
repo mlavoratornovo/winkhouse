@@ -62,7 +62,7 @@ public class ClassiClientiDaAValueProvider extends BaseDaValueProvider {
 			
 			classiClienti = new ArrayList<IDaAValueObject>();
 			ClassiClientiDAO ccDAO = new ClassiClientiDAO();
-			ArrayList al = ccDAO.list(ClassiClientiVO.class.getName());
+			ArrayList al = ccDAO.list(null);
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
