@@ -37,12 +37,8 @@ public class StatoConservativoDAO extends BaseDAO{
 
 	}
 	
-	public <T> ArrayList<T> list(String classType){
-		return super.list(classType, LISTA_STATOCONSERVATIVO);
-	}	
-	
-	public ArrayList<Statoconservativo> list(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+	public ArrayList<Statoconservativo> list(ObjectContext context){
+		context = (context != null)? context: WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		return new ArrayList<Statoconservativo>(ObjectSelect.query(Statoconservativo.class).select(context));
 	};
 

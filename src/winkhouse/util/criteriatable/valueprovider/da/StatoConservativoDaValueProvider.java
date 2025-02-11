@@ -79,7 +79,7 @@ public class StatoConservativoDaValueProvider extends DaAValueProvider {
 			
 			statiConservativi = new ArrayList<IDaAValueObject>();
 			StatoConservativoDAO stDAO = new StatoConservativoDAO();
-			ArrayList al = stDAO.list(StatoConservativoVO.class.getName());
+			ArrayList al = stDAO.list(null);
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				

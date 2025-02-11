@@ -55,7 +55,7 @@ public class TipologiaStanzeDaValueProvider extends BaseDaValueProvider {
 			
 			tipologieStanze = new ArrayList<IDaAValueObject>();
 			TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-			ArrayList al = tsDAO.list(TipologiaStanzeVO.class.getName());
+			ArrayList al = tsDAO.list(null);
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				

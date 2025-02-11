@@ -62,7 +62,7 @@ public class RiscaldamentoDaValueProvider extends BaseDaValueProvider {
 			
 			riscaldamenti = new ArrayList<IDaAValueObject>();
 			RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-			ArrayList al = rDAO.list(RiscaldamentiVO.class.getName());
+			ArrayList al = rDAO.list(null);
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				

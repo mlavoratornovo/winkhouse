@@ -357,7 +357,7 @@ public class ImmobiliTreeView extends ViewPart {
 //							gruppo_list = (ArrayList)rDAO.listByAffitti(RiscaldamentiVO.class.getName());
 //							gruppo_list.addAll(iDAO.getImmobiliByRiscaldamentoIsAffitti(Immobili.class.getName(), null));
 //						}else{
-						gruppo_list = (ArrayList)rDAO.list();
+						gruppo_list = (ArrayList)rDAO.list(null);
 						gruppo_list.addAll(iDAO.getImmobiliByRiscaldamento(null));					
 //						}
 					}
@@ -372,7 +372,7 @@ public class ImmobiliTreeView extends ViewPart {
 //							gruppo_list = (ArrayList)scDAO.listByAffitti(StatoConservativoVO.class.getName());
 //							gruppo_list.addAll(iDAO.getImmobiliByStatoConservativoIsAffitti(Immobili.class.getName(), null));
 //						}else{
-						gruppo_list = (ArrayList)scDAO.list();
+						gruppo_list = (ArrayList)scDAO.list(null);
 						gruppo_list.addAll(iDAO.getImmobiliByStatoConservativo(null));					
 //						}
 					}

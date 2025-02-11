@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import winkhouse.export.helpers.UtilsHelper;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ClasseEnergeticaVO;
@@ -157,9 +159,9 @@ public class SelettoreDatiBase extends WizardPage {
 			if (codType == XMLExportHelper.STATO_CONSERVATIVO_COD){
 				
 				((ExporterWizard)getWizard()).getExporterVO().setHmStatiConservativi(new HashMap());
-				ArrayList<StatoConservativoVO> al_statoconservativo = UtilsHelper.getInstance().getAllStatoConservativo();
-				for (StatoConservativoVO statoConservativoVO : al_statoconservativo) {
-					((ExporterWizard)getWizard()).getExporterVO().getHmStatiConservativi().put(statoConservativoVO.getCodStatoConservativo(), new StatoConservativoXMLModel(statoConservativoVO));
+				ArrayList<Statoconservativo> al_statoconservativo = UtilsHelper.getInstance().getAllStatoConservativo();
+				for (Statoconservativo statoConservativoVO : al_statoconservativo) {
+// TO DO					((ExporterWizard)getWizard()).getExporterVO().getHmStatiConservativi().put(statoConservativoVO.getCodStatoConservativo(), new StatoConservativoXMLModel(statoConservativoVO));
 				}						
 				
 			}
@@ -184,9 +186,9 @@ public class SelettoreDatiBase extends WizardPage {
 			if (codType == XMLExportHelper.TIPOLOGIA_STANZE_COD){
 				
 				((ExporterWizard)getWizard()).getExporterVO().setHmTipiStanze(new HashMap());
-				ArrayList<TipologiaStanzeVO> al_tipologiestanze = UtilsHelper.getInstance().getAllTipologieStanze();
-				for (TipologiaStanzeVO tipologiaStanzeVO : al_tipologiestanze) {
-					((ExporterWizard)getWizard()).getExporterVO().getHmTipiStanze().put(tipologiaStanzeVO.getCodTipologiaStanza(), new TipologiaStanzeXMLModel(tipologiaStanzeVO));
+				ArrayList<Tipologiastanze> al_tipologiestanze = UtilsHelper.getInstance().getAllTipologieStanze();
+				for (Tipologiastanze tipologiaStanzeVO : al_tipologiestanze) {
+// TO DO					((ExporterWizard)getWizard()).getExporterVO().getHmTipiStanze().put(tipologiaStanzeVO.getCodTipologiaStanza(), new TipologiaStanzeXMLModel(tipologiaStanzeVO));
 				}						
 										
 			}					

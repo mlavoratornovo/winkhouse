@@ -464,7 +464,7 @@ public class UtilsHelper {
 		ArrayList<Riscaldamenti> returnValue = new ArrayList<Riscaldamenti>();
 		
 		RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-		returnValue = rDAO.list(RiscaldamentiVO.class.getName());
+		returnValue = rDAO.list(null);
 		
 		return returnValue;
 	}
@@ -499,12 +499,12 @@ public class UtilsHelper {
 	 * @return ArrayList<StatoConservativoVO>
 	 */
 
-	public ArrayList<StatoConservativoVO> getAllStatoConservativo(){
+	public ArrayList<Statoconservativo> getAllStatoConservativo(){
 		
-		ArrayList<StatoConservativoVO> returnValue = new ArrayList<StatoConservativoVO>();
+		ArrayList<Statoconservativo> returnValue = new ArrayList<Statoconservativo>();
 		
 		StatoConservativoDAO scDAO = new StatoConservativoDAO();
-		returnValue = scDAO.list(StatoConservativoVO.class.getName());
+		returnValue = scDAO.list(null);
 		
 		return returnValue;
 	}
@@ -797,12 +797,12 @@ public class UtilsHelper {
 	 * @return ArrayList<TipologiaStanzeVO>
 	 */
 
-	public ArrayList<TipologiaStanzeVO> getAllTipologieStanze(){
+	public ArrayList<Tipologiastanze> getAllTipologieStanze(){
 		
-		ArrayList<TipologiaStanzeVO> returnValue = new ArrayList<TipologiaStanzeVO>();
+		ArrayList<Tipologiastanze> returnValue = new ArrayList<Tipologiastanze>();
 		
 		TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-		returnValue = tsDAO.list(TipologiaStanzeVO.class.getName());
+		returnValue = tsDAO.list(null);
 
 		return returnValue;
 	}

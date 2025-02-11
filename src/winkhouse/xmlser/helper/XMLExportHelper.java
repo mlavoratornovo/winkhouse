@@ -24,6 +24,8 @@ import winkhouse.export.helpers.SystemPreferenceHelper;
 import winkhouse.export.helpers.UtilsHelper;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.AffittiAllegatiVO;
@@ -238,9 +240,9 @@ public class XMLExportHelper {
 			
 			HashMap hm = new HashMap();
 			
-			ArrayList<StatoConservativoVO> al_sc = UtilsHelper.getInstance().getAllStatoConservativo();
-			for (StatoConservativoVO statoConservativoVO : al_sc) {
-				hm.put(statoConservativoVO.getCodStatoConservativo(),new StatoConservativoXMLModel(statoConservativoVO));
+			ArrayList<Statoconservativo> al_sc = UtilsHelper.getInstance().getAllStatoConservativo();
+			for (Statoconservativo statoConservativoVO : al_sc) {
+// TO DO				hm.put(statoConservativoVO.getCodStatoConservativo(),new StatoConservativoXMLModel(statoConservativoVO));
 			}
 			exportSelection(hm,base_path + "statoconservativo.xml");
 		}else{		
@@ -279,9 +281,9 @@ public class XMLExportHelper {
 			
 			HashMap hm = new HashMap();
 			
-			ArrayList<TipologiaStanzeVO> al_ts = UtilsHelper.getInstance().getAllTipologieStanze();
-			for (TipologiaStanzeVO tipologiaStanzeVO : al_ts) {
-				hm.put(tipologiaStanzeVO.getCodTipologiaStanza(),new TipologiaStanzeXMLModel(tipologiaStanzeVO));
+			ArrayList<Tipologiastanze> al_ts = UtilsHelper.getInstance().getAllTipologieStanze();
+			for (Tipologiastanze tipologiaStanzeVO : al_ts) {
+// TO DO				hm.put(tipologiaStanzeVO.getCodTipologiaStanza(),new TipologiaStanzeXMLModel(tipologiaStanzeVO));
 			}
 			exportSelection(hm,base_path + "tipologiastanze.xml");
 		}else{		

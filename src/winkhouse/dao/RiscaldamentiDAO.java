@@ -36,12 +36,8 @@ public class RiscaldamentiDAO extends BaseDAO{
 		
 	}
 	
-	public <T> ArrayList<T> list(String classType){
-		return super.list(classType, LISTA_RISCALDAMENTI);
-	}
-
-	public ArrayList<Riscaldamenti> list(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+	public ArrayList<Riscaldamenti> list(ObjectContext context){
+		context = (context != null) ? context :WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		return new ArrayList<Riscaldamenti>(ObjectSelect.query(Riscaldamenti.class).select(context));
 	};
 

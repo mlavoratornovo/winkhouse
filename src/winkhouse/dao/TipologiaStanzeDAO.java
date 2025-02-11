@@ -30,13 +30,9 @@ public class TipologiaStanzeDAO extends BaseDAO{
 	public TipologiaStanzeDAO() {
 
 	}
-	
-	public <T> ArrayList<T> list(String classType){
-		return super.list(classType, LISTA_TIPOLOGIESTANZE);
-	}
-	
-	public ArrayList<Tipologiastanze> list(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		
+	public ArrayList<Tipologiastanze> list(ObjectContext context){
+		context = (context != null)? context: WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return new ArrayList<Tipologiastanze>(ObjectSelect.query(Tipologiastanze.class).select(context));
 	};
 	

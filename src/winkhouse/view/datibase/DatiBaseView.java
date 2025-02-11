@@ -2042,7 +2042,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				riscaldamenti = new ArrayList<Riscaldamenti>(new RiscaldamentiDAO().list());
+				riscaldamenti = new ArrayList<Riscaldamenti>(new RiscaldamentiDAO().list(ocRiscaldamenti));
 				tvRiscaldamenti.refresh();
 			}
 
@@ -2159,7 +2159,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (riscaldamenti == null){
-				riscaldamenti = new ArrayList<Riscaldamenti>(new RiscaldamentiDAO().list());				
+				riscaldamenti = new ArrayList<Riscaldamenti>(new RiscaldamentiDAO().list(ocRiscaldamenti));				
 			}
 			returnValue = riscaldamenti.toArray();
 			return returnValue;
@@ -2297,7 +2297,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				statoconservativo = new ArrayList<Statoconservativo>(new StatoConservativoDAO().list());
+				statoconservativo = new ArrayList<Statoconservativo>(new StatoConservativoDAO().list(ocStatoConservativo));
 				tvStatoConservativo.refresh();
 			}
 
@@ -2414,7 +2414,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (statoconservativo == null){
-				statoconservativo = new ArrayList<Statoconservativo>(new StatoConservativoDAO().list());				
+				statoconservativo = new ArrayList<Statoconservativo>(new StatoConservativoDAO().list(ocStatoConservativo));				
 			}
 			returnValue = statoconservativo.toArray();
 			return returnValue;
@@ -2556,7 +2556,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipologiastanze = new TipologiaStanzeDAO().list();
+				tipologiastanze = new TipologiaStanzeDAO().list(ocTipiStanze);
 				tvTipologiaStanze.refresh();
 			}
 
@@ -2672,7 +2672,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipologiastanze == null){
-				tipologiastanze = new TipologiaStanzeDAO().list();				
+				tipologiastanze = new TipologiaStanzeDAO().list(ocTipiStanze);				
 			}
 			returnValue = tipologiastanze.toArray();
 			return returnValue;

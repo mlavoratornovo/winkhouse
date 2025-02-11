@@ -248,7 +248,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Statoconservativo> getStatiConservativi() {
 		if (statiConservativi == null){
 			StatoConservativoDAO scDAO = new StatoConservativoDAO();
-			statiConservativi = scDAO.list();
+			statiConservativi = scDAO.list(null);
 		}
 		return statiConservativi;
 	}
@@ -261,7 +261,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Riscaldamenti> getRiscaldamenti() {
 		if (riscaldamenti == null){
 			RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-			riscaldamenti = rDAO.list();
+			riscaldamenti = rDAO.list(null);
 		}
 		return riscaldamenti;
 	}
@@ -332,7 +332,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Tipologiastanze> getTipologieStanze() {
 		if (tipologieStanze == null){
 			TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-			tipologieStanze = tsDAO.list();
+			tipologieStanze = tsDAO.list(null);
 		}
 		return tipologieStanze;
 	}

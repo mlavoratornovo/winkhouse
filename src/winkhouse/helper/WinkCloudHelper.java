@@ -38,6 +38,9 @@ import winkhouse.model.winkcloud.RicercaModel;
 import winkhouse.orm.Classicliente;
 import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Colloquicriteriricerca;
+import winkhouse.orm.Riscaldamenti;
+import winkhouse.orm.Statoconservativo;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.ImmagineVO;
@@ -94,22 +97,22 @@ public class WinkCloudHelper {
 
 		tipologieStanze.clear();
 		TipologiaStanzeDAO tsDAO = new TipologiaStanzeDAO();
-		ArrayList<TipologiaStanzeXMLModel> al_ts = tsDAO.list(TipologiaStanzeXMLModel.class.getName());
-		for (TipologiaStanzeXMLModel tipologieStanzeXMLModel : al_ts) {
+		ArrayList<Tipologiastanze> al_ts = tsDAO.list(null);
+		for (Tipologiastanze tipologieStanzeXMLModel : al_ts) {
 			tipologieStanze.put(tipologieStanzeXMLModel.getCodTipologiaStanza(), tipologieStanzeXMLModel);
 		}
 
 		riscaldamenti.clear();
 		RiscaldamentiDAO rDAO = new RiscaldamentiDAO();
-		ArrayList<RiscaldamentiXMLModel> al_r = rDAO.list(RiscaldamentiXMLModel.class.getName());
-		for (RiscaldamentiXMLModel riscaldamentiXMLModel : al_r) {
+		ArrayList<Riscaldamenti> al_r = rDAO.list(null);
+		for (Riscaldamenti riscaldamentiXMLModel : al_r) {
 			riscaldamenti.put(riscaldamentiXMLModel.getCodRiscaldamento(), riscaldamentiXMLModel);
 		}
 
 		statoConservativo.clear();
 		StatoConservativoDAO scDAO = new StatoConservativoDAO();
-		ArrayList<StatoConservativoXMLModel> al_sc = scDAO.list(StatoConservativoXMLModel.class.getName());
-		for (StatoConservativoXMLModel statoConservativoXMLModel : al_sc) {
+		ArrayList<Statoconservativo> al_sc = scDAO.list(null);
+		for (Statoconservativo statoConservativoXMLModel : al_sc) {
 			statoConservativo.put(statoConservativoXMLModel.getCodStatoConservativo(), statoConservativoXMLModel);
 		}
 
