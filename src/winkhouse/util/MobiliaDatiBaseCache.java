@@ -297,7 +297,7 @@ public class MobiliaDatiBaseCache {
 	public ArrayList<Tipologiecontatti> getTipologieContatti() {
 		if (tipologieContatti == null){
 			TipologiaContattiDAO tcDAO = new TipologiaContattiDAO();
-			tipologieContatti = tcDAO.list();
+			tipologieContatti = tcDAO.list(null);
 		}
 		return tipologieContatti;
 	}

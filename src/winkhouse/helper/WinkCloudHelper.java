@@ -41,6 +41,7 @@ import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipologiastanze;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.ImmagineVO;
@@ -90,8 +91,8 @@ public class WinkCloudHelper {
 		
 		tipologieContatti.clear();
 		TipologiaContattiDAO tcDAO = new TipologiaContattiDAO();
-		ArrayList<TipologiaContattiXMLModel> al_tc = tcDAO.list(TipologiaContattiXMLModel.class.getName());
-		for (TipologiaContattiXMLModel tipologieContattiXMLModel : al_tc) {
+		ArrayList<Tipologiecontatti> al_tc = tcDAO.list(null);
+		for (Tipologiecontatti tipologieContattiXMLModel : al_tc) {
 			tipologieContatti.put(tipologieContattiXMLModel.getCodTipologiaContatto(), tipologieContattiXMLModel);
 		}
 

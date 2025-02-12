@@ -26,6 +26,7 @@ import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipologiastanze;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ZipUtils;
 import winkhouse.vo.AffittiAllegatiVO;
@@ -266,9 +267,9 @@ public class XMLExportHelper {
 			
 			HashMap hm = new HashMap();
 			
-			ArrayList<TipologiaContattiVO> al_tc = UtilsHelper.getInstance().getAllTipologiaContatti();
-			for (TipologiaContattiVO tipologiaContattiVO : al_tc) {
-				hm.put(tipologiaContattiVO.getCodTipologiaContatto(),new TipologiaContattiXMLModel(tipologiaContattiVO));
+			ArrayList<Tipologiecontatti> al_tc = UtilsHelper.getInstance().getAllTipologiaContatti();
+			for (Tipologiecontatti tipologiaContattiVO : al_tc) {
+// TO DO				hm.put(tipologiaContattiVO.getCodTipologiaContatto(),new TipologiaContattiXMLModel(tipologiaContattiVO));
 			}
 			exportSelection(hm,base_path + "tipologiacontatti.xml");
 		}else{		

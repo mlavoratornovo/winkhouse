@@ -3025,7 +3025,7 @@ public class DatiBaseView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {				
-				tipologiecontatti = new TipologiaContattiDAO().list();
+				tipologiecontatti = new TipologiaContattiDAO().list(ocTipiContatti);
 				tvTipologieContatti.refresh();
 			}
 
@@ -3141,7 +3141,7 @@ public class DatiBaseView extends ViewPart {
 		public Object[] getElements(Object inputElement) {
 			Object[] returnValue = null;
 			if (tipologiecontatti == null){
-				tipologiecontatti = new TipologiaContattiDAO().list();				
+				tipologiecontatti = new TipologiaContattiDAO().list(ocTipiContatti);				
 			}
 			returnValue = tipologiecontatti.toArray();
 			return returnValue;

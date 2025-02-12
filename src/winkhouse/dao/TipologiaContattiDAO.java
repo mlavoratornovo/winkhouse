@@ -31,13 +31,9 @@ public class TipologiaContattiDAO extends BaseDAO{
 	public TipologiaContattiDAO() {
 
 	}
-	public ArrayList<Tipologiecontatti> list(){
-		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+	public ArrayList<Tipologiecontatti> list(ObjectContext context){
+		context = (context != null)?context:WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return new ArrayList<Tipologiecontatti>(ObjectSelect.query(Tipologiecontatti.class).select(context));
-	}
-
-	public <T> ArrayList<T> list(String classType){
-		return super.list(classType, LISTA_TIPOLOGIECONTATTI);
 	}
 	
 	public Object getTipologiaContattoById (String classType, Integer codTipologiaContatto){

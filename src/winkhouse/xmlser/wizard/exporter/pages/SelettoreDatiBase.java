@@ -29,6 +29,7 @@ import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipologiastanze;
+import winkhouse.orm.Tipologiecontatti;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.AgentiVO;
 import winkhouse.vo.ClasseEnergeticaVO;
@@ -168,9 +169,9 @@ public class SelettoreDatiBase extends WizardPage {
 			if (codType == XMLExportHelper.TIPOLOGIA_CONTATTI_COD){
 
 				((ExporterWizard)getWizard()).getExporterVO().setHmTipiContatti(new HashMap());
-				ArrayList<TipologiaContattiVO> al_tipologiacontatti = UtilsHelper.getInstance().getAllTipologiaContatti();
-				for (TipologiaContattiVO tipologiaContattiVO : al_tipologiacontatti) {
-					((ExporterWizard)getWizard()).getExporterVO().getHmTipiContatti().put(tipologiaContattiVO.getCodTipologiaContatto(), new TipologiaContattiXMLModel(tipologiaContattiVO));
+				ArrayList<Tipologiecontatti> al_tipologiacontatti = UtilsHelper.getInstance().getAllTipologiaContatti();
+				for (Tipologiecontatti tipologiaContattiVO : al_tipologiacontatti) {
+// TO DO					((ExporterWizard)getWizard()).getExporterVO().getHmTipiContatti().put(tipologiaContattiVO.getCodTipologiaContatto(), new TipologiaContattiXMLModel(tipologiaContattiVO));
 				}												
 				
 			}

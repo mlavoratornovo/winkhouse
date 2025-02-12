@@ -833,12 +833,12 @@ public class UtilsHelper {
 	 * @return ArrayList<TipologiaContattiVO>
 	 */
 
-	public ArrayList<TipologiaContattiVO> getAllTipologiaContatti(){
+	public ArrayList<Tipologiecontatti> getAllTipologiaContatti(){
 		
-		ArrayList<TipologiaContattiVO> returnValue = new ArrayList<TipologiaContattiVO>();
+		ArrayList<Tipologiecontatti> returnValue = new ArrayList<Tipologiecontatti>();
 		
 		TipologiaContattiDAO tcDAO = new TipologiaContattiDAO();
-		returnValue = tcDAO.list(TipologiaContattiVO.class.getName());
+		returnValue = tcDAO.list(null);
 		
 		return returnValue;
 	}
