@@ -6,6 +6,7 @@ import java.util.Iterator;
 import winkhouse.configuration.EnvSettingsFactory;
 import winkhouse.dao.TipologieImmobiliDAO;
 import winkhouse.helper.TipologieColloquiHelper;
+import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.util.ColloquiMethodName;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.util.criteriatable.valueprovider.da.TipologiaImmobileDaValueProvider.TipologiaImmobileDAaValue;
@@ -24,9 +25,9 @@ public class TipologiaColloquiDaValueProvider extends BaseDaValueProvider {
 
 	public class TipologiaColloquiDAaValue implements IDaAValueObject{
 		
-		private TipologieColloquiVO tipologieColloqui = null;
+		private Tipologiecolloqui tipologieColloqui = null;
 		
-		public TipologiaColloquiDAaValue(TipologieColloquiVO tipologieColloqui){
+		public TipologiaColloquiDAaValue(Tipologiecolloqui tipologieColloqui){
 			this.tipologieColloqui = tipologieColloqui; 
 		}
 		
@@ -42,7 +43,7 @@ public class TipologiaColloquiDaValueProvider extends BaseDaValueProvider {
 
 		@Override
 		public String getCodValue() {
-			return String.valueOf(this.tipologieColloqui.getCodTipologiaColloquio());
+			return String.valueOf(this.tipologieColloqui.getCodTipologieColloquio());
 		}
 		
 	}
@@ -69,7 +70,7 @@ public class TipologiaColloquiDaValueProvider extends BaseDaValueProvider {
 			ArrayList al = EnvSettingsFactory.getInstance().getTipologieColloqui();
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				TipologieColloquiVO tivo = (TipologieColloquiVO) iterator.next();
+				Tipologiecolloqui tivo = (Tipologiecolloqui) iterator.next();
 				tipologieColloqui.add(new TipologiaColloquiDAaValue(tivo));
 				
 			}

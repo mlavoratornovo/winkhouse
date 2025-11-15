@@ -6,6 +6,7 @@ import java.util.Iterator;
 import winkhouse.dao.AnagraficheDAO;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Immobili;
 import winkhouse.util.ColloquiMethodName;
 import winkhouse.util.criteriatable.valueprovider.da.AnagraficheDaValueProvider.AnagraficheDAaValue;
 import winkhouse.vo.AnagraficheVO;
@@ -24,9 +25,9 @@ public class ImmobiliDaValueProvider extends BaseDaValueProvider {
 	
     public class ImmobileDAaValue implements IDaAValueObject{
 		
-		private ImmobiliModel immobile = null;
+		private Immobili immobile = null;
 		
-		public ImmobileDAaValue(ImmobiliModel immobile){
+		public ImmobileDAaValue(Immobili immobile){
 			this.immobile = immobile; 
 		}
 		
@@ -71,7 +72,7 @@ public class ImmobiliDaValueProvider extends BaseDaValueProvider {
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				ImmobiliModel im = (ImmobiliModel) iterator.next();
+				Immobili im = (Immobili) iterator.next();
 				immobili.add(new ImmobileDAaValue(im));
 				
 			}

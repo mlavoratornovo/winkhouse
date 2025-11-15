@@ -21,6 +21,7 @@ import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipiappuntamenti;
 import winkhouse.orm.Tipologiastanze;
+import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.orm.Tipologiecontatti;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.vo.AgentiVO;
@@ -45,7 +46,7 @@ public class MobiliaDatiBaseCache {
 	
 	private ArrayList<Classicliente> classiClienti = null;
 	private ArrayList<Tipologiecontatti> tipologieContatti = null;
-	private ArrayList<TipologieColloquiVO> tipologieColloqui = null;
+	private ArrayList<Tipologiecolloqui> tipologieColloqui = null;
 	private ArrayList<Tipologiastanze> tipologieStanze = null;
 	private ArrayList<Tipiappuntamenti> tipiAppuntamenti = null;
 	private ArrayList<Classienergetiche> classiEnergetiche = null;
@@ -307,7 +308,7 @@ public class MobiliaDatiBaseCache {
 		this.tipologieContatti = tipologieContatti;
 	}
 
-	public ArrayList<TipologieColloquiVO> getTipologieColloqui() {
+	public ArrayList<Tipologiecolloqui> getTipologieColloqui() {
 		if (tipologieColloqui == null){
 			tipologieColloqui = EnvSettingsFactory.getInstance().getTipologieColloqui();
 		}
@@ -325,7 +326,7 @@ public class MobiliaDatiBaseCache {
 	}
 
 	public void setTipologieColloqui(
-			ArrayList<TipologieColloquiVO> tipologieColloqui) {
+			ArrayList<Tipologiecolloqui> tipologieColloqui) {
 		this.tipologieColloqui = tipologieColloqui;
 	}
 

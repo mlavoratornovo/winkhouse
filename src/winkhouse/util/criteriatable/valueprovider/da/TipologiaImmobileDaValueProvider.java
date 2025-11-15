@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.TipologieImmobiliDAO;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.vo.TipologieImmobiliVO;
 import winkhouse.widgets.data.ICriteriaOwners;
@@ -16,9 +17,9 @@ public class TipologiaImmobileDaValueProvider extends BaseDaValueProvider {
 
 	public class TipologiaImmobileDAaValue implements IDaAValueObject{
 		
-		private TipologieImmobiliVO tipologiaImmobili = null;
+		private Tipologieimmobili tipologiaImmobili = null;
 		
-		public TipologiaImmobileDAaValue(TipologieImmobiliVO tipologiaImmobili){
+		public TipologiaImmobileDAaValue(Tipologieimmobili tipologiaImmobili){
 			this.tipologiaImmobili = tipologiaImmobili; 
 		}
 		
@@ -67,7 +68,7 @@ public class TipologiaImmobileDaValueProvider extends BaseDaValueProvider {
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				TipologieImmobiliVO tivo = (TipologieImmobiliVO) iterator.next();
+				Tipologieimmobili tivo = (Tipologieimmobili) iterator.next();
 				tipologieImmobili.add(new TipologiaImmobileDAaValue(tivo));
 				
 			}

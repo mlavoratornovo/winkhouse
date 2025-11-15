@@ -434,7 +434,7 @@ public class ListaCriteriAnagrafiche extends WizardPage{
 			ricerca.setTipo(EnvSettingsFactory.getInstance()
 	   				   						  .getTipologieColloqui()
 	   				   						  .get(0)
-	   				   						  .getCodTipologiaColloquio());
+	   				   						  .getCodTipologieColloquio());
 		}
 		ArrayList al = (ArrayList)((ExporterWizard)getWizard()).getExporterVO()
         													   .getCriteriRicerca().clone();

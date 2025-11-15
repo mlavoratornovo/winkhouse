@@ -3,6 +3,7 @@ package winkhouse.view.immobili;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.cayenne.ObjectContext;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -32,6 +33,7 @@ import winkhouse.action.anagrafiche.RefreshAnagrafichePropietarieAction;
 import winkhouse.action.anagrafiche.SalvaAnagrafichePropietarieAction;
 import winkhouse.model.AnagraficheModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Immobili;
 import winkhouse.orm.Immobilipropietari;
@@ -221,10 +223,12 @@ public class AnagrafichePropietarieView extends ViewPart {
 //			if (this.immobile.getImmobilipropietaris() == null){
 //				this.immobile.setAnagrafichePropietarie(new ArrayList<AnagraficheModel>());
 //			}
-			Immobilipropietari ip = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Immobilipropietari.class);
-			ip.setAnagrafiche(anagrafica);
-			ip.setImmobili(immobile);
-			this.immobile.addToImmobilipropietaris(ip);
+			ObjectContext oc = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+			Immobilipropietari ip = oc.newObject(Immobilipropietari.class);
+			ip.setAnagrafiche(ip.getObjectContext().localObject(anagrafica));
+			ip.setImmobili(ip.getObjectContext().localObject(this.immobile));
+			oc.commitChanges();
+			this.immobile.addToImmobilipropietaris(this.immobile.getObjectContext().localObject(ip));
 			setAnagrafica(this.immobile);
 			RecapitiView riv = (RecapitiView)PlatformUI.getWorkbench()
 			   										   .getActiveWorkbenchWindow()

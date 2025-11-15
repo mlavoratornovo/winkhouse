@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.RiscaldamentiDAO;
+import winkhouse.orm.Riscaldamenti;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.vo.RiscaldamentiVO;
 import winkhouse.widgets.data.ICriteriaOwners;
@@ -16,9 +17,9 @@ public class RiscaldamentoDaValueProvider extends BaseDaValueProvider {
 	
 	public class RiscaldamentoDAaValue implements IDaAValueObject{
 		
-		private RiscaldamentiVO riscaldamento = null;
+		private Riscaldamenti riscaldamento = null;
 		
-		public RiscaldamentoDAaValue(RiscaldamentiVO riscaldamento){
+		public RiscaldamentoDAaValue(Riscaldamenti riscaldamento){
 			this.riscaldamento = riscaldamento; 
 		}
 		
@@ -66,7 +67,7 @@ public class RiscaldamentoDaValueProvider extends BaseDaValueProvider {
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				RiscaldamentiVO rvo = (RiscaldamentiVO) iterator.next();
+				Riscaldamenti rvo = (Riscaldamenti) iterator.next();
 				riscaldamenti.add(new RiscaldamentoDAaValue(rvo));
 				
 			}

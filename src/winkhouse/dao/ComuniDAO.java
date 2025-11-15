@@ -2,6 +2,13 @@ package winkhouse.dao;
 
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.query.ObjectSelect;
+
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Comuni;
+import winkhouse.orm.Immobili;
+import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ComuniVO;
 
 public class ComuniDAO extends BaseDAO {
@@ -17,45 +24,105 @@ public class ComuniDAO extends BaseDAO {
 	
  	public ComuniDAO() {
 	}
-
- 	public <T> ArrayList<T> getComuniStartWith(String comune){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_LIKE, comune+"%");
+ 	
+ 	public ArrayList<Comuni> getComuniStartWith(String comune){
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		return new ArrayList<Comuni>(ObjectSelect.query(Comuni.class)
+		 		   									  .where(Comuni.COMUNE.startsWithIgnoreCase(comune))
+		 		   									  .select(context)); 		
  	}
  	
- 	public <T> ArrayList<T> getComuniEndWith(String comune){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_LIKE, "%"+comune);
+ 	public ArrayList<Comuni> getComuniEndWith(String comune){
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		return new ArrayList<Comuni>(ObjectSelect.query(Comuni.class)
+		 		   									  .where(Comuni.COMUNE.endsWithIgnoreCase(comune))
+		 		   									  .select(context)); 		
  	}
 
- 	public <T> ArrayList<T> getComuniBetWeenWith(String comune){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_LIKE, "%"+comune+"%");
+ 	public ArrayList<Comuni> getComuniBetWeenWith(String comune){
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		return new ArrayList<Comuni>(ObjectSelect.query(Comuni.class)
+		 		   									  .where(Comuni.COMUNE.containsIgnoreCase(comune))
+		 		   									  .select(context)); 		
+
  	}
  	
- 	public <T> ArrayList<T> getComuniMatchWith(String comune){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), LIST_COMUNI_MATCH, comune);
+ 	public ArrayList<Comuni> getComuniMatchWith(String comune){
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		return new ArrayList<Comuni>(ObjectSelect.query(Comuni.class)
+		 		   									  .where(Comuni.COMUNE.eq(comune))
+		 		   									  .select(context));
+ 	}
+ 	 	
+ 	public ArrayList<Comuni> getProvincieAnagrafiche(){
+ 		ArrayList<Comuni> retVal = new ArrayList<Comuni>();
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		ObjectSelect.query(Anagrafiche.class);
+		ArrayList<String> al = new ArrayList<String>(ObjectSelect.columnQuery(Anagrafiche.class,Anagrafiche.PROVINCIA)
+		 		   									  			 .distinct()
+		 		   									  			 .select(context));
+ 		al.forEach(provincia -> {
+ 			Comuni c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Comuni.class);
+ 			c.setProvincia(provincia);
+ 			retVal.add(c);
+ 		});
+ 		return retVal;
  	}
  	
- 	public ComuniVO getComuniByCodComune(Integer codComune){
- 		return (ComuniVO) super.getObjectById(ComuniVO.class.getName(), GET_COMUNE_BY_CODCOMUNE, codComune);
- 	}
- 	
- 	public <T> ArrayList<T> getProvincieAnagrafiche(){
- 		return super.list(ComuniVO.class.getName(), GET_PROVINCIE_BY_ANAGRAFICHE);
- 	}
- 	
- 	public <T> ArrayList<T> getComuniByProvincia(String provincia){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), GET_COMUNI_BY_PROVINCIA, provincia);
+ 	public ArrayList<Comuni> getComuniByProvincia(String provincia){
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		return new ArrayList<Comuni>(ObjectSelect.query(Comuni.class)
+		 		   									  .where(Comuni.PROVINCIA.eq(provincia))
+		 		   									  .select(context));
+
  	}
 
- 	public <T> ArrayList<T> getProvincieImmobili(){
- 		return super.list(ComuniVO.class.getName(), GET_PROVINCIE_BY_IMMOBILI);
+ 	public ArrayList<Comuni> getProvincieImmobili(){
+ 		ArrayList<Comuni> retVal = new ArrayList<Comuni>();
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		ObjectSelect.query(Immobili.class);
+		ArrayList<String> al = new ArrayList<String>(ObjectSelect.columnQuery(Immobili.class,Immobili.PROVINCIA)
+		 		   									  			 .distinct()
+		 		   									  			 .select(context));
+ 		al.forEach(provincia -> {
+ 			Comuni c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Comuni.class);
+ 			c.setProvincia(provincia);
+ 			retVal.add(c);
+ 		});
+ 		return retVal;
  	}
 
- 	public <T> ArrayList<T> getComuniByProvinciaImmobili(String provincia){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), GET_COMUNI_BY_PROVINCIA_IMMOBILI,provincia);
+ 	public ArrayList<Comuni> getComuniByProvinciaImmobili(String provincia){
+ 		ArrayList<Comuni> retVal = new ArrayList<Comuni>();
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		ObjectSelect.query(Immobili.class);
+		ArrayList<String> al = new ArrayList<String>(ObjectSelect.columnQuery(Immobili.class,Immobili.CITTA)
+		 		   									  			 .distinct()
+		 		   									  			 .where(Immobili.PROVINCIA.eq(provincia))
+		 		   									  			 .select(context));
+ 		al.forEach(comune -> {
+ 			Comuni c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Comuni.class);
+ 			c.setComune(comune);
+ 			retVal.add(c);
+ 		});
+ 		return retVal;
+ 		 		
  	}
 
- 	public <T> ArrayList<T> getComuniByProvinciaAnagrafiche(String provincia){
- 		return super.getObjectsByStringFieldValue(ComuniVO.class.getName(), GET_COMUNI_BY_PROVINCIA_ANAGRAFICHE,provincia);
+ 	public ArrayList<Comuni> getComuniByProvinciaAnagrafiche(String provincia){
+ 		ArrayList<Comuni> retVal = new ArrayList<Comuni>();
+ 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+ 		ObjectSelect.query(Anagrafiche.class);
+		ArrayList<String> al = new ArrayList<String>(ObjectSelect.columnQuery(Anagrafiche.class,Anagrafiche.CITTA)
+		 		   									  			 .distinct()
+		 		   									  			 .where(Anagrafiche.PROVINCIA.eq(provincia))
+		 		   									  			 .select(context));
+ 		al.forEach(comune -> {
+ 			Comuni c = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Comuni.class);
+ 			c.setComune(comune);
+ 			retVal.add(c);
+ 		});
+ 		return retVal;
  	}
 
 }

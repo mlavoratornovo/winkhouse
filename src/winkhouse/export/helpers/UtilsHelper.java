@@ -29,6 +29,7 @@ import winkhouse.orm.Classienergetiche;
 import winkhouse.orm.Riscaldamenti;
 import winkhouse.orm.Statoconservativo;
 import winkhouse.orm.Tipologiastanze;
+import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.orm.Tipologiecontatti;
 import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.MobiliaDatiBaseCache;
@@ -859,7 +860,7 @@ public class UtilsHelper {
 	 * Ritorna la lista delle tipologie colloqui presenti in winkhouse
 	 * @return ArrayList<TipologieColloquiVO> la lista delle tipologie colloqui
 	 */
-	public ArrayList<TipologieColloquiVO> getTipologieColloqui(){
+	public ArrayList<Tipologiecolloqui> getTipologieColloqui(){
 		return EnvSettingsFactory.getInstance()
 						         .getTipologieColloqui();
 	}

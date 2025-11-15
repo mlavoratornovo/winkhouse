@@ -31,7 +31,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import winkhouse.Activator;
 import winkhouse.dao.ComuniDAO;
-import winkhouse.vo.ComuniVO;
+import winkhouse.orm.Comuni;
 
 
 public class PopUpSceltaComune {
@@ -199,11 +199,11 @@ public class PopUpSceltaComune {
 			@Override
 			public String getColumnText(Object arg0, int arg1) {
 				switch(arg1){
-					case 0: return ((ComuniVO)arg0).getCodIstat();
-					case 1: return ((ComuniVO)arg0).getComune();
-					case 2: return ((ComuniVO)arg0).getProvincia();
-					case 3: return ((ComuniVO)arg0).getRegione();
-					case 4: return ((ComuniVO)arg0).getCap();
+					case 0: return ((Comuni)arg0).getCodistat();
+					case 1: return ((Comuni)arg0).getComune();
+					case 2: return ((Comuni)arg0).getProvincia();
+					case 3: return ((Comuni)arg0).getRegione();
+					case 4: return ((Comuni)arg0).getCap();
 											
 				}
 				return null;
@@ -219,7 +219,7 @@ public class PopUpSceltaComune {
 			
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				ComuniVO cVO = (ComuniVO)((StructuredSelection)arg0.getSelection()).getFirstElement();
+				Comuni cVO = (Comuni)((StructuredSelection)arg0.getSelection()).getFirstElement();
 				returnValue(cVO);
 				//popup.close();
 				
@@ -255,16 +255,16 @@ public class PopUpSceltaComune {
 		popup.open();
 	}
 	
-	public void setRisultatiRicerca(ArrayList<ComuniVO> comuni){
+	public void setRisultatiRicerca(ArrayList<Comuni> comuni){
 		tv.setInput(comuni);		
 	}
 	
-	private void returnValue(ComuniVO returnObj){
+	private void returnValue(Comuni returnObj){
 		
 		if ((callerObj != null) && (setterMethodName != null)){
 		
 				try {
-					Method m = callerObj.getClass().getMethod(setterMethodName, ComuniVO.class);
+					Method m = callerObj.getClass().getMethod(setterMethodName, Comuni.class);
 					m.invoke(callerObj, returnObj);			
 					popup.close();
 				} catch (SecurityException e) {

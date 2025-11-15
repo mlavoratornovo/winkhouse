@@ -29,6 +29,7 @@ import winkhouse.model.ColloquiModel;
 import winkhouse.model.ColloquiModelVisiteCollection;
 import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Colloqui;
+import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.AllegatiColloquiVO;
 import winkhouse.vo.ColloquiAgentiVO;
@@ -226,7 +227,7 @@ public class ColloquiHelper {
 														   .addAll((ArrayList)colloquioDelResult.get(this.LIST_DELETE_ALLEGATI_FILE)));
 					
 					if (!(Boolean)colloquioDelResult.get(this.RESULT_DELETE_COLLOQUIO_DB)){
-						TipologieColloquiVO tcVO = (cModel.getCodtipologiacolloquio()!= 0)
+						Tipologiecolloqui tcVO = (cModel.getCodtipologiacolloquio()!= 0)
 						? EnvSettingsFactory.getInstance().getTipologiaColloquioById(cModel.getCodtipologiacolloquio())
 						: null;
 						MessageDialog.openError(PlatformUI.getWorkbench()
@@ -438,7 +439,7 @@ public class ColloquiHelper {
 							
 							boolean nextsave = true;
 							if (cModel.getTipologia() != null){
-								if ((cModel.getTipologia().getCodTipologiaColloquio() == 1) && (listaCriteri.size() > 0)){
+								if ((cModel.getTipologia().getCodTipologieColloquio() == 1) && (listaCriteri.size() > 0)){
 									SearchEngineImmobili sei = new SearchEngineImmobili(listaCriteri);
 									if (sei.verifyQuery() == false){
 										nextsave = MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 

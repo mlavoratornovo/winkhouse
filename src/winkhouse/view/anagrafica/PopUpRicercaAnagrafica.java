@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import org.apache.cayenne.ObjectContext;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -41,10 +42,10 @@ import winkhouse.dao.AnagraficheDAO;
 import winkhouse.dao.WinkSysDAO;
 import winkhouse.helper.AnagraficheHelper;
 import winkhouse.helper.ProfilerHelper;
-import winkhouse.model.AnagraficheModel;
+import winkhouse.orm.Anagrafiche;
 import winkhouse.util.IWinkSysProperties;
 import winkhouse.util.WinkhouseUtils;
-import winkhouse.vo.AnagraficheVO;
+
 
 
 
@@ -90,10 +91,9 @@ public class PopUpRicercaAnagrafica extends Dialog{
 	protected void okPressed() {
 		
 		if ((((StructuredSelection)viewer.getSelection()).getFirstElement() != null) && 
-		    (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof AnagraficheVO)){
-			AnagraficheVO aVO = (AnagraficheVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
-			AnagraficheModel aModel = new AnagraficheModel(aVO);
-			returnValue(aModel);
+		    (((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof Anagrafiche)){
+			Anagrafiche aVO = (Anagrafiche)((StructuredSelection)viewer.getSelection()).getFirstElement();			
+			returnValue(aVO);
 			close();
 		}else{
 			MessageBox mb = new MessageBox(getShell(),SWT.ERROR);
@@ -147,23 +147,24 @@ public class PopUpRicercaAnagrafica extends Dialog{
 			
 			@Override
 			public void mouseUp(MouseEvent e) {
-				
-				AnagraficheModel aModel = new AnagraficheModel();
+				ObjectContext o = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+				Anagrafiche aModel = o.newObject(Anagrafiche.class);
+
 				
 				aModel.setNome(tNome.getText());
 				aModel.setCognome(tCognome.getText());
-				aModel.setRagioneSociale(tIndirizzo.getText());
+				aModel.setRagsoc(tIndirizzo.getText());
 				
 				if (
 						(((aModel.getCognome() != null) && (!aModel.getCognome().equalsIgnoreCase(""))) && 
 						 ((aModel.getNome() != null) && (!aModel.getNome().equalsIgnoreCase("")))) ||
-						 ((aModel.getRagioneSociale() != null) && (!aModel.getRagioneSociale().equalsIgnoreCase("")))
+						 ((aModel.getRagsoc() != null) && (!aModel.getRagsoc().equalsIgnoreCase("")))
 					){
-					AnagraficheHelper ah = new AnagraficheHelper();
-					if (ah.updateAnagrafiche(aModel, false, null, true) == true){
+					try {
+						o.commitChanges();
 						MessageDialog.openInformation(getShell(), "Salvataggio anagrafica", "Anagrafica inserita con successo");
-						viewer.setInput(new Object());
-					}else{
+						viewer.setInput(new Object());						
+					} catch (Exception e2) {
 						MessageDialog.openError(getShell(), "Salvataggio anagrafica", "Impossibile salvare l'anagrafica");
 					}
 				}else{
@@ -267,17 +268,17 @@ public class PopUpRicercaAnagrafica extends Dialog{
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
 				
-				String cognome = (((AnagraficheModel)element).getCognome() == null) 
+				String cognome = (((Anagrafiche)element).getCognome() == null) 
 								 ? "" 
-								 : ((AnagraficheModel)element).getCognome().toLowerCase();
+								 : ((Anagrafiche)element).getCognome().toLowerCase();
 				
-				String nome = (((AnagraficheModel)element).getNome() == null) 
+				String nome = (((Anagrafiche)element).getNome() == null) 
 				 			  ? "" 
-				 			  : ((AnagraficheModel)element).getNome().toLowerCase();
+				 			  : ((Anagrafiche)element).getNome().toLowerCase();
 
-				String indirizzo = (((AnagraficheModel)element).getRagioneSociale() == null) 
+				String indirizzo = (((Anagrafiche)element).getRagsoc() == null) 
 				 				   ? "" 
-				 				   : ((AnagraficheModel)element).getRagioneSociale().toLowerCase();
+				 				   : ((Anagrafiche)element).getRagsoc().toLowerCase();
 				
 				if (
 						cognome.startsWith(tCognome.getText().toLowerCase()) && 
@@ -330,7 +331,7 @@ public class PopUpRicercaAnagrafica extends Dialog{
 //				if ((((StructuredSelection)viewer.getSelection()).getFirstElement() != null) && 
 //					(((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof AnagraficheVO)){
 //					AnagraficheVO aVO = (AnagraficheVO)((StructuredSelection)viewer.getSelection()).getFirstElement();
-//					AnagraficheModel aModel = new AnagraficheModel(aVO);
+//					Anagrafiche aModel = new Anagrafiche(aVO);
 //					returnValue(aModel);
 //			
 //				}else{
@@ -384,7 +385,7 @@ public class PopUpRicercaAnagrafica extends Dialog{
 		
 		@Override
 		public Object[] getElements(Object inputElement) {
-			ArrayList al = anagraficheDAO.list(AnagraficheModel.class.getName());
+			ArrayList al = anagraficheDAO.list(Anagrafiche.class.getName());
 			if (WinkhouseUtils.getInstance().getHm_winkSys().get(IWinkSysProperties.LOGIN) != null &&
 				Boolean.valueOf(WinkhouseUtils.getInstance().getHm_winkSys().get(IWinkSysProperties.LOGIN))){	
 				ProfilerHelper.getInstance().filterAnagrafiche(al, false);
@@ -413,11 +414,11 @@ public class PopUpRicercaAnagrafica extends Dialog{
 		public String getColumnText(Object element, int columnIndex) {
 			String retunValue = null;
 			switch(columnIndex){
-				case 1: retunValue = ((AnagraficheModel)element).getNome();
+				case 1: retunValue = ((Anagrafiche)element).getNome();
 						break;
-				case 0: retunValue = ((AnagraficheModel)element).getCognome();
+				case 0: retunValue = ((Anagrafiche)element).getCognome();
 						break;
-				case 2: retunValue = ((AnagraficheModel)element).getRagioneSociale();
+				case 2: retunValue = ((Anagrafiche)element).getRagsoc();
 						break;
 			}
 			return retunValue;
@@ -465,12 +466,12 @@ public class PopUpRicercaAnagrafica extends Dialog{
 		this.setterMethodName = setterMethodName;
 	}
 	
-	private void returnValue(AnagraficheModel returnObj){
+	private void returnValue(Anagrafiche returnObj){
 		
 		if ((callerObj != null) && (setterMethodName != null)){
 		
 				try {
-					Method m = callerObj.getClass().getMethod(setterMethodName, AnagraficheModel.class);
+					Method m = callerObj.getClass().getMethod(setterMethodName, Anagrafiche.class);
 					m.invoke(callerObj, returnObj);			
 					//popup.close();
 				} catch (SecurityException e) {

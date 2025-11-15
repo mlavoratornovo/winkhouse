@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.StatoConservativoDAO;
+import winkhouse.orm.Statoconservativo;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.vo.StatoConservativoVO;
 import winkhouse.widgets.data.ICriteriaOwners;
@@ -17,9 +18,9 @@ public class StatoConservativoDaValueProvider extends DaAValueProvider {
 	
 	public class StatoConservativoDAaValue implements IDaAValueObject{
 		
-		private StatoConservativoVO statoConservativo = null;
+		private Statoconservativo statoConservativo = null;
 		
-		public StatoConservativoDAaValue(StatoConservativoVO statoConservativo){
+		public StatoConservativoDAaValue(Statoconservativo statoConservativo){
 			this.statoConservativo = statoConservativo; 
 		}
 		
@@ -83,7 +84,7 @@ public class StatoConservativoDaValueProvider extends DaAValueProvider {
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				StatoConservativoVO stvo = (StatoConservativoVO) iterator.next();
+				Statoconservativo stvo = (Statoconservativo) iterator.next();
 				statiConservativi.add(new StatoConservativoDAaValue(stvo));
 				
 			}

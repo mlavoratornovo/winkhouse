@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.TipologiaStanzeDAO;
+import winkhouse.orm.Tipologiastanze;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.vo.TipologiaStanzeVO;
 import winkhouse.widgets.data.ICriteriaOwners;
@@ -20,9 +21,9 @@ public class TipologiaStanzeDaValueProvider extends BaseDaValueProvider {
 
 	public class TipologiaStanzeDAaValue implements IDaAValueObject{
 
-		private TipologiaStanzeVO tipologiaStanze = null;
+		private Tipologiastanze tipologiaStanze = null;
 		
-		public TipologiaStanzeDAaValue(TipologiaStanzeVO tipologiaStanze){
+		public TipologiaStanzeDAaValue(Tipologiastanze tipologiaStanze){
 			this.tipologiaStanze = tipologiaStanze; 
 		}
 		
@@ -59,7 +60,7 @@ public class TipologiaStanzeDaValueProvider extends BaseDaValueProvider {
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				TipologiaStanzeVO tsvo = (TipologiaStanzeVO) iterator.next();
+				Tipologiastanze tsvo = (Tipologiastanze) iterator.next();
 				tipologieStanze.add(new TipologiaStanzeDAaValue(tsvo));
 				
 			}

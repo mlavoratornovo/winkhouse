@@ -438,7 +438,7 @@ public class ListaCriteriImmobili extends WizardPage {
 			ricerca.setTipo(UtilsHelper.getInstance()
 	   				   				   .getTipologieColloqui()
 	   				   					.get(0)
-	   				   					.getCodTipologiaColloquio());
+	   				   					.getCodTipologieColloquio());
 		}
 		ArrayList al = new ArrayList(((ExporterWizard)getWizard()).getExporterVO()
         													  .getCriteriRicerca());

@@ -9,14 +9,20 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.apache.cayenne.ObjectId;
 
 import javolution.util.FastMap;
 import javolution.xml.XMLObjectReader;
 import javolution.xml.XMLObjectWriter;
 import javolution.xml.stream.XMLStreamException;
 import winkhouse.Activator;
+import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.TipologieColloquiVO;
 
@@ -26,7 +32,7 @@ public class EnvSettingsFactory {
 	public final static String TIPOLOGIECOLLOQUI_FILENAME = "tipologiecolloqui.xml";
 	public final static String MESI_FILENAME = "mesi";
 	private FastMap<String,String> queries = null;
-	private ArrayList<TipologieColloquiVO> tipologieColloqui = null;
+	private ArrayList<Tipologiecolloqui> tipologieColloqui = null;
 	private static Locale locale = new Locale("it");
 	private FastMap<String,String> gcaleventcolors = null;
 	
@@ -62,10 +68,10 @@ public class EnvSettingsFactory {
 		return queries;
 	}
 	
-	public ArrayList<TipologieColloquiVO> getTipologieColloqui(){
+	public ArrayList<Tipologiecolloqui> getTipologieColloqui(){
 		
 		if (tipologieColloqui == null){
-			tipologieColloqui = new ArrayList<TipologieColloquiVO>();
+			tipologieColloqui = new ArrayList<Tipologiecolloqui>();
 		    XMLObjectReader reader = null;
 			try {
 				reader = XMLObjectReader.newInstance(getClass().getClassLoader()
@@ -78,7 +84,13 @@ public class EnvSettingsFactory {
 		    	while (reader.hasNext()){ 
 					try {	
 					  TipologieColloquiVO tipologia = reader.read("TipologieColloqui", TipologieColloquiVO.class);
-					  tipologieColloqui.add(tipologia);
+					  Tipologiecolloqui tc = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Tipologiecolloqui.class);
+					  tc.setDescrizione(tipologia.getDescrizione());
+					  Map<String, Object> idMap = new HashMap<>();
+					  idMap.put(Tipologiecolloqui.CODTIPOLOGIACOLLOQUIO_PK_COLUMN, tipologia.getCodTipologiaColloquio()); // assuming 'id' is the primary key
+					  ObjectId objectId = new ObjectId("Tipologiecolloqui", idMap);					  
+					  tc.setObjectId(objectId);
+					  tipologieColloqui.add(tc);
 					} catch (XMLStreamException e) {
 						e.printStackTrace();
 					}
@@ -94,15 +106,15 @@ public class EnvSettingsFactory {
 		return tipologieColloqui;
 	}
 	
-	public TipologieColloquiVO getTipologiaColloquioById(Integer idTipoColloquio) {
+	public Tipologiecolloqui getTipologiaColloquioById(Integer idTipoColloquio) {
 		
-		Comparator<TipologieColloquiVO> c = new Comparator<TipologieColloquiVO>() {
+		Comparator<Tipologiecolloqui> c = new Comparator<Tipologiecolloqui>() {
 
 			@Override
-			public int compare(TipologieColloquiVO o1, TipologieColloquiVO o2) {
-				if (o1.getCodTipologiaColloquio() == o2.getCodTipologiaColloquio()) {
+			public int compare(Tipologiecolloqui o1, Tipologiecolloqui o2) {
+				if (o1.getCodTipologieColloquio() == o2.getCodTipologieColloquio()) {
 					return 0;
-				}else if (o1.getCodTipologiaColloquio() > o2.getCodTipologiaColloquio()) {
+				}else if (o1.getCodTipologieColloquio() > o2.getCodTipologieColloquio()) {
 					return 1;
 				}else {
 					return -1;
@@ -111,8 +123,11 @@ public class EnvSettingsFactory {
 			}
 			
 		};
-		TipologieColloquiVO tcVO = new TipologieColloquiVO();
-		tcVO.setCodTipologiaColloquio(idTipoColloquio);
+		Tipologiecolloqui tcVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Tipologiecolloqui.class);
+		Map<String, Object> idMap = new HashMap<>();
+		idMap.put(Tipologiecolloqui.CODTIPOLOGIACOLLOQUIO_PK_COLUMN, idTipoColloquio); // assuming 'id' is the primary key
+		ObjectId objectId = new ObjectId("Tipologiecolloqui", idMap);					  
+		tcVO.setObjectId(objectId);		
 		Collections.sort(getTipologieColloqui(), c);
 		return getTipologieColloqui().get(Collections.binarySearch(getTipologieColloqui(),tcVO, c));
 		

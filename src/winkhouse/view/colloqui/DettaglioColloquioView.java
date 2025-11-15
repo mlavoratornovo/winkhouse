@@ -9,8 +9,11 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.apache.cayenne.ObjectId;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.PojoProperties;
 //import org.eclipse.core.databinding.beans.PojoObservables;
@@ -195,13 +198,13 @@ public class DettaglioColloquioView extends ViewPart {
 
 	private boolean isInCompareMode = false;	
 	
-	private Comparator<TipologieColloquiVO> comparatorTipologia = new Comparator<TipologieColloquiVO>(){
+	private Comparator<Tipologiecolloqui> comparatorTipologia = new Comparator<Tipologiecolloqui>(){
 
 		@Override
-		public int compare(TipologieColloquiVO arg0,TipologieColloquiVO arg1) {
-			if (arg0.getCodTipologiaColloquio().intValue() == arg1.getCodTipologiaColloquio().intValue()){
+		public int compare(Tipologiecolloqui arg0,Tipologiecolloqui arg1) {
+			if (arg0.getCodTipologieColloquio() == arg1.getCodTipologieColloquio()){
 				return 0;
-			}else if (arg0.getCodTipologiaColloquio().intValue() > arg1.getCodTipologiaColloquio().intValue()){
+			}else if (arg0.getCodTipologieColloquio() > arg1.getCodTipologieColloquio()){
 				return 1;
 			}else{
 				return -1;
@@ -1792,7 +1795,7 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {
-				return ((TipologieColloquiVO)element).getDescrizione();
+				return ((Tipologiecolloqui)element).getDescrizione();
 			}
 			
 		});
@@ -1801,7 +1804,7 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				colloquio.setCodtipologiacolloquio(((TipologieColloquiVO)((StructuredSelection)event.getSelection()).getFirstElement()).getCodTipologiaColloquio());
+				colloquio.setCodtipologiacolloquio(((Tipologiecolloqui)((StructuredSelection)event.getSelection()).getFirstElement()).getCodTipologieColloquio());
 				enableLists();
 			}
 			
@@ -1809,8 +1812,11 @@ public class DettaglioColloquioView extends ViewPart {
 						
 		c_tipologiacolloquio.setInput(new Object());
 		if (colloquio.getCodtipologiacolloquio() != 0){
-			TipologieColloquiVO tcVO = new TipologieColloquiVO();
-			tcVO.setCodTipologiaColloquio(colloquio.getCodtipologiacolloquio());
+			Tipologiecolloqui tcVO = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Tipologiecolloqui.class);
+			Map<String, Object> idMap = new HashMap<>();
+			idMap.put(Tipologiecolloqui.CODTIPOLOGIACOLLOQUIO_PK_COLUMN, colloquio.getCodtipologiacolloquio()); // assuming 'id' is the primary key
+			ObjectId objectId = new ObjectId("Tipologiecolloqui", idMap);					  
+			tcVO.setObjectId(objectId);			
 			int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieColloqui(), 
 												 tcVO, 
 												 comparatorTipologia);
@@ -1855,7 +1861,7 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public String getText(Object element) {
-				return ((AgentiVO)element).getCognome() + " " + ((AgentiVO)element).getNome();
+				return ((Agenti)element).getCognome() + " " + ((Agenti)element).getNome();
 			}
 			
 		});
@@ -2238,7 +2244,7 @@ public class DettaglioColloquioView extends ViewPart {
 			ricerca.setTipo(EnvSettingsFactory.getInstance()
 	   				   						  .getTipologieColloqui()
 	   				   						  .get(0)
-	   				   						  .getCodTipologiaColloquio());
+	   				   						  .getCodTipologieColloquio());
 		}
 		
 		ArrayList<Colloquicriteriricerca> al = new ArrayList<Colloquicriteriricerca>(colloquio.getColloquicriteriricercas());

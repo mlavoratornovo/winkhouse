@@ -15,6 +15,7 @@ import winkhouse.dao.EntityDAO;
 import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.WinkGCalendarDAO;
 import winkhouse.orm.Agenti;
+import winkhouse.orm.Tipologiecolloqui;
 import winkhouse.util.IEntityAttribute;
 import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.vo.AgentiVO;
@@ -27,7 +28,7 @@ public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 
 	private Agenti agenteInseritore = null;
 	private ImmobiliModel immobileAbbinato = null;
-	private TipologieColloquiVO tipologia = null;
+	private Tipologiecolloqui tipologia = null;
 	private ArrayList allegati = null;
 	private ArrayList<ColloquiAgentiModel_Age> agenti = null;
 	private ArrayList<ColloquiAnagraficheModel_Ang> anagrafiche = null;
@@ -116,15 +117,15 @@ public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 		}
 	}
 
-	public TipologieColloquiVO getTipologia() {
+	public Tipologiecolloqui getTipologia() {
 		if (tipologia == null){
 			if ((super.getCodTipologiaColloquio() != null) &&
 				(super.getCodTipologiaColloquio() != 0)){
-				ArrayList<TipologieColloquiVO> al = MobiliaDatiBaseCache.getInstance().getTipologieColloqui();
-			    Iterator<TipologieColloquiVO> it = al.iterator();
+				ArrayList<Tipologiecolloqui> al = MobiliaDatiBaseCache.getInstance().getTipologieColloqui();
+			    Iterator<Tipologiecolloqui> it = al.iterator();
 			    while(it.hasNext()){
-			    	TipologieColloquiVO tcVO = it.next();
-					if (tcVO.getCodTipologiaColloquio().intValue() == super.getCodTipologiaColloquio().intValue()){
+			    	Tipologiecolloqui tcVO = it.next();
+					if (tcVO.getCodTipologieColloquio() == super.getCodTipologiaColloquio()){
 						tipologia = tcVO;
 						break;
 					}
@@ -134,11 +135,11 @@ public class ColloquiModel extends ColloquiVO implements IEntityAttribute{
 		return tipologia;
 	}
 
-	public void setTipologia(TipologieColloquiVO tipologia) {
+	public void setTipologia(Tipologiecolloqui tipologia) {
 		
 		this.tipologia = tipologia;
 		if (tipologia != null){
-			super.setCodTipologiaColloquio(tipologia.getCodTipologiaColloquio());
+			super.setCodTipologiaColloquio(tipologia.getCodTipologieColloquio());
 		}else{
 			super.setCodTipologiaColloquio(0);
 		}

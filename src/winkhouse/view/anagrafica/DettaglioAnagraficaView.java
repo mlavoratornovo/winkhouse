@@ -498,7 +498,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					anagrafica.setAgenti(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement()));				
+					anagrafica.setAgenti(anagrafica.getObjectContext().localObject(((Agenti)((StructuredSelection)event.getSelection()).getFirstElement())));				
 				}
 				
 			});
@@ -553,7 +553,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 	
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					anagrafica.setClassicliente(((Classicliente)((StructuredSelection)event.getSelection()).getFirstElement())); 
+					anagrafica.setClassicliente(anagrafica.getObjectContext().localObject(((Classicliente)((StructuredSelection)event.getSelection()).getFirstElement()))); 
 				}
 				
 			});

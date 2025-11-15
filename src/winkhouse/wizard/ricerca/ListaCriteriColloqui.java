@@ -524,7 +524,7 @@ public class ListaCriteriColloqui extends WizardPage{
 			((RicercaWizard)getWizard()).getRicerca().setTipo(EnvSettingsFactory.getInstance()
 	   				   						  					  .getTipologieColloqui()
 	   				   						  					  .get(0)
-	   				   						  					  .getCodTipologiaColloquio());
+	   				   						  					  .getCodTipologieColloquio());
 		}
 		ArrayList al = (ArrayList)((RicercaWizard)getWizard()).getRicerca()
         													  .getCriteriColloqui().clone();

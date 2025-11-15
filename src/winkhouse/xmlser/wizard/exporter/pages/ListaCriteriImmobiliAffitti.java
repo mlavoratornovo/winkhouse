@@ -1142,7 +1142,7 @@ public class ListaCriteriImmobiliAffitti extends WizardPage {
 			ricerca.setTipo(EnvSettingsFactory.getInstance()
 	   				   						  .getTipologieColloqui()
 	   				   						  .get(0)
-	   				   						  .getCodTipologiaColloquio());
+	   				   						  .getCodTipologieColloquio());
 		}
 		ArrayList<Colloquicriteriricerca> al = new ArrayList(((ExporterWizard)getWizard()).getExporterVO().getCriteriRicerca());
 
