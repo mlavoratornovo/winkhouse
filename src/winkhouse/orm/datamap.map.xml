@@ -326,7 +326,7 @@
 	<db-entity name="IMMOBILIPROPIETARI" schema="PUBLIC" catalog="PUBLIC">
 		<db-attribute name="CODANAGRAFICA" type="INTEGER" length="32"/>
 		<db-attribute name="CODIMMOBILE" type="INTEGER" length="32"/>
-		<db-attribute name="IDIMMPROP" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="32"/>
+		<db-attribute name="IDIMMPROP" type="INTEGER" isGenerated="true" isPrimaryKey="true" isMandatory="true" length="32"/>
 	</db-entity>
 	<db-entity name="PERMESSI" schema="PUBLIC" catalog="PUBLIC">
 		<db-attribute name="CANREAD" type="BOOLEAN"/>

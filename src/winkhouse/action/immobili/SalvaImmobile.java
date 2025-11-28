@@ -49,22 +49,8 @@ public class SalvaImmobile extends Action {
 			 															 .getActiveWorkbenchWindow()
 			 															 .getActivePage()
 			 															 .getActivePart();
-			if (
-				(div.getImmobile().getAnagrafiche()!= null) &&				
-				(
-				 (
-				  (div.getImmobile().getAnagrafiche().getCognome() != null) && 
-				  (!div.getImmobile().getAnagrafiche().getCognome().equalsIgnoreCase("")) 
-				  ) ||
-				 (
-				  (div.getImmobile().getAnagrafiche().getNome() != null) &&
-				  (!div.getImmobile().getAnagrafiche().getNome().equalsIgnoreCase(""))
-				 )
-				) &&
-				((!div.getImmobile().getCitta().equalsIgnoreCase("")) &&
-				 (!div.getImmobile().getIndirizzo().equalsIgnoreCase(""))
-				)
-			   ){
+			if ((div.getImmobile().getImmobilipropietaris()!= null && div.getImmobile().getImmobilipropietaris().size() > 0) && 
+				(!div.getImmobile().getCitta().equalsIgnoreCase("") && !div.getImmobile().getIndirizzo().equalsIgnoreCase(""))){
 				
 				EntityHelper eh = new EntityHelper();
 				ImmobiliHelper ih = new ImmobiliHelper();

@@ -20,7 +20,8 @@ public abstract class _Immobilipropietari extends BaseDataObject {
 
     private static final long serialVersionUID = 1L; 
 
-
+    public static final String IDIMMPROP_PK_COLUMN = "IDIMMPROP";
+    
     public static final Property<Anagrafiche> ANAGRAFICHE = Property.create("anagrafiche", Anagrafiche.class);
     public static final Property<Immobili> IMMOBILI = Property.create("immobili", Immobili.class);
 

@@ -15,7 +15,7 @@ public class ClasseEnergeticaXMLModel extends Classienergetiche
 									  implements XMLSerializable {
 	
 	public ClasseEnergeticaXMLModel(Classienergetiche ceVO) {
-		this.setCodClasseEnergetica(ceVO.getCodClasseEnergetica());
+		//this.setCodClasseEnergetica(ceVO.getCodClasseEnergetica());
 		this.setDescrizione(ceVO.getDescrizione());
 		this.setOrdine(ceVO.getOrdine());
 		this.setNome(ceVO.getNome());

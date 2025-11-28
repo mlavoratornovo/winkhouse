@@ -9,7 +9,12 @@ import java.util.ArrayList;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
+import org.apache.cayenne.exp.ExpressionFactory;
 import org.apache.cayenne.query.ObjectSelect;
+import org.apache.cayenne.query.Orderings;
+import org.apache.cayenne.query.SortOrder;
+
+import com.google.common.collect.Ordering;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.TipologieImmobiliModel;
@@ -39,7 +44,11 @@ public class TipologieImmobiliDAO extends BaseDAO{
 	
 	public ArrayList<Tipologieimmobili> list(ObjectContext context){
 		context = (context != null)?context : WinkhouseUtils.getInstance().getNewCayenneObjectContext();
-		return new ArrayList<Tipologieimmobili>(ObjectSelect.query(Tipologieimmobili.class).select(context));
+//		Orderings o = new Orderings();
+//		o.add(new org.apache.cayenne.query.Ordering(ExpressionFactory.dbPathExp("CODTIPOLOGIAIMMOBILE"),SortOrder.ASCENDING));
+		return new ArrayList<Tipologieimmobili>(ObjectSelect.query(Tipologieimmobili.class)
+//				.orderBy(o)// (ExpressionFactory.dbPathExp("CODTIPOLOGIAIMMOBILE"), SortOrder.ASCENDING)
+				.select(context));
 	};	
 	
 	public ArrayList<TipologieImmobiliModel> listByComune(String comune){

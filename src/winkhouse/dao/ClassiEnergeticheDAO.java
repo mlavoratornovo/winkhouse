@@ -41,8 +41,8 @@ public class ClassiEnergeticheDAO extends BaseDAO {
 	
 	public ArrayList<Classienergetiche> listClassiEnergetiche(ObjectContext context){
 		context = (context != null)?context:WinkhouseUtils.getInstance().getNewCayenneObjectContext();
-		Property<String> propertyName = Property.create("ordine", String.class);		
-		return new ArrayList<Classienergetiche>(ObjectSelect.query(Classienergetiche.class).orderBy(propertyName.asc()).select(context));
+		//Property<String> propertyName = Property.create("ordine", String.class);		
+		return new ArrayList<Classienergetiche>(ObjectSelect.query(Classienergetiche.class).select(context));
 	};
 	
 	public ArrayList<ClasseEnergeticaModel> listByComune(String comune){

@@ -227,7 +227,7 @@ public class DettaglioImmobileView extends ViewPart
 
 		@Override
 		public int compare(Tipologieimmobili arg0,Tipologieimmobili arg1) {
-			return Integer.valueOf(arg0.getCodTipologiaImmobile()).compareTo(Integer.valueOf(arg0.getCodTipologiaImmobile()));
+			return Integer.valueOf(arg0.getCodTipologiaImmobile()).compareTo(Integer.valueOf(arg1.getCodTipologiaImmobile()));
 		}
 		
 	};
@@ -929,33 +929,34 @@ public class DettaglioImmobileView extends ViewPart
 							
 			cvtipologia.setInput(new Object());
 			if (immobile.getTipologieimmobili() != null){
+				
 				int index = Collections.binarySearch(MobiliaDatiBaseCache.getInstance().getTipologieImmobili(), immobile.getTipologieimmobili(), comparatorTipologia);
 				Object[] sel = new Object[1];
 				sel[0] = MobiliaDatiBaseCache.getInstance().getTipologieImmobili().get(index);
 				StructuredSelection ss = new StructuredSelection(sel);
 				cvtipologia.setSelection(ss);		
 
-				ArrayList<Tipologieimmobili> tipologie = MobiliaDatiBaseCache.getInstance().getTipologieImmobili();
-				int count = 0;
-				boolean findit = false;
-				for (Iterator iterator = tipologie.iterator(); iterator.hasNext();) {
-					if (immobile.getTipologieimmobili().getCodTipologiaImmobile() == ((Tipologieimmobili)iterator.next()).getCodTipologiaImmobile()){
-						findit = true;
-						break;
-					}else{
-						count++;
-					}
-					
-				}
-				if (findit == false){
-					count = -1;
-				}
-				if (count > -1){
-					sel = new Object[1];
-					sel[0] = MobiliaDatiBaseCache.getInstance().getTipologieImmobili().get(count);
-					ss = new StructuredSelection(sel);
-					cvtipologia.setSelection(ss);
-				}
+//				ArrayList<Tipologieimmobili> tipologie = MobiliaDatiBaseCache.getInstance().getTipologieImmobili();
+//				int count = 0;
+//				boolean findit = false;
+//				for (Iterator iterator = tipologie.iterator(); iterator.hasNext();) {
+//					if (immobile.getTipologieimmobili().getCodTipologiaImmobile() == ((Tipologieimmobili)iterator.next()).getCodTipologiaImmobile()){
+//						findit = true;
+//						break;
+//					}else{
+//						count++;
+//					}
+//					
+//				}
+//				if (findit == false){
+//					count = -1;
+//				}
+//				if (count > -1){
+//					sel = new Object[1];
+//					sel[0] = MobiliaDatiBaseCache.getInstance().getTipologieImmobili().get(count);
+//					ss = new StructuredSelection(sel);
+//					cvtipologia.setSelection(ss);
+//				}
 				
 			}
 			
@@ -1149,6 +1150,10 @@ public class DettaglioImmobileView extends ViewPart
 
 			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tspese),																
 					 PojoProperties.value("spese").observe(immobile),
+	                 null, 
+	                 null);
+			bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(tannoCostruzione),																
+					 PojoProperties.value("annocostruzione").observe(immobile),
 	                 null, 
 	                 null);
 	

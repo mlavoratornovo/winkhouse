@@ -21,7 +21,11 @@ public class Immobili extends _Immobili {
 	}
 
 	public int getCodImmobile() {
-        return Cayenne.intPKForObject(this);
+		try {
+        	return Cayenne.intPKForObject(this);
+    	}catch(Exception ex) {
+    		return 0;
+    	}
     }
     
     public String getDescrizioneAnagrafichePropietarie() {

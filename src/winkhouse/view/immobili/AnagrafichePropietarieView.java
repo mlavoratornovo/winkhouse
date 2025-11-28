@@ -223,10 +223,15 @@ public class AnagrafichePropietarieView extends ViewPart {
 //			if (this.immobile.getImmobilipropietaris() == null){
 //				this.immobile.setAnagrafichePropietarie(new ArrayList<AnagraficheModel>());
 //			}
-			ObjectContext oc = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+			ObjectContext oc = WinkhouseUtils.getInstance().getCayenneObjectContext();
 			Immobilipropietari ip = oc.newObject(Immobilipropietari.class);
 			ip.setAnagrafiche(ip.getObjectContext().localObject(anagrafica));
-			ip.setImmobili(ip.getObjectContext().localObject(this.immobile));
+			if (this.immobile.getCodImmobile() != 0) {
+				ip.setImmobili(ip.getObjectContext().localObject(this.immobile));
+			}else {
+				ip.setImmobili(this.immobile);
+			}
+			
 			oc.commitChanges();
 			this.immobile.addToImmobilipropietaris(this.immobile.getObjectContext().localObject(ip));
 			setAnagrafica(this.immobile);
