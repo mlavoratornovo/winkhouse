@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.cayenne.Cayenne;
 import org.apache.cayenne.ObjectContext;
@@ -541,6 +542,14 @@ public class ImmobiliDAO extends BaseDAO{
 	public Immobili getImmobileById(Integer codImmobile){
 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return Cayenne.objectForPK(context,Immobili.class,codImmobile);
+	}
+
+	public ArrayList<Immobili> getImmobileById(List<Integer> ids){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		Expression exp = ExpressionFactory.inDbExp("CODIMMOBILE", ids);
+		SelectQuery<Immobili> query = new SelectQuery<>(Immobili.class, exp);
+
+		return new ArrayList<Immobili>(context.select(query));
 	}
 
 	

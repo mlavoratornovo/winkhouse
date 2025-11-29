@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import winkhouse.dao.ClassiClientiDAO;
+import winkhouse.orm.Classicliente;
 import winkhouse.util.AnagraficheMethodName;
 import winkhouse.vo.ClassiClientiVO;
 import winkhouse.widgets.data.ICriteriaOwners;
@@ -16,9 +17,9 @@ public class ClassiClientiDaAValueProvider extends BaseDaValueProvider {
 	
 	public class ClassiClientiDAaValue implements IDaAValueObject{
 		
-		private ClassiClientiVO classeCliente = null;
+		private Classicliente classeCliente = null;
 		
-		public ClassiClientiDAaValue(ClassiClientiVO classeCliente){
+		public ClassiClientiDAaValue(Classicliente classeCliente){
 			this.classeCliente = classeCliente; 
 		}
 		
@@ -66,7 +67,7 @@ public class ClassiClientiDaAValueProvider extends BaseDaValueProvider {
 			
 			for (Iterator iterator = al.iterator(); iterator.hasNext();) {
 				
-				ClassiClientiVO ccvo = (ClassiClientiVO) iterator.next();
+				Classicliente ccvo = (Classicliente) iterator.next();
 				classiClienti.add(new ClassiClientiDAaValue(ccvo));
 				
 			}

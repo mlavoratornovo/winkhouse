@@ -60,6 +60,9 @@ public class SalvaImmobile extends Action {
 				immobile.setDateupdate(new Date().toInstant()
 					      .atZone(ZoneId.systemDefault())
 					      .toLocalDateTime());
+				immobile.setVisione(immobile.isVisione());
+				immobile.setStorico(immobile.isStorico());
+				immobile.setAffitto(immobile.isAffitto());
 				if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
 					immobile.setAgenti1(WinkhouseUtils.getInstance().getLoggedAgent());
 				}

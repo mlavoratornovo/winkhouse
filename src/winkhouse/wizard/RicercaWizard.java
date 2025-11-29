@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -23,6 +25,7 @@ import winkhouse.action.anagrafiche.ApriDettaglioAnagraficaAction;
 import winkhouse.action.colloqui.ApriDettaglioColloquioAction;
 import winkhouse.action.immobili.ApriDettaglioImmobileAction;
 import winkhouse.dao.AbbinamentiDAO;
+import winkhouse.dao.ImmobiliDAO;
 import winkhouse.dao.RicercheDAO;
 import winkhouse.engine.search.SearchEngineAnagrafiche;
 import winkhouse.engine.search.SearchEngineColloqui;
@@ -30,6 +33,7 @@ import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.engine.search.SearchEngineImmobiliAffitti;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.RicercheHelper;
+import winkhouse.model.ImmobiliModel;
 //import winkhouse.model.AbbinamentiModel;
 //import winkhouse.model.AnagraficheModel;
 //import winkhouse.model.ColloquiModel;
@@ -418,10 +422,16 @@ public class RicercaWizard extends Wizard {
 																	 InterruptedException {
 						
 						Display d = PlatformUI.getWorkbench().getDisplay();
-						ArrayList alImmobili = getRicerca().getRisultati();
+						ArrayList<ImmobiliModel> alImmobili = getRicerca().getRisultati();
 						if (alImmobili != null && alImmobili.size() > 0){
-							Iterator it = alImmobili.iterator();
-							monitor.beginTask("apertura dettagli", alImmobili.size());
+							
+							List<Integer> ids = alImmobili.stream()
+	                                   .map(ImmobiliModel::getCodImmobile)
+	                                   .collect(Collectors.toList());
+							ImmobiliDAO iDAO = new ImmobiliDAO();
+							ArrayList<Immobili> alimmobile = iDAO.getImmobileById(ids);
+							Iterator it = alimmobile.iterator();
+							monitor.beginTask("apertura dettagli", alimmobile.size());
 							d.readAndDispatch();
 							while(it.hasNext()){
 								Immobili im = (Immobili)it.next();
