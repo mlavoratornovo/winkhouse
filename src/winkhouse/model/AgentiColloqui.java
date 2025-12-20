@@ -3,26 +3,23 @@ package winkhouse.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import winkhouse.orm.Agenti;
 import winkhouse.vo.AgentiVO;
 
-public class AgentiColloqui extends AgentiModel {
+public class AgentiColloqui extends Agenti {
 
 	public static final int AGENTI_COLLOQUIO_PARTECIPANTI = 0;
 	public static final int AGENTI_COLLOQUIO_INSERITORI = 1;
 	
 	private int agenti_colloquio_type = 0;
+	private Agenti agente;
 	
-	public AgentiColloqui() {
-		
+	public AgentiColloqui(Agenti agente) {
+		this.agente = agente;
 	}
 
-	public AgentiColloqui(AgentiVO agentiVO) {
-		super(agentiVO);		
-	}
-
-	public AgentiColloqui(ResultSet rs) throws SQLException {
-		super(rs);
-		agenti_colloquio_type = rs.getInt("agenti_colloquio_type");
+	public Agenti getAgente() {
+		return agente;
 	}
 
 	public int getAgenti_colloquio_type() {

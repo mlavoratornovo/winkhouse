@@ -40,10 +40,14 @@ import winkhouse.model.ColloquiAgentiModel_Age;
 import winkhouse.model.ColloquiAnagraficheModel_Ang;
 import winkhouse.model.ColloquiModel;
 import winkhouse.model.ImmobiliModel;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
+import winkhouse.orm.Classicliente;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Colloquianagrafiche;
 import winkhouse.orm.Immobili;
+import winkhouse.orm.Tipologiecolloqui;
+import winkhouse.orm.Tipologieimmobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 import winkhouse.view.anagrafica.handler.DettaglioAnagraficaHandler;
@@ -103,35 +107,35 @@ public class ColloquiTreeView extends ViewPart {
 		@Override
 		public Object[] getChildren(Object parentElement) {
 			
-			if (parentElement instanceof TipologieColloquiVO){
+			if (parentElement instanceof Tipologiecolloqui){
 				
 				ColloquiDAO cDAO = new ColloquiDAO();
 				return cDAO.getColloquiByTipologia(ColloquiModel.class.getName(), 
-												   ((TipologieColloquiVO) parentElement).getCodTipologiaColloquio()).toArray();
+												   ((Tipologiecolloqui) parentElement).getCodTipologieColloquio()).toArray();
 				
 			}else if (parentElement instanceof AgentiColloqui){
 				
 				ColloquiDAO cDAO = new ColloquiDAO();
 				
 				if (((AgentiColloqui)parentElement).getAgenti_colloquio_type() == AgentiColloqui.AGENTI_COLLOQUIO_INSERITORI ){
-					if (((AgentiColloqui)parentElement).getCodAgente() != null){
-						return cDAO.getColloquiByAgenteInseritore(ColloquiModel.class.getName(), ((AgentiColloqui)parentElement).getCodAgente()).toArray();
+					if (((AgentiColloqui)parentElement).getAgente() != null){
+						return cDAO.getColloquiByAgenteInseritore(ColloquiModel.class.getName(), ((AgentiColloqui)parentElement).getAgente()).toArray();
 					}else{
 						return cDAO.getColloquiWithoutAgenteInseritore(ColloquiModel.class.getName()).toArray();
 					}
 				}
 				
 				if (((AgentiColloqui)parentElement).getAgenti_colloquio_type() == AgentiColloqui.AGENTI_COLLOQUIO_PARTECIPANTI ){
-					if (((AgentiColloqui)parentElement).getCodAgente() != null){
+					if (((AgentiColloqui)parentElement).getAgente() != null){
 						return cDAO.getColloquiByAgentePartecipante(ColloquiModel.class.getName(), ((AgentiColloqui)parentElement).getCodAgente()).toArray();
 					}else{
 						return cDAO.getColloquiWithoutAgentePartecipante(ColloquiModel.class.getName()).toArray();
 					}
 				}
 				
-			}else if (parentElement instanceof TipologieImmobiliVO){
+			}else if (parentElement instanceof Tipologieimmobili){
 				ImmobiliDAO iDAO = new ImmobiliDAO();
-				return iDAO.getImmobiliColloquiByTipologiaImmobile(ImmobiliModel.class.getName(), ((TipologieImmobiliVO)parentElement).getCodTipologiaImmobile()).toArray();
+				return iDAO.getImmobiliColloquiByTipologiaImmobile((Tipologieimmobili)parentElement).toArray();
 				
 			}else if (parentElement instanceof ImmobiliModel){
 				ColloquiDAO cDAO = new ColloquiDAO();
@@ -180,7 +184,7 @@ public class ColloquiTreeView extends ViewPart {
 					
 					AgentiDAO aDAO = new AgentiDAO();
 					
-					AgentiColloqui nessuno = new AgentiColloqui();
+					AgentiColloqui nessuno = new AgentiColloqui(null);
 					nessuno.setCognome("senza agente inseritore");
 					nessuno.setAgenti_colloquio_type(AgentiColloqui.AGENTI_COLLOQUIO_INSERITORI);
 					ArrayList agenti_ins = aDAO.listAgentiColloquiInseritori(AgentiColloqui.class.getName());
@@ -192,7 +196,7 @@ public class ColloquiTreeView extends ViewPart {
 					
 					AgentiDAO aDAO = new AgentiDAO();
 					
-					AgentiColloqui nessuno = new AgentiColloqui();
+					AgentiColloqui nessuno = new AgentiColloqui(null);
 					nessuno.setCognome("senza agenti partecipanti");
 					nessuno.setAgenti_colloquio_type(AgentiColloqui.AGENTI_COLLOQUIO_PARTECIPANTI);
 					ArrayList agenti_par = aDAO.listAgentiColloquiPartecipanti(AgentiColloqui.class.getName());
@@ -244,27 +248,27 @@ public class ColloquiTreeView extends ViewPart {
 			
 			String returnValue = null;
 			
-			if (obj instanceof TipologieColloquiVO){
+			if (obj instanceof Tipologiecolloqui){
 				returnValue = obj.toString();
 			}
 
-			if (obj instanceof TipologieImmobiliVO){
-				returnValue = ((TipologieImmobiliVO)obj).getDescrizione();
+			if (obj instanceof Tipologieimmobili){
+				returnValue = ((Tipologieimmobili)obj).getDescrizione();
 			}
-			if (obj instanceof AgentiVO){
-				returnValue = ((AgentiVO)obj).toString();
+			if (obj instanceof Agenti){
+				returnValue = ((Agenti)obj).toString();
 			}
-			if (obj instanceof ClassiClientiVO){
-				returnValue = ((ClassiClientiVO)obj).toString();
+			if (obj instanceof Classicliente){
+				returnValue = ((Classicliente)obj).toString();
 			}			
-			if (obj instanceof ColloquiVO){
-				returnValue = ((ColloquiVO)obj).toString();
+			if (obj instanceof Colloqui){
+				returnValue = ((Colloqui)obj).toString();
 			}
-			if (obj instanceof ImmobiliModel){
-				returnValue = ((ImmobiliModel)obj).toString();
+			if (obj instanceof Immobili){
+				returnValue = ((Immobili)obj).toString();
 			}
-			if (obj instanceof AnagraficheModel){
-				returnValue = ((AnagraficheModel)obj).toString();
+			if (obj instanceof Anagrafiche){
+				returnValue = ((Anagrafiche)obj).toString();
 			}
 			if ((obj instanceof IntegerYearVO) || (obj instanceof IntegerMonthVO)){
 				returnValue = obj.toString();
@@ -275,26 +279,26 @@ public class ColloquiTreeView extends ViewPart {
 
 		public Image getImage(Object obj) {
 			
-			if ((obj instanceof TipologieColloquiVO)){ 
+			if ((obj instanceof Tipologiecolloqui)){ 
 				return tipicolloquiImg;
 			}
-			if (obj instanceof ColloquiVO){
+			if (obj instanceof Colloqui){
 				return colloquiImg;
 			}
-			if (obj instanceof AgentiVO){
+			if (obj instanceof Agenti){
 				return agentiImg;
 			}
-			if (obj instanceof ClassiClientiVO){
+			if (obj instanceof Classicliente){
 				return classianagraficheImg;
 			}
-			if (obj instanceof TipologieImmobiliVO){
+			if (obj instanceof Tipologieimmobili){
 				return tipiimmobiliImg;
 			}
 			
-			if (obj instanceof ImmobiliModel){
+			if (obj instanceof Immobili){
 				return immobiliImg;
 			}
-			if (obj instanceof AnagraficheModel){
+			if (obj instanceof Anagrafiche){
 				return anagraficaImg;
 			}
 			if ((obj instanceof IntegerYearVO) || (obj instanceof IntegerMonthVO)){

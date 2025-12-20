@@ -430,7 +430,7 @@ public class CriteriaTableUtilsFactory {
 			if (inputElement instanceof ArrayList){
 				return ((ArrayList)inputElement).toArray();
 			}else{
-				return null;
+				return new ArrayList().toArray();
 			}
 		}
 		

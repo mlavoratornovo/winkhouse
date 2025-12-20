@@ -1503,7 +1503,7 @@ public class DettaglioColloquioView extends ViewPart {
 		CriteriaTableUtilsFactory ctuf = new CriteriaTableUtilsFactory();
 		
 		tvCriteri = ctuf.getSearchImmobiliCriteriaTable(ccriteriRicerca,
-														null);
+														new ArrayList());
 		
 		tvCriteri.getTable().setLayoutData(gdExpVH);
 		tvCriteri.getTable().setHeaderVisible(true);
@@ -1661,7 +1661,7 @@ public class DettaglioColloquioView extends ViewPart {
 					return new ArrayList().toArray(); //colloquio.getAgenti().toArray();
 					//ColloquiAnagraficheModel_Ang
 				}else{
-					return null;
+					return new ArrayList().toArray();
 				}
 			}
 		});
@@ -1804,8 +1804,10 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				colloquio.setCodtipologiacolloquio(((Tipologiecolloqui)((StructuredSelection)event.getSelection()).getFirstElement()).getCodTipologieColloquio());
-				enableLists();
+				if (((StructuredSelection)event.getSelection()).getFirstElement()!=null){
+					colloquio.setCodtipologiacolloquio(((Tipologiecolloqui)((StructuredSelection)event.getSelection()).getFirstElement()).getCodTipologieColloquio());
+					enableLists();
+		}
 			}
 			
 		});
@@ -1910,13 +1912,14 @@ public class DettaglioColloquioView extends ViewPart {
 								 PojoProperties.value("commentoCliente").observe(colloquio),
 								 null, 
 								 null);
-		
-		dcdataincontro.setText(formatter.format(Date.from(colloquio.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant())));
-		
-		oraincontro.setText(formatterTime.format(Date.from(colloquio.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant())));
-		
-		datainserimento.setText(formatter.format(Date.from(colloquio.getDatainserimento().atZone(ZoneId.systemDefault()).toInstant())) + " " +
-								formatterTime.format(colloquio.getDatainserimento().atZone(ZoneId.systemDefault()).toInstant()));
+		if (colloquio.getDatacolloquio() != null) {
+			dcdataincontro.setText(formatter.format(Date.from(colloquio.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant())));
+			oraincontro.setText(formatterTime.format(Date.from(colloquio.getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant())));
+		}		
+		if (colloquio.getDatainserimento() != null) {
+			datainserimento.setText(formatter.format(Date.from(colloquio.getDatainserimento().atZone(ZoneId.systemDefault()).toInstant())) + " " +
+					formatterTime.format(colloquio.getDatainserimento().atZone(ZoneId.systemDefault()).toInstant()));			
+		}				
 
 		bindingContext.bindValue(WidgetProperties.buttonSelection().observe(inagenda), 
 								 PojoProperties.value("scadenziere").observe(colloquio),

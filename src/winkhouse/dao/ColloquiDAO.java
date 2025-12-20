@@ -16,8 +16,10 @@ import org.apache.cayenne.query.ObjectSelect;
 import org.apache.cayenne.query.SelectQuery;
 
 import winkhouse.db.ConnectionManager;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
+import winkhouse.orm.Colloquiagenti;
 import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiVO;
@@ -392,8 +394,11 @@ public class ColloquiDAO extends BaseDAO{
 				  .select(context));										
 	}
 
-	public <T> ArrayList<T> getColloquiByAgenteInseritore(String classType,Integer codAgenteInseritore){
-		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_AGENTEINSERITORE, codAgenteInseritore);
+	public ArrayList<Colloqui> getColloquiByAgenteInseritore(String classType,Agenti agenteInseritore){
+		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
+		return new ArrayList<Colloqui>(ObjectSelect.query(Colloqui.class)
+				  .where(Colloqui.AGENTI.eq(agenteInseritore))														  				  
+				  .select(context));										
 	}
 	
 	public <T> ArrayList<T> getColloquiWithoutAgenteInseritore(String classType){
@@ -418,8 +423,12 @@ public class ColloquiDAO extends BaseDAO{
 		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_ANAGRAFICA_RICERCA, codAnagrafica);
 	}
 
-	public <T> ArrayList<T> getColloquiByTipologia(String classType,Integer codTipologia){
-		return super.getObjectsByIntFieldValue(classType, COLLOQUI_BY_TYPE, codTipologia);
+	public ArrayList<Colloqui> getColloquiByTipologia(String classType,Integer codTipologia){
+		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
+		return new ArrayList<Colloqui>(ObjectSelect.query(Colloqui.class)
+				  .where(Colloqui.CODTIPOLOGIACOLLOQUIO.eq(codTipologia))				  
+				  .select(context));	
+		
 	}
 
 	public <T> ArrayList<T> getColloquiByTipologiaImmobile(String classType,Integer codTipologiaImmobile){

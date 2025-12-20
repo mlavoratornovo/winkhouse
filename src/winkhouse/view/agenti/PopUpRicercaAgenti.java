@@ -20,11 +20,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import winkhouse.Activator;
 import winkhouse.dao.AgentiDAO;
-import winkhouse.vo.AgentiVO;
+import winkhouse.orm.Agenti;
+import winkhouse.util.WinkhouseUtils;
+
 
 
 
@@ -44,11 +47,10 @@ public class PopUpRicercaAgenti {
 	}
 
 	private void createContent(){
-		popup = new Shell(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(),
+		popup = new Shell(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 						  SWT.APPLICATION_MODAL|SWT.SHELL_TRIM);
 		popup.setText("Seleziona agente");
-		popup.setImage(Activator.getDefault()
-								.getImageDescriptor("icons/looknfeel.png").createImage());
+		popup.setImage(Activator.getImageDescriptor("icons/looknfeel.png").createImage());
 		popup.setBackground(new Color(null,255,255,255));
 		popup.setSize(300, 300);
 		GridLayout gl = new GridLayout();
@@ -97,8 +99,8 @@ public class PopUpRicercaAgenti {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if ((((StructuredSelection)viewer.getSelection()).getFirstElement() != null) && 
-					(((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof AgentiVO)){
-					AgentiVO aVO = (AgentiVO)((StructuredSelection)viewer.getSelection()).getFirstElement();					
+					(((StructuredSelection)viewer.getSelection()).getFirstElement() instanceof Agenti)){
+					Agenti aVO = (Agenti)((StructuredSelection)viewer.getSelection()).getFirstElement();					
 					returnValue(aVO);
 				}else{
 					MessageBox mb = new MessageBox(popup,SWT.ERROR);
@@ -149,7 +151,7 @@ public class PopUpRicercaAgenti {
 
 		@Override
 		public Object[] getElements(Object inputElement) {			
-			return agentiDAO.list(AgentiVO.class.getName()).toArray();
+			return agentiDAO.list(WinkhouseUtils.getInstance().getCayenneObjectContext()).toArray();
 		}
 
 		@Override
@@ -184,10 +186,10 @@ public class PopUpRicercaAgenti {
 		@Override
 		public String getColumnText(Object element, int columnIndex) {
 			switch(columnIndex){
-			case 0 : return ((AgentiVO)element).getNome();
-			case 1 : return ((AgentiVO)element).getCognome();
-			case 2 : return ((AgentiVO)element).getCitta();
-			case 3 : return ((AgentiVO)element).getIndirizzo();
+			case 0 : return ((Agenti)element).getNome();
+			case 1 : return ((Agenti)element).getCognome();
+			case 2 : return ((Agenti)element).getCitta();
+			case 3 : return ((Agenti)element).getIndirizzo();
 			default:return "";
 			}
 		}
@@ -209,12 +211,12 @@ public class PopUpRicercaAgenti {
 		this.setterMethodName = setterMethodName;
 	}
 	
-	private void returnValue(AgentiVO returnObj){
+	private void returnValue(Agenti returnObj){
 		
 		if ((callerObj != null) && (setterMethodName != null)){
 		
 				try {
-					Method m = callerObj.getClass().getMethod(setterMethodName, AgentiVO.class);
+					Method m = callerObj.getClass().getMethod(setterMethodName, Agenti.class);
 					m.invoke(callerObj, returnObj);			
 					popup.close();
 				} catch (SecurityException e) {

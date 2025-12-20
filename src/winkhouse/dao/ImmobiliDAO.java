@@ -136,9 +136,7 @@ public class ImmobiliDAO extends BaseDAO{
 	
 	public ArrayList<Immobili> list(String classType){
 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
-		if (WinkhouseUtils.getInstance().getTipoArchivio()){
-			Expression exp = ExpressionFactory.matchExp("storico", true);
-			SelectQuery<Immobili> query = new SelectQuery<Immobili>(Immobili.class, exp);
+		if (WinkhouseUtils.getInstance().getTipoArchivio()){			
 			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
 											 		   .where(Immobili.STORICO.isTrue())
 											           .select(context));			
@@ -187,13 +185,38 @@ public class ImmobiliDAO extends BaseDAO{
 	public ArrayList<Immobili> getImmobiliByTipologia(Tipologieimmobili ti){
 		ObjectContext context = WinkhouseUtils.getInstance().getNewCayenneObjectContext();
 		if (ti != null) {
-			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
-					  .where(Immobili.TIPOLOGIEIMMOBILI.eq(ti))														  
-					  .select(context));													
+			if (WinkhouseUtils.getInstance().getTipoArchivio()){				
+				return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+						  .where(Immobili.TIPOLOGIEIMMOBILI.eq(ti))
+						  .where(Immobili.STORICO.isTrue())
+						  .select(context));
+			}else {
+				Expression exp = ExpressionFactory.or(
+						Immobili.STORICO.isFalse(),
+						Immobili.STORICO.isNull()					    
+					);
+				return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+						  .where(Immobili.TIPOLOGIEIMMOBILI.eq(ti))
+						  .where(exp)
+						  .select(context));				
+			}
 		}else {
-			return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
-					  .where(Immobili.TIPOLOGIEIMMOBILI.isNull())														  
-					  .select(context));										
+			if (WinkhouseUtils.getInstance().getTipoArchivio()){
+				return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+						  .where(Immobili.TIPOLOGIEIMMOBILI.isNull())
+						  .where(Immobili.STORICO.isTrue())
+						  .select(context));					
+			}else {
+				Expression exp = ExpressionFactory.or(
+						Immobili.STORICO.isFalse(),
+						Immobili.STORICO.isNull()					    
+					);				
+				
+				return new ArrayList<Immobili>(ObjectSelect.query(Immobili.class)
+						  .where(Immobili.TIPOLOGIEIMMOBILI.isNull())
+						  .where(exp)
+						  .select(context));									
+			}
 		}
 	}
 
@@ -209,12 +232,13 @@ public class ImmobiliDAO extends BaseDAO{
 											   codTipologia);
 	}
 
-	public <T> ArrayList<T> getImmobiliColloquiByTipologiaImmobile(String classType, Integer codTipologia){
-		return super.getObjectsByIntFieldValue(classType, 
-											   ((WinkhouseUtils.getInstance().getTipoArchivio())
-											     ? IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI_STORICO
-											     : IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI),
-											   codTipologia);
+	public ArrayList<Immobili> getImmobiliColloquiByTipologiaImmobile(Tipologieimmobili ti){
+		return this.getImmobiliByTipologia(ti);
+//		return super.getObjectsByIntFieldValue(classType, 
+//											   ((WinkhouseUtils.getInstance().getTipoArchivio())
+//											     ? IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI_STORICO
+//											     : IMMOBILI_IN_COLLOQUI_BY_TIPOLOGIAIMMOBILI),
+//											   codTipologia);
 	}
 
 	public ArrayList<Immobili> getImmobiliByTipologiaComune(Tipologieimmobili ti, String comune){

@@ -11,6 +11,7 @@ import org.apache.cayenne.exp.Property;
 
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Allegaticolloquio;
+import winkhouse.orm.Classicliente;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Colloquianagrafiche;
 import winkhouse.orm.Colloquicriteriricerca;
@@ -47,8 +48,8 @@ public abstract class _Colloqui extends BaseDataObject {
     public static final Property<List<Colloquicriteriricerca>> COLLOQUICRITERIRICERCAS = Property.create("colloquicriteriricercas", List.class);
     public static final Property<List<Colloqui>> COLLOQUIS = Property.create("colloquis", List.class);
     public static final Property<Immobili> IMMOBILI = Property.create("immobili", Immobili.class);
-    public static final Property<List<Winkgcalendar>> WINKGCALENDARS = Property.create("winkgcalendars", List.class);
-
+    public static final Property<List<Winkgcalendar>> WINKGCALENDARS = Property.create("winkgcalendars", List.class);    
+    
     protected Integer codtipologiacolloquio;
     protected String commentoagenzia;
     protected String commentocliente;
