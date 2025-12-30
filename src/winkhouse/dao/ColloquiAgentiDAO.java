@@ -12,9 +12,11 @@ import org.apache.cayenne.query.ObjectSelect;
 
 import winkhouse.db.ConnectionManager;
 import winkhouse.model.ColloquiAgentiModel_Age;
+import winkhouse.orm.Agenti;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Colloquiagenti;
+import winkhouse.orm.Immobili;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.vo.ColloquiAgentiVO;
 

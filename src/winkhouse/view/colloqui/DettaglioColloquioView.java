@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.ObjectId;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.PojoProperties;
@@ -85,13 +86,6 @@ import winkhouse.dialogs.custom.FileDialogCellEditor;
 import winkhouse.engine.search.SearchEngineImmobili;
 import winkhouse.helper.ProfilerHelper;
 import winkhouse.helper.RicercheHelper;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ColloquiAgentiModel_Age;
-import winkhouse.model.ColloquiAnagraficheModel_Ang;
-import winkhouse.model.ColloquiCriteriRicercaModel;
-import winkhouse.model.ColloquiModel;
-import winkhouse.model.ImmobiliModel;
-import winkhouse.model.RicercheModel;
 import winkhouse.orm.Agenti;
 import winkhouse.orm.Allegaticolloquio;
 import winkhouse.orm.Anagrafiche;
@@ -198,6 +192,9 @@ public class DettaglioColloquioView extends ViewPart {
 
 	private boolean isInCompareMode = false;	
 	
+	private ArrayList<Colloquiagenti> newColloquioAgenti = null;
+	private ArrayList<Colloquianagrafiche> newColloquioAnagrafiche = null;
+	
 	private Comparator<Tipologiecolloqui> comparatorTipologia = new Comparator<Tipologiecolloqui>(){
 
 		@Override
@@ -226,7 +223,7 @@ public class DettaglioColloquioView extends ViewPart {
 	}
 
 	@Override
-	public void createPartControl(Composite parent) {
+	public void createPartControl(Composite parent) {		
 		
 		ft = new FormToolkit(getViewSite().getShell().getDisplay());
 		f = ft.createScrolledForm(parent);
@@ -597,7 +594,7 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (ProfilerHelper.getInstance().getPermessoUI(PopUpRicercaAnagrafica.ID)){
-					PopUpRicercaAnagrafica pra = new PopUpRicercaAnagrafica(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell());
+					PopUpRicercaAnagrafica pra = new PopUpRicercaAnagrafica(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
 					pra.setCallerObj(PlatformUI.getWorkbench()
 											   .getActiveWorkbenchWindow()
 											   .getActivePage()
@@ -692,11 +689,15 @@ public class DettaglioColloquioView extends ViewPart {
 			
 			@Override
 			public Object[] getElements(Object inputElement) {
-				if ((colloquio != null) && (colloquio.getColloquianagrafiches() != null)){
-					return colloquio.getColloquianagrafiches().toArray();
-					//ColloquiAnagraficheModel_Ang
-				}else{
-					return null;
+				if (colloquio.getCodColloquio() != 0) {
+					if ((colloquio != null) && (colloquio.getColloquianagrafiches() != null)){
+						return colloquio.getColloquianagrafiches().toArray();
+						//ColloquiAnagraficheModel_Ang
+					}else{
+						return new ArrayList().toArray();
+					}
+				}else {
+					return newColloquioAnagrafiche.toArray();
 				}
 			}
 		});
@@ -710,12 +711,12 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				ColloquiAnagraficheModel_Ang cam_ang = (ColloquiAnagraficheModel_Ang)element;
+				Colloquianagrafiche cam_ang = (Colloquianagrafiche)element;
 				switch (columnIndex){
-					case 0 : return (cam_ang.getAnagrafica()!= null)
-									? cam_ang.getAnagrafica().getNome() + " " + cam_ang.getAnagrafica().getCognome()
+					case 0 : return (cam_ang.getAnagrafiche()!= null)
+									? cam_ang.getAnagrafiche().getNome() + " " + cam_ang.getAnagrafiche().getCognome()
 									: "";
-					case 1 : return cam_ang.getCommento();
+					case 1 : return cam_ang.getDescrizione();
 					default : return "";
 				}				
 			}
@@ -754,8 +755,8 @@ public class DettaglioColloquioView extends ViewPart {
 		tvcCommento.setLabelProvider(new CellLabelProvider(){
 			@Override
 			public void update(ViewerCell cell) {
-				ColloquiAnagraficheModel_Ang cModel = ((ColloquiAnagraficheModel_Ang)cell.getElement());
-				cell.setText(cModel.getCommento());				
+				Colloquianagrafiche cModel = ((Colloquianagrafiche)cell.getElement());
+				cell.setText(cModel.getDescrizione());				
 			}
 			
 		});
@@ -774,8 +775,8 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			protected Object getValue(Object element) {
 				if (element != null){
-					ColloquiAnagraficheModel_Ang cam = (ColloquiAnagraficheModel_Ang)element;
-					return cam.getCommento();
+					Colloquianagrafiche cam = (Colloquianagrafiche)element;
+					return cam.getDescrizione();
 				}
 				return null;
 			}
@@ -783,7 +784,7 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				if (element != null){
-					((ColloquiAnagraficheModel_Ang)element).setCommento(String.valueOf(value));
+					((Colloquianagrafiche)element).setDescrizione(String.valueOf(value));
 					tvAnagrafiche.refresh();
 				}				
 			}
@@ -1613,7 +1614,7 @@ public class DettaglioColloquioView extends ViewPart {
 			public void mouseUp(MouseEvent e) {
 				StructuredSelection ss = (StructuredSelection)tvAgenti.getSelection();
 				if (ss.getFirstElement() != null){
-					ColloquiAgentiModel_Age cam = (ColloquiAgentiModel_Age)ss.getFirstElement();
+					Colloquiagenti cam = (Colloquiagenti)ss.getFirstElement();
 					//colloquio.getAgenti().remove(cam);
 					tvAgenti.refresh();
 				}else{
@@ -1657,11 +1658,16 @@ public class DettaglioColloquioView extends ViewPart {
 			
 			@Override
 			public Object[] getElements(Object inputElement) {
-				if ((colloquio != null) && (colloquio.getAgenti() != null)){
-					return new ArrayList().toArray(); //colloquio.getAgenti().toArray();
-					//ColloquiAnagraficheModel_Ang
-				}else{
-					return new ArrayList().toArray();
+				if (colloquio.getCodColloquio() != 0) {
+					if ((colloquio != null) && (colloquio.getAgenti() != null)){
+						ColloquiAgentiDAO ca = new ColloquiAgentiDAO();
+						ArrayList<Colloquiagenti> camodels = ca.getColloquiAgentiByColloquio(colloquio.getCodColloquio(), colloquio.getObjectContext());					
+						return camodels.stream().map(p -> p.getAgenti()).toArray();
+					}else{
+						return new ArrayList().toArray();
+					}
+				}else {
+					return newColloquioAgenti.toArray();
 				}
 			}
 		});
@@ -1675,10 +1681,10 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				ColloquiAgentiModel_Age cam_age = (ColloquiAgentiModel_Age)element;
+				Colloquiagenti cam_age = (Colloquiagenti)element;
 				switch (columnIndex){
-					case 0 : return (cam_age.getAgente() != null)
-									? cam_age.getAgente().getNome() + " " + cam_age.getAgente().getCognome()
+					case 0 : return (cam_age.getAgenti() != null)
+									? cam_age.getAgenti().getNome() + " " + cam_age.getAgenti().getCognome()
 									: "";
 					case 1 : return cam_age.getCommento();
 					default : return "";
@@ -1719,7 +1725,7 @@ public class DettaglioColloquioView extends ViewPart {
 		tvcCommento.setLabelProvider(new CellLabelProvider(){
 			@Override
 			public void update(ViewerCell cell) {
-				ColloquiAgentiModel_Age cModel = ((ColloquiAgentiModel_Age)cell.getElement());
+				Colloquiagenti cModel = ((Colloquiagenti)cell.getElement());
 				cell.setText(cModel.getCommento());				
 			}
 			
@@ -1739,7 +1745,7 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			protected Object getValue(Object element) {
 				if (element != null){
-					ColloquiAgentiModel_Age cam = (ColloquiAgentiModel_Age)element;
+					Colloquiagenti cam = (Colloquiagenti)element;
 					return cam.getCommento();
 				}
 				return null;
@@ -1748,7 +1754,7 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			protected void setValue(Object element, Object value) {
 				if (element != null){
-					((ColloquiAgentiModel_Age)element).setCommento(String.valueOf(value));
+					((Colloquiagenti)element).setCommento(String.valueOf(value));
 					tvAgenti.refresh();
 				}				
 			}
@@ -1767,7 +1773,10 @@ public class DettaglioColloquioView extends ViewPart {
 //		}else{
 //			opi.setEnabled(false);
 //		}
-				
+		
+		newColloquioAgenti = new ArrayList<Colloquiagenti>();
+		newColloquioAnagrafiche = new ArrayList<Colloquianagrafiche>();
+		
 		c_tipologiacolloquio.setContentProvider(new IStructuredContentProvider(){
 
 			@Override
@@ -2189,10 +2198,16 @@ public class DettaglioColloquioView extends ViewPart {
 	}
 	
 	public void addAgente(Agenti agente){
-		
-		Colloquiagenti ca = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquiagenti.class);
-		ca.setCodcolloquio(colloquio.getCodColloquio());
-		ca.setAgenti(agente);
+		if (colloquio.getCodColloquio() != 0) {			
+			Colloquiagenti ca = colloquio.getEditObjectContext().newObject(Colloquiagenti.class);
+			ca.setCodcolloquio(colloquio.getCodColloquio());
+			ca.setAgenti(agente);			
+		}else {
+			Colloquiagenti ca = WinkhouseUtils.getInstance().getNewCayenneObjectContext().newObject(Colloquiagenti.class);
+			ca.setCodcolloquio(colloquio.getCodColloquio());
+			ca.setAgenti(ca.getObjectContext().localObject(agente));
+			newColloquioAgenti.add(ca);
+		}
 				
 		tvAgenti.setInput(new Object());
 	}
@@ -2212,19 +2227,27 @@ public class DettaglioColloquioView extends ViewPart {
 	}
 
 	public void addAnagrafica(Anagrafiche anagrafica){
-		Colloquianagrafiche cam = WinkhouseUtils.getInstance().getCayenneObjectContext().newObject(Colloquianagrafiche.class);
-		cam.setColloqui(colloquio);
-		cam.setAnagrafiche(anagrafica);
-		colloquio.addToColloquianagrafiches(cam);
-		tvAnagrafiche.setInput(new Object());
+		if (colloquio.getCodColloquio() != 0) {	
+			Colloquianagrafiche cam = colloquio.getObjectContext().newObject(Colloquianagrafiche.class);
+			cam.setColloqui(colloquio);
+			cam.setAnagrafiche(cam.getObjectContext().localObject(anagrafica));
+			colloquio.addToColloquianagrafiches(cam);
+			tvAnagrafiche.setInput(new Object());
+		}else {
+			Colloquianagrafiche cam = colloquio.getObjectContext().newObject(Colloquianagrafiche.class);			
+			cam.setColloqui(colloquio);
+			cam.setAnagrafiche(cam.getObjectContext().localObject(anagrafica));
+			newColloquioAnagrafiche.add(cam);			
+		}
+		tvAnagrafiche.setInput(new ArrayList());
 	}
 	
-	public ColloquiAnagraficheModel_Ang findAnagrafica(ColloquiAnagraficheModel_Ang cam_a){
-		ColloquiAnagraficheModel_Ang returnValue = null;
+	public Colloquianagrafiche findAnagrafica(Colloquianagrafiche cam_a){
+		Colloquianagrafiche returnValue = null;
 		Iterator it = colloquio.getColloquianagrafiches().iterator();
 		while (it.hasNext()) {
-			ColloquiAnagraficheModel_Ang object = (ColloquiAnagraficheModel_Ang) it.next();
-			if (object.getCodAnagrafica().intValue() == cam_a.getCodAnagrafica().intValue());
+			Colloquianagrafiche object = (Colloquianagrafiche) it.next();
+			if (object.getAnagrafiche().getCodAnagrafica() == cam_a.getAnagrafiche().getCodAnagrafica());
 			returnValue = object;			
 		}
 		return returnValue;
