@@ -1,11 +1,9 @@
 package winkhouse.action.colloqui;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
@@ -16,14 +14,10 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.Activator;
 import winkhouse.dao.ColloquiDAO;
 import winkhouse.helper.ColloquiHelper;
-import winkhouse.helper.EntityHelper;
 import winkhouse.helper.OptimisticLockHelper;
-import winkhouse.model.AttributeModel;
-import winkhouse.model.ColloquiModel;
 import winkhouse.orm.Colloqui;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.colloqui.DettaglioColloquioView;
-import winkhouse.view.colloqui.handler.DettaglioColloquioHandler;
 
 
 
@@ -67,21 +61,27 @@ public class SalvaColloquio extends Action {
 		}
 		if (dcv != null){
 			Colloqui cm = dcv.getColloquio() ;
-			if (cm != null){
+			if (cm != null && cm.getCodtipologiacolloquio() != 0){
 				ColloquiHelper ch = new ColloquiHelper();
 				
 				cm.setDateupdate(new Date().toInstant()
 					      .atZone(ZoneId.systemDefault())
 					      .toLocalDateTime());
-				if (WinkhouseUtils.getInstance().getLoggedAgent() != null){
+				if (WinkhouseUtils.getInstance().getLoggedAgent() != null && cm.getAgenti() == null){
 					cm.setAgenti((WinkhouseUtils.getInstance().getLoggedAgent()));					
 				}
 				OptimisticLockHelper olh = new OptimisticLockHelper();
 				String decision = olh.checkOLColloquio(cm);
 				
 				if (decision.equalsIgnoreCase(OptimisticLockHelper.SOVRASCRIVI)){
-				
-					cm.getEditObjectContext().commitChanges();
+					if (cm.getAgenti1() != null) {
+						cm.getObjectContext().commitChanges();
+					}else {
+						MessageBox mb = new MessageBox(dcv.getSite().getShell(),SWT.ERROR);
+						mb.setText("Errore salvataggio");
+						mb.setMessage("Impostare un agente inseritore");			
+						mb.open();										
+					}
 //					if (ch.saveColloquio(cm)){
 //						
 //						EntityHelper eh = new EntityHelper();

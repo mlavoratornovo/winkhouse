@@ -1,13 +1,9 @@
 package winkhouse.action.anagrafiche;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
@@ -17,12 +13,8 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.dao.AnagraficheDAO;
-import winkhouse.db.ConnectionManager;
-import winkhouse.helper.AnagraficheHelper;
 import winkhouse.helper.EntityHelper;
 import winkhouse.helper.OptimisticLockHelper;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.AttributeModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;

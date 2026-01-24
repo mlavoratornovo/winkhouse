@@ -1,10 +1,15 @@
 package winkhouse.view.common;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.cayenne.access.ToManyList;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -379,23 +384,22 @@ public class ColloquiView extends ViewPart {
 
 		public Object[] getChildren(Object arg0) {
 
-			Object[] returnValue = new Object[0];
-
-			if ( arg0 instanceof ArrayList){
-				returnValue = ((ArrayList<ColloquiModel>)arg0).toArray();
+			Object[] returnValue = {arg0};			
+			if ( arg0 instanceof ToManyList){
+				returnValue = ((ToManyList<Colloqui>)arg0).toArray();
 			}
-
-			if ( arg0 instanceof ColloquiModelVisiteCollection){
-				returnValue = ((ColloquiModelVisiteCollection)arg0).getColloquiVisite().toArray();
-			}
-			
-			if ( arg0 instanceof ColloquiModelAnagraficaCollection){
-				returnValue = ((ColloquiModelAnagraficaCollection)arg0).getColloqui().toArray();
-			}
-
-			if ( arg0 instanceof ColloquiModelRicercaCollection){
-				returnValue = ((ColloquiModelRicercaCollection)arg0).getColloquiRicerca().toArray();
-			}
+//
+//			if ( arg0 instanceof ColloquiModelVisiteCollection){
+//				returnValue = ((ColloquiModelVisiteCollection)arg0).getColloquiVisite().toArray();
+//			}
+//			
+//			if ( arg0 instanceof ColloquiModelAnagraficaCollection){
+//				returnValue = ((ColloquiModelAnagraficaCollection)arg0).getColloqui().toArray();
+//			}
+//
+//			if ( arg0 instanceof ColloquiModelRicercaCollection){
+//				returnValue = ((ColloquiModelRicercaCollection)arg0).getColloquiRicerca().toArray();
+//			}
 
 			return returnValue;
 
@@ -421,25 +425,18 @@ public class ColloquiView extends ViewPart {
 				if (element instanceof ArrayList){
 					returnValue = null;
 				}
-				if ((element instanceof ColloquiModelVisiteCollection) && 
-					(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiModel.class.getName()))
-					){
-					returnValue = colloquiVisiteImg;
-				}
-				if ((element instanceof ColloquiModelAnagraficaCollection) && 
-					(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiModel.class.getName()))
-					){
-					returnValue = colloquiImg;
-				}
-				if ((element instanceof ColloquiModelRicercaCollection) && 
-						(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiModel.class.getName()))
-						){
+				if (element instanceof Colloqui){
+					switch (((Colloqui)element).getCodtipologiacolloquio()) {
+					case 1: {						
 						returnValue = colloquiRicerca;
-					}								
-				if ((element instanceof ColloquiModel) &&
-					(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiVO.class.getName()))
-					){
-					returnValue = colloquiImg;
+					}
+					case 2: {
+						returnValue = colloquiVisiteImg;
+					}					
+					default:
+						returnValue = colloquiImg;
+					}
+				
 				}								
 				
 			}
@@ -451,62 +448,51 @@ public class ColloquiView extends ViewPart {
 			
 			String returnValue = null;
 			
-			if ((element instanceof ColloquiModelVisiteCollection) && 
-				(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiModel.class.getName()))
-				){
+			if (element instanceof Colloqui){
 				if (columnIndex == 2){
 					if (immobile != null){
 						returnValue = "Colloqui immobile";
-					}					
+					}else if(anagrafica != null) {
+						returnValue = "Colloqui anagrafiche";
+					}
 				}				
 			}
-			if ((element instanceof ColloquiModelAnagraficaCollection) && 
-					(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiModel.class.getName()))
-					){
-					if (columnIndex == 2){
-						returnValue = "Colloqui anagrafiche";
-					}				
-				}
-
-			if ((element instanceof ColloquiModelRicercaCollection) && 
-					(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiModel.class.getName()))
-					){
-					if (columnIndex == 2){
-						if (anagrafica != null){
-							returnValue = "Colloqui ricerca";
-						}
-						
-					}				
-				}
 			
-			if ((element instanceof ColloquiModel) &&
-				(element.getClass().getSuperclass().getName().equalsIgnoreCase(ColloquiVO.class.getName()))
-			    ){
+			if (element instanceof Colloqui){
 				if (columnIndex == 2){
-					returnValue = (((ColloquiModel)element).getTipologia()!=null)
-									?((ColloquiModel)element).getTipologia().getDescrizione()
-									: "";
+					
+					switch (((Colloqui)element).getCodtipologiacolloquio()) {
+					case 1: {						
+						returnValue = "Ricerca";
+					}
+					case 2: {
+						returnValue = "Visita";
+					}					
+					default:
+						returnValue = "Generico";
+					}				
 				}
-				if (columnIndex == 3){					
-					returnValue = formatter.format(((ColloquiModel)element).getDataColloquio());
+				if (columnIndex == 3){	
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+					returnValue = ((Colloqui)element).getDatacolloquio().format(formatter);
 				}
 				if (columnIndex == 4){
-					returnValue = (((ColloquiModel)element).getAgenteInseritore() != null)
-								  ? ((ColloquiModel)element).getAgenteInseritore().getCognome() + " " + 
-									((ColloquiModel)element).getAgenteInseritore().getNome()
+					returnValue = (((Colloqui)element).getAgenti1() != null)
+								  ? ((Colloqui)element).getAgenti1().getCognome() + " " + 
+									((Colloqui)element).getAgenti1().getNome()
 								  : ""; 
 				}
 				if (columnIndex == 5){
-					returnValue = ((ColloquiModel)element).getLuogoIncontro();
+					returnValue = ((Colloqui)element).getLuogo();
 				}
 				if (columnIndex == 6){
 					String descriteria = "";
-					for (Object iterable_element : ((ColloquiModel)element).getCriteriRicerca()) {
-						if (iterable_element instanceof ColloquiCriteriRicercaModel){
-							descriteria = descriteria + ((ColloquiCriteriRicercaModel)iterable_element).toString();	
-						}
-						
-					}
+//					for (Object iterable_element : ((ColloquiModel)element).getCriteriRicerca()) {
+//						if (iterable_element instanceof ColloquiCriteriRicercaModel){
+//							descriteria = descriteria + ((ColloquiCriteriRicercaModel)iterable_element).toString();	
+//						}
+//						
+//					}
 					returnValue = descriteria;
 				}				
 				

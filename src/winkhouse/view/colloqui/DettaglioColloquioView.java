@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.ObjectId;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.PojoProperties;
@@ -101,7 +100,6 @@ import winkhouse.util.MobiliaDatiBaseCache;
 import winkhouse.util.WinkhouseUtils;
 import winkhouse.util.WinkhouseUtils.ObjectSearchGetters;
 import winkhouse.view.affitti.ListaAffittiView;
-import winkhouse.view.agenda.ListaAppuntamentiView;
 import winkhouse.view.agenti.PopUpRicercaAgenti;
 import winkhouse.view.anagrafica.ImmobiliPropietaView;
 import winkhouse.view.anagrafica.PopUpRicercaAnagrafica;
@@ -110,11 +108,8 @@ import winkhouse.view.common.ColloquiView;
 import winkhouse.view.common.EAVView;
 import winkhouse.view.common.RecapitiView;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
-import winkhouse.vo.AgentiVO;
 import winkhouse.vo.AllegatiColloquiVO;
-import winkhouse.vo.ColloquiCriteriRicercaVO;
 import winkhouse.vo.RicercheVO;
-import winkhouse.vo.TipologieColloquiVO;
 import winkhouse.wizard.PopUpEditRicerca;
 import winkhouse.wizard.PopUpRicercaRicerche;
 

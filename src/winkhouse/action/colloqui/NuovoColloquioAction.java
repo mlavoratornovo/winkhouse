@@ -11,9 +11,6 @@ import org.eclipse.ui.PlatformUI;
 import winkhouse.Activator;
 import winkhouse.dao.AnagraficheDAO;
 import winkhouse.dao.ImmobiliDAO;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ColloquiModel;
-import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
@@ -26,8 +23,6 @@ import winkhouse.view.anagrafica.handler.DettaglioAnagraficaHandler;
 import winkhouse.view.colloqui.DettaglioColloquioView;
 import winkhouse.view.immobili.DettaglioImmobileView;
 import winkhouse.view.immobili.handler.DettaglioImmobiliHandler;
-import winkhouse.vo.AnagraficheVO;
-import winkhouse.vo.ImmobiliVO;
 
 public class NuovoColloquioAction extends Action {
 
@@ -65,9 +60,10 @@ public class NuovoColloquioAction extends Action {
 						DettaglioColloquioView dcv = (DettaglioColloquioView)PlatformUI.getWorkbench()
 							    													   .getActiveWorkbenchWindow()
 							    													   .getActivePage()															 
-							    													   .showView(DettaglioColloquioView.ID,String.valueOf(cm.getCodColloquio()),IWorkbenchPage.VIEW_CREATE);
+							    													   .showView(DettaglioColloquioView.ID,String.valueOf(cm.getCodColloquio()),IWorkbenchPage.VIEW_CREATE);						
+						dcv.setImmobile(im);	
+						cm.setImmobili(im);
 						dcv.setColloquio(cm);
-						dcv.setImmobile(im);
 						dcv.setFocus();
 						
 						PlatformUI.getWorkbench()
