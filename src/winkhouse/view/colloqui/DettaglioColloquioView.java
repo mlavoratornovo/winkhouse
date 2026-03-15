@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.cayenne.ObjectId;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -108,8 +110,6 @@ import winkhouse.view.common.ColloquiView;
 import winkhouse.view.common.EAVView;
 import winkhouse.view.common.RecapitiView;
 import winkhouse.view.immobili.ImmaginiImmobiliView;
-import winkhouse.vo.AllegatiColloquiVO;
-import winkhouse.vo.RicercheVO;
 import winkhouse.wizard.PopUpEditRicerca;
 import winkhouse.wizard.PopUpRicercaRicerche;
 
@@ -149,17 +149,17 @@ public class DettaglioColloquioView extends ViewPart {
 	private SimpleDateFormat formatterDateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	
 	private Colloqui colloquio = null;
-	private String[] desGetters = null;
-	private String[] desTipologiaImmobile = null;
-	private Integer[] codTipologiaImmobile = null;
-	private String[] desStatoConservativo = null;
-	private Integer[] codStatoConservativo = null;
-	private String[] desRiscaldamenti = null;
-	private Integer[] codRiscaldamenti = null;
+//	private String[] desGetters = null;
+//	private String[] desTipologiaImmobile = null;
+//	private Integer[] codTipologiaImmobile = null;
+//	private String[] desStatoConservativo = null;
+//	private Integer[] codStatoConservativo = null;
+//	private String[] desRiscaldamenti = null;
+//	private Integer[] codRiscaldamenti = null;
 	private String[] desAgenti = null;
 	private Integer[] codAgenti = null;
-	private SimpleDateFormat formatterIT = new SimpleDateFormat("dd/MM/yyyy");
-	private SimpleDateFormat formatterENG = new SimpleDateFormat("yyyy-MM-dd");
+//	private SimpleDateFormat formatterIT = new SimpleDateFormat("dd/MM/yyyy");
+//	private SimpleDateFormat formatterENG = new SimpleDateFormat("yyyy-MM-dd");
 
 	private OpenPopUpImmobili opi = null;
 	private SalvaColloquio salvaColloquio = null;
@@ -931,7 +931,7 @@ public class DettaglioColloquioView extends ViewPart {
 										
 				pathRepositoryAllegati += File.separator + "colloqui";
 												
-				AllegatiColloquiVO acVO = (AllegatiColloquiVO)((StructuredSelection)tvAllegati.getSelection()).getFirstElement();
+				Allegaticolloquio acVO = (Allegaticolloquio)((StructuredSelection)tvAllegati.getSelection()).getFirstElement();
 				
 				if ((acVO.getFromPath() == null) ||
 					(acVO.getFromPath().equalsIgnoreCase(""))){	
@@ -939,7 +939,7 @@ public class DettaglioColloquioView extends ViewPart {
 						(!acVO.getNome().equalsIgnoreCase(""))){
 						Program.launch(pathRepositoryAllegati +
 									   File.separator +
-									   acVO.getCodColloquio() +
+									   acVO.getColloqui().getCodColloquio() +
 									   File.separator +
 									   acVO.getNome());
 					}
@@ -989,10 +989,10 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public String getColumnText(Object element, int columnIndex) {
-				AllegatiColloquiVO acVO = (AllegatiColloquiVO)element;
+				Allegaticolloquio acVO = (Allegaticolloquio)element;
 				switch (columnIndex){
 					case 0 : return acVO.getNome();
-					case 1 : return acVO.getDescrizione();
+					case 1 : return acVO.getCommento();
 					default : return "";
 				}				
 			}
@@ -1032,8 +1032,8 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				if (cell.getElement() != null){
-					AllegatiColloquiVO acVO = (AllegatiColloquiVO)cell.getElement();
-					cell.setText(acVO.getDescrizione());
+					Allegaticolloquio acVO = (Allegaticolloquio)cell.getElement();
+					cell.setText(acVO.getCommento());
 				}else{
 					cell.setText("");
 				}
@@ -1056,7 +1056,7 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			protected Object getValue(Object element) {
 				return (element!= null)
-					   ?((AllegatiColloquiVO)element).getDescrizione()
+					   ?((Allegaticolloquio)element).getCommento()
 					   :"";
 			}
 
@@ -1064,9 +1064,9 @@ public class DettaglioColloquioView extends ViewPart {
 			protected void setValue(Object element, Object value) {
 				if (element != null){
 					if (value != null){
-						((AllegatiColloquiVO)element).setDescrizione(String.valueOf(value));
+						((Allegaticolloquio)element).setCommento(String.valueOf(value));
 					}else{
-						((AllegatiColloquiVO)element).setDescrizione("");
+						((Allegaticolloquio)element).setCommento("");
 					}
 					tvAllegati.refresh();
 				}
@@ -1084,8 +1084,8 @@ public class DettaglioColloquioView extends ViewPart {
 			@Override
 			public void update(ViewerCell cell) {
 				
-				if (((AllegatiColloquiVO)cell.getElement()).getFromPath() != null){
-					cell.setText(((AllegatiColloquiVO)cell.getElement()).getFromPath());
+				if (((Allegaticolloquio)cell.getElement()).getFromPath() != null){
+					cell.setText(((Allegaticolloquio)cell.getElement()).getFromPath());
 				}else{
 					cell.setText("");
 				}
@@ -1109,8 +1109,8 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			protected Object getValue(Object element) {				
-				if (((AllegatiColloquiVO)element).getFromPath() != null){
-					return ((AllegatiColloquiVO)element).getFromPath();
+				if (((Allegaticolloquio)element).getFromPath() != null){
+					return ((Allegaticolloquio)element).getFromPath();
 				}else{
 					return "";
 				}
@@ -1118,10 +1118,10 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			protected void setValue(Object element, Object value) {
-				((AllegatiColloquiVO)element).setFromPath(String.valueOf(value));
-				((AllegatiColloquiVO)element).setNome(((AllegatiColloquiVO)element).getFromPath()
-																				   .substring(((AllegatiColloquiVO)element).getFromPath()
-																						   								   .lastIndexOf(File.separator)+1)
+				((Allegaticolloquio)element).setFromPath(String.valueOf(value));
+				((Allegaticolloquio)element).setNome(((Allegaticolloquio)element).getFromPath()
+																				 .substring(((Allegaticolloquio)element).getFromPath()
+																						   						   		.lastIndexOf(File.separator)+1)
 												      );
 				tvAllegati.refresh();
 			}
@@ -1262,7 +1262,7 @@ public class DettaglioColloquioView extends ViewPart {
 						colloquio.addToColloquicriteriricercas(crVO);
 						reloadLineNumber();
 						Collections.sort(colloquio.getColloquicriteriricercas(), comparatorLineNumber);
-						tvCriteri.refresh();
+						tvCriteri.setInput((Arrays.stream(colloquio.getColloquicriteriricercas().toArray()).collect(Collectors.toCollection(ArrayList::new))));
 						
 						TableItem ti = tvCriteri.getTable().getItem(tvCriteri.getTable().getItemCount()-1);
 						Object[] sel = new Object[1];
@@ -1320,7 +1320,7 @@ public class DettaglioColloquioView extends ViewPart {
 					colloquio.removeFromColloquicriteriricercas((Colloquicriteriricerca)ss.getFirstElement());
 					reloadLineNumber();
 					Collections.sort(colloquio.getColloquicriteriricercas(), comparatorLineNumber);					
-					tvCriteri.refresh();
+					tvCriteri.setInput((Arrays.stream(colloquio.getColloquicriteriricercas().toArray()).collect(Collectors.toCollection(ArrayList::new))));
 					checkCriteri(colloquio);
 				}else{
 					MessageBox mb = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
@@ -1391,7 +1391,7 @@ public class DettaglioColloquioView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				PopUpRicercaRicerche puRR = new PopUpRicercaRicerche(RicercheVO.RICERCHE_IMMOBILI,
+				PopUpRicercaRicerche puRR = new PopUpRicercaRicerche(Ricerche.RICERCHE_IMMOBILI,
 													 				 (DettaglioColloquioView)getViewSite().getPart(),
 													 				 "setCriteriColloquio");
 								
@@ -1419,7 +1419,7 @@ public class DettaglioColloquioView extends ViewPart {
 					(colloquio.getColloquicriteriricercas().size() != 0)){
 					
 					PopUpEditRicerca puER = new PopUpEditRicerca((DettaglioColloquioView)getViewSite().getPart(),"setCriteriColloquio");
-					getRicerca().setTipo(RicercheVO.RICERCHE_IMMOBILI);
+					getRicerca().setTipo(Ricerche.RICERCHE_IMMOBILI);
 					puER.setRicerca(getRicerca());										
 				}else{
 					MessageDialog.openWarning(PlatformUI.getWorkbench()
@@ -1937,7 +1937,7 @@ public class DettaglioColloquioView extends ViewPart {
 		
 		tvAnagrafiche.setInput(new Object());
 		tvAgenti.setInput(new Object());
-		tvCriteri.setInput(colloquio.getColloquicriteriricercas());		
+		tvCriteri.setInput(Arrays.stream(colloquio.getColloquicriteriricercas().toArray()).collect(Collectors.toCollection(ArrayList::new)));		
 		checkCriteri(colloquio);
 		
 		tvAllegati.setInput(new Object());

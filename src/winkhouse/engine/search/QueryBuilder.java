@@ -9,13 +9,13 @@ import java.util.Iterator;
 
 import winkhouse.dao.AttributeDAO;
 import winkhouse.model.AttributeModel;
+import winkhouse.orm.Colloquicriteriricerca;
 import winkhouse.util.AnagraficheMethodName;
 import winkhouse.util.ColloquiMethodName;
 import winkhouse.util.ImmobiliAffittiMethodName;
 import winkhouse.util.ImmobiliMethodName;
 import winkhouse.util.QueryConst;
 import winkhouse.util.WinkhouseUtils;
-import winkhouse.vo.ColloquiCriteriRicercaVO;
 
 
 public class QueryBuilder {
@@ -28,10 +28,10 @@ public class QueryBuilder {
 		attributeDAO = new AttributeDAO();
 	}	
 	
-	Comparator<ColloquiCriteriRicercaVO> cLineNumber = new Comparator<ColloquiCriteriRicercaVO>(){
+	Comparator<Colloquicriteriricerca> cLineNumber = new Comparator<Colloquicriteriricerca>(){
 
 		@Override
-		public int compare(ColloquiCriteriRicercaVO o1, ColloquiCriteriRicercaVO o2){
+		public int compare(Colloquicriteriricerca o1, Colloquicriteriricerca o2){
 			if ((o1.getLineNumber() == null) && (o2.getLineNumber() == null)){
 				return 0;
 			}else if ((o1.getLineNumber() != null) && (o2.getLineNumber() == null)){
@@ -49,11 +49,11 @@ public class QueryBuilder {
 		
 	};
 
-	Comparator<ColloquiCriteriRicercaVO> cMethodName = new Comparator<ColloquiCriteriRicercaVO>(){
+	Comparator<Colloquicriteriricerca> cMethodName = new Comparator<Colloquicriteriricerca>(){
 
 		@Override
-		public int compare(ColloquiCriteriRicercaVO o1, ColloquiCriteriRicercaVO o2){
-			return o1.getGetterMethodName().compareTo(o2.getGetterMethodName());			
+		public int compare(Colloquicriteriricerca o1, Colloquicriteriricerca o2){
+			return o1.getGettermethodname().compareTo(o2.getGettermethodname());			
 		}
 		
 	};
@@ -68,23 +68,23 @@ public class QueryBuilder {
 				             "ON A.CODANAGRAFICA = AST.CODANAGRAFICA ";
 		
 		Collections.sort(criteria, cMethodName);
-		ColloquiCriteriRicercaVO ccrKey = new ColloquiCriteriRicercaVO();
-		ccrKey.setGetterMethodName(AnagraficheMethodName.GET_CONTATTI);
+		Colloquicriteriricerca ccrKey = new Colloquicriteriricerca();
+		ccrKey.setGettermethodname(AnagraficheMethodName.GET_CONTATTI);
 		int indexContatti = Collections.binarySearch(criteria, ccrKey, cMethodName);
 		if (indexContatti > -1){
 			returnValue += "LEFT JOIN CONTATTI C ON A.CODANAGRAFICA = C.CODANAGRAFICA ";
 		}
-		ccrKey.setGetterMethodName(AnagraficheMethodName.GET_DESCRIZIONE_CLASSECLIENTE);
+		ccrKey.setGettermethodname(AnagraficheMethodName.GET_DESCRIZIONE_CLASSECLIENTE);
 		int indexClassiCliente = Collections.binarySearch(criteria, ccrKey, cMethodName);
 		if (indexClassiCliente > -1){
 			returnValue += "LEFT JOIN CLASSICLIENTE CC ON A.CODCLASSECLIENTE = CC.CODCLASSECLIENTE ";
 		}
-		ccrKey.setGetterMethodName(AnagraficheMethodName.GET_NOME_AGENTEINSERITORE);
+		ccrKey.setGettermethodname(AnagraficheMethodName.GET_NOME_AGENTEINSERITORE);
 		int indexAgentiNome = Collections.binarySearch(criteria, ccrKey, cMethodName);
 		if (indexAgentiNome > -1){
 			returnValue += "LEFT JOIN AGENTI AG ON A.CODAGENTEINSERITORE = AG.CODAGENTE ";
 		}
-		ccrKey.setGetterMethodName(AnagraficheMethodName.GET_COGNOME_AGENTEINSERITORE);
+		ccrKey.setGettermethodname(AnagraficheMethodName.GET_COGNOME_AGENTEINSERITORE);
 		int indexAgentiCognome = Collections.binarySearch(criteria, ccrKey, cMethodName);
 		if (indexAgentiCognome > -1){
 			returnValue += "LEFT JOIN AGENTI AG ON A.CODAGENTEINSERITORE = AG.CODAGENTE ";
@@ -106,74 +106,74 @@ public class QueryBuilder {
 		Iterator it = criteria.iterator();
 		int count = 1;
 		while (it.hasNext()){
-			ColloquiCriteriRicercaVO ccrVO = (ColloquiCriteriRicercaVO)it.next();
-		    if ((ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
-		    	(ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
+			Colloquicriteriricerca ccrVO = (Colloquicriteriricerca)it.next();
+		    if ((ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
+		    	(ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
 		       ){
-		    	returnValue += ccrVO.getGetterMethodName(); 
+		    	returnValue += ccrVO.getGettermethodname(); 
 		    }else{
 				WinkhouseUtils.ObjectSearchGetters isg = WinkhouseUtils.getInstance()
-																	   .findObjectSearchGettersByMethodName(ccrVO.getGetterMethodName(), 
+																	   .findObjectSearchGettersByMethodName(ccrVO.getGettermethodname(), 
 																				   								WinkhouseUtils.ANAGRAFICHE, 
 																				   								WinkhouseUtils.FUNCTION_SEARCH);
 		    	
 		   // 	returnValue += isg.getColumnName();
-				if (!ccrVO.getIsPersonal()){
-			    	if (!ccrVO.getFromValue().equalsIgnoreCase("")){
+				if (!ccrVO.isIspersonal()){
+			    	if (!ccrVO.getFromvalue().equalsIgnoreCase("")){
 			    		if (
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_NOME)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_COGNOME)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_COMMENTO)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CITTA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_PROVINCIA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_INDIRIZZO)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_DESCRIZIONE_CLASSECLIENTE)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_NOME_AGENTEINSERITORE)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_COGNOME_AGENTEINSERITORE)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CONTATTI)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CAP)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODICE_FISCALE)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_PARTITA_IVA))
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_NOME)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_COGNOME)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_COMMENTO)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CITTA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_PROVINCIA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_INDIRIZZO)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_DESCRIZIONE_CLASSECLIENTE)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_NOME_AGENTEINSERITORE)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_COGNOME_AGENTEINSERITORE)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CONTATTI)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CAP)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CODICE_FISCALE)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_PARTITA_IVA))
 			    			){
-			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + " '%" + ccrVO.getFromValue().replace("'", "''").toLowerCase() + "%' " ;
+			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + " '%" + ccrVO.getFromvalue().replace("'", "''").toLowerCase() + "%' " ;
 			    		}else{
 			    			if (
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODAGENTEINSERITORE)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODCLASSECLIENTE)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(AnagraficheMethodName.GET_CODANAGRAFICA))
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CODAGENTEINSERITORE)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CODCLASSECLIENTE)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(AnagraficheMethodName.GET_CODANAGRAFICA))
 			    				){
 			    				
-		    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromValue(); 
+		    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromvalue(); 
 			    				
 			    			}else{
 	
-				    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
 				    					returnValue += "(" + isg.getColumnName() + " >= " + 
-				    								   ((ccrVO.getGetterMethodName()
-				    										  .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getFromValue()+"' ":ccrVO.getFromValue())+ 
+				    								   ((ccrVO.getGettermethodname()
+				    										  .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getFromvalue()+"' ":ccrVO.getFromvalue())+ 
 				    								   " AND " + isg.getColumnName() + " <= " +
-				    								   ((ccrVO.getGetterMethodName()
-				    										  .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getToValue()+"' ":ccrVO.getToValue())+ 
+				    								   ((ccrVO.getGettermethodname()
+				    										  .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getTovalue()+"' ":ccrVO.getTovalue())+ 
 		
 				    								   ") ";
 				    			}
-				    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() == null) || (ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() == null) || (ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
 				    					returnValue += isg.getColumnName() + " >= " +
-				    								   ((ccrVO.getGetterMethodName()
-				    										  .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getFromValue()+"' ":ccrVO.getFromValue())+ 
+				    								   ((ccrVO.getGettermethodname()
+				    										  .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getFromvalue()+"' ":ccrVO.getFromvalue())+ 
 				    								   " "; 
 				    								   	
 					    		}
-				    			if (((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
 				    				returnValue += isg.getColumnName() + " <= " + 
-				    							   ((ccrVO.getGetterMethodName()
-												          .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getToValue()+"' ":ccrVO.getToValue())+ 
+				    							   ((ccrVO.getGettermethodname()
+												          .equalsIgnoreCase(AnagraficheMethodName.GET_DATAINSERIMENTO))?" '"+ccrVO.getTovalue()+"' ":ccrVO.getTovalue())+ 
 		
 				    							   " ";	
 					    		}	
@@ -195,15 +195,16 @@ public class QueryBuilder {
 
 	}
 	
-	protected ColloquiCriteriRicercaVO findGetNumeroStanzeMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetNumeroStanzeMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_NUMEROSTANZE)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_NUMEROSTANZE)){
 				returnValue = ccrvo;
 				break;
 			}
@@ -213,15 +214,16 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetTipoStanzeMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetTipoStanzeMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.MTIPOLOGIASTANZA)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliMethodName.MTIPOLOGIASTANZA)){
 				returnValue = ccrvo;
 				break;
 			}
@@ -231,15 +233,16 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetMqStanzeMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetMqStanzeMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.MMQSTANZA)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliMethodName.MMQSTANZA)){
 				returnValue = ccrvo;
 				break;
 			}
@@ -249,15 +252,15 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetCampiPersonaliMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetCampiPersonaliMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getIsPersonal()){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.isIspersonal()){
 				returnValue = ccrvo;
 				break;
 			}
@@ -267,17 +270,18 @@ public class QueryBuilder {
 		
 	}
 	
-	protected ColloquiCriteriRicercaVO findGetPeriodoAffittoMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetPeriodoAffittoMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO) ||
-			    ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAUZIONE) ||
-				ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RATA)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				(ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO) ||
+			     ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAUZIONE) ||
+				 ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RATA))){
 				returnValue = ccrvo;
 				break;
 			}
@@ -287,16 +291,17 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetSpeseAffittoMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetSpeseAffittoMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA) ||
-				ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				(ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA) ||
+				 ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA))){
 				returnValue = ccrvo;
 				break;
 			}
@@ -306,16 +311,17 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetRateAffittoMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetRateAffittoMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
-				ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				(ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
+				 ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA))){
 				returnValue = ccrvo;
 				break;
 			}
@@ -325,17 +331,18 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetAnagraficheAffittoMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetAnagraficheAffittoMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.COGNOME_ANAGRAFICA) ||
-				ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.NOME_ANAGRAFICA) ||
-				ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.RAGIONESOCIALE_ANAGRAFICA)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				(ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.COGNOME_ANAGRAFICA) ||
+				 ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.NOME_ANAGRAFICA) ||
+				 ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.RAGIONESOCIALE_ANAGRAFICA))){
 				returnValue = ccrvo;
 				break;
 			}
@@ -345,15 +352,16 @@ public class QueryBuilder {
 		
 	}
 
-	protected ColloquiCriteriRicercaVO findGetAffittoMethod(ArrayList criteri){
+	protected Colloquicriteriricerca findGetAffittoMethod(ArrayList criteri){
 		
-		ColloquiCriteriRicercaVO returnValue = null;
+		Colloquicriteriricerca returnValue = null;
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAUZIONE)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				ccrvo.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAUZIONE)){
 				returnValue = ccrvo;
 				break;
 			}
@@ -363,15 +371,16 @@ public class QueryBuilder {
 		
 	}
 	
-	protected ArrayList<ColloquiCriteriRicercaVO> findGetColloquioAgentiMethod(ArrayList criteri){
+	protected ArrayList<Colloquicriteriricerca> findGetColloquioAgentiMethod(ArrayList criteri){
 		
-		ArrayList<ColloquiCriteriRicercaVO> returnValue = new ArrayList<ColloquiCriteriRicercaVO>();
+		ArrayList<Colloquicriteriricerca> returnValue = new ArrayList<Colloquicriteriricerca>();
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_AGENTI)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				ccrvo.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_AGENTI)){
 				returnValue.add(ccrvo);
 			}
 		}
@@ -380,15 +389,16 @@ public class QueryBuilder {
 		
 	}
 	
-	protected ArrayList<ColloquiCriteriRicercaVO> findGetColloquioAnagraficheMethod(ArrayList criteri){
+	protected ArrayList<Colloquicriteriricerca> findGetColloquioAnagraficheMethod(ArrayList criteri){
 		
-		ArrayList<ColloquiCriteriRicercaVO> returnValue =  new ArrayList<ColloquiCriteriRicercaVO>();
+		ArrayList<Colloquicriteriricerca> returnValue =  new ArrayList<Colloquicriteriricerca>();
 		
 		Iterator it = criteri.iterator();
 		
 		while(it.hasNext()){
-			ColloquiCriteriRicercaVO ccrvo = (ColloquiCriteriRicercaVO)it.next();
-			if (ccrvo.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_ANAGRAFICHE)){
+			Colloquicriteriricerca ccrvo = (Colloquicriteriricerca)it.next();
+			if (ccrvo.getGettermethodname() != null && 
+				ccrvo.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_ANAGRAFICHE)){
 				returnValue.add(ccrvo);				
 			}
 		}
@@ -470,82 +480,83 @@ public class QueryBuilder {
 		int count = 1;
 		while (it.hasNext()){
 			
-			ColloquiCriteriRicercaVO ccrVO = (ColloquiCriteriRicercaVO)it.next();
+			Colloquicriteriricerca ccrVO = (Colloquicriteriricerca)it.next();
 			
-		    if ((ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
-		    	(ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
+		    if (ccrVO.getGettermethodname() != null && 
+		    	((ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
+		    	(ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI)))	
 		       ){
-		    	returnValue += ccrVO.getGetterMethodName() + " "; 
+		    	returnValue += ccrVO.getGettermethodname() + " "; 
 		    }else{
 				WinkhouseUtils.ObjectSearchGetters isg = WinkhouseUtils.getInstance()
-																	   .findObjectSearchGettersByMethodName(ccrVO.getGetterMethodName(), 
+																	   .findObjectSearchGettersByMethodName(ccrVO.getGettermethodname(), 
 																					 						WinkhouseUtils.IMMOBILI, 
 																					 						WinkhouseUtils.FUNCTION_SEARCH);
 		    	
-				if (ccrVO.getIsPersonal() == false){
+				if (ccrVO.isIspersonal() == false){
 					
-			    	if (!ccrVO.getFromValue().equalsIgnoreCase("")){
+			    	if (ccrVO.getFromvalue()!= null && !ccrVO.getFromvalue().equalsIgnoreCase("")){
 			    		if (
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_ZONA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CITTA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_PROVINCIA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAP)) || 
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RIF)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_INDIRIZZO))			    				
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_ZONA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CITTA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_PROVINCIA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAP)) || 
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RIF)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_INDIRIZZO))			    				
 			    			){
-			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromValue().replace("'", "''").toLowerCase() + "%'" ;
+			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromvalue().replace("'", "''").toLowerCase() + "%'" ;
 			    		}else{
 			    			if (
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODAGENTEINSERITORE)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODRISCALDAMENTO)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODSTATO)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODTIPOLOGIA)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODCLASSEENERGETICA)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.MTIPOLOGIASTANZA)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliMethodName.GET_CODIMMOBILE))
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODAGENTEINSERITORE)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODRISCALDAMENTO)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODSTATO)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODTIPOLOGIA)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODCLASSEENERGETICA)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliMethodName.MTIPOLOGIASTANZA)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliMethodName.GET_CODIMMOBILE))
 			    				){
-			    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromValue();
+			    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromvalue();
 			    				
 			    			}else{
-				    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
 				    					returnValue += " (" + isg.getColumnName() + " >= " + 
-				    								   ((ccrVO.getGetterMethodName()
-				    										  .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getFromValue()+"' ":ccrVO.getFromValue())+ 
+				    								   ((ccrVO.getGettermethodname()
+				    										  .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getFromvalue()+"' ":ccrVO.getFromvalue())+ 
 				    								   " AND " + isg.getColumnName() + " <= " +
-				    								   ((ccrVO.getGetterMethodName()
-				    										  .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getToValue()+"' ":ccrVO.getToValue())+ 
+				    								   ((ccrVO.getGettermethodname()
+				    										  .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getTovalue()+"' ":ccrVO.getTovalue())+ 
 		
 				    								   ") ";
 				    			}
-				    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() == null) || (ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() == null) || (ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
 				    					returnValue += isg.getColumnName() + " >= " +
-				    								   ((ccrVO.getGetterMethodName()
-				    										  .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getFromValue()+"' ":ccrVO.getFromValue())+ 
+				    								   ((ccrVO.getGettermethodname()
+				    										  .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getFromvalue()+"' ":ccrVO.getFromvalue())+ 
 				    								   " "; 
 				    								   	
 					    		}
-				    			if (((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
 				    				returnValue += isg.getColumnName() + " <= " + 
-				    							   ((ccrVO.getGetterMethodName()
-												          .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getToValue()+"' ":ccrVO.getToValue())+ 
+				    							   ((ccrVO.getGettermethodname()
+												          .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getTovalue()+"' ":ccrVO.getTovalue())+ 
 		
 				    							   " ";	
 					    		}
 			    			}
 			    		}
 			    	}else{
-		    			if (((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-			    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+		    			if (((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+			    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 			    				){
 			    				returnValue += isg.getColumnName() + " <= " + 
-			    							   ((ccrVO.getGetterMethodName()
-											          .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getToValue()+"' ":ccrVO.getToValue())+ 
+			    							   ((ccrVO.getGettermethodname()
+											          .equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO))?" '"+ccrVO.getTovalue()+"' ":ccrVO.getTovalue())+ 
 	
 			    							   " ";	
 				    		}
@@ -571,42 +582,42 @@ public class QueryBuilder {
 		return returnValue;
 	}
 	
-	protected String buildCampiPersonalizzatiWhereClause(ColloquiCriteriRicercaVO ccrVO){
+	protected String buildCampiPersonalizzatiWhereClause(Colloquicriteriricerca ccrVO){
 		
 		String returnValue = "";
 		
-		AttributeModel am = attributeDAO.getAttributeByID(Integer.valueOf(ccrVO.getGetterMethodName()));
-		returnValue += "( CPAV.IDFIELD = " + ccrVO.getGetterMethodName() + " AND ";
+		AttributeModel am = attributeDAO.getAttributeByID(Integer.valueOf(ccrVO.getGettermethodname()));
+		returnValue += "( CPAV.IDFIELD = " + ccrVO.getGettermethodname() + " AND ";
 		
 		if (am.getFieldType().equalsIgnoreCase(String.class.getName()) || am.getFieldType().equalsIgnoreCase(Enum.class.getName())){
 		
-			if ((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().trim().equalsIgnoreCase(""))){
-				returnValue += " LCASE(CPAV.FIELDVALUE) LIKE '%"+ccrVO.getFromValue().toLowerCase()+"%') ";
+			if ((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().trim().equalsIgnoreCase(""))){
+				returnValue += " LCASE(CPAV.FIELDVALUE) LIKE '%"+ccrVO.getFromvalue().toLowerCase()+"%') ";
 			}
 			
 		}
 		
 		if (am.getFieldType().equalsIgnoreCase(Integer.class.getName())){
 			
-			if ((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-				(ccrVO.getToValue() == null) || (ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+				(ccrVO.getTovalue() == null) || (ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 				
-				returnValue += "CAST(CPAV.FIELDVALUE AS INTEGER) >= " + ccrVO.getFromValue() + ") ";
+				returnValue += "CAST(CPAV.FIELDVALUE AS INTEGER) >= " + ccrVO.getFromvalue() + ") ";
 				
 			}
 			
-			if ((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-				(ccrVO.getToValue() != null) && (!ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+				(ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 					
-					returnValue += "CAST(CPAV.FIELDVALUE AS INTEGER) <= " + ccrVO.getToValue() + ") ";
+					returnValue += "CAST(CPAV.FIELDVALUE AS INTEGER) <= " + ccrVO.getTovalue() + ") ";
 					
 			}
 
-			if ((ccrVO.getFromValue() != null) & (!ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-					(ccrVO.getToValue() != null) && (!ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() != null) & (!ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+					(ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 						
-					returnValue += "CAST(CPAV.FIELDVALUE AS INTEGER) >= " + ccrVO.getFromValue() + " AND " +
-								   " CAST(CPAV.FIELDVALUE AS INTEGER) <= " + ccrVO.getToValue() + ") ";
+					returnValue += "CAST(CPAV.FIELDVALUE AS INTEGER) >= " + ccrVO.getFromvalue() + " AND " +
+								   " CAST(CPAV.FIELDVALUE AS INTEGER) <= " + ccrVO.getTovalue() + ") ";
 						
 			}
 
@@ -614,25 +625,25 @@ public class QueryBuilder {
 		
 		if (am.getFieldType().equalsIgnoreCase(Date.class.getName())){
 			
-			if ((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-				(ccrVO.getToValue() == null) || (ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+				(ccrVO.getTovalue() == null) || (ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 				
-				returnValue += "CAST(CPAV.FIELDVALUE AS DATE) >= '" + ccrVO.getFromValue() + "') ";
+				returnValue += "CAST(CPAV.FIELDVALUE AS DATE) >= '" + ccrVO.getFromvalue() + "') ";
 				
 			}
 			
-			if ((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-				(ccrVO.getToValue() != null) && (!ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+				(ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 					
-					returnValue += "CAST(CPAV.FIELDVALUE AS DATE) <= '" + ccrVO.getToValue() + "') ";
+					returnValue += "CAST(CPAV.FIELDVALUE AS DATE) <= '" + ccrVO.getTovalue() + "') ";
 					
 			}
 
-			if ((ccrVO.getFromValue() != null) & (!ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-					(ccrVO.getToValue() != null) && (!ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() != null) & (!ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+					(ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 						
-					returnValue += "CAST(CPAV.FIELDVALUE AS DATE) >= '" + ccrVO.getFromValue() + "' " + " AND " +
-								   " CAST(CPAV.FIELDVALUE AS DATE) <= '" + ccrVO.getToValue() + "' ) ";
+					returnValue += "CAST(CPAV.FIELDVALUE AS DATE) >= '" + ccrVO.getFromvalue() + "' " + " AND " +
+								   " CAST(CPAV.FIELDVALUE AS DATE) <= '" + ccrVO.getTovalue() + "' ) ";
 						
 			}
 
@@ -640,32 +651,32 @@ public class QueryBuilder {
 		
 		if (am.getFieldType().equalsIgnoreCase(Double.class.getName())){
 			
-			if ((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-				(ccrVO.getToValue() == null) || (ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+				(ccrVO.getTovalue() == null) || (ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 				
-				returnValue += "CAST(CPAV.FIELDVALUE AS DOUBLE) >= " + ccrVO.getFromValue() + ") ";
+				returnValue += "CAST(CPAV.FIELDVALUE AS DOUBLE) >= " + ccrVO.getFromvalue() + ") ";
 				
 			}
 			
-			if ((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-				(ccrVO.getToValue() != null) && (!ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+				(ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 					
-					returnValue += "CAST(CPAV.FIELDVALUE AS DOUBLE) <= " + ccrVO.getToValue() + ") ";
+					returnValue += "CAST(CPAV.FIELDVALUE AS DOUBLE) <= " + ccrVO.getTovalue() + ") ";
 					
 			}
 
-			if ((ccrVO.getFromValue() != null) & (!ccrVO.getFromValue().trim().equalsIgnoreCase("")) &&
-					(ccrVO.getToValue() != null) && (!ccrVO.getToValue().trim().equalsIgnoreCase(""))){
+			if ((ccrVO.getFromvalue() != null) & (!ccrVO.getFromvalue().trim().equalsIgnoreCase("")) &&
+					(ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().trim().equalsIgnoreCase(""))){
 						
-					returnValue += "CAST(CPAV.FIELDVALUE AS DOUBLE) >= " + ccrVO.getFromValue() + " AND " +
-								   " CAST(CPAV.FIELDVALUE AS DOUBLE) <= " + ccrVO.getToValue() + ") ";
+					returnValue += "CAST(CPAV.FIELDVALUE AS DOUBLE) >= " + ccrVO.getFromvalue() + " AND " +
+								   " CAST(CPAV.FIELDVALUE AS DOUBLE) <= " + ccrVO.getTovalue() + ") ";
 						
 			}
 		}
 		if (am.getFieldType().equalsIgnoreCase(Boolean.class.getName())){
 			
-			if ((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().trim().equalsIgnoreCase(""))){
-				returnValue += " CAST(CPAV.FIELDVALUE AS BOOLEAN) = " + ccrVO.getFromValue().toLowerCase()+ ") ";
+			if ((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().trim().equalsIgnoreCase(""))){
+				returnValue += " CAST(CPAV.FIELDVALUE AS BOOLEAN) = " + ccrVO.getFromvalue().toLowerCase()+ ") ";
 			}
 
 		}
@@ -742,115 +753,115 @@ public class QueryBuilder {
 		Iterator it = criteria.iterator();
 		int count = 1;
 		while (it.hasNext()){
-			ColloquiCriteriRicercaVO ccrVO = (ColloquiCriteriRicercaVO)it.next();
-		    if ((ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
-		    	(ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
+			Colloquicriteriricerca ccrVO = (Colloquicriteriricerca)it.next();
+		    if ((ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
+		    	(ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
 		       ){
-		    	returnValue += ccrVO.getGetterMethodName() + " "; 
+		    	returnValue += ccrVO.getGettermethodname() + " "; 
 		    }else{
 				WinkhouseUtils.ObjectSearchGetters isg = WinkhouseUtils.getInstance()
-																			 .findObjectSearchGettersByMethodName(ccrVO.getGetterMethodName(), 
+																			 .findObjectSearchGettersByMethodName(ccrVO.getGettermethodname(), 
 																					 							  WinkhouseUtils.AFFITTIIMMOBILI, 
 																					 							  WinkhouseUtils.FUNCTION_SEARCH);
 		    	
-				if (!ccrVO.getIsPersonal()){
-			    	if (!ccrVO.getFromValue().equalsIgnoreCase("")){
+				if (!ccrVO.isIspersonal()){
+			    	if (!ccrVO.getFromvalue().equalsIgnoreCase("")){
 			    		if (
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_ZONA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CITTA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_PROVINCIA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAP)) || 
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RIF)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_INDIRIZZO)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.NOME_ANAGRAFICA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.COGNOME_ANAGRAFICA)) ||
-			    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.RAGIONESOCIALE_ANAGRAFICA))
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_ZONA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CITTA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_PROVINCIA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CAP)) || 
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_RIF)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_INDIRIZZO)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.NOME_ANAGRAFICA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.COGNOME_ANAGRAFICA)) ||
+			    				(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.RAGIONESOCIALE_ANAGRAFICA))
 			    			
 			    			){
-			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromValue().toLowerCase() + "%'" ;
+			    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromvalue().toLowerCase() + "%'" ;
 			    		}else{
 			    			if (
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODAGENTEINSERITORE)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODRISCALDAMENTO)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODSTATO)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODTIPOLOGIA)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODCLASSEENERGETICA)) ||
-			    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.MTIPOLOGIASTANZA))
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODAGENTEINSERITORE)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODRISCALDAMENTO)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODSTATO)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODTIPOLOGIA)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_CODCLASSEENERGETICA)) ||
+			    					(ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.MTIPOLOGIASTANZA))
 			    				){
-			    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromValue();
+			    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromvalue();
 			    				
 			    			}else{
-				    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
-				    				if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO)){
+				    				if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO)){
 
-				    					returnValue += " (" + isg.getColumnName() + " >= " + " '"+ccrVO.getFromValue()+"' " + 
-	    								   	           " AND " + isg.getColumnName() + " <= " + " '"+ccrVO.getToValue()+"' " +
+				    					returnValue += " (" + isg.getColumnName() + " >= " + " '"+ccrVO.getFromvalue()+"' " + 
+	    								   	           " AND " + isg.getColumnName() + " <= " + " '"+ccrVO.getTovalue()+"' " +
 	    								   	           ") ";	   
 				    					
-				    				}else if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA)){
+				    				}else if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA)){
 
-				    					returnValue += " (" + isg.getColumnName() + " >= " + " '"+ccrVO.getFromValue()+" 00:00:00.0' " + 
-		    								   	   " AND " + isg.getColumnName() + " <= " + " '"+ccrVO.getToValue()+" 00:00:00.0' " +
+				    					returnValue += " (" + isg.getColumnName() + " >= " + " '"+ccrVO.getFromvalue()+" 00:00:00.0' " + 
+		    								   	   " AND " + isg.getColumnName() + " <= " + " '"+ccrVO.getTovalue()+" 00:00:00.0' " +
 		    								   	   ") ";	   
 				    					
-				    				}else if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO)){
-				    					returnValue += " (A.DATAINIZIO > '" + ccrVO.getToValue() + " 00:00:00.0' OR A.DATAFINE < '" + 
-				    								   ccrVO.getFromValue() + " 00:00:00.0' )"; 
+				    				}else if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO)){
+				    					returnValue += " (A.DATAINIZIO > '" + ccrVO.getTovalue() + " 00:00:00.0' OR A.DATAFINE < '" + 
+				    								   ccrVO.getFromvalue() + " 00:00:00.0' )"; 
 				    				}else{
-				    					returnValue += " (" + isg.getColumnName() + " >= " +ccrVO.getFromValue()+ 
-		    								   	   	   " AND " + isg.getColumnName() + " <= " + ccrVO.getToValue()+
+				    					returnValue += " (" + isg.getColumnName() + " >= " +ccrVO.getFromvalue()+ 
+		    								   	   	   " AND " + isg.getColumnName() + " <= " + ccrVO.getTovalue()+
 		    								   	   	   ") ";	   
 	
 				    				}
 				    			}
-				    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() == null) || (ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() == null) || (ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
-				    				if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO)){
+				    				if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO)){
 				    					
-				    					returnValue += isg.getColumnName() + " >= " + " '" + ccrVO.getFromValue()+ "' "; 
+				    					returnValue += isg.getColumnName() + " >= " + " '" + ccrVO.getFromvalue()+ "' "; 
 				    					
-				    				}else if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA)){
+				    				}else if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA)){
 
-				    					returnValue += isg.getColumnName() + " >= " + " '"+ccrVO.getFromValue()+" 00:00:00.0' ";	   
+				    					returnValue += isg.getColumnName() + " >= " + " '"+ccrVO.getFromvalue()+" 00:00:00.0' ";	   
 				    					
 				    					
-				    				}else if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO)){
-				    					returnValue += " A.DATAFINE < '" + ccrVO.getFromValue() + " 00:00:00.0' "; 
+				    				}else if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO)){
+				    					returnValue += " A.DATAFINE < '" + ccrVO.getFromvalue() + " 00:00:00.0' "; 
 				    				}else{
-				    					returnValue += " (" + isg.getColumnName() + " >= " +ccrVO.getFromValue()+ ") ";	   
+				    					returnValue += " (" + isg.getColumnName() + " >= " +ccrVO.getFromvalue()+ ") ";	   
 	
 				    				}
 				    				
 				    								   	
 					    		}
-				    			if (((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-				    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))
+				    			if (((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+				    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))
 				    				){
-				    				if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO)){
+				    				if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.GET_DATALIBERO)){
 	
-				    					returnValue += isg.getColumnName() + " <= " + " '" + ccrVO.getToValue()+ "' "; 
+				    					returnValue += isg.getColumnName() + " <= " + " '" + ccrVO.getTovalue()+ "' "; 
 				    				
-				    				}else if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA) ||
-				    					      ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA)){
+				    				}else if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_RATA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_RATA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.SCADENZA_SPESA) ||
+				    					      ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.DATAPAGATO_SPESA)){
 
-				    					returnValue += isg.getColumnName() + " <= " + " '"+ccrVO.getToValue()+" 00:00:00.0' ";	   
+				    					returnValue += isg.getColumnName() + " <= " + " '"+ccrVO.getTovalue()+" 00:00:00.0' ";	   
 				    									    				
-				    				}else if (ccrVO.getGetterMethodName().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO)){			    					
-				    					returnValue += " A.DATAINIZIO > '" + ccrVO.getToValue() + " 00:00:00.0' "; 
+				    				}else if (ccrVO.getGettermethodname().equalsIgnoreCase(ImmobiliAffittiMethodName.PERIODOAFFITTO)){			    					
+				    					returnValue += " A.DATAINIZIO > '" + ccrVO.getTovalue() + " 00:00:00.0' "; 
 	
 				    				}else{
-				    					returnValue += " (" + isg.getColumnName() + " <= " + ccrVO.getToValue() + ") ";	   
+				    					returnValue += " (" + isg.getColumnName() + " <= " + ccrVO.getTovalue() + ") ";	   
 	
 				    				}
 				    				
@@ -872,17 +883,17 @@ public class QueryBuilder {
 		return returnValue;
 	}
 	
-	private String fillPartecipantiColloquioParameter(ArrayList<ColloquiCriteriRicercaVO> criteria, String fieldName){
+	private String fillPartecipantiColloquioParameter(ArrayList<Colloquicriteriricerca> criteria, String fieldName){
 		
 		String returnValue = "";
 		int count = 0;
 		
-		Iterator<ColloquiCriteriRicercaVO> it = criteria.iterator();
+		Iterator<Colloquicriteriricerca> it = criteria.iterator();
 		
 		while (it.hasNext()) {
 			
-			ColloquiCriteriRicercaVO type = (ColloquiCriteriRicercaVO) it.next();
-			returnValue += fieldName + " = " + type.getFromValue();
+			Colloquicriteriricerca type = (Colloquicriteriricerca) it.next();
+			returnValue += fieldName + " = " + type.getFromvalue();
 			count ++;
 			if (count != criteria.size()){
 				returnValue += (type.getLogicalOperator() != null)? " " + type.getLogicalOperator() + " " : "";
@@ -912,8 +923,8 @@ public class QueryBuilder {
  		
 		returnValue += " WHERE 1=1 ";
 		
-		ArrayList<ColloquiCriteriRicercaVO> agenti = findGetColloquioAgentiMethod(criteria);
-		ArrayList<ColloquiCriteriRicercaVO> anagrafiche = findGetColloquioAnagraficheMethod(criteria);
+		ArrayList<Colloquicriteriricerca> agenti = findGetColloquioAgentiMethod(criteria);
+		ArrayList<Colloquicriteriricerca> anagrafiche = findGetColloquioAnagraficheMethod(criteria);
 		
 		if (agenti.size() > 0){
 			criteria.removeAll(agenti);
@@ -935,100 +946,100 @@ public class QueryBuilder {
 			int count = 1;
 			while (it.hasNext()){
 				
-				ColloquiCriteriRicercaVO ccrVO = (ColloquiCriteriRicercaVO)it.next();
+				Colloquicriteriricerca ccrVO = (Colloquicriteriricerca)it.next();
 				
-			    if ((ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
-			    	(ccrVO.getGetterMethodName().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
+			    if ((ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.OPEN_PARENTESI)) ||
+			    	(ccrVO.getGettermethodname().equalsIgnoreCase(QueryConst.CLOSE_PARENTESI))	
 			       ){
-			    	returnValue += ccrVO.getGetterMethodName() + " "; 
+			    	returnValue += ccrVO.getGettermethodname() + " "; 
 			    }else{
 					WinkhouseUtils.ObjectSearchGetters isg = WinkhouseUtils.getInstance()
-																		   .findObjectSearchGettersByMethodName(ccrVO.getGetterMethodName(), 
+																		   .findObjectSearchGettersByMethodName(ccrVO.getGettermethodname(), 
 																						 						WinkhouseUtils.COLLOQUI, 
 																						 						WinkhouseUtils.FUNCTION_SEARCH);
 			    	
-					if (ccrVO.getIsPersonal() == false){
+					if (ccrVO.isIspersonal() == false){
 						
-				    	if (!ccrVO.getFromValue().equalsIgnoreCase("")){
+				    	if (!ccrVO.getFromvalue().equalsIgnoreCase("")){
 				    		if (
-				    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_COMMENTO_AGENZIA)) ||
-				    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_COMMENTO_CLIENTE)) ||
-				    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DESCRIZIONE)) ||
-				    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_LUOGO_INCONTRO)) 
+				    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_COMMENTO_AGENZIA)) ||
+				    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_COMMENTO_CLIENTE)) ||
+				    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DESCRIZIONE)) ||
+				    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_LUOGO_INCONTRO)) 
 				    			){
-				    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromValue().replace("'", "''").toLowerCase() + "%'" ;
+				    			returnValue += " LCASE(" + isg.getColumnName() + ") LIKE " + "'%" + ccrVO.getFromvalue().replace("'", "''").toLowerCase() + "%'" ;
 				    		}else{
 				    			if (
-				    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_AGENTI)) ||
-				    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_ANAGRAFICHE)) ||
-				    					(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_IMMOBILE_ABBINATO))
+				    					(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_AGENTI)) ||
+				    					(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_ANAGRAFICHE)) ||
+				    					(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_IMMOBILE_ABBINATO))
 				    				){
-				    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromValue();
+				    					returnValue += isg.getColumnName() + " = " + ccrVO.getFromvalue();
 				    				
 				    			}else{
-					    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-					    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase(""))) &&
-					    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))
+					    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+					    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase(""))) &&
+					    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))
 					    				){
 					    					returnValue += " (" + isg.getColumnName() + " >= " + 
-					    								   ((ccrVO.getGetterMethodName()
-					    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getFromValue()+" 00:00:00' ":ccrVO.getFromValue())+ 
+					    								   ((ccrVO.getGettermethodname()
+					    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getFromvalue()+" 00:00:00' ":ccrVO.getFromvalue())+ 
 					    								   " AND " + isg.getColumnName() + " <= " +
-					    								   ((ccrVO.getGetterMethodName()
-					    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getToValue()+" 23:59:59' ":ccrVO.getToValue())+ 
+					    								   ((ccrVO.getGettermethodname()
+					    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getTovalue()+" 23:59:59' ":ccrVO.getTovalue())+ 
 			
 					    								   ") ";
 					    			}
-					    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-					    				((ccrVO.getToValue() == null) || (ccrVO.getToValue().equalsIgnoreCase("")))  &&
-					    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))
+					    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+					    				((ccrVO.getTovalue() == null) || (ccrVO.getTovalue().equalsIgnoreCase("")))  &&
+					    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))
 					    				){
 					    					returnValue += isg.getColumnName() + " >= " +
-					    								   ((ccrVO.getGetterMethodName()
-					    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getFromValue()+" 00:00:00' ":ccrVO.getFromValue())+ 
+					    								   ((ccrVO.getGettermethodname()
+					    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getFromvalue()+" 00:00:00' ":ccrVO.getFromvalue())+ 
 					    								   " "; 
 					    								   	
 						    		}
-					    			if (((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-					    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))  &&
-					    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))
+					    			if (((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+					    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))  &&
+					    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))
 					    				){
 					    				returnValue += isg.getColumnName() + " <= " + 
-					    							   ((ccrVO.getGetterMethodName()
-													          .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getToValue()+" 23:59:59' ":ccrVO.getToValue())+ 
+					    							   ((ccrVO.getGettermethodname()
+													          .equalsIgnoreCase(ColloquiMethodName.GET_DATA_COLLOQUIO))?" '"+ccrVO.getTovalue()+" 23:59:59' ":ccrVO.getTovalue())+ 
 			
 					    							   " ";	
 						    		}
-					    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-						    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase(""))) &&
-						    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))
+					    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+						    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase(""))) &&
+						    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))
 						    				){
 						    					returnValue += " (" + isg.getColumnName() + " >= " + 
-						    								   ((ccrVO.getGetterMethodName()
-						    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getFromValue()+" 00:00:00' ":ccrVO.getFromValue())+ 
+						    								   ((ccrVO.getGettermethodname()
+						    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getFromvalue()+" 00:00:00' ":ccrVO.getFromvalue())+ 
 						    								   " AND " + isg.getColumnName() + " <= " +
-						    								   ((ccrVO.getGetterMethodName()
-						    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getToValue()+" 23:59:59' ":ccrVO.getToValue())+ 
+						    								   ((ccrVO.getGettermethodname()
+						    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getTovalue()+" 23:59:59' ":ccrVO.getTovalue())+ 
 				
 						    								   ") ";
 						    			}
-						    			if (((ccrVO.getFromValue() != null) && (!ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-						    				((ccrVO.getToValue() == null) || (ccrVO.getToValue().equalsIgnoreCase(""))) &&
-						    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))
+						    			if (((ccrVO.getFromvalue() != null) && (!ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+						    				((ccrVO.getTovalue() == null) || (ccrVO.getTovalue().equalsIgnoreCase(""))) &&
+						    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))
 						    				){
 						    					returnValue += isg.getColumnName() + " >= " +
-						    								   ((ccrVO.getGetterMethodName()
-						    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getFromValue()+" 00:00:00' ":ccrVO.getFromValue())+ 
+						    								   ((ccrVO.getGettermethodname()
+						    										  .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getFromvalue()+" 00:00:00' ":ccrVO.getFromvalue())+ 
 						    								   " "; 
 						    								   	
 							    		}
-						    			if (((ccrVO.getFromValue() == null) || (ccrVO.getFromValue().equalsIgnoreCase(""))) && 
-						    				((ccrVO.getToValue() != null) && (!ccrVO.getToValue().equalsIgnoreCase("")))  &&
-						    				(ccrVO.getGetterMethodName().equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))
+						    			if (((ccrVO.getFromvalue() == null) || (ccrVO.getFromvalue().equalsIgnoreCase(""))) && 
+						    				((ccrVO.getTovalue() != null) && (!ccrVO.getTovalue().equalsIgnoreCase("")))  &&
+						    				(ccrVO.getGettermethodname().equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))
 						    				){
 						    				returnValue += isg.getColumnName() + " <= " + 
-						    							   ((ccrVO.getGetterMethodName()
-														          .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getToValue()+" 23:59:59' ":ccrVO.getToValue())+ 
+						    							   ((ccrVO.getGettermethodname()
+														          .equalsIgnoreCase(ColloquiMethodName.GET_DATA_INSERIMENTO))?" '"+ccrVO.getTovalue()+" 23:59:59' ":ccrVO.getTovalue())+ 
 				
 						    							   " ";	
 							    		}

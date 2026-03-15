@@ -289,7 +289,7 @@ public class RiassuntoColloquio extends WizardPage {
 						} catch (NumberFormatException e) {
 							cod = 0;
 						}						
-						Riscaldamenti rVO = rDAO.getRiscaldamentoById(cod);
+						Riscaldamenti rVO = rDAO.getRiscaldamentiById(cod);
 						fromValue = (rVO != null)?rVO.getDescrizione(): "";
 					}else if (colloquiCriteriRicercaVO.getGettermethodname().equalsIgnoreCase("getCodAgenteInseritore")){
 						Integer cod = 0;

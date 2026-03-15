@@ -86,8 +86,8 @@ public class SalvaAnagrafica extends Action {
 							 ((getAnagrafica().getNome() != null) && (!getAnagrafica().getNome().equalsIgnoreCase("")))) ||
 							 ((getAnagrafica().getRagsoc() != null) && (!getAnagrafica().getRagsoc().equalsIgnoreCase("")))
 						){
-						
-						WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
+						anagrafica.getObjectContext().commitChanges();
+						//WinkhouseUtils.getInstance().getCayenneObjectContext().commitChanges();
 //						
 //						AnagraficheHelper ah = new AnagraficheHelper();
 						EntityHelper eh = new EntityHelper();

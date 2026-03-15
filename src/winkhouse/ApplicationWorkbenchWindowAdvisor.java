@@ -51,7 +51,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowStatusLine(false);
         configurer.setShowPerspectiveBar(true);
         configurer.setTitle("winkhouse");
-        PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.SHOW_TRADITIONAL_STYLE_TABS, false);
+        //PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.SHOW_TRADITIONAL_STYLE_TABS, false);
 		IPerspectiveRegistry perspectiveRegistry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		IPerspectiveDescriptor[] perspectives = perspectiveRegistry.getPerspectives();
 		
@@ -85,37 +85,37 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		super.postWindowCreate();
 		
 		dil = new DettaglioImmobiliListener();
-        Activator.getDefault().getWorkbench()
+        PlatformUI.getWorkbench()
 		 		 .getActiveWorkbenchWindow()
 		 		 .getPartService()
 		 		 .addPartListener(dil);
         
 		dal = new DettaglioAnagraficaListener();
-        Activator.getDefault().getWorkbench()
+		PlatformUI.getWorkbench()
 		 		 .getActiveWorkbenchWindow()
 		 		 .getPartService()
 		 		 .addPartListener(dal);
         
 		dcl = new DettaglioColloquioListener();
-        Activator.getDefault().getWorkbench()
+		PlatformUI.getWorkbench()
 		 		 .getActiveWorkbenchWindow()
 		 		 .getPartService()
 		 		 .addPartListener(dcl);
 
         dafl = new DettaglioAffittoListener();
-        Activator.getDefault().getWorkbench()
+        PlatformUI.getWorkbench()
 		 		 .getActiveWorkbenchWindow()
 		 		 .getPartService()
 		 		 .addPartListener(dafl);
 
         dbml = new DBMonitorListener();
-        Activator .getDefault().getWorkbench()
+        PlatformUI.getWorkbench()
         		  .getActiveWorkbenchWindow()
         		  .getPartService()        		  
         		  .addPartListener(dbml);
         
         apa = new ApplicationPerspectiveAdapter();
-        Activator .getDefault().getWorkbench()
+        PlatformUI.getWorkbench()
         		  .getActiveWorkbenchWindow()
         		  .addPerspectiveListener(apa);
 

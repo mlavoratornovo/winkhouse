@@ -268,7 +268,7 @@ public class RiscaldamentiDAO extends BaseDAO{
 		return super.getObjectById(classType, RISCALDAMENTI_BY_ID, codRiscaldamento);
 	}	
 
-	public Riscaldamenti getRiscaldamentoById(Integer codRiscaldamento){
+	public Riscaldamenti getRiscaldamentiById(Integer codRiscaldamento){
 		ObjectContext context = WinkhouseUtils.getInstance().getCayenneObjectContext();
 		return Cayenne.objectForPK(context,Riscaldamenti.class,codRiscaldamento);
 	}

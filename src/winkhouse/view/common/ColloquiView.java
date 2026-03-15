@@ -1,6 +1,7 @@
 package winkhouse.view.common;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +21,6 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -36,21 +36,10 @@ import org.eclipse.ui.part.ViewPart;
 import winkhouse.Activator;
 import winkhouse.action.colloqui.NuovoColloquioAction;
 import winkhouse.action.colloqui.RefreshColloqui;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.ColloquiCriteriRicercaModel;
-import winkhouse.model.ColloquiModel;
-import winkhouse.model.ColloquiModelAnagraficaCollection;
-import winkhouse.model.ColloquiModelRicercaCollection;
-import winkhouse.model.ColloquiModelVisiteCollection;
-import winkhouse.model.ContattiModel;
-import winkhouse.model.CriteriRicercaModel;
-import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
 import winkhouse.view.colloqui.handler.DettaglioColloquioHandler;
-import winkhouse.vo.ColloquiVO;
-import winkhouse.vo.ContattiVO;
 
 
 
@@ -77,16 +66,16 @@ public class ColloquiView extends ViewPart {
 	}
 	
 	
-	private class OrdinamentoData extends ViewerSorter{
+	private class OrdinamentoData extends ViewerComparator{
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
 			Calendar c1 = Calendar.getInstance();			
 			Calendar c2 = Calendar.getInstance();
-			if ((e1 instanceof ColloquiModel) && 
-				(e2 instanceof ColloquiModel)){
-				c1.setTime(((ColloquiModel)e1).getDataColloquio());
-				c2.setTime(((ColloquiModel)e2).getDataColloquio());				
+			if ((e1 instanceof Colloqui) && 
+				(e2 instanceof Colloqui)){
+				c1.setTime(Date.from(((Colloqui)e1).getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant()));
+				c2.setTime(Date.from(((Colloqui)e2).getDatacolloquio().atZone(ZoneId.systemDefault()).toInstant()));				
 			} 
 			
 			if (c1.before(c2)){
@@ -131,20 +120,20 @@ public class ColloquiView extends ViewPart {
 			
 			int returnValue = 0;
 						
-			Date data1 = ((ColloquiModel)e1).getDataColloquio();
-			Date data2 = ((ColloquiModel)e2).getDataColloquio();
+			LocalDateTime data1 = ((Colloqui)e1).getDatacolloquio();
+			LocalDateTime data2 = ((Colloqui)e2).getDatacolloquio();
 						
-			String agente1 = (((ColloquiModel)e1).getAgenteInseritore() != null)
-					  ? ((ColloquiModel)e1).getAgenteInseritore().getCognome() + " " + 
-						((ColloquiModel)e1).getAgenteInseritore().getNome()
+			String agente1 = (((Colloqui)e1).getAgenti1() != null)
+					  ? ((Colloqui)e1).getAgenti1().getCognome() + " " + 
+						((Colloqui)e1).getAgenti1().getNome()
 					  : "";
-			String agente2 = (((ColloquiModel)e1).getAgenteInseritore() != null)
-					  ? ((ColloquiModel)e1).getAgenteInseritore().getCognome() + " " + 
-						((ColloquiModel)e1).getAgenteInseritore().getNome()
+			String agente2 = (((Colloqui)e1).getAgenti1() != null)
+					  ? ((Colloqui)e1).getAgenti1().getCognome() + " " + 
+						((Colloqui)e1).getAgenti1().getNome()
 					  : "";
 			
-			String luogo1 = ((ColloquiModel)e1).getLuogoIncontro();
-			String luogo2 = ((ColloquiModel)e2).getLuogoIncontro();
+			String luogo1 = ((Colloqui)e1).getLuogo();
+			String luogo2 = ((Colloqui)e2).getLuogo();
 			
 			switch (propertyIndex) {
 			case 3: {
@@ -155,9 +144,9 @@ public class ColloquiView extends ViewPart {
 				}else if ((data1 == null) && (data2 != null)){
 					returnValue = -1;
 				}else{
-					if (data1.before(data2)){
+					if (data1.isBefore(data2)){
 						returnValue = 1;
-					}else if (data1.after(data2)){
+					}else if (data1.isAfter(data2)){
 						returnValue = -1;
 					}else{
 						returnValue = 0;
@@ -168,15 +157,15 @@ public class ColloquiView extends ViewPart {
 				break;
 			}
 			case 4: {
-				if ((agente1 == null) && (agente2 == null)){
-					returnValue = 0;
-				}else if ((agente1 != null) && (agente2 == null)){
-					returnValue = 1;
-				}else if ((agente1 == null) && (agente2 != null)){
-					returnValue = -1;
-				}else{
+//				if ((agente1 == null) && (agente2 == null)){
+//					returnValue = 0;
+//				}else if ((agente1 != null) && (agente2 == null)){
+//					returnValue = 1;
+//				}else if ((agente1 == null) && (agente2 != null)){
+//					returnValue = -1;
+//				}else{
 					returnValue = agente1.compareTo(agente2);
-				}
+//				}
 				break;
 			}
 			case 5: {
@@ -255,7 +244,7 @@ public class ColloquiView extends ViewPart {
 		tvColloqui.getTree().setLinesVisible(true);
 		tvColloqui.setContentProvider(new ColloquiContentProvider());
 		tvColloqui.setLabelProvider(new ColloquiLabelProvider());
-		tvColloqui.setSorter(new OrdinamentoData());
+		tvColloqui.setComparator(new OrdinamentoData());
 		tvColloqui.addDoubleClickListener(new IDoubleClickListener(){
 
 			@Override
