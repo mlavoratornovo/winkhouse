@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.cayenne.access.ToManyList;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -377,6 +378,10 @@ public class ColloquiView extends ViewPart {
 			if ( arg0 instanceof ToManyList){
 				returnValue = ((ToManyList<Colloqui>)arg0).toArray();
 			}
+			if ( arg0 instanceof List){
+				returnValue = ((List<Colloqui>)arg0).toArray();
+			}
+			
 //
 //			if ( arg0 instanceof ColloquiModelVisiteCollection){
 //				returnValue = ((ColloquiModelVisiteCollection)arg0).getColloquiVisite().toArray();
@@ -453,12 +458,15 @@ public class ColloquiView extends ViewPart {
 					switch (((Colloqui)element).getCodtipologiacolloquio()) {
 					case 1: {						
 						returnValue = "Ricerca";
+						break;
 					}
 					case 2: {
 						returnValue = "Visita";
+						break;
 					}					
 					default:
 						returnValue = "Generico";
+						break;
 					}				
 				}
 				if (columnIndex == 3){	
@@ -500,7 +508,8 @@ public class ColloquiView extends ViewPart {
 		if (anagrafica != null){
 			this.anagrafica = anagrafica;		
 			this.immobile = null;
-			tvColloqui.setInput(anagrafica.getColloquianagrafiches());
+			tvColloqui.setInput(anagrafica.getColloquianagrafiches().stream()
+					  .map(ca -> ca.getColloqui()).collect(Collectors.toList()));
 		}
 	}
 

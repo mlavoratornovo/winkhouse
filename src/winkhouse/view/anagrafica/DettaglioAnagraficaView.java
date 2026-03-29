@@ -308,7 +308,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 					 				 .findView(ColloquiView.ID);
 			
 			if (ivp != null){
-				// ((ColloquiView)ivp).setAnagrafica(anagrafica);
+				((ColloquiView)ivp).setAnagrafica(anagrafica);
 				((ColloquiView)ivp).setCompareView(isInCompareMode);
 			}
 
