@@ -11,15 +11,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+
 import org.apache.cayenne.access.ToManyList;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
@@ -29,7 +30,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
@@ -48,7 +49,7 @@ public class ColloquiView extends ViewPart {
 
 	public final static String ID = "winkhouse.colloquiview";
 		
-	private TreeViewer tvColloqui = null;
+	private TableViewer tvColloqui = null;
 	private FormToolkit ft = null;
 	private Form f = null;	
 	private Immobili immobile = null;
@@ -194,14 +195,14 @@ public class ColloquiView extends ViewPart {
 		
 	}
 	
-	private SelectionAdapter getSelectionAdapter(final TreeColumn column, final int index) {
+	private SelectionAdapter getSelectionAdapter(final TableColumn column, final int index) {
         SelectionAdapter selectionAdapter = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 comparator.setColumn(index);
                 int dir = comparator.getDirection();
-                tvColloqui.getTree().setSortDirection(dir);
-                tvColloqui.getTree().setSortColumn(column);
+                tvColloqui.getTable().setSortDirection(dir);
+                tvColloqui.getTable().setSortColumn(column);
                 tvColloqui.refresh();
             }
         };
@@ -239,10 +240,10 @@ public class ColloquiView extends ViewPart {
 		toolbar.setLayout(new FillLayout(SWT.HORIZONTAL));
 */
 		int colloquioType = 0;
-		tvColloqui = new TreeViewer(f.getBody(),SWT.HORIZONTAL|SWT.VERTICAL|SWT.FULL_SELECTION);
-		tvColloqui.getTree().setLayoutData(gdExpVH);
-		tvColloqui.getTree().setHeaderVisible(true);
-		tvColloqui.getTree().setLinesVisible(true);
+		tvColloqui = new TableViewer(f.getBody(),SWT.HORIZONTAL|SWT.VERTICAL|SWT.FULL_SELECTION);
+		tvColloqui.getTable().setLayoutData(gdExpVH);
+		tvColloqui.getTable().setHeaderVisible(true);
+		tvColloqui.getTable().setLinesVisible(true);
 		tvColloqui.setContentProvider(new ColloquiContentProvider());
 		tvColloqui.setLabelProvider(new ColloquiLabelProvider());
 		tvColloqui.setComparator(new OrdinamentoData());
@@ -251,7 +252,7 @@ public class ColloquiView extends ViewPart {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				
-				TreeSelection ts = (TreeSelection)event.getSelection();
+				IStructuredSelection ts = (IStructuredSelection)event.getSelection();
 				if (ts.getFirstElement() instanceof Colloqui){
 					
 					Colloqui cm = (Colloqui)ts.getFirstElement();
@@ -299,32 +300,32 @@ public class ColloquiView extends ViewPart {
 		comparator = new ColumnSorter();
 		tvColloqui.setComparator(comparator);
 		
-		TreeColumn column0 = new TreeColumn(tvColloqui.getTree(), SWT.LEFT, 0);
+		TableColumn column0 = new TableColumn(tvColloqui.getTable(), SWT.LEFT, 0);
 		column0.setWidth(20);
 
-		TreeColumn column1 = new TreeColumn(tvColloqui.getTree(), SWT.LEFT, 1);
+		TableColumn column1 = new TableColumn(tvColloqui.getTable(), SWT.LEFT, 1);
 		column1.setWidth(25);		
 
-		TreeColumn tcTipologia = new TreeColumn(tvColloqui.getTree(),SWT.CENTER,2);
+		TableColumn tcTipologia = new TableColumn(tvColloqui.getTable(),SWT.CENTER,2);
 		tcTipologia.setWidth(100);
 		tcTipologia.setText("Tipologia");
 		
-		TreeColumn tcData = new TreeColumn(tvColloqui.getTree(),SWT.CENTER,3);
+		TableColumn tcData = new TableColumn(tvColloqui.getTable(),SWT.CENTER,3);
 		tcData.setWidth(150);
 		tcData.setText("Data colloquio");
 		tcData.addSelectionListener(getSelectionAdapter(tcData, 3));
 		
-		TreeColumn tcAgente = new TreeColumn(tvColloqui.getTree(),SWT.CENTER,4);
+		TableColumn tcAgente = new TableColumn(tvColloqui.getTable(),SWT.CENTER,4);
 		tcAgente.setWidth(150);
 		tcAgente.setText("Agente inseritore");
 		tcAgente.addSelectionListener(getSelectionAdapter(tcAgente, 4));
 		
-		TreeColumn tcLuogo = new TreeColumn(tvColloqui.getTree(),SWT.CENTER,5);
+		TableColumn tcLuogo = new TableColumn(tvColloqui.getTable(),SWT.CENTER,5);
 		tcLuogo.setWidth(200);
 		tcLuogo.setText("Luogo");
 		tcLuogo.addSelectionListener(getSelectionAdapter(tcLuogo, 5));
 
-		TreeColumn tcCriteri = new TreeColumn(tvColloqui.getTree(),SWT.CENTER,6);
+		TableColumn tcCriteri = new TableColumn(tvColloqui.getTable(),SWT.CENTER,6);
 		tcCriteri.setWidth(200);
 		tcCriteri.setText("Criteri ricerca");
 		
@@ -357,11 +358,17 @@ public class ColloquiView extends ViewPart {
 		}
 	}
 
-	private class ColloquiContentProvider implements IStructuredContentProvider,
-    												 ITreeContentProvider{
+	private class ColloquiContentProvider implements IStructuredContentProvider{
 
 		public Object[] getElements(Object inputElement) {
-			return getChildren(inputElement);
+			Object[] returnValue = {inputElement};			
+			if ( inputElement instanceof ToManyList){
+				returnValue = ((ToManyList<Colloqui>)inputElement).toArray();
+			}
+			if ( inputElement instanceof List){
+				returnValue = ((List<Colloqui>)inputElement).toArray();
+			}
+			return returnValue;
 		}
 
 		public void dispose() {
@@ -372,40 +379,7 @@ public class ColloquiView extends ViewPart {
 
 		}
 
-		public Object[] getChildren(Object arg0) {
 
-			Object[] returnValue = {arg0};			
-			if ( arg0 instanceof ToManyList){
-				returnValue = ((ToManyList<Colloqui>)arg0).toArray();
-			}
-			if ( arg0 instanceof List){
-				returnValue = ((List<Colloqui>)arg0).toArray();
-			}
-			
-//
-//			if ( arg0 instanceof ColloquiModelVisiteCollection){
-//				returnValue = ((ColloquiModelVisiteCollection)arg0).getColloquiVisite().toArray();
-//			}
-//			
-//			if ( arg0 instanceof ColloquiModelAnagraficaCollection){
-//				returnValue = ((ColloquiModelAnagraficaCollection)arg0).getColloqui().toArray();
-//			}
-//
-//			if ( arg0 instanceof ColloquiModelRicercaCollection){
-//				returnValue = ((ColloquiModelRicercaCollection)arg0).getColloquiRicerca().toArray();
-//			}
-
-			return returnValue;
-
-		}
-
-		public Object getParent(Object element) {
-			return null;
-		}
-
-		public boolean hasChildren(Object element) {
-			return (getChildren(element).length==0)?false:true;
-		}
 
 	}
 	
@@ -469,9 +443,11 @@ public class ColloquiView extends ViewPart {
 						break;
 					}				
 				}
-				if (columnIndex == 3){	
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-					returnValue = ((Colloqui)element).getDatacolloquio().format(formatter);
+				if (columnIndex == 3){
+					if (((Colloqui)element).getDatacolloquio() != null){
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+						returnValue = ((Colloqui)element).getDatacolloquio().format(formatter);
+					}
 				}
 				if (columnIndex == 4){
 					returnValue = (((Colloqui)element).getAgenti1() != null)
@@ -513,7 +489,7 @@ public class ColloquiView extends ViewPart {
 		}
 	}
 
-	public TreeViewer getTvColloqui() {
+	public TableViewer getTvColloqui() {
 		return tvColloqui;
 	}
 

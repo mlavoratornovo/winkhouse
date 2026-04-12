@@ -39,6 +39,7 @@ import winkhouse.action.anagrafiche.RefreshDettaglioAnagrafica;
 import winkhouse.action.anagrafiche.SalvaAnagrafica;
 import winkhouse.action.recapiti.ApriDettaglioRecapitiAction;
 import winkhouse.action.stampa.StampaAnagraficheAction;
+import winkhouse.dao.AnagraficheDAO;
 import winkhouse.dao.AttributeDAO;
 import winkhouse.dao.EntityDAO;
 import winkhouse.model.AnagraficheModel;
@@ -255,18 +256,23 @@ public class DettaglioAnagraficaView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		bindAnagrafica(bindingContext);
-		updateViews();
-		if ((anagrafica != null) && 
-			(anagrafica.getImmobilis() != null) && 
-			(anagrafica.getImmobilis().size() > 0)){
-			f.setImage(anagraficaPropietaImg);
-			setTitleImage(anagraficaPropietaImg);
-		}else{
-			f.setImage(anagraficaImg);
-			setTitleImage(anagraficaImg);			
+		if (anagrafica.getCodAnagrafica() != 0) {
+			anagrafica = new AnagraficheDAO().getAnagraficheById(this.anagrafica.getCodAnagrafica());
+			this.setAnagrafica(anagrafica);
 		}
+		
+//		DataBindingContext bindingContext = new DataBindingContext();
+//		bindAnagrafica(bindingContext);
+//		updateViews();
+//		if ((anagrafica != null) && 
+//			(anagrafica.getImmobilis() != null) && 
+//			(anagrafica.getImmobilis().size() > 0)){
+//			f.setImage(anagraficaPropietaImg);
+//			setTitleImage(anagraficaPropietaImg);
+//		}else{
+//			f.setImage(anagraficaImg);
+//			setTitleImage(anagraficaImg);			
+//		}
 	}
 
 	public Anagrafiche getAnagrafica() {
