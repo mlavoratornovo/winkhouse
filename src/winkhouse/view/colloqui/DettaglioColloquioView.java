@@ -1778,7 +1778,7 @@ public class DettaglioColloquioView extends ViewPart {
 			public Object[] getElements(Object inputElement) {
 				
 				if ((colloquio.getImmobili() == null)){
-					return MobiliaDatiBaseCache.getInstance().getTipologieColloqui().toArray();
+					return MobiliaDatiBaseCache.getInstance().getTipologieColloquiWithoutImmobili().toArray();
 				}else{
 					return MobiliaDatiBaseCache.getInstance().getTipologieColloquiWithoutRicerca().toArray();	
 				}

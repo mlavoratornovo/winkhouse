@@ -324,6 +324,16 @@ public class MobiliaDatiBaseCache {
 		
 		return tipologieColloquiWithoutRicerca;
 	}
+	
+	public ArrayList<TipologieColloquiVO> getTipologieColloquiWithoutImmobili() {
+		ArrayList<TipologieColloquiVO> tipologieColloquiWithoutRicerca = (ArrayList<TipologieColloquiVO>)EnvSettingsFactory.getInstance()
+																														   .getTipologieColloqui()
+																														   .clone();
+		tipologieColloquiWithoutRicerca.remove(1);
+		
+		
+		return tipologieColloquiWithoutRicerca;
+	}
 
 	public void setTipologieColloqui(
 			ArrayList<Tipologiecolloqui> tipologieColloqui) {

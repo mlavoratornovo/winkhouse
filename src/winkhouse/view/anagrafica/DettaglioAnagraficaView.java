@@ -256,7 +256,7 @@ public class DettaglioAnagraficaView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		if (anagrafica.getCodAnagrafica() != 0) {
+		if (anagrafica.getCodAnagrafica() != 0) {			
 			anagrafica = new AnagraficheDAO().getAnagraficheById(this.anagrafica.getCodAnagrafica());
 			this.setAnagrafica(anagrafica);
 		}

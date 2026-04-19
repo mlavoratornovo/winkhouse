@@ -8,7 +8,6 @@ import org.eclipse.ui.PlatformUI;
 
 import winkhouse.Activator;
 import winkhouse.dao.AnagraficheDAO;
-import winkhouse.model.AnagraficheModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.view.anagrafica.DettaglioAnagraficaView;
 
@@ -44,6 +43,7 @@ public class RefreshDettaglioAnagrafica extends Action {
 			
 			if (am.getCodAnagrafica() != 0){
 				AnagraficheDAO adao = new AnagraficheDAO();
+				am.getObjectContext().invalidateObjects(am);
 				Anagrafiche o = adao.getAnagraficheById(am.getCodAnagrafica());
 				if (o != null){					
 					((DettaglioAnagraficaView)iwp).setAnagrafica(o);

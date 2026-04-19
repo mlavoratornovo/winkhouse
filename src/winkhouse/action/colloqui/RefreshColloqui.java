@@ -45,11 +45,13 @@ public class RefreshColloqui extends Action {
 			
 			if (cv.getImmobile() != null){
 //				cv.getImmobile().setColloqui(null);
+				cv.getImmobile().getObjectContext().invalidateObjects(cv.getImmobile());
 				cv.setImmobile(cv.getImmobile());
 			}
 			
 			if (cv.getAnagrafica() != null){
 //				cv.getAnagrafica().setColloqui(null);
+				cv.getAnagrafica().getObjectContext().invalidateObjects(cv.getAnagrafica());
 				cv.setAnagrafica(cv.getAnagrafica());
 			}
 		}

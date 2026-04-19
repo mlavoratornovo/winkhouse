@@ -44,6 +44,7 @@ public class RefreshDettaglioImmobile extends Action {
 
 			if (im.getCodImmobile() != 0){
 				ImmobiliDAO idao = new ImmobiliDAO();
+				im.getObjectContext().invalidateObjects(im);
 				Immobili o = idao.getImmobileById(im.getCodImmobile());
 				if (o != null){
 					((DettaglioImmobileView)iwp).setImmobile(im);
