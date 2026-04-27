@@ -34,11 +34,6 @@ import winkhouse.action.abbinamenti.FindAbbinamenti;
 import winkhouse.action.anagrafiche.ApriDettaglioAnagraficaAction;
 import winkhouse.action.immobili.ApriDettaglioImmobileAction;
 import winkhouse.dao.AbbinamentiDAO;
-import winkhouse.model.AbbinamentiModel;
-import winkhouse.model.AnagraficheModel;
-import winkhouse.model.AppuntamentiModel;
-import winkhouse.model.ColloquiModel;
-import winkhouse.model.ImmobiliModel;
 import winkhouse.orm.Anagrafiche;
 import winkhouse.orm.Colloqui;
 import winkhouse.orm.Immobili;
@@ -57,7 +52,7 @@ public class AbbinamentiView extends ViewPart {
 	private ArrayList<?> ricerca = null;
 	private ArrayList<?> manuale = null;
 	
-	private ArrayList<Abbinamenti> abbinnameti = new ArrayList<Abbinamenti>(2);
+	private ArrayList<Abbinamenti> abbinameti = new ArrayList<Abbinamenti>(2);
 	
 	private AbbinamentiManuali abbinamentiManuali = null;
 	private AbbinamentiRicerca abbinamentiRicerca = null;
@@ -128,7 +123,7 @@ public class AbbinamentiView extends ViewPart {
 
 		@Override
 		public boolean hasChildren(Object element) {
-			return (element instanceof AbbinamentiModel)?false:true;
+			return (element instanceof winkhouse.orm.Abbinamenti)?false:true;
 		}
 
 		@Override
@@ -170,7 +165,7 @@ public class AbbinamentiView extends ViewPart {
 				return abbinamentiManualiImg;
 			}else if ((columnIndex == 1) && (element instanceof AbbinamentiRicerca)){
 				return abbinamentiRicercaImg;
-			}else if ((columnIndex == 3) && (element instanceof AbbinamentiModel)){
+			}else if ((columnIndex == 3) && (element instanceof winkhouse.orm.Abbinamenti)){
 
 /*				return (PlatformUI.getWorkbench()
 				   		   		  .getActiveWorkbenchWindow()
@@ -185,11 +180,11 @@ public class AbbinamentiView extends ViewPart {
 					
 				   if (WinkhouseUtils.getInstance()
  								       .getLastEntityTypeFocused()
-									   .equalsIgnoreCase(ImmobiliModel.class.getName())){
+									   .equalsIgnoreCase(Immobili.class.getName())){
 					   return anagraficheImg;
 				   }else if (WinkhouseUtils.getInstance()
 						   					 .getLastEntityTypeFocused()
-						   					 .equalsIgnoreCase(AnagraficheModel.class.getName())){
+						   					 .equalsIgnoreCase(Anagrafiche.class.getName())){
 					   return immobiliImg;
 				   }else{
 					   return null;
@@ -199,11 +194,11 @@ public class AbbinamentiView extends ViewPart {
 					return null;
 				}
 				
-			}else if ((columnIndex == 3) && (element instanceof AnagraficheModel)){
+			}else if ((columnIndex == 3) && (element instanceof Anagrafiche)){
 
 				return anagraficheImg;
 					   
-			}else if ((columnIndex == 3) && (element instanceof ImmobiliModel)){
+			}else if ((columnIndex == 3) && (element instanceof Immobili)){
 				
 				return immobiliImg;
 				
@@ -220,76 +215,76 @@ public class AbbinamentiView extends ViewPart {
 			}else if ((columnIndex == 2) && (element instanceof AbbinamentiRicerca)){
 				return "Ricerca";
 			}else if (columnIndex == 4){
-				if (element instanceof AbbinamentiModel){
+				if (element instanceof winkhouse.orm.Abbinamenti){
 					return (immobile != null)
-						   ? ((AbbinamentiModel)element).getAnagrafica().getNome()
+						   ? ((winkhouse.orm.Abbinamenti)element).getAnagrafiche().getNome()
 						   : (anagrafica != null)
-						   	 ? ((AbbinamentiModel)element).getImmobile().getDescrizione()
+						   	 ? ((winkhouse.orm.Abbinamenti)element).getImmobili().getDescrizione()
 						   	 : "";
-				}else if (element instanceof ImmobiliModel){
-					return ((ImmobiliModel)element).getDescrizione();
-				}else if (element instanceof AnagraficheModel){
-					return ((AnagraficheModel)element).getNome();
+				}else if (element instanceof Immobili){
+					return ((Immobili)element).getDescrizione();
+				}else if (element instanceof Anagrafiche){
+					return ((Anagrafiche)element).getNome();
 				}else return "";				
 			}else if (columnIndex == 5){
-				if (element instanceof AbbinamentiModel){
+				if (element instanceof winkhouse.orm.Abbinamenti){
 					return (immobile != null)
-						   ? ((AbbinamentiModel)element).getAnagrafica().getCognome()
+						   ? ((winkhouse.orm.Abbinamenti)element).getAnagrafiche().getCognome()
 						   : (anagrafica != null)
-						   	 ? ((AbbinamentiModel)element).getImmobile().getCitta()
+						   	 ? ((winkhouse.orm.Abbinamenti)element).getImmobili().getCitta()
 						   	 : "";
-				}else if (element instanceof ImmobiliModel){
-					return ((ImmobiliModel)element).getCitta();
-				}else if (element instanceof AnagraficheModel){
-					return ((AnagraficheModel)element).getCognome();
+				}else if (element instanceof Immobili){
+					return ((Immobili)element).getCitta();
+				}else if (element instanceof Anagrafiche){
+					return ((Anagrafiche)element).getCognome();
 				}else return "";				
 			}else if (columnIndex == 6){
-				if (element instanceof AbbinamentiModel){
+				if (element instanceof winkhouse.orm.Abbinamenti){
 					return (immobile != null)
-						   ? ((AbbinamentiModel)element).getAnagrafica().getIndirizzo()
+						   ? ((winkhouse.orm.Abbinamenti)element).getAnagrafiche().getIndirizzo()
 						   : (anagrafica != null)
-						   	 ? ((AbbinamentiModel)element).getImmobile().getIndirizzo()
+						   	 ? ((winkhouse.orm.Abbinamenti)element).getImmobili().getIndirizzo()
 						   	 : "";
-				}else if (element instanceof ImmobiliModel){
-					return ((ImmobiliModel)element).getIndirizzo();
-				}else if (element instanceof AnagraficheModel){
-					return ((AnagraficheModel)element).getIndirizzo();
+				}else if (element instanceof Immobili){
+					return ((Immobili)element).getIndirizzo();
+				}else if (element instanceof Anagrafiche){
+					return ((Anagrafiche)element).getIndirizzo();
 				}else return "";				
 			}else if (columnIndex == 7){
-				if (element instanceof AbbinamentiModel){
+				if (element instanceof winkhouse.orm.Abbinamenti){
 					return (immobile != null)
-						   ? ((AbbinamentiModel)element).getAnagrafica().getProvincia()
+						   ? ((winkhouse.orm.Abbinamenti)element).getAnagrafiche().getProvincia()
 						   : (anagrafica != null)
-						   	 ? ((AbbinamentiModel)element).getImmobile().getProvincia()
+						   	 ? ((winkhouse.orm.Abbinamenti)element).getImmobili().getProvincia()
 						   	 : "";
-				}else if (element instanceof ImmobiliModel){
-					return ((ImmobiliModel)element).getProvincia();
-				}else if (element instanceof AnagraficheModel){
-					return ((AnagraficheModel)element).getProvincia();
+				}else if (element instanceof Immobili){
+					return ((Immobili)element).getProvincia();
+				}else if (element instanceof Anagrafiche){
+					return ((Anagrafiche)element).getProvincia();
 				}else return "";				
 			}else if (columnIndex == 8){
-				if (element instanceof AbbinamentiModel){
+				if (element instanceof winkhouse.orm.Abbinamenti){
 					return (immobile != null)
-						   ? ((AbbinamentiModel)element).getAnagrafica().getCitta()
+						   ? ((winkhouse.orm.Abbinamenti)element).getAnagrafiche().getCitta()
 						   : (anagrafica != null)
-						   	 ? String.valueOf(((AbbinamentiModel)element).getImmobile().getPrezzo())
+						   	 ? String.valueOf(((winkhouse.orm.Abbinamenti)element).getImmobili().getPrezzo())
 						   	 : "";
-				}else if (element instanceof ImmobiliModel){
-					return String.valueOf(((ImmobiliModel)element).getPrezzo());
-				}else if (element instanceof AnagraficheModel){
-					return ((AnagraficheModel)element).getCitta();
+				}else if (element instanceof Immobili){
+					return String.valueOf(((Immobili)element).getPrezzo());
+				}else if (element instanceof Anagrafiche){
+					return ((Anagrafiche)element).getCitta();
 				}else return "";				
 			}else if (columnIndex == 9){
-				if (element instanceof AbbinamentiModel){
+				if (element instanceof winkhouse.orm.Abbinamenti){
 					return (immobile != null)
-						   ? ((AbbinamentiModel)element).getAnagrafica().getCap()
+						   ? ((winkhouse.orm.Abbinamenti)element).getAnagrafiche().getCap()
 						   : (anagrafica != null)
-						   	 ? String.valueOf(((AbbinamentiModel)element).getImmobile().getMq())
+						   	 ? String.valueOf(((winkhouse.orm.Abbinamenti)element).getImmobili().getMq())
 						   	 : "";
-				}else if (element instanceof ImmobiliModel){
-					return String.valueOf(((ImmobiliModel)element).getMq());
-				}else if (element instanceof AnagraficheModel){
-					return ((AnagraficheModel)element).getCap();
+				}else if (element instanceof Immobili){
+					return String.valueOf(((Immobili)element).getMq());
+				}else if (element instanceof Anagrafiche){
+					return ((Anagrafiche)element).getCap();
 				}else return "";				
 			}else{
 				return "";
@@ -332,165 +327,165 @@ public class AbbinamentiView extends ViewPart {
 			String col4_1 = null;
 			String col4_2 = null;
 			
-			if (e1 instanceof AbbinamentiModel){
+			if (e1 instanceof winkhouse.orm.Abbinamenti){
 				col4_1 = (immobile != null)
-					   ? ((AbbinamentiModel)e1).getAnagrafica().getNome()
+					   ? ((winkhouse.orm.Abbinamenti)e1).getAnagrafiche().getNome()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e1).getImmobile().getDescrizione()
+					   	 ? ((winkhouse.orm.Abbinamenti)e1).getImmobili().getDescrizione()
 					   	 : "";
-			}else if (e1 instanceof ImmobiliModel){
-				col4_1 = ((ImmobiliModel)e1).getDescrizione();
-			}else if (e1 instanceof AnagraficheModel){
-				col4_1 = ((AnagraficheModel)e1).getNome();
+			}else if (e1 instanceof Immobili){
+				col4_1 = ((Immobili)e1).getDescrizione();
+			}else if (e1 instanceof Anagrafiche){
+				col4_1 = ((Anagrafiche)e1).getNome();
 			}else{ col4_1 =  "";}
 
-			if (e2 instanceof AbbinamentiModel){
+			if (e2 instanceof winkhouse.orm.Abbinamenti){
 				col4_2 = (immobile != null)
-					   ? ((AbbinamentiModel)e2).getAnagrafica().getNome()
+					   ? ((winkhouse.orm.Abbinamenti)e2).getAnagrafiche().getNome()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e2).getImmobile().getDescrizione()
+					   	 ? ((winkhouse.orm.Abbinamenti)e2).getImmobili().getDescrizione()
 					   	 : "";
-			}else if (e2 instanceof ImmobiliModel){
-				col4_2 = ((ImmobiliModel)e2).getDescrizione();
-			}else if (e2 instanceof AnagraficheModel){
-				col4_2 = ((AnagraficheModel)e2).getNome();
+			}else if (e2 instanceof Immobili){
+				col4_2 = ((Immobili)e2).getDescrizione();
+			}else if (e2 instanceof Anagrafiche){
+				col4_2 = ((Anagrafiche)e2).getNome();
 			}else{ col4_2 =  "";}
 			
 			String col5_1 = null;
 			String col5_2 = null;
 			
-			if (e1 instanceof AbbinamentiModel){
+			if (e1 instanceof winkhouse.orm.Abbinamenti){
 				col5_1 = (immobile != null)
-					   ? ((AbbinamentiModel)e1).getAnagrafica().getCognome()
+					   ? ((winkhouse.orm.Abbinamenti)e1).getAnagrafiche().getCognome()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e1).getImmobile().getCitta()
+					   	 ? ((winkhouse.orm.Abbinamenti)e1).getImmobili().getCitta()
 					   	 : "";
-			}else if (e1 instanceof ImmobiliModel){
-				col5_1 = ((ImmobiliModel)e1).getCitta();
-			}else if (e1 instanceof AnagraficheModel){
-				col5_1 = ((AnagraficheModel)e1).getCognome();
+			}else if (e1 instanceof Immobili){
+				col5_1 = ((Immobili)e1).getCitta();
+			}else if (e1 instanceof Anagrafiche){
+				col5_1 = ((Anagrafiche)e1).getCognome();
 			}else col5_1 = "";
 
-			if (e2 instanceof AbbinamentiModel){
+			if (e2 instanceof winkhouse.orm.Abbinamenti){
 				col5_2 = (immobile != null)
-					   ? ((AbbinamentiModel)e2).getAnagrafica().getCognome()
+					   ? ((winkhouse.orm.Abbinamenti)e2).getAnagrafiche().getCognome()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e2).getImmobile().getCitta()
+					   	 ? ((winkhouse.orm.Abbinamenti)e2).getImmobili().getCitta()
 					   	 : "";
-			}else if (e2 instanceof ImmobiliModel){
-				col5_2 = ((ImmobiliModel)e2).getCitta();
-			}else if (e2 instanceof AnagraficheModel){
-				col5_2 = ((AnagraficheModel)e2).getCognome();
+			}else if (e2 instanceof Immobili){
+				col5_2 = ((Immobili)e2).getCitta();
+			}else if (e2 instanceof Anagrafiche){
+				col5_2 = ((Anagrafiche)e2).getCognome();
 			}else col5_2 = "";
 
 			
 			String col6_1 = null;
 			String col6_2 = null;
 
-			if (e1 instanceof AbbinamentiModel){
+			if (e1 instanceof winkhouse.orm.Abbinamenti){
 				col6_1 = (immobile != null)
-					   ? ((AbbinamentiModel)e1).getAnagrafica().getIndirizzo()
+					   ? ((winkhouse.orm.Abbinamenti)e1).getAnagrafiche().getIndirizzo()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e1).getImmobile().getIndirizzo()
+					   	 ? ((winkhouse.orm.Abbinamenti)e1).getImmobili().getIndirizzo()
 					   	 : "";
-			}else if (e1 instanceof ImmobiliModel){
-				col6_1 = ((ImmobiliModel)e1).getIndirizzo();
-			}else if (e1 instanceof AnagraficheModel){
-				col6_1 = ((AnagraficheModel)e1).getIndirizzo();
+			}else if (e1 instanceof Immobili){
+				col6_1 = ((Immobili)e1).getIndirizzo();
+			}else if (e1 instanceof Anagrafiche){
+				col6_1 = ((Anagrafiche)e1).getIndirizzo();
 			}else col6_1 = "";				
 
-			if (e2 instanceof AbbinamentiModel){
+			if (e2 instanceof winkhouse.orm.Abbinamenti){
 				col6_2 = (immobile != null)
-					   ? ((AbbinamentiModel)e2).getAnagrafica().getIndirizzo()
+					   ? ((winkhouse.orm.Abbinamenti)e2).getAnagrafiche().getIndirizzo()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e2).getImmobile().getIndirizzo()
+					   	 ? ((winkhouse.orm.Abbinamenti)e2).getImmobili().getIndirizzo()
 					   	 : "";
-			}else if (e2 instanceof ImmobiliModel){
-				col6_2 = ((ImmobiliModel)e2).getIndirizzo();
-			}else if (e2 instanceof AnagraficheModel){
-				col6_2 = ((AnagraficheModel)e2).getIndirizzo();
+			}else if (e2 instanceof Immobili){
+				col6_2 = ((Immobili)e2).getIndirizzo();
+			}else if (e2 instanceof Anagrafiche){
+				col6_2 = ((Anagrafiche)e2).getIndirizzo();
 			}else col6_2 = "";				
 
 			
 			String col7_1 = null;
 			String col7_2 = null;
 
-			if (e1 instanceof AbbinamentiModel){
+			if (e1 instanceof winkhouse.orm.Abbinamenti){
 				col7_1 =  (immobile != null)
-					   ? ((AbbinamentiModel)e1).getAnagrafica().getProvincia()
+					   ? ((winkhouse.orm.Abbinamenti)e1).getAnagrafiche().getProvincia()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e1).getImmobile().getProvincia()
+					   	 ? ((winkhouse.orm.Abbinamenti)e1).getImmobili().getProvincia()
 					   	 : "";
-			}else if (e1 instanceof ImmobiliModel){
-				col7_1 =  ((ImmobiliModel)e1).getProvincia();
-			}else if (e1 instanceof AnagraficheModel){
-				col7_1 =  ((AnagraficheModel)e1).getProvincia();
+			}else if (e1 instanceof Immobili){
+				col7_1 =  ((Immobili)e1).getProvincia();
+			}else if (e1 instanceof Anagrafiche){
+				col7_1 =  ((Anagrafiche)e1).getProvincia();
 			}else col7_1 =  "";				
 
-			if (e2 instanceof AbbinamentiModel){
+			if (e2 instanceof winkhouse.orm.Abbinamenti){
 				col7_2 =  (immobile != null)
-					   ? ((AbbinamentiModel)e2).getAnagrafica().getProvincia()
+					   ? ((winkhouse.orm.Abbinamenti)e2).getAnagrafiche().getProvincia()
 					   : (anagrafica != null)
-					   	 ? ((AbbinamentiModel)e2).getImmobile().getProvincia()
+					   	 ? ((winkhouse.orm.Abbinamenti)e2).getImmobili().getProvincia()
 					   	 : "";
-			}else if (e2 instanceof ImmobiliModel){
-				col7_2 =  ((ImmobiliModel)e2).getProvincia();
-			}else if (e2 instanceof AnagraficheModel){
-				col7_2 =  ((AnagraficheModel)e2).getProvincia();
+			}else if (e2 instanceof Immobili){
+				col7_2 =  ((Immobili)e2).getProvincia();
+			}else if (e2 instanceof Anagrafiche){
+				col7_2 =  ((Anagrafiche)e2).getProvincia();
 			}else col7_2 =  "";				
 
 			String col8_1 = null;
 			String col8_2 = null;
 
-			if (e1 instanceof AbbinamentiModel){
+			if (e1 instanceof winkhouse.orm.Abbinamenti){
 				col8_1 =  (immobile != null)
-					   ? ((AbbinamentiModel)e1).getAnagrafica().getCitta()
+					   ? ((winkhouse.orm.Abbinamenti)e1).getAnagrafiche().getCitta()
 					   : (anagrafica != null)
-					   	 ? String.valueOf(((AbbinamentiModel)e1).getImmobile().getPrezzo())
+					   	 ? String.valueOf(((winkhouse.orm.Abbinamenti)e1).getImmobili().getPrezzo())
 					   	 : "";
-			}else if (e1 instanceof ImmobiliModel){
-				col8_1 =  String.valueOf(((ImmobiliModel)e1).getPrezzo());
-			}else if (e1 instanceof AnagraficheModel){
-				col8_1 =  ((AnagraficheModel)e1).getCitta();
+			}else if (e1 instanceof Immobili){
+				col8_1 =  String.valueOf(((Immobili)e1).getPrezzo());
+			}else if (e1 instanceof Anagrafiche){
+				col8_1 =  ((Anagrafiche)e1).getCitta();
 			}else col8_1 =  "";				
 
-			if (e2 instanceof AbbinamentiModel){
+			if (e2 instanceof winkhouse.orm.Abbinamenti){
 				col8_2 =  (immobile != null)
-					   ? ((AbbinamentiModel)e2).getAnagrafica().getCitta()
+					   ? ((winkhouse.orm.Abbinamenti)e2).getAnagrafiche().getCitta()
 					   : (anagrafica != null)
-					   	 ? String.valueOf(((AbbinamentiModel)e2).getImmobile().getPrezzo())
+					   	 ? String.valueOf(((winkhouse.orm.Abbinamenti)e2).getImmobili().getPrezzo())
 					   	 : "";
-			}else if (e2 instanceof ImmobiliModel){
-				col8_2 =  String.valueOf(((ImmobiliModel)e2).getPrezzo());
-			}else if (e2 instanceof AnagraficheModel){
-				col8_2 =  ((AnagraficheModel)e2).getCitta();
+			}else if (e2 instanceof Immobili){
+				col8_2 =  String.valueOf(((Immobili)e2).getPrezzo());
+			}else if (e2 instanceof Anagrafiche){
+				col8_2 =  ((Anagrafiche)e2).getCitta();
 			}else col8_2 =  "";				
 
 			String col9_1 = null;
 			String col9_2 = null;
 			
-			if (e1 instanceof AbbinamentiModel){
+			if (e1 instanceof winkhouse.orm.Abbinamenti){
 				col9_1 = (immobile != null)
-					   ? ((AbbinamentiModel)e1).getAnagrafica().getCap()
+					   ? ((winkhouse.orm.Abbinamenti)e1).getAnagrafiche().getCap()
 					   : (anagrafica != null)
-					   	 ? String.valueOf(((AbbinamentiModel)e1).getImmobile().getMq())
+					   	 ? String.valueOf(((winkhouse.orm.Abbinamenti)e1).getImmobili().getMq())
 					   	 : "";
-			}else if (e1 instanceof ImmobiliModel){
-				col9_1 = String.valueOf(((ImmobiliModel)e1).getMq());
-			}else if (e1 instanceof AnagraficheModel){
-				col9_1 = ((AnagraficheModel)e1).getCap();
+			}else if (e1 instanceof Immobili){
+				col9_1 = String.valueOf(((Immobili)e1).getMq());
+			}else if (e1 instanceof Anagrafiche){
+				col9_1 = ((Anagrafiche)e1).getCap();
 			}else col9_1 =  "";				
 
-			if (e2 instanceof AbbinamentiModel){
+			if (e2 instanceof winkhouse.orm.Abbinamenti){
 				col9_2 =  (immobile != null)
-					   ? ((AbbinamentiModel)e2).getAnagrafica().getCap()
+					   ? ((winkhouse.orm.Abbinamenti)e2).getAnagrafiche().getCap()
 					   : (anagrafica != null)
-					   	 ? String.valueOf(((AbbinamentiModel)e2).getImmobile().getMq())
+					   	 ? String.valueOf(((winkhouse.orm.Abbinamenti)e2).getImmobili().getMq())
 					   	 : "";
-			}else if (e2 instanceof ImmobiliModel){
-				col9_2 =  String.valueOf(((ImmobiliModel)e2).getMq());
-			}else if (e2 instanceof AnagraficheModel){
-				col9_2 =  ((AnagraficheModel)e2).getCap();
+			}else if (e2 instanceof Immobili){
+				col9_2 =  String.valueOf(((Immobili)e2).getMq());
+			}else if (e2 instanceof Anagrafiche){
+				col9_2 =  ((Anagrafiche)e2).getCap();
 			}else col9_2 =  "";				
 
 			
@@ -603,8 +598,8 @@ public class AbbinamentiView extends ViewPart {
 		f.setText("Abbinamenti");
 		f.getBody().setLayout(new GridLayout());
 		
-		abbinnameti.add(new AbbinamentiManuali());
-		abbinnameti.add(new AbbinamentiRicerca());
+		abbinameti.add(new AbbinamentiManuali());
+		abbinameti.add(new AbbinamentiRicerca());
 		
 		FindAbbinamenti fai = new FindAbbinamenti();
 		fai.setToolTipText("Ricerca abbinamenti");
@@ -644,20 +639,20 @@ public class AbbinamentiView extends ViewPart {
 			
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof ImmobiliModel){
+				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof Immobili){
 					ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction((Immobili)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(),null);
 					adia.run();
 				}
-				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof AnagraficheModel){
-//					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction((AnagraficheModel)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(), null);
+				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof Anagrafiche){
+//					ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction((Anagrafiche)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement(), null);
 //					adaa.run();
 					
 				}				
 				 
-				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof AbbinamentiModel){
+				if (((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement() instanceof Abbinamenti){
 					winkhouse.orm.Abbinamenti am = (winkhouse.orm.Abbinamenti)((StructuredSelection)tvAbinamenti.getSelection()).getFirstElement();
 					if (immobile != null){
-//						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am.getAnagrafica(), null);
+//						ApriDettaglioAnagraficaAction adaa = new ApriDettaglioAnagraficaAction(am.getAnagrafiche(), null);
 //						adaa.run();
 					}else if (anagrafica != null){
 						ApriDettaglioImmobileAction adia = new ApriDettaglioImmobileAction(am.getImmobili(),null);
@@ -750,8 +745,8 @@ public class AbbinamentiView extends ViewPart {
 		this.ricerca = resultRicerca;
 		abbinamentiRicerca = new AbbinamentiRicerca();
 		abbinamentiRicerca.setAbbinamenti(this.ricerca);
-		abbinnameti.set(1, abbinamentiRicerca);
-		tvAbinamenti.setInput(abbinnameti);
+		abbinameti.set(1, abbinamentiRicerca);
+		tvAbinamenti.setInput(abbinameti);
 		
 	}
 
@@ -763,8 +758,8 @@ public class AbbinamentiView extends ViewPart {
 		this.manuale = resultManuale;
 		abbinamentiManuali = new AbbinamentiManuali();
 		abbinamentiManuali.setAbbinamenti(this.manuale);
-		abbinnameti.set(0, abbinamentiManuali);
-		tvAbinamenti.setInput(abbinnameti);
+		abbinameti.set(0, abbinamentiManuali);
+		tvAbinamenti.setInput(abbinameti);
 	}
 
 	public Immobili getImmobile() {
@@ -790,7 +785,7 @@ public class AbbinamentiView extends ViewPart {
 			this.anagrafica = null;
 			this.colloquio = null;
 			setManuale(new ArrayList(this.immobile.getAbbinamentis()));
-			setRicerca(new ArrayList<AbbinamentiModel>());	
+			setRicerca(new ArrayList<winkhouse.orm.Abbinamenti>());	
 			
 		}else{
 			this.immobile = null;
@@ -813,7 +808,7 @@ public class AbbinamentiView extends ViewPart {
 					this.immobile = null;
 					this.colloquio = null;
 					setManuale(new ArrayList(this.anagrafica.getAbbinamentis()));
-					setRicerca(new ArrayList<AbbinamentiModel>());	
+					setRicerca(new ArrayList<winkhouse.orm.Abbinamenti>());	
 					
 				}
 			}else if ((anagraficaModel != null) && 
@@ -823,7 +818,7 @@ public class AbbinamentiView extends ViewPart {
 					this.immobile = null;
 					this.colloquio = null;
 					setManuale(new ArrayList(this.anagrafica.getAbbinamentis()));					
-					setRicerca(new ArrayList<AbbinamentiModel>());	
+					setRicerca(new ArrayList<winkhouse.orm.Abbinamenti>());	
 
 			}else{
 				tvAbinamenti.refresh();
